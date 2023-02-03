@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.toCounterBtn);
 
-        if(getIntent().hasExtra("com.example.as1.SOMETHING")){
+        if(getIntent().hasExtra("key1")){
             TextView welcome = (TextView)findViewById(R.id.welcome);
-            String s = getIntent().getExtras().getString("com.example.as1.SOMETHING");
+            String s = getIntent().getExtras().getString("key1");
             welcome.setText(s);
         }
 

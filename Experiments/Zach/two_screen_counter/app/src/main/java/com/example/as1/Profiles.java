@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,7 +17,6 @@ public class Profiles extends AppCompatActivity{
 
     Button login;
     Button goBack;
-    TextView TextView;
 
 
     @Override
@@ -26,7 +26,6 @@ public class Profiles extends AppCompatActivity{
 
         login = findViewById(R.id.button);
         goBack = findViewById(R.id.button2);
-        TextView = findViewById(R.id.textView);
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,10 +40,10 @@ public class Profiles extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Profiles.this, MainActivity.class);
-                Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
-                intent3.putExtra("com.example.as1.SOMETHING", "Welcome User");
-                startActivity(intent3);
+                EditText text = findViewById(R.id.email);
+                String message = text.getText().toString();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("key1", message);
                 startActivity(intent);
             }
         });

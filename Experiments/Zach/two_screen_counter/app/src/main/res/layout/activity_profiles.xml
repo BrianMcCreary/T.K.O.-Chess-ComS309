@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/email"
         android:layout_width="253dp"
         android:layout_height="60dp"
         android:layout_marginStart="100dp"
@@ -36,7 +36,7 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="447dp"
         android:ems="10"
-        android:hint="email:"
+        android:hint="username:"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
