@@ -28,17 +28,29 @@
 			<version>3.0.2</version>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+=======
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+>>>>>>> 5710c3104e1cec4680516b9577dd6d5dadfb6369
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 	</dependencies>
+=======
+    </dependencies>
+>>>>>>> 5710c3104e1cec4680516b9577dd6d5dadfb6369
 
 	<build>
 		<plugins>
