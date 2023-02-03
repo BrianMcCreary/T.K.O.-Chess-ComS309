@@ -1,5 +1,6 @@
 package coms309.demo1gamestate.game_experiments;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,5 +15,10 @@ public class ChessGamestateController {
         game.setPlayerW(gamestate.getPlayerW());
         game.setPlayerB(gamestate.getPlayerB());
         return "Following Gamestate has been saved:\n" + gamestate.toString();
+    }
+
+    @GetMapping("/ChessGamestate")
+    public @ResponseBody ChessGamestate getChessGamestate() {
+        return game;
     }
 }
