@@ -50,12 +50,20 @@ public class Board {
         return chessBoard[x - 1][y - 1];
     }
 
+    public void replaceTile(Tile tile, int x, int y) {
+        chessBoard[x-1][y-1] = tile;
+    }
+
     @Override
     public String toString() {
         String board = "";
         for (int i = 7; i > -1; --i) {
             for (int j = 0; j < 8; ++j) {
-                board += "[" + this.chessBoard[j][i].getPieceType() + "] ";
+                String spaces = "";
+                for (int o = 0; o < 7 - chessBoard[j][i].getPieceType().length(); ++o) {
+                    spaces += " ";
+                }
+                board += "[" + chessBoard[j][i].getPieceType() + spaces + "] ";
             }
             board += "\n";
         }

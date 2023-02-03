@@ -1,14 +1,14 @@
 package coms309.demo1gamestate.game_experiments;
 
 public class ChessGamestate {
-    private String Gamestate;
+    private String gamestate;
     private String playerB;
     private String playerW;
 
     public ChessGamestate() {}
 
     public ChessGamestate(String Gamestate, String playerB, String playerW) {
-        this.Gamestate = Gamestate;
+        this.gamestate = Gamestate;
         this.playerB = playerB;
         this.playerW = playerW;
     }
@@ -30,15 +30,15 @@ public class ChessGamestate {
     }
 
     public String getGamestate() {
-        return Gamestate;
+        return gamestate;
     }
 
     public void setGamestate(String Gamestate) {
-        this.Gamestate = Gamestate;
+        this.gamestate = Gamestate;
     }
 
     @Override
     public String toString() {
-        return "PlayerW: " + playerW + "\nPlayerB: " + playerB + "\nGamestate: " + Gamestate;
+        return "PlayerW: " + playerW + "\nPlayerB: " + playerB + "\nGamestate: " + gamestate;
     }
 }
