@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2196F3"
+    android:backgroundTint="#2196F3"
+    android:foregroundTint="#3F51B5"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/toCounterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To Counter"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:text="Begin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
