@@ -7,37 +7,48 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/secondActivityBtn"
+        android:id="@+id/LoginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Second Activity"
-        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
+        android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/rickRollBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
-        android:id="@+id/googleBtn"
+        android:id="@+id/rickRollBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Google"
+        android:text="TotesnotRickRoll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondActivityBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/LoginBtn" />
 
     <EditText
-        android:id="@+id/messageText"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter Message"
+        android:hint="Enter username"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/secondActivityBtn"
+        app:layout_constraintBottom_toTopOf="@+id/LoginBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

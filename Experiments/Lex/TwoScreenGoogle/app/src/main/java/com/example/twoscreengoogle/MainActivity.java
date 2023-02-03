@@ -16,31 +16,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button secondActivityBtn = (Button) findViewById(R.id.secondActivityBtn);
-        secondActivityBtn.setOnClickListener(new View.OnClickListener() {
+        Button LoginBtn = (Button) findViewById(R.id.LoginBtn);
+        LoginBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                EditText messageText =  findViewById(R.id.messageText);
-                String message = messageText.getText().toString();
+                EditText password = findViewById(R.id.password);
+                String corrPassword = password.getText().toString();
 
-                Intent startIntent = new Intent(getApplicationContext(), SecondActivity.class);
-                startIntent.putExtra("key1", message);
-                startActivity(startIntent);
+                if (corrPassword.equals("Password1")) {
+                    EditText user = findViewById(R.id.username);
+                    String username = user.getText().toString();
+
+                    Intent correctLogin = new Intent(getApplicationContext(), SecondActivity.class);
+                    correctLogin.putExtra("key1", username);
+                    startActivity(correctLogin);
+                }
             }
         });
 
-        Button googleBtn = (Button) findViewById(R.id.googleBtn);
-        googleBtn.setOnClickListener(new View.OnClickListener() {
+        Button rickRollBtn = (Button) findViewById(R.id.rickRollBtn);
+        rickRollBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String google = "http://www.yahoo.com";
-                Uri webAddress = Uri.parse(google);
+                String rollingRick = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
+                Uri webAddress = Uri.parse(rollingRick);
 
-                Intent goToGoogle = new Intent(Intent.ACTION_VIEW, webAddress);
-                if (goToGoogle.resolveActivity(getPackageManager()) != null) {
-                    startActivity(goToGoogle);
-                }
+                Intent goToYoutube = new Intent(Intent.ACTION_VIEW, webAddress);
+                startActivity(goToYoutube);
+                /*Ask TA's About why resolveActivity(getPackageManager()) didn't work
+                if (goToYoutube.resolveActivity(getPackageManager()) != null) {
+                   startActivity(goToYoutube);
+                }*/
             }
         });
 
