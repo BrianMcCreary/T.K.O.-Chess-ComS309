@@ -35,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button GuestBtn = (Button) findViewById(R.id.guestLoginBtn);
+        GuestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginGuest = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(loginGuest);
+            }
+        });
+
         Button rickRollBtn = (Button) findViewById(R.id.rickRollBtn);
         rickRollBtn.setOnClickListener(new View.OnClickListener() {
             @Override
