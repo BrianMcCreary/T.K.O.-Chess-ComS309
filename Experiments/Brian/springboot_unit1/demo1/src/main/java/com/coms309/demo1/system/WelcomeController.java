@@ -19,7 +19,7 @@ public class WelcomeController {
                 "POST a new player by parameter: /players/parameter\n" +
                 "POST a new player by JSON body: /players\n" +
                 "DELETE a player by parameter: /players\n" +
-                "PUT new information about a player: /players/{username}\n" +
+                "PUT new information about a player via parameter: /players/{username}\n" +
                 "GET statistics of a player: /players/{username}/stats\n" +
                 "\n/chess section: \n" +
                 "POST a new game: /chess\n";

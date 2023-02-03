@@ -82,4 +82,15 @@ public class PlayerController {
         return "Player \"" + username + "\" does not exist.";
     }
 
+    @PutMapping("/players/{username}")
+    public @ResponseBody String updateUsername(@PathVariable String username, @RequestParam String newUsername){
+        for(Player player : players){
+            if(player.username.equals(username)){
+                player.username = newUsername;
+                return "Previous username \"" + username + "\" updated to \"" + newUsername + "\".";
+            }
+        }
+        return "Player \"" + username + "\" does not exist.";
+    }
+
 }
