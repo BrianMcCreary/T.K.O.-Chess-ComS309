@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">TwoScreenGoogle</string>
+
+    <string-array name="ChessPieces">
+        <item>King</item>
+        <item>Queen</item>
+        <item>Rook</item>
+        <item>Bishop</item>
+        <item>Knight</item>
+        <item>Pawn</item>
+    </string-array>
+
+    <string-array name="PointValues">
+        <item>10</item>
+        <item>9</item>
+        <item>4</item>
+        <item>3</item>
+        <item>3</item>
+        <item>1</item>
+    </string-array>
+    
+    <string-array name="Descriptions">
+        <item>Can move one space in any direction. Long live the king!</item>
+        <item>Can move any number of spaces in any direction.</item>
+        <item>Can move any number of spaces perpendicularly.</item>
+        <item>Can move any number of spaces diagonally</item>
+        <item>Can move two spaces in one direction and one space perpendicularly to the first direction.</item>
+        <item>Can move one space forward, but can only take diagonally</item>
+    </string-array>
+</resources>
