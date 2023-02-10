@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">TwoScreenGoogle</string>
+<<<<<<< HEAD
+=======
 
     <string-array name="ChessPieces">
         <item>King</item>
@@ -27,4 +29,5 @@
         <item>Can move two spaces in one direction and one space perpendicularly to the first direction.</item>
         <item>Can move one space forward, but can only take diagonally</item>
     </string-array>
+>>>>>>> 96080ae939e775a09e6c667b9910c19a28a95957
 </resources>
