@@ -7,83 +7,108 @@
     android:background="@color/dark_grey">
 
     <Button
+        android:id="@+id/button2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginBottom="214dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Play Chess"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/button"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Play T.K.O. Chess"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="190dp" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Sign Out"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="585dp" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="522dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="View Profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="399dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="113dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="113dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="330dp" />
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Play Chess"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="260dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="185dp"
-        android:layout_height="44dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Friends"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="460dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logout" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_friends" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_profile" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="266dp"
+        android:layout_height="345dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="405dp"
-        android:layout_height="69dp"
-        android:text="Welcome!"
+        android:id="@+id/textView2"
+        android:layout_width="410dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="318dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="354dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Total Knockout Chess"
         android:textAlignment="center"
-        android:textSize="50sp"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="36dp" />
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
