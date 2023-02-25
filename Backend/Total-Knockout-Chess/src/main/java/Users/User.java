@@ -106,6 +106,12 @@ public class User {
         }
     }
 
+    protected void rejectFriendRequest(User friend){
+        if (pendingFriends.contains(friend)) {
+            pendingFriends.remove(friend);
+        }
+    }
+
     protected String removeFriend(User friend) {
         if (friends.contains(friend)) {
             friends.remove(friend);
