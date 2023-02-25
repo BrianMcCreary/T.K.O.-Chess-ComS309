@@ -89,6 +89,9 @@ public class User {
      */
     protected void setFriends(List<User> friends) {
         this.friends = friends;
+        for (User f : friends) {
+            f.friends.add(this);
+        }
     }
 
     protected void sendFriendRequest(User friend) {
