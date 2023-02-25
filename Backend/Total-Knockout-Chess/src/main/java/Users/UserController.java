@@ -101,4 +101,11 @@ public class UserController {
         User removee = userRepository.findById(removeeId);
         remover.removeFriend(removee);
     }
+
+    @PutMapping(path = "/rejectFriendRequest/{rejectorId}/{rejecteeId}")
+    public void rejectFriendRequest(@PathVariable int rejectorId, @PathVariable int rejecteeId) {
+        User rejector = userRepository.findById(rejectorId);
+        User rejectee = userRepository.findById(rejecteeId);
+        rejector.rejectFriendRequest(rejectee);
+    }
 }

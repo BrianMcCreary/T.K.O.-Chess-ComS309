@@ -112,13 +112,11 @@ public class User {
         }
     }
 
-    protected String removeFriend(User friend) {
+    protected void removeFriend(User friend) {
         if (friends.contains(friend)) {
             friends.remove(friend);
             friend.friends.remove(this);
-            return "Friend removed";
         }
-        return "Friend not found";
     }
 
     protected List<User> getPendingFriends() {
