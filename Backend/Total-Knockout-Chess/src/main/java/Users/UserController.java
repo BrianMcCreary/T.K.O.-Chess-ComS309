@@ -10,8 +10,8 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private final String success = "{\"message\":\"success\"}";
+    private final String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    String createUser(@RequestBody User user) {
+    public @ResponseBody String createUser(@RequestBody User user) {
         if (user == null) {
             return failure;
         }
@@ -36,12 +36,22 @@ public class UserController {
     }
 
     @GetMapping(path = "/users/{id}")
-    User getUserById(@PathVariable int id) {
+    public User getUserById(@PathVariable int id) {
         return userRepository.findById(id);
     }
 
-    @PutMapping(path = "/users/{id}")
-    String changeUserName(@PathVariable int id, @RequestParam String name) {
+    @GetMapping(path = "/users/name/{id}")
+    public String getUserName(@PathVariable int id) {
+        return userRepository.findById(id).getName();
+    }
+
+    @GetMapping(path = "/users/password/{id}")
+    public String getUserPassword(@PathVariable int id) {
+        return userRepository.findById(id).getPassword();
+    }
+
+    @PutMapping(path = "/users/name/{id}")
+    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam String name) {
         for (User u : userRepository.findAll()) {
             if (u.getName().equals(name)) {
                 return failure;
@@ -49,5 +59,46 @@ public class UserController {
         }
         System.out.println(userRepository.findById(id).setName(name));
         return success;
+    }
+
+    @PutMapping(path = "/users/password/{id}")
+    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
+        String message = userRepository.findById(id).setPassword(password);
+        if (message.equals("Password updated.")) {
+            return success;
+        }
+        System.out.println(message);
+        return failure;
+    }
+
+    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
+    public void sendFriendRequest(@PathVariable int fromId, @PathVariable int toId) {
+        User sender = userRepository.findById(fromId);
+        User recipient = userRepository.findById(toId);
+        sender.sendFriendRequest(recipient);
+    }
+
+    @GetMapping(path = "/pendingFriendRequests/{id}")
+    public List<User> getPendingFriends(@PathVariable int id) {
+        return userRepository.findById(id).getPendingFriends();
+    }
+
+    @GetMapping(path = "/friends/{id}")
+    public List<User> getFriends(@PathVariable int id) {
+        return userRepository.findById(id).getFriends();
+    }
+
+    @PutMapping(path = "/acceptFriendRequest/{senderId}/{acceptorId}")
+    public void acceptFriendRequest(@PathVariable int senderId, @PathVariable int acceptorId) {
+        User sender = userRepository.findById(senderId);
+        User acceptor = userRepository.findById(acceptorId);
+        acceptor.acceptFriendRequest(sender);
+    }
+
+    @PutMapping(path = "/removeFriend/{removerId}/{removeeId}")
+    public void removeFriend(@PathVariable int removerId, @PathVariable int removeeId) {
+        User remover = userRepository.findById(removerId);
+        User removee = userRepository.findById(removeeId);
+        remover.removeFriend(removee);
     }
 }

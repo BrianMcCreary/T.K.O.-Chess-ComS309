@@ -114,4 +114,12 @@ public class User {
         }
         return "Friend not found";
     }
+
+    protected List<User> getPendingFriends() {
+        return pendingFriends;
+    }
+
+    protected List<User> getFriends() {
+        return friends;
+    }
 }
