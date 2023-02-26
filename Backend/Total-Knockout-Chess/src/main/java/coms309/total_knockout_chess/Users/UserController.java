@@ -1,4 +1,4 @@
-package Users;
+package coms309.total_knockout_chess.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

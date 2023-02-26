@@ -1,4 +1,4 @@
-package Users;
+package coms309.total_knockout_chess.Users;
 
 import jakarta.persistence.*;
 
