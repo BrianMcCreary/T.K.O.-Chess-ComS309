@@ -14,18 +14,16 @@ public class User {
     private String name;
     private String password;
 
-    @OneToMany
     private List<User> friends;
 
     /**
      * List of this users incoming friend requests. User can accept or deny these requests.
      */
-    @OneToMany
     private List<User> pendingFriends;
 
     /**
      * Constructor to initialize a new user with a specified name and password.
-     * New users have a empty friends and pendingFriends lists.
+     * New users have an empty friends and pendingFriends lists.
      * @param name - desired username
      * @param password - desired password. Must be at least 8 characters long
      */
