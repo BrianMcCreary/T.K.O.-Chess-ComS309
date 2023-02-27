@@ -20,10 +20,10 @@ public class UserController {
 
     @PostMapping(path = "/users")
     public @ResponseBody String createUser(@RequestBody User user) {
-        if (user == null) {
+        if (user == null || user.getName().equals(null)) {
             return failure;
         }
-        if (user.getName().length() < 8) {
+        if (user.getPassword().length() < 8) {
             return failure;
         }
         for (User u : userRepository.findAll()) {
@@ -71,41 +71,41 @@ public class UserController {
         return failure;
     }
 
-    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
-    public void sendFriendRequest(@PathVariable int fromId, @PathVariable int toId) {
-        User sender = userRepository.findById(fromId);
-        User recipient = userRepository.findById(toId);
-        sender.sendFriendRequest(recipient);
-    }
-
-    @GetMapping(path = "/pendingFriendRequests/{id}")
-    public List<User> getPendingFriends(@PathVariable int id) {
-        return userRepository.findById(id).getPendingFriends();
-    }
-
-    @GetMapping(path = "/friends/{id}")
-    public List<User> getFriends(@PathVariable int id) {
-        return userRepository.findById(id).getFriends();
-    }
-
-    @PutMapping(path = "/acceptFriendRequest/{senderId}/{acceptorId}")
-    public void acceptFriendRequest(@PathVariable int senderId, @PathVariable int acceptorId) {
-        User sender = userRepository.findById(senderId);
-        User acceptor = userRepository.findById(acceptorId);
-        acceptor.acceptFriendRequest(sender);
-    }
-
-    @PutMapping(path = "/removeFriend/{removerId}/{removeeId}")
-    public void removeFriend(@PathVariable int removerId, @PathVariable int removeeId) {
-        User remover = userRepository.findById(removerId);
-        User removee = userRepository.findById(removeeId);
-        remover.removeFriend(removee);
-    }
-
-    @PutMapping(path = "/rejectFriendRequest/{rejectorId}/{rejecteeId}")
-    public void rejectFriendRequest(@PathVariable int rejectorId, @PathVariable int rejecteeId) {
-        User rejector = userRepository.findById(rejectorId);
-        User rejectee = userRepository.findById(rejecteeId);
-        rejector.rejectFriendRequest(rejectee);
-    }
+//    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
+//    public void sendFriendRequest(@PathVariable int fromId, @PathVariable int toId) {
+//        User sender = userRepository.findById(fromId);
+//        User recipient = userRepository.findById(toId);
+//        sender.sendFriendRequest(recipient);
+//    }
+//
+//    @GetMapping(path = "/pendingFriendRequests/{id}")
+//    public List<User> getPendingFriends(@PathVariable int id) {
+//        return userRepository.findById(id).getPendingFriends();
+//    }
+//
+//    @GetMapping(path = "/friends/{id}")
+//    public List<User> getFriends(@PathVariable int id) {
+//        return userRepository.findById(id).getFriends();
+//    }
+//
+//    @PutMapping(path = "/acceptFriendRequest/{senderId}/{acceptorId}")
+//    public void acceptFriendRequest(@PathVariable int senderId, @PathVariable int acceptorId) {
+//        User sender = userRepository.findById(senderId);
+//        User acceptor = userRepository.findById(acceptorId);
+//        acceptor.acceptFriendRequest(sender);
+//    }
+//
+//    @PutMapping(path = "/removeFriend/{removerId}/{removeeId}")
+//    public void removeFriend(@PathVariable int removerId, @PathVariable int removeeId) {
+//        User remover = userRepository.findById(removerId);
+//        User removee = userRepository.findById(removeeId);
+//        remover.removeFriend(removee);
+//    }
+//
+//    @PutMapping(path = "/rejectFriendRequest/{rejectorId}/{rejecteeId}")
+//    public void rejectFriendRequest(@PathVariable int rejectorId, @PathVariable int rejecteeId) {
+//        User rejector = userRepository.findById(rejectorId);
+//        User rejectee = userRepository.findById(rejecteeId);
+//        rejector.rejectFriendRequest(rejectee);
+//    }
 }
