@@ -23,6 +23,9 @@ public class User {
      */
 //    private List<User> pendingFriends;
 
+    public User(){
+    }
+
     /**
      * Constructor to initialize a new user with a specified name and password.
      * New users have an empty friends and pendingFriends lists.
@@ -36,10 +39,7 @@ public class User {
 //        pendingFriends = new ArrayList<User>();
     }
 
-    public User() {
-        name = "Jimbo";
-        password = "password7676";
-    }
+
 
     protected int getId() {
         return id;
@@ -53,19 +53,19 @@ public class User {
         return name;
     }
 
-    /**
-     * Method to update this user's username.
-     * @param name - String of requested username to update to. The argument 'name'
-     *             must be available and different from the current username.
-     * @return String message indicating success or failure.
-     */
-    protected String setName(String name) {
-        if(this.name.equals(name)){
-            return "Username is already: " + name + ". Please specify a different name to update.";
-        }
-        this.name = name;
-        return "Username updated to: " + name + ".";
-    }
+//    /**
+//     * Method to update this user's username.
+//     * @param name - String of requested username to update to. The argument 'name'
+//     *             must be available and different from the current username.
+//     * @return String message indicating success or failure.
+//     */
+//    protected String setName(String name) {
+//        if(this.name.equals(name)){
+//            return "Username is already: " + name + ". Please specify a different name to update.";
+//        }
+//        this.name = name;
+//        return "Username updated to: " + name + ".";
+//    }
 
     protected String getPassword() {
         return password;
@@ -77,16 +77,16 @@ public class User {
      *             must be at least 8 characters and be different from the current username.
      * @return String message indicating success or failure.
      */
-    protected String setPassword(String password) {
-        if(this.password.equals(password)){
-            return "New password matches current password. Please specify a different password to update.";
-        }
-        else if(password.length() < 8){
-            return "Password must be at least 8 characters.";
-        }
-        this.password = password;
-        return "Password updated.";
-    }
+//    protected String setPassword(String password) {
+//        if(this.password.equals(password)){
+//            return "New password matches current password. Please specify a different password to update.";
+//        }
+//        else if(password.length() < 8){
+//            return "Password must be at least 8 characters.";
+//        }
+//        this.password = password;
+//        return "Password updated.";
+//    }
 
     /**
      * Admin method to set list of friends to a specific list of users.
