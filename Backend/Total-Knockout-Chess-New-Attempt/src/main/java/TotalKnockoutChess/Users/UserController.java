@@ -2,7 +2,6 @@ package TotalKnockoutChess.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -28,7 +27,7 @@ public class UserController {
         }
         for (User u : userRepository.findAll()) {
             if (u.getName().equals(user.getName())) {
-                return failure;
+                    return failure;
             }
         }
         userRepository.save(user);
