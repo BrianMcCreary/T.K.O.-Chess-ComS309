@@ -12,7 +12,7 @@
         android:theme="@style/Theme.TKO_Chess"
         tools:targetApi="31">
         <activity
-            android:name=".LogIn"
+            android:name=".LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
