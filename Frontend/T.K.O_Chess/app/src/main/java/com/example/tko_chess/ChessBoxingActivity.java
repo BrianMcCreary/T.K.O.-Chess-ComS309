@@ -1,2 +1,4 @@
-package com.example.tko_chess;public class ChessBoxingActivity {
+package com.example.tko_chess;
+
+public class ChessBoxingActivity {
 }

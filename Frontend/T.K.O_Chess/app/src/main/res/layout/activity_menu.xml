@@ -7,7 +7,7 @@
     android:background="@color/dark_grey">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/toChessbtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="113dp"
@@ -20,18 +20,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/toTKOChessbtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Play T.K.O. Chess"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/toChessbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/toBoxingbtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="113dp"
@@ -41,7 +41,7 @@
         android:text="Box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/toChessbtn" />
 
     <ImageView
         android:id="@+id/imageView"
