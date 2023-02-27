@@ -16,12 +16,12 @@ public class User {
     private String name;
     private String password;
 
-    private List<User> friends;
+//    private List<User> friends;
 
     /**
      * List of this users incoming friend requests. User can accept or deny these requests.
      */
-    private List<User> pendingFriends;
+//    private List<User> pendingFriends;
 
     /**
      * Constructor to initialize a new user with a specified name and password.
@@ -32,8 +32,13 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        friends = new ArrayList<User>();
-        pendingFriends = new ArrayList<User>();
+//        friends = new ArrayList<User>();
+//        pendingFriends = new ArrayList<User>();
+    }
+
+    public User() {
+        name = "Jimbo";
+        password = "password7676";
     }
 
     protected int getId() {
@@ -87,43 +92,43 @@ public class User {
      * Admin method to set list of friends to a specific list of users.
      * @param friends - list of friends to be set.
      */
-    protected void setFriends(List<User> friends) {
-        this.friends = friends;
-        for (User f : friends) {
-            f.friends.add(this);
-        }
-    }
-
-    protected void sendFriendRequest(User friend) {
-        friend.pendingFriends.add(this);
-    }
-
-    protected void acceptFriendRequest(User friend) {
-        if (pendingFriends.contains(friend)) {
-            friends.add(friend);
-            pendingFriends.remove(friend);
-            friend.friends.add(this);
-        }
-    }
-
-    protected void rejectFriendRequest(User friend){
-        if (pendingFriends.contains(friend)) {
-            pendingFriends.remove(friend);
-        }
-    }
-
-    protected void removeFriend(User friend) {
-        if (friends.contains(friend)) {
-            friends.remove(friend);
-            friend.friends.remove(this);
-        }
-    }
-
-    protected List<User> getPendingFriends() {
-        return pendingFriends;
-    }
-
-    protected List<User> getFriends() {
-        return friends;
-    }
+//    protected void setFriends(List<User> friends) {
+//        this.friends = friends;
+//        for (User f : friends) {
+//            f.friends.add(this);
+//        }
+//    }
+//
+//    protected void sendFriendRequest(User friend) {
+//        friend.pendingFriends.add(this);
+//    }
+//
+//    protected void acceptFriendRequest(User friend) {
+//        if (pendingFriends.contains(friend)) {
+//            friends.add(friend);
+//            pendingFriends.remove(friend);
+//            friend.friends.add(this);
+//        }
+//    }
+//
+//    protected void rejectFriendRequest(User friend){
+//        if (pendingFriends.contains(friend)) {
+//            pendingFriends.remove(friend);
+//        }
+//    }
+//
+//    protected void removeFriend(User friend) {
+//        if (friends.contains(friend)) {
+//            friends.remove(friend);
+//            friend.friends.remove(this);
+//        }
+//    }
+//
+//    protected List<User> getPendingFriends() {
+//        return pendingFriends;
+//    }
+//
+//    protected List<User> getFriends() {
+//        return friends;
+//    }
 }
