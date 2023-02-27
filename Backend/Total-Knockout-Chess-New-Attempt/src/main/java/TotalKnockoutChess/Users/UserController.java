@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping(path = "/users")
     public @ResponseBody String createUser(@RequestBody User user) {
-        if (user == null || user.getName().equals(null)) {
+        if (user == null || user.getName().length() <= 0) {
             return failure;
         }
         if (user.getPassword().length() < 8) {
