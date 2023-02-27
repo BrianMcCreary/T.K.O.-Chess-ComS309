@@ -2,7 +2,6 @@ package TotalKnockoutChess.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,18 +18,20 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    public String createUser(@RequestBody User user) {
+    public @ResponseBody String createUser(@RequestBody User user) {
         if (user == null || user.getName().length() <= 0) {
             return failure;
         }
         if (user.getPassword().length() < 8) {
             return failure;
         }
-//        for (User u : userRepository.findAll()) {
-//            if (u.getName().equals(user.getName())) {
-//                return failure;
-//            }
-//        }
+
+        for (User u : userRepository.findAll()) {
+            if (u.getName().equals(user.getName())) {
+                    return failure;
+            }
+        }
+
         userRepository.save(user);
         return success;
     }
