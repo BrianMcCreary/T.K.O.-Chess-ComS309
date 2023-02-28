@@ -34,6 +34,17 @@ public class UserController {
         return success;
     }
 
+    @GetMapping(path = "/users/getByName/{username}")
+    public User getUserByName(@PathVariable String username) {
+        List<User> userList = userRepository.findAll();
+        for (User u : userList) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
     @GetMapping(path = "/users/{id}")
     public User getUserById(@PathVariable int id) {
         return userRepository.findById(id);
