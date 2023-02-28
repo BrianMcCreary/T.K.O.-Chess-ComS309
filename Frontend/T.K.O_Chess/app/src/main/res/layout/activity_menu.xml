@@ -6,109 +6,124 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey">
 
-    <Button
-        android:id="@+id/toChessbtn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="113dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="214dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Play Chess"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/toTKOChessbtn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Play T.K.O. Chess"
-        app:layout_constraintBottom_toTopOf="@+id/toChessbtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/toBoxingbtn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="113dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Box"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toChessbtn" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_settings" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logout" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="105dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_friends" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_profile" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="266dp"
-        android:layout_height="345dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="410dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="318dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="354dp"
+        android:id="@+id/TKOChessText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Total Knockout Chess"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/LogoImageView"
+        app:layout_constraintStart_toStartOf="@+id/LogoImageView"
+        app:layout_constraintTop_toBottomOf="@+id/LogoImageView" />
+
+    <Button
+        android:id="@+id/toChessbtn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Play Chess"
+        app:layout_constraintEnd_toEndOf="@+id/toTKOChessbtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/toTKOChessbtn"
+        app:layout_constraintTop_toBottomOf="@+id/toTKOChessbtn" />
+
+    <Button
+        android:id="@+id/toTKOChessbtn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Play T.K.O. Chess"
+        app:layout_constraintEnd_toEndOf="@+id/TKOChessText"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="@+id/TKOChessText"
+        app:layout_constraintTop_toBottomOf="@+id/TKOChessText" />
+
+    <Button
+        android:id="@+id/toTKObtn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Play T.K.O"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/toChessbtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/toChessbtn"
+        app:layout_constraintTop_toBottomOf="@+id/toChessbtn"
+        app:layout_constraintVertical_bias="0.038" />
+
+    <ImageView
+        android:id="@+id/LogoImageView"
+        android:layout_width="266dp"
+        android:layout_height="345dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="NotSibling" />
+
+    <ImageButton
+        android:id="@+id/LogoutBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="19dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/LogoImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Logs user out and takes user to login screen."
+        app:srcCompat="@drawable/ic_logout" />
+
+    <ImageButton
+        android:id="@+id/SettingsBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LogoImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Takes user to settings."
+        app:srcCompat="@drawable/ic_settings" />
+
+    <ImageButton
+        android:id="@+id/ProfileBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/SettingsBtn"
+        app:layout_constraintStart_toStartOf="@+id/SettingsBtn"
+        app:layout_constraintTop_toBottomOf="@+id/SettingsBtn"
+        android:contentDescription="Takes user to view their profile."
+        app:srcCompat="@drawable/ic_profile" />
+
+    <ImageButton
+        android:id="@+id/FriendsBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/ProfileBtn"
+        app:layout_constraintStart_toStartOf="@+id/ProfileBtn"
+        app:layout_constraintTop_toBottomOf="@+id/ProfileBtn"
+        android:contentDescription="Takes user to friends page."
+        app:srcCompat="@drawable/ic_friends" />
 
 </android.support.constraint.ConstraintLayout>

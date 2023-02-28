@@ -36,7 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        Boxing = findViewById(R.id.toBoxingbtn);
+        Boxing = findViewById(R.id.toTKObtn);
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
