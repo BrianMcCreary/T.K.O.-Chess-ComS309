@@ -19,17 +19,17 @@ public class UserController {
 
     @PostMapping(path = "/users")
     public String createUser(@RequestBody User user) {
-//        if (user == null || user.getUsername().length() <= 0) {
-//            return failure;
-//        }
-//        if (user.getPassword().length() < 8) {
-//            return failure;
-//        }
-//        for (User u : userRepository.findAll()) {
-//            if (u.getUsername().equals(user.getUsername())) {
-//                    return failure;
-//            }
-//        }
+        if (user == null || user.getUsername().length() <= 0) {
+            return failure;
+        }
+        if (user.getPassword().length() < 8) {
+            return failure;
+        }
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(user.getUsername())) {
+                    return failure;
+            }
+        }
         userRepository.save(user);
         return success;
     }
@@ -49,26 +49,30 @@ public class UserController {
         return userRepository.findById(id).getPassword();
     }
 
-//    @PutMapping(path = "/users/name/{id}")
-//    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam String name) {
-//        for (User u : userRepository.findAll()) {
-//            if (u.getUsername().equals(name)) {
-//                return failure;
-//            }
-//        }
-//        System.out.println(userRepository.findById(id).setUsername(name));
-//        return success;
-//    }
+    @PutMapping(path = "/users/name/{id}")
+    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam (value="username", required=true) String username) {
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                return "Username is already: " + username + ". Please specify a different name to update.";
+            }
+        }
+        userRepository.findById(id).setUsername(username);
+        userRepository.flush();
+        return "Username updated to: " + userRepository.findById(id).getUsername() + ".";
+    }
 
-//    @PutMapping(path = "/users/password/{id}")
-//    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
-//        String message = userRepository.findById(id).setPassword(password);
-//        if (message.equals("Password updated.")) {
-//            return success;
-//        }
-//        System.out.println(message);
-//        return failure;
-//    }
+    @PutMapping(path = "/users/password/{id}")
+    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
+        if (userRepository.findById(id).getPassword().equals(password)) {
+            return "New password matches current password. Please specify a different password to update.";
+        }
+        else if(password.length() < 8){
+            return "Password must be at least 8 characters.";
+        }
+        userRepository.findById(id).setPassword(password);
+        userRepository.flush();
+        return "Password updated.";
+    }
 
 //    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
 //    public void sendFriendRequest(@PathVariable int fromId, @PathVariable int toId) {
