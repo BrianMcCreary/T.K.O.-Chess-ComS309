@@ -13,7 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String username;
     private String password;
 
 //    private List<User> friends;
@@ -26,45 +26,40 @@ public class User {
     /**
      * Constructor to initialize a new user with a specified name and password.
      * New users have an empty friends and pendingFriends lists.
-     * @param name - desired username
+     * @param username - desired username
      * @param password - desired password. Must be at least 8 characters long
      */
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
 //        friends = new ArrayList<User>();
 //        pendingFriends = new ArrayList<User>();
     }
 
     public User() {
-        name = "Jimbo";
-        password = "password7676";
+        this.username = "jimbo";
+        this.password = "password675";
     }
 
-    protected int getId() {
+    public int getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    protected String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * Method to update this user's username.
-     * @param name - String of requested username to update to. The argument 'name'
+     * @param username - String of requested username to update to. The argument 'name'
      *             must be available and different from the current username.
-     * @return String message indicating success or failure.
      */
-    protected String setName(String name) {
-        if(this.name.equals(name)){
-            return "Username is already: " + name + ". Please specify a different name to update.";
-        }
-        this.name = name;
-        return "Username updated to: " + name + ".";
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     protected String getPassword() {
@@ -77,15 +72,17 @@ public class User {
      *             must be at least 8 characters and be different from the current username.
      * @return String message indicating success or failure.
      */
-    protected String setPassword(String password) {
-        if(this.password.equals(password)){
-            return "New password matches current password. Please specify a different password to update.";
-        }
-        else if(password.length() < 8){
-            return "Password must be at least 8 characters.";
-        }
+    protected void setPassword(String password) {
         this.password = password;
-        return "Password updated.";
+
+//        if(this.password.equals(password)){
+//            return "New password matches current password. Please specify a different password to update.";
+//        }
+//        else if(password.length() < 8){
+//            return "Password must be at least 8 characters.";
+//        }
+//        this.password = password;
+//        return "Password updated.";
     }
 
     /**

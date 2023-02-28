@@ -18,18 +18,18 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    public @ResponseBody String createUser(@RequestBody User user) {
-        if (user == null || user.getName().length() <= 0) {
-            return failure;
-        }
-        if (user.getPassword().length() < 8) {
-            return failure;
-        }
-        for (User u : userRepository.findAll()) {
-            if (u.getName().equals(user.getName())) {
-                    return failure;
-            }
-        }
+    public String createUser(@RequestBody User user) {
+//        if (user == null || user.getUsername().length() <= 0) {
+//            return failure;
+//        }
+//        if (user.getPassword().length() < 8) {
+//            return failure;
+//        }
+//        for (User u : userRepository.findAll()) {
+//            if (u.getUsername().equals(user.getUsername())) {
+//                    return failure;
+//            }
+//        }
         userRepository.save(user);
         return success;
     }
@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping(path = "/users/name/{id}")
     public String getUserName(@PathVariable int id) {
-        return userRepository.findById(id).getName();
+        return userRepository.findById(id).getUsername();
     }
 
     @GetMapping(path = "/users/password/{id}")
@@ -49,26 +49,26 @@ public class UserController {
         return userRepository.findById(id).getPassword();
     }
 
-    @PutMapping(path = "/users/name/{id}")
-    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam String name) {
-        for (User u : userRepository.findAll()) {
-            if (u.getName().equals(name)) {
-                return failure;
-            }
-        }
-        System.out.println(userRepository.findById(id).setName(name));
-        return success;
-    }
+//    @PutMapping(path = "/users/name/{id}")
+//    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam String name) {
+//        for (User u : userRepository.findAll()) {
+//            if (u.getUsername().equals(name)) {
+//                return failure;
+//            }
+//        }
+//        System.out.println(userRepository.findById(id).setUsername(name));
+//        return success;
+//    }
 
-    @PutMapping(path = "/users/password/{id}")
-    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
-        String message = userRepository.findById(id).setPassword(password);
-        if (message.equals("Password updated.")) {
-            return success;
-        }
-        System.out.println(message);
-        return failure;
-    }
+//    @PutMapping(path = "/users/password/{id}")
+//    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
+//        String message = userRepository.findById(id).setPassword(password);
+//        if (message.equals("Password updated.")) {
+//            return success;
+//        }
+//        System.out.println(message);
+//        return failure;
+//    }
 
 //    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
 //    public void sendFriendRequest(@PathVariable int fromId, @PathVariable int toId) {
