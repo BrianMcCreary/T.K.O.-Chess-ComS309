@@ -38,8 +38,6 @@ public class User {
     }
 
     public User() {
-        this.username = "jimbo";
-        this.password = "password675";
     }
 
     public int getId() {
@@ -63,7 +61,7 @@ public class User {
         this.username = username;
     }
 
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -73,7 +71,7 @@ public class User {
      *             must be at least 8 characters and be different from the current username.
      * @return String message indicating success or failure.
      */
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -81,7 +79,7 @@ public class User {
      * Admin method to set list of friends to a specific list of users.
      * @param friends - list of friends to be set.
      */
-//    protected void setFriends(List<User> friends) {
+//    public void setFriends(List<User> friends) {
 //        this.friends = friends;
 //        for (User f : friends) {
 //            f.friends.add(this);
@@ -113,11 +111,11 @@ public class User {
 //        }
 //    }
 //
-//    protected List<User> getPendingFriends() {
+//    public List<User> getPendingFriends() {
 //        return pendingFriends;
 //    }
 //
-//    protected List<User> getFriends() {
+//    public List<User> getFriends() {
 //        return friends;
 //    }
 }
