@@ -2,10 +2,17 @@ package com.example.tko_chess;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+import com.example.tko_chess.Tile;
 
 public final class chessboard extends View {
     private static final String TAG = chessboard.class.getSimpleName();
@@ -32,7 +39,7 @@ public final class chessboard extends View {
 
     private void buildTiles() {
         for(int i = 0; i < collumns; i++){
-            for(int j = 0; i < rows; j++){
+            for(int j = 0; j < rows; j++){
                 mTiles[i][j] = new Tile(i,j);
             }
         }
@@ -43,14 +50,14 @@ public final class chessboard extends View {
         final int width = getWidth();
         final int height = getHeight();
 
-        this.squareSize = Math.min(getSquareSizeWidth(width), getSquareSizeHeight(height));
+        this.squareSize = Math.min(getWidth(width), getHeight(height));
 
         for(int i = 0; i < collumns; i++){
             for(int j = 0; j < rows; j++){
                 final int xCoordinate = getXCoordinate(i);
                 final int yCoordinate = getYCoordinate(j);
 
-                final Rect tileRect = new Rect(xCoordinate, yCoordinate, xCoordinate + squareSize, yCoordinate + squareSize);
+                final Rect tileRect = new Rect(xCoordinate, yCoordinate, (xCoordinate + squareSize), (yCoordinate + squareSize);
                 mTiles[i][j].setTileRect(tileRect);
                 mTiles[i][j].draw(canvas);
             }
@@ -73,19 +80,15 @@ public final class chessboard extends View {
         return true;
     }
 
-    private int getYCoordinate(final int Y) {
-        return y0 + squareSize * (flipped ? Y : 7 - Y);
-    }
+    private int getYCoordinate(final int Y) { return y0 + squareSize * (flipped ? Y : 7 - Y);}
 
-    private int getXCoordinate(final int X) {
-        return x0 + squareSize * (flipped ? 7 - X : X);
-    }
+    private int getXCoordinate(final int X) { return x0 + squareSize * (flipped ? 7 - X : X);}
 
-    private int getSquareSizeHeight(int height) {
+    private int getHeight(int height) {
         return height / 8;
     }
 
-    private int getSquareSizeWidth(int width) {
+    private int getWidth(int width) {
         return width / 8;
     }
 

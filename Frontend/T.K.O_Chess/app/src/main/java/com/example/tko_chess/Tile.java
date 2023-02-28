@@ -42,7 +42,6 @@ public final class Tile {
     }
 
     public String getRowString() {
-        // To get the actual row, add 1 since 'row' is 0 indexed.
         return String.valueOf(row + 1);
     }
 
