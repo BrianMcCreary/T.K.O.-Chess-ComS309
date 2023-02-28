@@ -39,11 +39,14 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+
+
         //Login button that takes users to main menu after inputting a username and password
         Login = (Button) findViewById(R.id.LoginButton);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Text fields for users to enter username/password for their account
                 Username = (EditText) findViewById(R.id.UsernameText);
                 Password = (EditText) findViewById(R.id.PasswordText);
