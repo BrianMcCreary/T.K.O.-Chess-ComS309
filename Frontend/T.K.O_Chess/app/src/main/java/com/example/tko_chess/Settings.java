@@ -1,4 +1,6 @@
 package com.example.tko_chess;
 
-public class Settings {
+import android.support.v7.app.AppCompatActivity;
+
+public class Settings extends AppCompatActivity {
 }

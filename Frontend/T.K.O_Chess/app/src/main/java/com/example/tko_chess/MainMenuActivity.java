@@ -39,6 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -47,6 +48,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -56,6 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, LogInActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -65,6 +68,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, Settings.class);
+                startActivity(intent);
             }
         });
 
@@ -74,6 +78,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, Profiles.class);
+                startActivity(intent);
             }
         });
 
@@ -83,6 +88,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, Friends.class);
+                startActivity(intent);
             }
         });
         }

@@ -1,4 +1,6 @@
 package com.example.tko_chess;
 
-public class BoxingActivity {
+import android.support.v7.app.AppCompatActivity;
+
+public class BoxingActivity extends AppCompatActivity {
 }

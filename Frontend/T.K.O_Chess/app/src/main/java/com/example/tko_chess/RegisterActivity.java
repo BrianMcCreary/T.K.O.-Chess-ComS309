@@ -1,4 +1,7 @@
 package com.example.tko_chess;
 
-public class RegisterActivity {
+import android.support.v7.app.AppCompatActivity;
+
+public class RegisterActivity extends AppCompatActivity {
+
 }

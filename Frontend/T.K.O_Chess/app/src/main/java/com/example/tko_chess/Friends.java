@@ -1,4 +1,6 @@
 package com.example.tko_chess;
 
-public class Friends {
+import android.support.v7.app.AppCompatActivity;
+
+public class Friends extends AppCompatActivity {
 }
