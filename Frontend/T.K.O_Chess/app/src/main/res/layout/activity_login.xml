@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    tools:context=".LogInActivity">
+
+    <ImageView
+        android:id="@+id/ChessBoxingLogo"
+        android:layout_width="309dp"
+        android:layout_height="357dp"
+        android:adjustViewBounds="false"
+        android:background="#00404040"
+        android:backgroundTint="#5C5C5C"
+        android:cropToPadding="false"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/WelcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Welcome"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/LogInText"
+        app:layout_constraintEnd_toEndOf="@+id/ChessBoxingLogo"
+        app:layout_constraintStart_toStartOf="@+id/ChessBoxingLogo"
+        app:layout_constraintTop_toBottomOf="@+id/ChessBoxingLogo"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/LogInText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Log In:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/UsernameText"
+        app:layout_constraintEnd_toEndOf="@+id/WelcomeText"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/WelcomeText"
+        app:layout_constraintTop_toBottomOf="@+id/WelcomeText" />
+
+    <EditText
+        android:id="@+id/UsernameText"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/PasswordText"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LogInText" />
+
+    <EditText
+        android:id="@+id/PasswordText"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UsernameText" />
+
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/Register2Text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordText"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/Register1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="10dp"
+        android:text="Don't have an account? Click "
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/Register2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="here"
+        android:textColor="@color/soft_blue"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Register1Text"
+        app:layout_constraintStart_toEndOf="@+id/Register1Text"
+        app:layout_constraintTop_toTopOf="@+id/Register1Text" />
+
+    <TextView
+        android:id="@+id/Register3Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="to register."
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Register1Text"
+        app:layout_constraintStart_toEndOf="@+id/Register2Text"
+        app:layout_constraintTop_toTopOf="@+id/Register1Text" />
+
+    <Button
+        android:id="@+id/RegisterButton"
+        android:layout_width="25dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="3dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/Register2Text"
+        app:layout_constraintStart_toStartOf="@+id/Register2Text"
+        app:layout_constraintTop_toTopOf="@+id/Register2Text"
+        tools:visibility="invisible" />
+
+</android.support.constraint.ConstraintLayout>

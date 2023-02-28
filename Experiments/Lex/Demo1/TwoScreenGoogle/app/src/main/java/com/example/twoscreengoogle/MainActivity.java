@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         Button secondActivityBtn = (Button) findViewById(R.id.secondActivityBtn);
         secondActivityBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 if (goToGoogle.resolveActivity(getPackageManager()) != null) {
                     startActivity(goToGoogle);
                 }
-=======
+
         Button LoginBtn = (Button) findViewById(R.id.LoginBtn);
         LoginBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 if (goToYoutube.resolveActivity(getPackageManager()) != null) {
                    startActivity(goToYoutube);
                 }*/
->>>>>>> 96080ae939e775a09e6c667b9910c19a28a95957
             }
         });
 

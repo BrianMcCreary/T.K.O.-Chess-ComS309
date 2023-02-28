@@ -12,7 +12,7 @@
         android:theme="@style/Theme.TKO_Chess"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainMenuActivity" >
+        </activity>
+
+        <activity
+            android:name=".BoxingActivity">
+        </activity>
+
+        <activity
+            android:name=".ChessActivity">
+        </activity>
+
+        <activity
+            android:name=".ChessBoxingActivity">
+        </activity>
+
+        <activity
+            android:name=".Friends">
+        </activity>
+
+        <activity
+            android:name=".Settings">
+        </activity>
+
+        <activity
+            android:name=".Profiles">
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
