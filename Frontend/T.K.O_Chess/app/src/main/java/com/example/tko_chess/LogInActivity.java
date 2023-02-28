@@ -3,14 +3,24 @@ package com.example.tko_chess;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.example.tko_chess.ultils.Const;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -43,14 +53,19 @@ public class LogInActivity extends AppCompatActivity {
                 String username = Username.getText().toString();
                 String password = Username.getText().toString();
 
-                JSONObject user = new JSONObject();
-                try {
-                    user.put("name", Username.getText());
-                    user.put("password", Password.getText());
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //Checks to see if there is a user that matches the input username and login.
+                JsonObjectRequest userObjectReq = new JsonObjectRequest(Request.Method.GET, Const.URL_SERVER_AN5, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
 
                 Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                 startActivity(intent);
