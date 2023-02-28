@@ -57,7 +57,7 @@ public final class chessboard extends View {
                 final int xCoordinate = getXCoordinate(i);
                 final int yCoordinate = getYCoordinate(j);
 
-                final Rect tileRect = new Rect(xCoordinate, yCoordinate, (xCoordinate + squareSize), (yCoordinate + squareSize);
+                final Rect tileRect = new Rect(xCoordinate, yCoordinate, (xCoordinate + squareSize), (yCoordinate + squareSize));
                 mTiles[i][j].setTileRect(tileRect);
                 mTiles[i][j].draw(canvas);
             }
