@@ -76,12 +76,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="19dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Logs user out and takes user to login screen."
         android:padding="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/LogoImageView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Logs user out and takes user to login screen."
         app:srcCompat="@drawable/ic_logout" />
 
     <ImageButton
@@ -92,12 +93,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Takes user to settings."
         android:padding="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/LogoImageView"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Takes user to settings."
         app:srcCompat="@drawable/ic_settings" />
 
     <ImageButton

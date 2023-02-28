@@ -10,11 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e152a83a-6395-4a94-aa7c-4b94d26585aa" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_register.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
