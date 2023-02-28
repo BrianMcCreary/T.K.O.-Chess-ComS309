@@ -25,6 +25,30 @@
             android:name=".MainMenuActivity" >
         </activity>
 
+        <activity
+            android:name=".BoxingActivity">
+        </activity>
+
+        <activity
+            android:name=".ChessActivity">
+        </activity>
+
+        <activity
+            android:name=".ChessBoxingActivity">
+        </activity>
+
+        <activity
+            android:name=".Friends">
+        </activity>
+
+        <activity
+            android:name=".Settings">
+        </activity>
+
+        <activity
+            android:name=".Profiles">
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
