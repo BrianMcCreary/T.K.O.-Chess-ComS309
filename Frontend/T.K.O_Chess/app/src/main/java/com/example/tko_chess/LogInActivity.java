@@ -77,15 +77,20 @@ public class LogInActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 String temp;
-
+                                //Get confirmation/failure of login message from backend. Throw error if response is not string
                                 try {
                                     temp = (String) response.get("message");
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
+                                //If true, take user to main menu screen.
                                 if (temp.equals("true")) {
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
+                                } else
+                                //else, show error message
+                                if (temp.equals("false")) {
+
                                 }
                             }
                         }, new Response.ErrorListener() {

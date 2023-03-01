@@ -35,16 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
-		//Text fields for users to enter username/password for their account
-		RegUsername = (EditText) findViewById(R.id.RegUsernameText);
-		RegPassword = (EditText) findViewById(R.id.RegPasswordText);
-		ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);
-		PasswordMatch = (TextView) findViewById(R.id.PasswordMatchText);
 
-		//Strings containing username/password. Used to fill username and password fields of a user object.
-		String username = RegUsername.getText().toString();
-		String password = RegPassword.getText().toString();
-		String confirmPassword = ConfirmPassword.getText().toString();
 
 		//toLogin button that takes user back to login screen.
 		toLogin = (Button) findViewById(R.id.toLoginBtn);
@@ -55,17 +46,31 @@ public class RegisterActivity extends AppCompatActivity {
 			}
 		});
 
+
+
 		//Register button that creates a new user in remote server
 		Register = (Button) findViewById(R.id.RegisterBtn);
 		Register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
+				//Text fields for users to enter username/password for their account
+				RegUsername = (EditText) findViewById(R.id.RegUsernameText);
+				RegPassword = (EditText) findViewById(R.id.RegPasswordText);
+				ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);
+				PasswordMatch = (TextView) findViewById(R.id.PasswordMatchText);
+
+				//Strings containing username/password. Used to fill username and password fields of a user object.
+				String username = RegUsername.getText().toString();
+				String password = RegPassword.getText().toString();
+				String confirmPassword = ConfirmPassword.getText().toString();
+
 				//Creates a new user JsonObject that will be sent to the remote server
 				JSONObject newUser = new JSONObject();
 				try {
 					newUser.put("username", RegUsername.getText());
 					newUser.put("password", RegPassword.getText());
+					newUser.put("confirmPassword", ConfirmPassword.getText());
 				}
 				catch (JSONException e) {
 					e.printStackTrace();
@@ -81,26 +86,33 @@ public class RegisterActivity extends AppCompatActivity {
 							public void onResponse(JSONObject response) {
 								String temp;
 
-								//Try catch for the .get method.
+								//Get confirmation/failure of registration message from backend. Throw error if response is not string
 								try {
 									temp = (String) response.get("message");
 								} catch (JSONException e) {
 									throw new RuntimeException(e);
 								}
 
-								//Register and login the new user or print out error message
+								//If username/password met all requirements, take user to main menu
 								if (temp.equals("success")) {
+									PasswordMatch.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
-								} else
-								if (temp.equals("failure")) {
-									System.out.println("error");
+								}
+								//else, show error message
+								else {
+									try {
+										PasswordMatch.setText(response.get("message").toString());
+									} catch (JSONException e) {
+										throw new RuntimeException(e);
+									}
 								}
 							}
 						}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						System.out.println(error.toString());
+						PasswordMatch.setText("An error occured.");
 					}
 				});
 				queue.add(registerObjectReq);
