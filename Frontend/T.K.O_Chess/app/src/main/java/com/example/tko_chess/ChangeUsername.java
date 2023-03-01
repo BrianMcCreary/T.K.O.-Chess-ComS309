@@ -4,23 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 
-public class Friends extends AppCompatActivity {
+public class ChangeUsername extends AppCompatActivity {
 
-    ImageButton goBack;
+    Button goBack;
+    Button saveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+        setContentView(R.layout.activity_change_username);
 
-        goBack = findViewById(R.id.backBtn2);
+        goBack = findViewById(R.id.backBtn5);
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Friends.this, MainMenuActivity.class);
+                Intent intent = new Intent(ChangeUsername.this, Profiles.class);
                 startActivity(intent);
             }
         });

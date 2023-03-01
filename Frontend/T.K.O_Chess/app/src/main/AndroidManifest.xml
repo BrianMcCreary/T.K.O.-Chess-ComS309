@@ -49,6 +49,19 @@
             android:name=".Profiles">
         </activity>
 
+        <activity
+            android:name=".Profile_Editor">
+        </activity>
+
+        <activity
+            android:name=".ChangeUsername">
+        </activity>
+
+        <activity
+            android:name=".ChangePassword">
+        </activity>
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
