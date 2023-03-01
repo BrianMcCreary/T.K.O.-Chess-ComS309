@@ -1,0 +1,14 @@
+com/example/as1/BuildConfig.java
+ com.example.as1.BuildConfig
+com/example/as1/CounterActivity.java
+ com.example.as1.CounterActivity
+ com.example.as1.CounterActivity$1
+ com.example.as1.CounterActivity$2
+com/example/as1/MainActivity.java
+ com.example.as1.MainActivity
+ com.example.as1.MainActivity$1
+ com.example.as1.MainActivity$2
+com/example/as1/Profiles.java
+ com.example.as1.Profiles
+ com.example.as1.Profiles$1
+ com.example.as1.Profiles$2
