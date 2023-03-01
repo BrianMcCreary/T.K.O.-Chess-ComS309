@@ -89,37 +89,13 @@
         android:id="@+id/LoginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Already have an account?"
+        android:layout_marginBottom="5dp"
+        android:text="Back to"
         android:textColor="@color/white"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/LoginText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:text="Login"
-        android:textColor="@color/soft_blue"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginText"
-        app:layout_constraintStart_toEndOf="@+id/LoginText"
-        app:layout_constraintTop_toTopOf="@+id/LoginText" />
-
-    <Button
-        android:id="@+id/LoginBtn"
-        android:layout_width="32dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="3dp"
-        android:text="Button"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/LoginText"
-        app:layout_constraintStart_toEndOf="@+id/LoginText"
-        app:layout_constraintTop_toTopOf="@+id/LoginText"
-        tools:visibility="invisible" />
+        app:layout_constraintBottom_toTopOf="@+id/toLoginBtn"
+        app:layout_constraintEnd_toEndOf="@+id/toLoginBtn"
+        app:layout_constraintStart_toStartOf="@+id/toLoginBtn" />
 
     <TextView
         android:id="@+id/PasswordMatchText"
@@ -129,5 +105,17 @@
         android:textColor="#F44336"
         app:layout_constraintStart_toStartOf="@+id/ConfirmPasswordText"
         app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordText" />
+
+    <Button
+        android:id="@+id/toLoginBtn"
+        android:layout_width="60dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/very_light_grey"
+        android:text="Login"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

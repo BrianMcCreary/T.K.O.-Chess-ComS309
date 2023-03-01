@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
 import org.json.JSONException;
@@ -33,7 +35,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Register button that takes user to register page so they can make an account.
-        toRegister = (Button) findViewById(R.id.RegisterButton);
+        toRegister = (Button) findViewById(R.id.toRegisterBtn);
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +68,9 @@ public class LogInActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                //Create a Request Que for the JsonObjectRequest
+                RequestQueue queue = Volley.newRequestQueue(LogInActivity.this);
+
                 //Checks to see if there is a user that matches the input username and login.
                 JsonObjectRequest userObjectReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_LOGIN, user,
                         new Response.Listener<JSONObject>() {
@@ -86,9 +91,10 @@ public class LogInActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                                System.out.println(error.toString());
                             }
                         });
+                queue.add(userObjectReq);
             }
         });
 
