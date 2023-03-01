@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -24,6 +25,7 @@ import org.json.JSONArray;
 public class LogInActivity extends AppCompatActivity {
 
     EditText Username, Password;
+    TextView Temp;
     Button Login, toRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,31 @@ public class LogInActivity extends AppCompatActivity {
                 String username = Username.getText().toString();
                 String password = Username.getText().toString();
 
+                JSONObject user = new JSONObject();
+                try {
+                    user.put("username", Username.getText());
+                    user.put("password", Password.getText());
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 //Checks to see if there is a user that matches the input username and login.
-                JsonObjectRequest userObjectReq = new JsonObjectRequest(Request.Method.GET, Const.URL_SERVER_AN5, null,
+                JsonObjectRequest userObjectReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_LOGIN, user,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
+                                String temp;
 
+                                try {
+                                    temp = (String) response.get("message");
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                if (temp.equals("true")) {
+                                    Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
+                                    startActivity(intent);
+                                }
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -68,10 +89,6 @@ public class LogInActivity extends AppCompatActivity {
 
                             }
                         });
-
-                Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
-                startActivity(intent);
-
             }
         });
 

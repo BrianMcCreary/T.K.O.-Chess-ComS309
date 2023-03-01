@@ -137,4 +137,13 @@
         app:layout_constraintVertical_bias="1.0"
         tools:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="It worked!"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="377dp" />
+
 </android.support.constraint.ConstraintLayout>
