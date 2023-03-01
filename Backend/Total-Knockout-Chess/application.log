@@ -243,3 +243,29 @@ Caused by: java.lang.IllegalStateException: Cannot load driver class: com.mysql.
 2023-02-28 18:18:47.836  INFO 13388 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2023-02-28 18:18:47.837  INFO 13388 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-02-28 18:18:47.841  INFO 13388 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-02-28 18:25:03.355  INFO 22012 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-7SFDHRU with PID 22012 (E:\COMS309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by conno in E:\COMS309\1_an_5\Backend\Total-Knockout-Chess)
+2023-02-28 18:25:03.359  INFO 22012 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
+2023-02-28 18:25:03.925  INFO 22012 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-02-28 18:25:03.969  INFO 22012 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38 ms. Found 1 JPA repository interfaces.
+2023-02-28 18:25:04.456  INFO 22012 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-02-28 18:25:04.467  INFO 22012 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-28 18:25:04.467  INFO 22012 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-02-28 18:25:04.551  INFO 22012 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-02-28 18:25:04.551  INFO 22012 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1143 ms
+2023-02-28 18:25:04.699  INFO 22012 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-02-28 18:25:04.741  INFO 22012 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-28 18:25:04.781  WARN 22012 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-28 18:25:04.802  INFO 22012 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.23.Final
+2023-02-28 18:25:04.938  INFO 22012 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-28 18:25:05.043  INFO 22012 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-02-28 18:25:05.137  INFO 22012 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-02-28 18:25:05.138  INFO 22012 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-02-28 18:25:05.329  INFO 22012 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-02-28 18:25:05.349  INFO 22012 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2023-02-28 18:25:05.905  INFO 22012 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-28 18:25:05.913  INFO 22012 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-28 18:25:06.106  INFO 22012 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-02-28 18:25:06.114  INFO 22012 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 3.078 seconds (JVM running for 3.412)
+2023-02-28 18:25:11.325  INFO 22012 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-28 18:25:11.326  INFO 22012 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-02-28 18:25:11.326  INFO 22012 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
