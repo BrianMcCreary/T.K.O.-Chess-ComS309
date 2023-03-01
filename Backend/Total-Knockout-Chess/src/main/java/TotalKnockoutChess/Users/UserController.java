@@ -11,6 +11,8 @@ public class UserController {
 
     private final String success = "{\"message\":\"success\"}";
     private final String failure = "{\"message\":\"failure\"}";
+    private final String trueMessage = "{\"message\":\"true\"}";
+    private final String falseMessage = "{\"message\":\"false\"}";
 
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
@@ -46,13 +48,13 @@ public class UserController {
     }
 
     @PostMapping(path = "/users/login")
-    public @ResponseBody boolean login(@RequestBody User user) {
+    public @ResponseBody String login(@RequestBody User user) {
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
-                return true;
+                return trueMessage;
             }
         }
-        return false;
+        return falseMessage;
     }
 
     @GetMapping(path = "/users/{id}")
