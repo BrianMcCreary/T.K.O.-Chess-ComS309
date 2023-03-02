@@ -29,16 +29,6 @@ public class Profile_Editor extends AppCompatActivity{
             }
         });
 
-        save = findViewById(R.id.savebtn);
-
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile_Editor.this, Profiles.class); //needs to be changed to act like an actual save button
-                startActivity(intent);
-            }
-        });
-
         changeUser = findViewById(R.id.changeUserBtn);
 
         changeUser.setOnClickListener(new View.OnClickListener() {

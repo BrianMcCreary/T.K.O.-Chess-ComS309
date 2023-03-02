@@ -72,7 +72,7 @@
         android:id="@+id/editprofilebtn"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:background="@color/darker_blue"
+        android:background="@color/soft_blue"
         android:text="Edit Profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
