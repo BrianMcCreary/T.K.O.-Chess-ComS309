@@ -11,8 +11,6 @@ public class UserController {
 
     private final String success = "{\"message\":\"success\"}";
     private final String failure = "{\"message\":\"failure\"}";
-    private final String trueMessage = "{\"message\":\"true\"}";
-    private final String falseMessage = "{\"message\":\"false\"}";
 
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
@@ -29,32 +27,11 @@ public class UserController {
         }
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(user.getUsername())) {
-                    return failure;
+                return failure;
             }
         }
         userRepository.save(user);
         return success;
-    }
-
-    @GetMapping(path = "/users/getByName/{username}")
-    public User getUserByName(@PathVariable String username) {
-        List<User> userList = userRepository.findAll();
-        for (User u : userList) {
-            if (u.getUsername().equals(username)) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-    @PostMapping(path = "/users/login")
-    public @ResponseBody String login(@RequestBody User user) {
-        for (User u : userRepository.findAll()) {
-            if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
-                return trueMessage;
-            }
-        }
-        return falseMessage;
     }
 
     @GetMapping(path = "/users/{id}")
@@ -72,46 +49,29 @@ public class UserController {
         return userRepository.findById(id).getPassword();
     }
 
-    @PutMapping(path = "/users/name/{currentUsername}/{username}")
-    public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @RequestParam String password) {
+    @PutMapping(path = "/users/name/{id}")
+    public @ResponseBody String changeUserName(@PathVariable int id, @RequestParam (value="username", required=true) String username) {
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(username)) {
-                return failure;                         //username is taken
+                return "Username is already: " + username + ". Please specify a different name to update.";
             }
         }
-        for (User u : userRepository.findAll()) {
-            if (u.getUsername().equals(currentUsername)) {      //find current user
-                if (u.getPassword().equals(password)) {
-                    u.setUsername(username);            //if given password matches, change username
-                    userRepository.flush();
-                    return success;
-                }
-                else {
-                    return failure;     //if given password does not match, return failure
-                }
-            }
-        }
-        return failure;     //return failure if user isn't found
+        userRepository.findById(id).setUsername(username);
+        userRepository.flush();
+        return "Username updated to: " + userRepository.findById(id).getUsername() + ".";
     }
 
-    @PutMapping(path = "/users/password/{username}")
-    public @ResponseBody String changeUserPassword(@PathVariable String username, @RequestParam String password, @RequestParam String currentPassword) {
-        if (password.length() < 8) {
-            return failure;     //if password is too short return failure
+    @PutMapping(path = "/users/password/{id}")
+    public @ResponseBody String changeUserPassword(@PathVariable int id, @RequestParam String password) {
+        if (userRepository.findById(id).getPassword().equals(password)) {
+            return "New password matches current password. Please specify a different password to update.";
         }
-        for (User u : userRepository.findAll()) {       //find user
-            if (u.getUsername().equals(username)) {
-                if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly
-                    u.setPassword(password);            //change password
-                    userRepository.flush();
-                    return success;
-                }
-                else {
-                    return failure;     //if they entered their old password incorrectly, return failure
-                }
-            }
+        else if(password.length() < 8){
+            return "Password must be at least 8 characters.";
         }
-        return failure;     //return failure if user isn't found
+        userRepository.findById(id).setPassword(password);
+        userRepository.flush();
+        return "Password updated.";
     }
 
 //    @PutMapping(path = "/sendFriendRequest/{fromId}/{toId}")
@@ -152,3 +112,4 @@ public class UserController {
 //        rejector.rejectFriendRequest(rejectee);
 //    }
 }
+
