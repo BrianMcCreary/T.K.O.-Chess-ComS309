@@ -24,25 +24,12 @@
         app:srcCompat="@drawable/ic_backbtn" />
 
     <Button
-        android:id="@+id/savebtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="142dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="70dp"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Save Changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/ChangePasswordBtn"
         android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_marginStart="105dp"
         android:layout_marginEnd="106dp"
-        android:layout_marginBottom="320dp"
+        android:layout_marginBottom="280dp"
         android:background="@color/soft_blue"
         android:text="Change Password"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,8 +41,8 @@
         android:id="@+id/changeUserBtn"
         android:layout_width="200dp"
         android:layout_height="55dp"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="280dp"
         android:background="@color/soft_blue"
         android:text="Change Username"
         app:layout_constraintBottom_toTopOf="@+id/ChangePasswordBtn"

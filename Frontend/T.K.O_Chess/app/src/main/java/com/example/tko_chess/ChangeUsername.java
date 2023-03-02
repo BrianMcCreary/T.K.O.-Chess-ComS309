@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ChangeUsername extends AppCompatActivity {
 
-    Button goBack;
-    Button saveBtn;
+    ImageButton goBack;
+    Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,16 @@ public class ChangeUsername extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChangeUsername.this, Profiles.class);
+                startActivity(intent);
+            }
+        });
+
+        save = findViewById(R.id.savebtn2);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChangeUsername.this, Profiles.class); //needs to be changed to act like an actual save button
                 startActivity(intent);
             }
         });
