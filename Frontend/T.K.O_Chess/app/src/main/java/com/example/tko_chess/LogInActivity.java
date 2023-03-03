@@ -104,7 +104,7 @@ public class LogInActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 System.out.println(error.toString());
-                                LoginError.setText("An error occured.");
+                                LoginError.setText("An error occurred.");
                             }
                         });
                 queue.add(userObjectReq);

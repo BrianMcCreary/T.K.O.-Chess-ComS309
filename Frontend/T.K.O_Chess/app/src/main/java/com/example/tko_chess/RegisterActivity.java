@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						System.out.println(error.toString());
-						RegisterError.setText("An error occured.");
+						RegisterError.setText("An error occurred.");
 					}
 				});
 				queue.add(registerObjectReq);
