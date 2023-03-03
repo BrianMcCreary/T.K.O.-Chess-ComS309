@@ -9,4 +9,6 @@ public class Const {
 
     public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/name/";
 
+    public static final String URL_SERVER_CHANGEPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/users/password/";
+
 }

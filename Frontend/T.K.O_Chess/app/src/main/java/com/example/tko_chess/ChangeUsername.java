@@ -77,7 +77,7 @@ public class ChangeUsername extends AppCompatActivity {
                    RequestQueue queue = Volley.newRequestQueue(ChangeUsername.this);
 
 
-                   JsonObjectRequest changeUserRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_CHANGEUSERNAME + currentUsername + "/" + username, newUsername, new Response.Listener<JSONObject>() {
+                   JsonObjectRequest changeUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_CHANGEUSERNAME + currentUsername + "/" + username + "/" + password, null, new Response.Listener<JSONObject>() {
                        @Override
                        public void onResponse(JSONObject response) {
                            String temp;
@@ -89,8 +89,13 @@ public class ChangeUsername extends AppCompatActivity {
                            }
 
                            if(temp.equals("success")){
+                               newUser = findViewById(R.id.newUsername);
+                               String name = newUser.getText().toString();
                                Intent intent = new Intent(ChangeUsername.this, Profile_Editor.class);
+                               //Intent intent2 = new Intent(ChangeUsername.this, Profiles.class);
+                               //intent.putExtra("key1", name);
                                startActivity(intent);
+                               //startActivity(intent2);
                            }
                            else{
                                try{
