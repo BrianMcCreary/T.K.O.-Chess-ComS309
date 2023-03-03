@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class Profiles extends AppCompatActivity {
 
@@ -18,6 +19,12 @@ public class Profiles extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         goBack = findViewById(R.id.backBtn);
+
+        if(getIntent().hasExtra("key1")){
+            TextView username = (TextView)findViewById(R.id.name);
+            String s = getIntent().getExtras().getString("key1");
+            username.setText(s);
+        }
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
