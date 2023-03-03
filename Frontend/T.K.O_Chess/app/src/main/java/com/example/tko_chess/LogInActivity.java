@@ -83,8 +83,13 @@ public class LogInActivity extends AppCompatActivity {
                                 }
                                 //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
+                                    Username = findViewById(R.id.UsernameText);
+                                    String name = Username.getText().toString();
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
+                                    //Intent intent2 = new Intent(LogInActivity.this, Profiles.class);
+                                    //intent2.putExtra("key1", name);
+                                    //startActivity(intent2);
                                 }
                                 //else, show error message
                                 else {
@@ -105,6 +110,5 @@ public class LogInActivity extends AppCompatActivity {
                 queue.add(userObjectReq);
             }
         });
-
     }
 }
