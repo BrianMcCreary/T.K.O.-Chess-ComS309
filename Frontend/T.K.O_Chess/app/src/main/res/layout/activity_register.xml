@@ -98,11 +98,10 @@
         app:layout_constraintStart_toStartOf="@+id/toLoginBtn" />
 
     <TextView
-        android:id="@+id/PasswordMatchText"
+        android:id="@+id/RegisterErrorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Passwords do not match"
-        android:textColor="#F44336"
+        android:textColor="@color/error_orange"
         app:layout_constraintStart_toStartOf="@+id/ConfirmPasswordText"
         app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordText" />
 

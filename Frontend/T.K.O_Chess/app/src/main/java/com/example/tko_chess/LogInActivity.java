@@ -10,24 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class LogInActivity extends AppCompatActivity {
 
     EditText Username, Password;
-    TextView Temp;
+    TextView LoginError;
     Button Login, toRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,7 @@ public class LogInActivity extends AppCompatActivity {
                 //Text fields for users to enter username/password for their account
                 Username = (EditText) findViewById(R.id.UsernameText);
                 Password = (EditText) findViewById(R.id.PasswordText);
+                LoginError = (TextView) findViewById(R.id.LoginErrorText);
 
                 //Strings containing username/password. Used to check that user does exist in database.
                 String username = Username.getText().toString();
@@ -83,20 +81,25 @@ public class LogInActivity extends AppCompatActivity {
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
-                                //If true, take user to main menu screen.
+                                //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
-                                } else
+                                }
                                 //else, show error message
-                                if (temp.equals("false")) {
-
+                                else {
+                                    try {
+                                        LoginError.setText(response.get("message").toString());
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 }
                             }
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 System.out.println(error.toString());
+                                LoginError.setText("An error occured.");
                             }
                         });
                 queue.add(userObjectReq);

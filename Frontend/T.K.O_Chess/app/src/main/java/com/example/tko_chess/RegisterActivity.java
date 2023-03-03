@@ -3,31 +3,26 @@ package com.example.tko_chess;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
-import org.w3c.dom.Text;
 
 public class RegisterActivity extends AppCompatActivity {
 
 	EditText RegUsername, RegPassword, ConfirmPassword;
-	TextView PasswordMatch;
+	TextView RegisterError;
 	Button Register, toLogin;
 
 	@Override
@@ -58,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 				RegUsername = (EditText) findViewById(R.id.RegUsernameText);
 				RegPassword = (EditText) findViewById(R.id.RegPasswordText);
 				ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);
-				PasswordMatch = (TextView) findViewById(R.id.PasswordMatchText);
+				RegisterError = (TextView) findViewById(R.id.RegisterErrorText);
 
 				//Strings containing username/password. Used to fill username and password fields of a user object.
 				String username = RegUsername.getText().toString();
@@ -93,16 +88,16 @@ public class RegisterActivity extends AppCompatActivity {
 									throw new RuntimeException(e);
 								}
 
-								//If username/password met all requirements, take user to main menu
+								//If registration was "success", take user to main menu and clear error
 								if (temp.equals("success")) {
-									PasswordMatch.setText("");
+									RegisterError.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
 								}
 								//else, show error message
 								else {
 									try {
-										PasswordMatch.setText(response.get("message").toString());
+										RegisterError.setText(response.get("message").toString());
 									} catch (JSONException e) {
 										throw new RuntimeException(e);
 									}
@@ -112,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						System.out.println(error.toString());
-						PasswordMatch.setText("An error occured.");
+						RegisterError.setText("An error occured.");
 					}
 				});
 				queue.add(registerObjectReq);

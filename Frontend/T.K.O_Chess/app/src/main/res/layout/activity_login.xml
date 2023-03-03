@@ -71,7 +71,6 @@
         android:id="@+id/PasswordText"
         android:layout_width="210dp"
         android:layout_height="50dp"
-        android:layout_marginTop="4dp"
         android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="Password"
@@ -89,11 +88,12 @@
         android:id="@+id/LoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/toRegisterBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PasswordText"
         app:layout_constraintVertical_bias="0.5" />
@@ -122,5 +122,13 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/LoginErrorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/error_orange"
+        app:layout_constraintStart_toStartOf="@+id/PasswordText"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordText" />
 
 </android.support.constraint.ConstraintLayout>
