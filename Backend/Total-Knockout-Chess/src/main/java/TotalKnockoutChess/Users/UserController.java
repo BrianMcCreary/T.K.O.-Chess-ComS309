@@ -72,8 +72,8 @@ public class UserController {
         return userRepository.findById(id).getPassword();
     }
 
-    @PutMapping(path = "/users/name/{currentUsername}/{username}")
-    public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @RequestParam String password) {
+    @PutMapping(path = "/users/name/{currentUsername}/{username}/{password}")
+    public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @PathVariable String password) {
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(username)) {
                 return failure;                         //username is taken
@@ -94,8 +94,8 @@ public class UserController {
         return failure;     //return failure if user isn't found
     }
 
-    @PutMapping(path = "/users/password/{username}")
-    public @ResponseBody String changeUserPassword(@PathVariable String username, @RequestParam String password, @RequestParam String currentPassword) {
+    @PutMapping(path = "/users/password/{username}/{password}/{currentPassword}")
+    public @ResponseBody String changeUserPassword(@PathVariable String username, @PathVariable String password, @PathVariable String currentPassword) {
         if (password.length() < 8) {
             return failure;     //if password is too short return failure
         }
