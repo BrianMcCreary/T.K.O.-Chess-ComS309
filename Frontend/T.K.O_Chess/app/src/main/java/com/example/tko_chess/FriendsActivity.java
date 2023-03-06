@@ -6,21 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class Friends extends AppCompatActivity {
+public class FriendsActivity extends AppCompatActivity {
 
-    ImageButton goBack;
+    ImageButton FriendsToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        goBack = findViewById(R.id.backBtn2);
+        FriendsToMenu = findViewById(R.id.backBtn2);
 
-        goBack.setOnClickListener(new View.OnClickListener() {
+        FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Friends.this, MainMenuActivity.class);
+                Intent intent = new Intent(FriendsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });
