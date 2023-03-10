@@ -29,57 +29,57 @@
 
         <activity
             android:name=".MainMenuActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".RegisterActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".BoxingActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".ChessActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".ChessBoxingActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".FriendsActivity"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".Settings"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".Profiles"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".Profile_Editor"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".ChangeUsername"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
         <activity
             android:name=".ChangePassword"
-            tools:node="merge">
+            android:exported="false">
         </activity>
 
 
