@@ -28,47 +28,58 @@
         </activity>
 
         <activity
-            android:name=".MainMenuActivity" >
+            android:name=".MainMenuActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".RegisterActivity" >
+            android:name=".RegisterActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".BoxingActivity">
+            android:name=".BoxingActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".ChessActivity">
+            android:name=".ChessActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".ChessBoxingActivity">
+            android:name=".ChessBoxingActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".FriendsActivity">
+            android:name=".FriendsActivity"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".Settings">
+            android:name=".Settings"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".Profiles">
+            android:name=".Profiles"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".Profile_Editor">
+            android:name=".Profile_Editor"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".ChangeUsername">
+            android:name=".ChangeUsername"
+            tools:node="merge">
         </activity>
 
         <activity
-            android:name=".ChangePassword">
+            android:name=".ChangePassword"
+            tools:node="merge">
         </activity>
 
 
