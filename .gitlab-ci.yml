@@ -1,8 +1,18 @@
 stages:
+  - mavenbuild
   - maventest
   - mavenDeploy
   - androidbuild
   - androidtest
+
+
+maven-build: #this is a JOB
+  stage: mavenbuild
+  tags:
+    - springboot_tag
+  script:
+    - cd Backend # to where you have the pom.xml
+    - mvn package
 
 maven-test:
    stage: maventest
