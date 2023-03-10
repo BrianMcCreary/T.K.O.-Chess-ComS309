@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.example.tko_chess'
-    compileSdk 30
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.tko_chess"
