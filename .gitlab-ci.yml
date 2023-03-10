@@ -34,8 +34,7 @@ autoDeploy:
   script:
     - cd Backend/Total-Knockout-Chess
     - mvn package
-    - pwd
-    - sudo mv target/*.jar /target/web-demo.jar  # /home/gitlab-runner/builds ... /target
+    - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
 
