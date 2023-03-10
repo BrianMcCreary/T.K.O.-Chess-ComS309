@@ -60,7 +60,7 @@ android-test:
     - android_tag
    before_script:
      - export GRADLE_USER_HOME=`pwd`/.gradle
-     - chmod +x ./Frontend/gradlew
+     - chmod +x ./Frontend/T.K.O_Chess/gradlew
    script:
      - cd Frontend/T.K.O_Chess
      - ./gradlew test
