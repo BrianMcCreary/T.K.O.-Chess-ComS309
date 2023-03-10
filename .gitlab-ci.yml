@@ -11,7 +11,7 @@ maven-build: #this is a JOB
   tags:
     - springboot_tag
   script:
-    - cd Backend # to where you have the pom.xml
+    - cd Backend/Total-Knockout-Chess # to where you have the pom.xml
     - mvn package
 
 maven-test:
