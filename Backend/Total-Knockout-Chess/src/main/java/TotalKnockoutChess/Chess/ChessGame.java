@@ -14,7 +14,7 @@ public class ChessGame {
     private final String TOP_COLOR = "black";
     private final String BOTTOM_COLOR = "white";
 
-    public ChessGame(User white, User black){
+    public ChessGame(User white, User black) {
         this.white = white;
         this.black = black;
         initializeGame();
@@ -23,18 +23,18 @@ public class ChessGame {
     // Helper method to initialize the game
     private void initializeGame() {
         // Create ChessGameTile's to fill "tiles" 2d array
-        for(int row = 0; row < BOARD_HEIGHT; row++){
-            for(int col = 0; col < BOARD_WIDTH; col++){
+        for (int row = 0; row < BOARD_HEIGHT; row++) {
+            for (int col = 0; col < BOARD_WIDTH; col++) {
                 tiles[col][row] = new ChessGameTile();
             }
         }
 
         // Fill bottom row of the board (row 1)
-        createDefaultTopOrBottomRow(1, BOTTOM_COLOR);
+        createDefaultTopOrBottomRow(0, BOTTOM_COLOR);
 
         // Fill middle rows of the board (rows 2 - 7)
-        for (int row = 1; row < BOARD_HEIGHT - 1; row++){
-            for (int col = 0; col < BOARD_WIDTH; col++){
+        for (int row = 1; row < BOARD_HEIGHT - 1; row++) {
+            for (int col = 0; col < BOARD_WIDTH; col++) {
                 tiles[col][row].piece = new Empty(); // Empty piece type has no color
             }
         }
@@ -44,7 +44,7 @@ public class ChessGame {
     }
 
     // Helper method to generate default edge rows
-    private void createDefaultTopOrBottomRow(int row, String color){
+    private void createDefaultTopOrBottomRow(int row, String color) {
         tiles[0][row].piece = new Rook(color);
         tiles[1][row].piece = new Knight(color);
         tiles[2][row].piece = new Bishop(color);
