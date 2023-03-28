@@ -4,4 +4,133 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"/>
+    android:background="@color/dark_grey">
+
+    <ImageButton
+        android:id="@+id/BoxingMenuBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="Opens the boxing options menu."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu" />
+
+    <ImageView
+        android:id="@+id/BoxingRingImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786"
+        app:srcCompat="@drawable/boxingring" />
+
+    <ImageView
+        android:id="@+id/Player2BlockImg"
+        android:layout_width="65dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="129dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/block" />
+
+    <ImageView
+        android:id="@+id/player1BlockImg"
+        android:layout_width="65dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="129dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:rotationY="180"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/block" />
+
+    <ImageView
+        android:id="@+id/Player2KickImg"
+        android:layout_width="114dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="129dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/kick" />
+
+    <ImageView
+        android:id="@+id/Player1KickImg"
+        android:layout_width="114dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="129dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:rotationY="180"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/kick" />
+
+    <ImageView
+        android:id="@+id/Player2JabImg"
+        android:layout_width="75dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="128dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/jab" />
+
+    <ImageView
+        android:id="@+id/Player1JabImg"
+        android:layout_width="75dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="128dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:rotationY="180"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/jab" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
