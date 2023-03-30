@@ -2,12 +2,13 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class Profile_Editor extends AppCompatActivity{
+public class Profile_Editor extends AppCompatActivity {
 
     ImageButton goBack;
     Button save;
