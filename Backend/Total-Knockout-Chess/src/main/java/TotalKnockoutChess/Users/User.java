@@ -1,11 +1,14 @@
 package TotalKnockoutChess.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import TotalKnockoutChess.Friends.FriendRequest;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -15,6 +18,17 @@ public class User {
     private int id;
     private String username;
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "friendship",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
+    @JsonManagedReference
+    private List<User> friends = new ArrayList<User>();
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
 
 //    private List<User> friends;
 
@@ -75,6 +89,21 @@ public class User {
         this.password = password;
     }
 
+    public void addRequest(FriendRequest request) {
+        friendRequests.add(request);
+    }
+
+    public void removeRequest(FriendRequest request) {
+        friendRequests.remove(request);
+    }
+
+    public void addFriend(User u) {
+        friends.add(u);
+    }
+
+    public void removeFriend(User u) {
+        friends.remove(u);
+    }
     /**
      * Admin method to set list of friends to a specific list of users.
      * @param friends - list of friends to be set.

@@ -1,43 +1,53 @@
 package TotalKnockoutChess.Friends;
 
 import TotalKnockoutChess.Users.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class FriendRequest {
-    @OneToOne
-    @JsonIgnore
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @ManyToOne
+    @JsonBackReference
     private User sender;
-    @OneToOne
-    @JsonIgnore
-    private User recipient;
+    @ManyToOne
+    @JsonManagedReference
+    private User receiver;
 
-    private boolean activeRequest;
+    public FriendRequest() {
+    }
 
-    public FriendRequest(User sender, User recipient) {
+    public FriendRequest(User sender, User receiver) {
         this.sender = sender;
-        this.recipient = recipient;
-        activeRequest = true;
+        this.receiver = receiver;
     }
 
     public User getSender() {
         return sender;
     }
 
-    public User getRecipient() {
-        return recipient;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setRecipient(User recipient) {
-        this.recipient = recipient;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public void setSender(User sender) {
         this.sender = sender;
     }
 
-    public void setActiveRequest(boolean activeRequest) {
-        this.activeRequest = activeRequest;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
