@@ -3,7 +3,7 @@ package com.example.tko_chess;
 import android.content.Intent;
 
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,15 +25,15 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText Username, Password;
     TextView LoginError;
-    Button Login, toRegister;
+    Button Login, LoginToRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         //Register button that takes user to register page so they can make an account.
-        toRegister = (Button) findViewById(R.id.toRegisterBtn);
-        toRegister.setOnClickListener(new View.OnClickListener() {
+        LoginToRegister = (Button) findViewById(R.id.toRegisterBtn);
+        LoginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LogInActivity.this, RegisterActivity.class));

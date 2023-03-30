@@ -2,7 +2,7 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,9 +13,9 @@ public class MainMenuActivity extends AppCompatActivity {
     Button chess;
     Button Boxing;
 
-    ImageButton toSettingsBtn;
-    ImageButton toFriendsBtn;
-    ImageButton profilesBtn;
+    ImageButton MenuToSettings;
+    ImageButton MenuToFriends;
+    ImageButton MenuToProfiles;
     ImageButton LogoutBtn;
 
     @Override
@@ -62,9 +62,9 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        toSettingsBtn = findViewById(R.id.SettingsBtn);
+        MenuToSettings = findViewById(R.id.SettingsBtn);
 
-        toSettingsBtn.setOnClickListener(new View.OnClickListener() {
+        MenuToSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, Settings.class);
@@ -72,9 +72,9 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        profilesBtn = findViewById(R.id.ProfileBtn);
+        MenuToProfiles = findViewById(R.id.ProfileBtn);
 
-        profilesBtn.setOnClickListener(new View.OnClickListener() {
+        MenuToProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, Profiles.class);
@@ -82,9 +82,9 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        toFriendsBtn = findViewById(R.id.FriendsBtn);
+        MenuToFriends = findViewById(R.id.FriendsBtn);
 
-        toFriendsBtn.setOnClickListener(new View.OnClickListener() {
+        MenuToFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, FriendsActivity.class);

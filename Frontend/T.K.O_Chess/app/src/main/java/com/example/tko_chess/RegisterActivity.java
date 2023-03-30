@@ -2,7 +2,7 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 	EditText RegUsername, RegPassword, ConfirmPassword;
 	TextView RegisterError;
-	Button Register, toLogin;
+	Button Register, RegisterToLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 		//toLogin button that takes user back to login screen.
-		toLogin = (Button) findViewById(R.id.toLoginBtn);
-		toLogin.setOnClickListener(new View.OnClickListener() {
+		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);
+		RegisterToLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startActivity(new Intent(RegisterActivity.this, LogInActivity.class));
