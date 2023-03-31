@@ -2,7 +2,6 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +25,7 @@ public class LogInActivity extends AppCompatActivity {
     EditText Username, Password;
     TextView LoginError;
     Button Login, LoginToRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +84,8 @@ public class LogInActivity extends AppCompatActivity {
                                 //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
 
-                                    SingletonUser.getInstance();
+                                    SingletonUser.login(user);
+                                    SingletonUser currUser = SingletonUser.login(user);
 
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);

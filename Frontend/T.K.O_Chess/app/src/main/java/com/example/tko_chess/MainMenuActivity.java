@@ -58,6 +58,10 @@ public class MainMenuActivity extends AppCompatActivity {
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Logs user out by forgetting current user.
+                SingletonUser.logout();
+
                 Intent intent = new Intent(MainMenuActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
