@@ -20,6 +20,10 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/**
+ * @author Lex Somers
+ */
 public class RegisterActivity extends AppCompatActivity {
 
 	EditText RegUsername, RegPassword, ConfirmPassword;

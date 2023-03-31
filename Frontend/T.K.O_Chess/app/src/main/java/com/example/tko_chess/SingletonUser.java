@@ -3,6 +3,9 @@ package com.example.tko_chess;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author Lex Somers
+ */
 public class SingletonUser {
 
     // Static variable reference of CurrUser

@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+/**
+ * @author Zachary Scurlock
+ * @author Lex Somers
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     Button tkoChess;

@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+/**
+ * @author Lex Somers
+ */
 public class FriendsActivity extends AppCompatActivity {
 
     ImageButton FriendsToMenu;
