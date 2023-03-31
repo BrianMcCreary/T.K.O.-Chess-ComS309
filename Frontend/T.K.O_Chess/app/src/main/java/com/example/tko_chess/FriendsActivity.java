@@ -15,7 +15,7 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        FriendsToMenu = findViewById(R.id.backBtn2);
+        FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
 
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override

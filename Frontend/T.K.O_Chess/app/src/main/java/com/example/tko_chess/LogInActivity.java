@@ -2,8 +2,9 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,13 +83,11 @@ public class LogInActivity extends AppCompatActivity {
                                 }
                                 //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
-                                    Username = findViewById(R.id.UsernameText);
-                                    String name = Username.getText().toString();
+
+                                    SingletonUser.getInstance();
+
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
-                                    //Intent intent2 = new Intent(LogInActivity.this, Profiles.class);
-                                    //intent2.putExtra("key1", name);
-                                    //startActivity(intent2);
                                 }
                                 //else, show error message
                                 else {
