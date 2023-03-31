@@ -85,7 +85,6 @@ public class LogInActivity extends AppCompatActivity {
                                 if (temp.equals("true")) {
 
                                     SingletonUser.login(user);
-                                    SingletonUser currUser = SingletonUser.login(user);
 
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);

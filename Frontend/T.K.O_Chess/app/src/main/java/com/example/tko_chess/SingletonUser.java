@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SingletonUser {
@@ -46,5 +47,14 @@ public class SingletonUser {
         User = null;
     }
 
+    //Returns the username of the currently logged in user if there is one.
+    public String getUsername() throws JSONException {
+        return (String) User.get("username");
+    }
+
+    //Returns the password of the currently logged in user if there is one.
+    public String getPassword() throws JSONException {
+        return (String) User.get("password");
+    }
 
 }
