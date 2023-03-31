@@ -23,7 +23,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        tkoChess = findViewById(R.id.toTKOChessbtn);
+        tkoChess = findViewById(R.id.MenuToTKOChessBtn);
 
         tkoChess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +33,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        chess = findViewById(R.id.toChessbtn);
+        chess = findViewById(R.id.MenuToChessBtn);
 
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +43,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        Boxing = findViewById(R.id.toTKObtn);
+        Boxing = findViewById(R.id.MenuToTKOBtn);
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -52,7 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        LogoutBtn = findViewById(R.id.LogoutBtn);
+        LogoutBtn = findViewById(R.id.MenuToLoginBtn);
 
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        MenuToSettings = findViewById(R.id.SettingsBtn);
+        MenuToSettings = findViewById(R.id.MenuToSettingsBtn);
 
         MenuToSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        MenuToProfiles = findViewById(R.id.ProfileBtn);
+        MenuToProfiles = findViewById(R.id.MenuToProfileBtn);
 
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        MenuToFriends = findViewById(R.id.FriendsBtn);
+        MenuToFriends = findViewById(R.id.MenuToFriendsBtn);
 
         MenuToFriends.setOnClickListener(new View.OnClickListener() {
             @Override
