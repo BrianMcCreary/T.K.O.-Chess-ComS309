@@ -2,11 +2,16 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+/**
+ * @author Zachary Scurlock
+ * @author Lex Somers
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     Button tkoChess;
@@ -57,6 +62,10 @@ public class MainMenuActivity extends AppCompatActivity {
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Logs user out by forgetting current user.
+                SingletonUser.logout();
+
                 Intent intent = new Intent(MainMenuActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
@@ -72,6 +81,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+
         MenuToProfiles = findViewById(R.id.MenuToProfileBtn);
 
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         MenuToFriends = findViewById(R.id.MenuToFriendsBtn);
+
 
         MenuToFriends.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class Profile_Editor extends AppCompatActivity{
+public class Profile_Editor extends AppCompatActivity {
 
     ImageButton goBack;
     Button save;

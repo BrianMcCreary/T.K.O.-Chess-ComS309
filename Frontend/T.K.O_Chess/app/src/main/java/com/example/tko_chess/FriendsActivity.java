@@ -18,6 +18,9 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author Lex Somers
+ */
 public class FriendsActivity extends AppCompatActivity {
 
     //Button declarations

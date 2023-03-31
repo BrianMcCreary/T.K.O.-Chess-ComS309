@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,10 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/**
+ * @author Lex Somers
+ */
 public class RegisterActivity extends AppCompatActivity {
 
 	EditText RegUsername, RegPassword, ConfirmPassword;
@@ -90,6 +95,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 								//If registration was "success", take user to main menu and clear error
 								if (temp.equals("success")) {
+
+									//If registration was "success" then remove the "confirmPassword" maping from the jsonObject
+									newUser.remove("confirmPassword");
+									//"Logs in" the user by setting SingletonUser to their username and password.
+									SingletonUser currUser = SingletonUser.login(newUser);
+
 									RegisterError.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
