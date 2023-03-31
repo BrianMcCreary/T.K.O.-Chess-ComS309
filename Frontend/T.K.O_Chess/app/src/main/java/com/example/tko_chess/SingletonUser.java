@@ -60,4 +60,11 @@ public class SingletonUser {
         return (String) User.get("password");
     }
 
+    //Returns a JSONObject with the username and password of the currently logged in user if there is one
+    public JSONObject getUser() {
+        return User;
+    }
+
+
+
 }

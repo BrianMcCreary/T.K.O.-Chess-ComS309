@@ -35,11 +35,12 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
 
         //Friends list GET request
+        SingletonUser currUser = SingletonUser.getInstance();
         //Create a Request Que for the JsonObjectRequest
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
         //Checks to see if there is a user that matches the input username and login.
-        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, ,
+        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, ,//currUser.getUser(),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
