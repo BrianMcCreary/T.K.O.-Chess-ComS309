@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,28 +36,26 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
 
         //Friends list GET request
+        //Creating request argument
         SingletonUser currUser = SingletonUser.getInstance();
+
         //Create a Request Que for the JsonObjectRequest
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
         //Checks to see if there is a user that matches the input username and login.
-        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, ,//currUser.getUser(),
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, currUser.getUserArray()  ,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        String temp;
+                    public void onResponse(JSONArray response) {
                         //Get confirmation/failure of receiving FriendsList from backend.
-                        try {
-                            temp = (String) response.get("message");
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+                        //TODO
                         //If request for Friends List was "success"
-                        if (temp.equals("true")) {
-
+                        if (true) {
+                            //TODO
                         }
                         //else, show error message
                         else {
+                            //TODO
 //                            try {
 //
 //                            } catch (JSONException e) {
