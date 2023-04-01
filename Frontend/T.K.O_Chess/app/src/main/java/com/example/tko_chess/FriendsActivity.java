@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ public class FriendsActivity extends AppCompatActivity {
 
     //Button declarations
     ImageButton FriendsToMenu;
+    LinearLayout FriendsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class FriendsActivity extends AppCompatActivity {
 
         //Button Initializations
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
+        FriendsList = findViewById(R.id.FriendsLinearLayout);
 
         //Friends list GET request
         //Creating request argument
@@ -43,15 +46,17 @@ public class FriendsActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
         //Checks to see if there is a user that matches the input username and login.
-        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, currUser.getUserArray()  ,
+        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, currUser.getUserArray(),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        //Get confirmation/failure of receiving FriendsList from backend.
-                        //TODO
                         //If request for Friends List was "success"
-                        if (true) {
+                        if (response.length() != 0) {
                             //TODO
+                            //For each friend the user has, put  that friend in the linear layout of activity_friends
+                            for (int i = 0; i < response.length(); i++) {
+                                FriendsList.
+                            }
                         }
                         //else, show error message
                         else {
