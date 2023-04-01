@@ -77,11 +77,13 @@ public class FriendRequestController {
         }
         if (r == null || s == null) {
             return failure;     //User not found
+
         }
         //Check if identical request already exists
         for (FriendRequest f : friendRequests) {
             if (f.getSender().getUsername().equals(sender) && f.getReceiver().getUsername().equals(receiver)) {
                 return failure;     //You already sent this user a friend request
+                //return "over here";
             }
             if (f.getSender().getUsername().equals(receiver) && f.getReceiver().getUsername().equals(sender)) {
                 return failure;     //This user has already sent you a request

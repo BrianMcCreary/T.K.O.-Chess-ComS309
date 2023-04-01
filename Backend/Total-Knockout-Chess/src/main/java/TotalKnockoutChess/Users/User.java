@@ -1,14 +1,8 @@
 package TotalKnockoutChess.Users;
 
-import TotalKnockoutChess.Friends.FriendRequest;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class User {
@@ -30,8 +24,11 @@ public class User {
 //    @JsonManagedReference
 //    private List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
 
+    @ElementCollection
     private List<String> incomingFriendRequests;
+    @ElementCollection
     private List<String> outgoingFriendRequests;
+    @ElementCollection
     private List<String> friends;
 
 //    private List<User> friends;

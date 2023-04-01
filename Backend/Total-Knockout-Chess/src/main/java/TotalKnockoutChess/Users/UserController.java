@@ -36,6 +36,17 @@ public class UserController {
         return success;
     }
 
+    @PutMapping(path = "/users/{username}")
+    public String deleteUser(@PathVariable String username) {
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                userRepository.delete(u);
+                return success;
+            }
+        }
+        return failure;
+    }
+
     @GetMapping(path = "/users/getByName/{username}")
     public User getUserByName(@PathVariable String username) {
         List<User> userList = userRepository.findAll();
