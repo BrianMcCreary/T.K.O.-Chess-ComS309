@@ -102,7 +102,7 @@ public class FriendRequestController {
         return success;     //Friend request sent
     }
 
-    @PutMapping(path = "/friendRequest/{sender}/{receiver}")
+    @PutMapping(path = "/deleteFriendRequest/{sender}/{receiver}")
     public String deleteFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
         for (FriendRequest friendRequest : friendRequests) {
@@ -119,7 +119,7 @@ public class FriendRequestController {
         return failure;     //Friend request not found
     }
 
-    @PutMapping(path = "/friendRequest/{sender}/{receiver}")
+    @PutMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
     public String acceptFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
         for (FriendRequest friendRequest : friendRequests) {
