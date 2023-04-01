@@ -19,16 +19,20 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "friendship",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
-    @JsonManagedReference
-    private List<User> friends = new ArrayList<User>();
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "friendship",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
+//    @JsonManagedReference
+//    private List<User> friends = new ArrayList<User>();
+//
+//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    private List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
+    private List<String> incomingFriendRequests;
+    private List<String> outgoingFriendRequests;
+    private List<String> friends;
 
 //    private List<User> friends;
 
@@ -47,6 +51,9 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        incomingFriendRequests = new ArrayList<String>();
+        outgoingFriendRequests = new ArrayList<String>();
+        friends = new ArrayList<String>();
 //        friends = new ArrayList<User>();
 //        pendingFriends = new ArrayList<User>();
     }
@@ -89,20 +96,40 @@ public class User {
         this.password = password;
     }
 
-    public void addRequest(FriendRequest request) {
-        friendRequests.add(request);
+    public void addIncomingRequest(String username) {
+        incomingFriendRequests.add(username);
     }
 
-    public void removeRequest(FriendRequest request) {
-        friendRequests.remove(request);
+    public void removeIncomingRequest(String username) {
+        incomingFriendRequests.remove(username);
     }
 
-    public void addFriend(User u) {
-        friends.add(u);
+    public List<String> getIncomingRequests() {
+        return incomingFriendRequests;
     }
 
-    public void removeFriend(User u) {
-        friends.remove(u);
+    public void addOutgoingRequest(String username) {
+        outgoingFriendRequests.add(username);
+    }
+
+    public void removeOutgoingRequest(String username) {
+        outgoingFriendRequests.remove(username);
+    }
+
+    public List<String> getOutgoingRequests() {
+        return outgoingFriendRequests;
+    }
+
+    public void addFriend(String username) {
+        friends.add(username);
+    }
+
+    public void removeFriend(String username) {
+        friends.remove(username);
+    }
+
+    public List<String> getFriends() {
+        return friends;
     }
     /**
      * Admin method to set list of friends to a specific list of users.

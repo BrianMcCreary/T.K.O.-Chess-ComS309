@@ -1,7 +1,6 @@
 package TotalKnockoutChess.Friends;
 
 import TotalKnockoutChess.Users.User;
-import TotalKnockoutChess.Users.UserController;
 import TotalKnockoutChess.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,25 +24,39 @@ public class FriendRequestController {
     private final String falseMessage = "{\"message\":\"false\"}";
 
     @GetMapping(path = "/friendRequests/incoming/{username}")
-    public List<User> getIncomingRequests(@PathVariable String username) {
-        List<User> users = new ArrayList<User>();
-        for (FriendRequest f : friendRequestRepository.findAll()) {
-            if (f.getReceiver().getUsername().equals(username)) {
-                users.add(f.getSender());
+    public List<String> getIncomingRequests(@PathVariable String username) {
+//        List<String> users = new ArrayList<String>();
+//        for (FriendRequest f : friendRequestRepository.findAll()) {
+//            if (f.getReceiver().getUsername().equals(username)) {
+//                users.add(f.getSender().getUsername());
+//            }
+//        }
+//        return users;
+
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                return u.getIncomingRequests();
             }
         }
-        return users;
+        return null;
     }
 
     @GetMapping(path = "/friendRequests/outgoing/{username}")
-    public List<User> getOutgoingRequests(@PathVariable String username) {
-        List<User> users = new ArrayList<User>();
-        for (FriendRequest f : friendRequestRepository.findAll()) {
-            if (f.getSender().getUsername().equals(username)) {
-                users.add(f.getReceiver());
+    public List<String> getOutgoingRequests(@PathVariable String username) {
+//        List<String> users = new ArrayList<String>();
+//        for (FriendRequest f : friendRequestRepository.findAll()) {
+//            if (f.getSender().getUsername().equals(username)) {
+//                users.add(f.getReceiver().getUsername());
+//            }
+//        }
+//        return users;
+
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                return u.getOutgoingRequests();
             }
         }
-        return users;
+        return null;
     }
 
     @PostMapping(path = "/friendRequest/{sender}/{receiver}")
@@ -67,15 +80,23 @@ public class FriendRequestController {
         //Check if identical request already exists
         for (FriendRequest f : friendRequests) {
             if (f.getSender().getUsername().equals(sender) && f.getReceiver().getUsername().equals(receiver)) {
-                return failure;     //You already send this user a friend request
+                return failure;     //You already sent this user a friend request
             }
             if (f.getSender().getUsername().equals(receiver) && f.getReceiver().getUsername().equals(sender)) {
                 return failure;     //This user has already sent you a request
             }
         }
+        //Check if already friends
+        for (Friendship friendship : friendshipRepository.findAll()) {
+            if ((friendship.getUser1().getUsername().equals(sender) && friendship.getUser2().getUsername().equals(receiver))  ||
+                    (friendship.getUser1().getUsername().equals(receiver) && friendship.getUser2().getUsername().equals(sender))) {
+                return failure; //You are already friends with this user
+            }
+        }
         FriendRequest f = new FriendRequest(s, r);
         friendRequestRepository.save(f);
-        s.addRequest(f);
+        s.addOutgoingRequest(r.getUsername());
+        r.addIncomingRequest(s.getUsername());
         userRepository.flush();
         return success;     //Friend request sent
     }
@@ -86,8 +107,10 @@ public class FriendRequestController {
         for (FriendRequest friendRequest : friendRequests) {
             if (friendRequest.getSender().getUsername().equals(sender) && friendRequest.getReceiver().getUsername().equals(receiver)) {
                 User s = friendRequest.getSender();
+                User r = friendRequest.getReceiver();
                 friendRequestRepository.delete(friendRequest);
-                s.removeRequest(friendRequest);
+                s.removeOutgoingRequest(r.getUsername());
+                r.removeIncomingRequest(s.getUsername());
                 userRepository.flush();
                 return success;     //Friend request deleted
             }
@@ -103,9 +126,10 @@ public class FriendRequestController {
                 User s = friendRequest.getSender();
                 User r = friendRequest.getSender();
                 friendRequestRepository.delete(friendRequest);
-                s.removeRequest(friendRequest);
-                s.addFriend(r);
-                r.addFriend(s);
+                s.removeOutgoingRequest(r.getUsername());
+                r.removeIncomingRequest(s.getUsername());
+                s.addFriend(r.getUsername());
+                r.addFriend(s.getUsername());
                 userRepository.flush();
                 friendshipRepository.save(new Friendship(s, r));
                 return success;     //Friendship saved successfully
