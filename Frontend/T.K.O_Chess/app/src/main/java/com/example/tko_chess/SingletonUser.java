@@ -23,18 +23,23 @@ public class SingletonUser {
     // Constructor
     // Here we will be creating private constructor
     // restricted to this class itself
-    private SingletonUser(JSONObject user)
-    {
+    private SingletonUser(JSONObject user) throws JSONException {
         UserObject = user;
-        UserArray.put(user);
+
+        JSONArray tempArray = new JSONArray();
+        String username = UserObject.get("username").toString();
+        String password = UserObject.get("password").toString();
+        tempArray.put(username);
+        tempArray.put(password);
+
+        UserArray = tempArray;
 
     }
 
     // Static method
     // Static method to create instance of Singleton class or "login" user.
     // Needs to be provided a JSONObject
-    public static SingletonUser login(JSONObject user)
-    {
+    public static SingletonUser login(JSONObject user) throws JSONException {
         if (UserInstance == null) {
             UserInstance = new SingletonUser(user);
         }

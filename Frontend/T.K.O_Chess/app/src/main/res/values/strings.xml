@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">T.K.O_Chess</string>
+    <string name="friend">Friend</string>
+    <string name="remove">Remove</string>
+    <string name="goes_back_to_main_menu">Goes back to main menu</string>
+    <string name="friends">Friends</string>
+    <string name="scrollview_holding_a_user_s_friends">Scrollview holding a user\'s friends.</string>
 </resources>

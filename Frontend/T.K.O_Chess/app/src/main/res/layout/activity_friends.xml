@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="19dp"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="Goes back to main menu"
+        android:contentDescription="@string/goes_back_to_main_menu"
         android:padding="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintHorizontal_bias="0.0"
@@ -26,7 +26,7 @@
         android:id="@+id/FriendsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Friends"
+        android:text="@string/friends"
         android:textColor="@color/white"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="@+id/FriendstoMenuBtn"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="378dp"
         android:layout_marginTop="28dp"
-        android:contentDescription=""
+        android:contentDescription="@string/scrollview_holding_a_user_s_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FriendsText">
@@ -51,11 +51,7 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+
         </LinearLayout>
     </ScrollView>
 
