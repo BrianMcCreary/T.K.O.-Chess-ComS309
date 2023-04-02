@@ -20,7 +20,7 @@ public final class Tile {
         this.row = row;
 
         this.squareColor = new Paint();
-        squareColor.setColor(isDark() ? Color.BLACK : Color.WHITE);
+        squareColor.setColor(isDark() ? Color.BLACK : Color.LTGRAY);
     }
 
     public void draw(final Canvas canvas) {
