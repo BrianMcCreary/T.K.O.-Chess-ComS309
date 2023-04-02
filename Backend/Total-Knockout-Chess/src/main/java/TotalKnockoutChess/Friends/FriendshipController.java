@@ -22,9 +22,11 @@ public class FriendshipController {
     @Autowired
     UserRepository userRepository;
 
+    //Method that removes a friendship given the users' usernames
     @PutMapping(path = "/friends/{remover}/{removee}")
     public String removeFriend (@PathVariable String remover, @PathVariable String removee) {
         List<Friendship> friendships = friendshipRepository.findAll();
+        //Iterate through friendships until correct one is found and update lists/repositories accordingly
         for (Friendship friendship : friendships) {
             if ((friendship.getUser1().getUsername().equals(remover) && friendship.getUser2().getUsername().equals(removee)) ||
                     (friendship.getUser1().getUsername().equals(removee) && friendship.getUser2().getUsername().equals(remover))) {
@@ -40,6 +42,7 @@ public class FriendshipController {
         return failure;     //Friendship not found
     }
 
+    //Method that returns a list of usernames of a user's friends given their username
     @GetMapping(path = "/friends/{username}")
     public List<String> getFriends(@PathVariable String username) {
         for (User u : userRepository.findAll()) {

@@ -11,10 +11,10 @@ public class Friendship {
     private Long id;
 
     @ManyToOne
-    private User user1;
+    private User user1;     //User1 of the friendship
 
     @ManyToOne
-    private User user2;
+    private User user2;     //User2 of the friendship
 
     public Friendship() {
     }

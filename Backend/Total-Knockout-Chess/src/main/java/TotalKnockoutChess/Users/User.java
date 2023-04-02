@@ -9,35 +9,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String username;
-    private String password;
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "friendship",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
-//    @JsonManagedReference
-//    private List<User> friends = new ArrayList<User>();
-//
-//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
+    private int id;     //User ID
+    private String username;        //User username
+    private String password;        //User password
 
     @ElementCollection
-    private List<String> incomingFriendRequests;
+    private List<String> incomingFriendRequests;        //User's incoming friend requests
     @ElementCollection
-    private List<String> outgoingFriendRequests;
+    private List<String> outgoingFriendRequests;        //User's outgoing friend requests
     @ElementCollection
-    private List<String> friends;
-
-//    private List<User> friends;
-
-    /**
-     * List of this users incoming friend requests. User can accept or deny these requests.
-     */
-//    private List<User> pendingFriends;
-
+    private List<String> friends;       //User's friends
 
     /**
      * Constructor to initialize a new user with a specified name and password.
@@ -51,8 +32,6 @@ public class User {
         incomingFriendRequests = new ArrayList<String>();
         outgoingFriendRequests = new ArrayList<String>();
         friends = new ArrayList<String>();
-//        friends = new ArrayList<User>();
-//        pendingFriends = new ArrayList<User>();
     }
 
     public User() {
@@ -128,48 +107,5 @@ public class User {
     public List<String> getFriends() {
         return friends;
     }
-    /**
-     * Admin method to set list of friends to a specific list of users.
-     * @param friends - list of friends to be set.
-     */
-//    public void setFriends(List<User> friends) {
-//        this.friends = friends;
-//        for (User f : friends) {
-//            f.friends.add(this);
-//        }
-//    }
-//
-//    protected void sendFriendRequest(User friend) {
-//        friend.pendingFriends.add(this);
-//    }
-//
-//    protected void acceptFriendRequest(User friend) {
-//        if (pendingFriends.contains(friend)) {
-//            friends.add(friend);
-//            pendingFriends.remove(friend);
-//            friend.friends.add(this);
-//        }
-//    }
-//
-//    protected void rejectFriendRequest(User friend){
-//        if (pendingFriends.contains(friend)) {
-//            pendingFriends.remove(friend);
-//        }
-//    }
-//
-//    protected void removeFriend(User friend) {
-//        if (friends.contains(friend)) {
-//            friends.remove(friend);
-//            friend.friends.remove(this);
-//        }
-//    }
-//
-//    public List<User> getPendingFriends() {
-//        return pendingFriends;
-//    }
-//
-//    public List<User> getFriends() {
-//        return friends;
-//    }
 }
 

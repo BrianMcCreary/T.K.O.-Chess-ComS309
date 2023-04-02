@@ -14,10 +14,10 @@ public class FriendRequest {
     private Long id;
     @ManyToOne
     @JsonBackReference
-    private User sender;
+    private User sender;        //User that sent this request
     @ManyToOne
     @JsonManagedReference
-    private User receiver;
+    private User receiver;      //User that received this request
 
     public FriendRequest() {
     }
