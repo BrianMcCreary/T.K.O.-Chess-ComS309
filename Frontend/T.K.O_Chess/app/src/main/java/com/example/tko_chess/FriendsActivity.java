@@ -57,13 +57,19 @@ public class FriendsActivity extends AppCompatActivity {
 
         //Create a Request Que for the JsonObjectRequest
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
-
+        //Create a string holding the username to concatenate to the URL
+        String URLConcatenation = null;
+        try {
+            URLConcatenation = currUser.getUsername();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         //Checks to see if there is a user that matches the input username and login.
-        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_LOGIN, currUser.getUserArray(),
+        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, currUser.getUserArray(),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
+                        createFriendList(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -90,15 +96,13 @@ public class FriendsActivity extends AppCompatActivity {
 
         //If request for Friends List was "success"
         if (listOfFriends.length() != 0) {
-            //TODO
-
             //For each friend the user has, put that friend in the linear layout of activity_friends
             for (int i = 0; i < listOfFriends.length(); i++) {
                 View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsListLayout, true);
                 TextView friendName = (TextView) friendLayout.findViewById(R.id.FriendEditText);
                 try {
                     //Sets the friend's username in the text box next to the remove button
-                    friendName.setText(currUser.getUsername());
+                    friendName.setText(listOfFriends.getString(i));
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }

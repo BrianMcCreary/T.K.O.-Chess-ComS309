@@ -13,7 +13,7 @@ public class Const {
 
     public static final String URL_SERVER_GETUSER = "http://coms-309-005.class.las.iastate.edu:8080/users/getByName/{username}";
 
-    public static final String URL_SERVER_FRIENDSLIST = "http://coms-309-005.class.las.iastate.edu:8080/friendsRequests/incoming/{username}";
+    public static final String URL_SERVER_FRIENDSLIST = "http://coms-309-005.class.las.iastate.edu:8080/friendsRequests/incoming/";
 
     public static final String URL_SERVER_INCOMINGFRIENDSREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/users/getByName/{username}";
 
