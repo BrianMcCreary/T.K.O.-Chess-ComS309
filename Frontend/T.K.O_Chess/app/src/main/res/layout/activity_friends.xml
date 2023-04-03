@@ -39,8 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="28dp"
-        android:contentDescription="@string/scrollview_holding_a_user_s_friends"
         android:background="@color/very_light_grey"
+        android:contentDescription="@string/scrollview_holding_a_user_s_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FriendsText">
@@ -52,7 +52,6 @@
             android:orientation="vertical">
 
 
-
         </LinearLayout>
     </ScrollView>
 
@@ -60,27 +59,77 @@
         android:id="@+id/SendFriendRequestText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/white"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textColorHint="@color/very_light_grey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FriendsScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/AddFriendView" />
 
     <Button
         android:id="@+id/SendFriendRequestBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_height="55dp"
+        android:text="@string/send_friend_request"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/soft_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SendFriendRequestText" />
+
+    <Button
+        android:id="@+id/IncomingFriendRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Incoming Friend Requests"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/soft_blue"
+        app:layout_constraintEnd_toEndOf="@+id/SendFriendRequestBtn"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/SendFriendRequestBtn"
+        app:layout_constraintTop_toBottomOf="@+id/SendFriendRequestBtn" />
+
+    <Button
+        android:id="@+id/PendingFriendRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Pending Friends Requests"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/soft_blue"
+        app:layout_constraintEnd_toEndOf="@+id/IncomingFriendRequestBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/IncomingFriendRequestBtn"
+        app:layout_constraintTop_toBottomOf="@+id/IncomingFriendRequestBtn" />
+
+    <TextView
+        android:id="@+id/AddFriendView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Add Friend"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/FriendsScrollView"
+        app:layout_constraintStart_toStartOf="@+id/FriendsScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/FriendsScrollView" />
+
+    <TextView
+        android:id="@+id/ErrorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text=""
+        android:textColor="@color/error_orange"
+        app:layout_constraintEnd_toEndOf="@+id/FriendsScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/FriendsScrollView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

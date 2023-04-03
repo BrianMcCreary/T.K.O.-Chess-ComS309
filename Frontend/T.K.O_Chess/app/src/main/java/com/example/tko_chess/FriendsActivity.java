@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,7 +29,12 @@ public class FriendsActivity extends AppCompatActivity {
 
     //Button declarations
     ImageButton FriendsToMenu;
+    Button ViewPendingFriendsReq;
+    Button ViewIncomingFriendReq;
     LinearLayout FriendsListLayout;
+
+    //TextView Declarations;
+    TextView ErrorMessage;
 
     //Friends list GET request
     //Creating request argument
@@ -37,6 +43,15 @@ public class FriendsActivity extends AppCompatActivity {
     //LayoutInflater used to populate friends list scrollview
     LayoutInflater inflater = getLayoutInflater();
 
+    //Request que used to send JSON requests
+    RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
+
+    //Display Friends List
+    //Create a string holding the username to concatenate to the URL
+    String URLConcatenation = null;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +59,14 @@ public class FriendsActivity extends AppCompatActivity {
 
         //Button Initializations
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
+        ViewIncomingFriendReq = findViewById(R.id.IncomingFriendRequestBtn);
+        ViewPendingFriendsReq = findViewById(R.id.PendingFriendRequestBtn);
 
-/*      //Delete this or comment out. Only for testing purposes when server is not up.
+        //TextView Initializations
+        ErrorMessage = findViewById(R.id.ErrorTextView);
+
+/*      //////////////////////////////////////////////////////////////////////////////
+        //Delete this or comment out. Only for testing purposes when server is not up.
         View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsList, true);
         TextView friendName = (TextView) friendLayout.findViewById(R.id.FriendEditText);
         try {
@@ -53,34 +74,13 @@ public class FriendsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        //Delete this or comment out. Only for testing purposes when server is not up.*/
+        //Delete this or comment out. Only for testing purposes when server is not up.
+        //////////////////////////////////////////////////////////////////////////////*/
 
-        //Create a Request Que for the JsonObjectRequest
-        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
-        //Create a string holding the username to concatenate to the URL
-        String URLConcatenation = null;
-        try {
-            URLConcatenation = currUser.getUsername();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        //Checks to see if there is a user that matches the input username and login.
-        JsonArrayRequest FriendsListReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, currUser.getUserArray(),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        createFriendList(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error.toString());
+        //Display friends on screen upon initial loading of screen
+        displayFriendsList(currUser.getListOfFriends());
 
-            }
-        });
-        queue.add(FriendsListReq);
-
-        //Button to take user back to main menu
+        //Take user back to main menu
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,32 +88,84 @@ public class FriendsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Display incoming friend request menu
+        ViewIncomingFriendReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+                FriendsListLayout.removeAllViews();
+            }
+        });
     }
 
-    private void createFriendList(JSONArray listOfFriends) {
 
+
+    private void displayFriendsList(JSONArray FriendsList) {
+
+        FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
 
-        //If request for Friends List was "success"
-        if (listOfFriends.length() != 0) {
-            //For each friend the user has, put that friend in the linear layout of activity_friends
-            for (int i = 0; i < listOfFriends.length(); i++) {
-                View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsListLayout, true);
-                TextView friendName = (TextView) friendLayout.findViewById(R.id.FriendEditText);
+        //For each friend the user has, put that friend in the linear layout of activity_friends
+        for (int i = 0; i < FriendsList.length(); i++) {
+            View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsListLayout, true);
+            TextView friendNameText = (TextView) friendLayout.findViewById(R.id.FriendEditText);
+            Button removeFriendBtn = (Button) friendLayout.findViewById(R.id.RemoveFriendBtn);
+
+            //Sets the friend's username in the text box next to the remove button
+            try {
+                friendNameText.setText(FriendsList.getString(i));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            //Remove friend button
+            removeFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //Get user's username in a string to concatenate onto URL path
+                    URLConcatenation = currUser.getUsername() + "/";
+                    URLConcatenation += friendNameText.getText().toString();
+
+                    removeFriend();
+
+                    //Update local list of friends and update display
+                    currUser.updateUserObject(currUser.getUsername());
+                    displayFriendsList(currUser.getListOfFriends());
+
+                }
+            });
+        }
+    }
+
+
+
+    private void removeFriend() {
+        JsonArrayRequest RemoveFriendReq = new JsonArrayRequest(Request.Method.PUT, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                String temp;
                 try {
-                    //Sets the friend's username in the text box next to the remove button
-                    friendName.setText(listOfFriends.getString(i));
+                    temp = (String) response.get(1);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
-                //Set a Click Listener for the button on each friend
+                //If removal succeeded, update friends List
+                if (temp == "success") {
+                    //Update local list of friends and update display
+                    currUser.updateUserObject(currUser.getUsername());
+                    displayFriendsList(currUser.getListOfFriends());
+                } else {
+                    ErrorMessage.setText("An error Occured");
+                }
             }
-        }
-        //else, show error message
-        else {
-            //TODO
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error Occured");
+            }
+        });
+        queue.add(RemoveFriendReq);
     }
-
 }
