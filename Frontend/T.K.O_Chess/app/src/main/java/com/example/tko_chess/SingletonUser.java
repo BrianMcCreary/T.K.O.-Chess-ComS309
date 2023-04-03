@@ -29,13 +29,12 @@ public class SingletonUser extends AppCompatActivity {
 
 
     // Static method
-    // Static method to create instance of Singleton class or "login" user.
-    // Needs to be provided a JSONObject
-    public static SingletonUser login(JSONObject user) throws JSONException {
+    // Returns an instance of this singleton class.
+    public static synchronized SingletonUser getInstance()
+    {
         if (UserInstance == null) {
-            UserInstance = new SingletonUser(user);
+            UserInstance = new SingletonUser();
         }
-
         return UserInstance;
     }
 
@@ -44,9 +43,9 @@ public class SingletonUser extends AppCompatActivity {
     // Constructor
     // Here we will be creating private constructor
     // restricted to this class itself
-    private SingletonUser(JSONObject user) throws JSONException {
+    private SingletonUser() {
+        UserObject = null;
         //Instantiate UserObject
-        updateUserObject(user.get("username").toString());
     }
 
 
@@ -55,7 +54,7 @@ public class SingletonUser extends AppCompatActivity {
     public void updateUserObject(String user) {
 
         //Get user object from backend
-        RequestQueue queue = Volley.newRequestQueue(SingletonUser.this);
+        RequestQueue queue = Volley.newRequestQueue(SingletonUser.getInstance());
         JsonObjectRequest GetUserReq = new JsonObjectRequest(Request.Method.GET, Const.URL_SERVER_GETUSER + user, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -78,15 +77,6 @@ public class SingletonUser extends AppCompatActivity {
     {
         UserInstance = null;
         UserObject = null;
-    }
-
-
-
-    // Static method
-    // Returns an instance of this singleton class.
-    public static synchronized SingletonUser getInstance()
-    {
-        return UserInstance;
     }
 
 

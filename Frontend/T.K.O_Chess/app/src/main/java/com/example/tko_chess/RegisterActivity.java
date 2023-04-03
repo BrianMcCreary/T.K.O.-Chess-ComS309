@@ -99,8 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
 									//If registration was "success" then remove the "confirmPassword" maping from the jsonObject
 									newUser.remove("confirmPassword");
 									//"Logs in" the user by setting SingletonUser to their username and password.
+									SingletonUser currUser = SingletonUser.getInstance();
 									try {
-										SingletonUser currUser = SingletonUser.login(newUser);
+										currUser.updateUserObject(newUser.get("username").toString());
 									} catch (JSONException e) {
 										throw new RuntimeException(e);
 									}

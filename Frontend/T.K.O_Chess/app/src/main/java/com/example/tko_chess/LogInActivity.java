@@ -86,8 +86,9 @@ public class LogInActivity extends AppCompatActivity {
                                 }
                                 //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
+                                    SingletonUser currUser = SingletonUser.getInstance();
                                     try {
-                                        SingletonUser.login(user);
+                                        currUser.updateUserObject(user.get("username").toString());
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
