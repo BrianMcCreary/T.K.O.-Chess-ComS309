@@ -8,16 +8,16 @@ import android.widget.ImageButton;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    ImageButton goBack;
+    ImageButton FriendsToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        goBack = findViewById(R.id.backBtn2);
+        FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
 
-        goBack.setOnClickListener(new View.OnClickListener() {
+        FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(FriendsActivity.this, MainMenuActivity.class);

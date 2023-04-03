@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 	EditText RegUsername, RegPassword, ConfirmPassword;
 	TextView RegisterError;
-	Button Register, toLogin;
+	Button Register, RegisterToLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 		//toLogin button that takes user back to login screen.
-		toLogin = (Button) findViewById(R.id.toLoginBtn);
-		toLogin.setOnClickListener(new View.OnClickListener() {
+		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);
+		RegisterToLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startActivity(new Intent(RegisterActivity.this, LogInActivity.class));
@@ -90,6 +91,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 								//If registration was "success", take user to main menu and clear error
 								if (temp.equals("success")) {
+
+									//If registration was "success" then remove the "confirmPassword" maping from the jsonObject
+									newUser.remove("confirmPassword");
+									//"Logs in" the user by setting SingletonUser to their username and password.
+									SingletonUser currUser = SingletonUser.login(newUser);
+
 									RegisterError.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
