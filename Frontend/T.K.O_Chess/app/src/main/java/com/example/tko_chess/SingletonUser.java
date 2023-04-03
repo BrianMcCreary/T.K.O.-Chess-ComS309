@@ -149,7 +149,7 @@ public class SingletonUser extends AppCompatActivity {
 
 
     //Returns a JSONArray with Strings of the incoming friend requests of the currently logged in user.
-    public JSONArray getListOfIncomingFriendReq() {
+    public JSONArray getListOfPendingFriendReq() {
         try {
             return (JSONArray) UserObject.get("incomingFriendRequests");
         } catch (JSONException e) {
@@ -160,7 +160,7 @@ public class SingletonUser extends AppCompatActivity {
 
 
     //Returns a JSONArray with Strings of the out going friend requests of the currently logged in user.
-    public JSONArray getListOfOutGoingFriendReq() {
+    public JSONArray getListOfSentFriendReq() {
         try {
             return (JSONArray) UserObject.get("outgoingFriendRequests");
         } catch (JSONException e) {

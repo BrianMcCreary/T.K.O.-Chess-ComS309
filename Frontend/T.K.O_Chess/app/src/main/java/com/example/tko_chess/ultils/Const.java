@@ -19,9 +19,12 @@ public class Const {
     //For GET, concatenate currUser's Username. For REMOVE, concatenate currUser's username and the friend being removed
     public static final String URL_SERVER_FRIENDSLIST = "http://coms-309-005.class.las.iastate.edu:8080/friends/";
 
-    //Concatenate User's username
-    public static final String URL_SERVER_PENDINGFRIENDSREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/friendsRequests/outgoing/";
+    //Used for sending a friend request to another user
+    public static final String URL_SERVER_SENDFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/friendRequest/";
 
-    //Concatenate User's username
-    public static final String URL_SERVER_INCOMINGFRIENDSREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/friendsRequests/incoming/";
+    //Used for denying a friend request sent to you, or canceling a friend request you sent to somebody.
+    public static final String URL_SERVER_DELETEFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/deleteFriendRequest/";
+
+    //Used for accepting a friend request sent to you.
+    public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
 }

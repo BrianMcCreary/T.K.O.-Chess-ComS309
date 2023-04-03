@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,25 +17,35 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author Lex Somers
  */
 public class FriendsActivity extends AppCompatActivity {
 
+    //Display Tracker. Used to track what method needs to be called to update the screen after sending a friend request.
+    //1 = displaySentFriendReq(), 2 = displayPendingFriendReq(), others = displayFriendsList()
+    int DisplayTracker = 0;
+
     //Button declarations
     ImageButton FriendsToMenu;
-    Button ViewPendingFriendsReq;
-    Button ViewIncomingFriendReq;
+    Button SendFriendReq;
+    Button ViewSentFriendReq;
+    Button ViewPendingFriendReq;
     LinearLayout FriendsListLayout;
 
-    //TextView Declarations;
+    //TextView Declarations
     TextView ErrorMessage;
+
+    //EditText Declarations
+    EditText FriendReqTo;
 
     //Friends list GET request
     //Creating request argument
@@ -59,11 +70,15 @@ public class FriendsActivity extends AppCompatActivity {
 
         //Button Initializations
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
-        ViewIncomingFriendReq = findViewById(R.id.IncomingFriendRequestBtn);
-        ViewPendingFriendsReq = findViewById(R.id.PendingFriendRequestBtn);
+        SendFriendReq = findViewById(R.id.SendFriendRequestBtn);
+        ViewPendingFriendReq = findViewById(R.id.PendingFriendRequestBtn);
+        ViewSentFriendReq = findViewById(R.id.SentFriendRequestBtn);
 
         //TextView Initializations
         ErrorMessage = findViewById(R.id.ErrorTextView);
+
+        //EditText Initializations
+        FriendReqTo = findViewById(R.id.SendFriendRequestText);
 
 /*      //////////////////////////////////////////////////////////////////////////////
         //Delete this or comment out. Only for testing purposes when server is not up.
@@ -89,27 +104,256 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
-        //Display incoming friend request menu
-        ViewIncomingFriendReq.setOnClickListener(new View.OnClickListener() {
+        //Send out a friend request
+        SendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
-                FriendsListLayout.removeAllViews();
+                //Puts sender's username and acceptor's username in a String to concatenate onto URL path
+                URLConcatenation = currUser.getUsername() + "/";
+                URLConcatenation += FriendReqTo.getText().toString();
+                sendRequest();
+            }
+        });
+
+        //Display incoming friend requests
+        ViewPendingFriendReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayPendingFriendReq(currUser.getListOfPendingFriendReq());
+            }
+        });
+
+        //Display pending friend requests
+        ViewSentFriendReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displaySentFriendReq(currUser.getListOfSentFriendReq());
             }
         });
     }
 
 
 
-    private void displayFriendsList(JSONArray FriendsList) {
+    private void sendRequest() {
+        JsonObjectRequest SendFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_SENDFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String temp;
+                try {
+                    temp = (String) response.get("message");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //If request was sent successfully, update screen.
+                if (temp == "success") {
+                    if (DisplayTracker == 1) { //displaySentFriendReq()
+                        //Update local list of sent requests and update display
+                        currUser.updateUserObject(currUser.getUsername());
+                        displaySentFriendReq(currUser.getListOfPendingFriendReq());
+                    } else
+                    if (DisplayTracker == 2) { //displayPendingFriendReq()
+                        //Update local list of pending requests and update display
+                        currUser.updateUserObject(currUser.getUsername());
+                        displayPendingFriendReq(currUser.getListOfPendingFriendReq());
+                    }
+                    else { //displayFriendsList()
+                        //Update local list of pending requests and update display
+                        currUser.updateUserObject(currUser.getUsername());
+                        displayFriendsList(currUser.getListOfPendingFriendReq());
+                    }
+                } else {
+                    ErrorMessage.setText("An error Occurred");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error Occurred");
+            }
+        });
+        queue.add(SendFriendReq);
+    }
 
+
+
+    private void displayPendingFriendReq(JSONArray PendingFriendReq) {
+        //Clear scroll view
+        FriendsListLayout.removeAllViews();
+        FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //For each friend the user has, put that friend in the linear layout of activity_friends
+        for (int i = 0; i < PendingFriendReq.length(); i++) {
+            View friendLayout = inflater.inflate(R.layout.pending_friend_request_layout, FriendsListLayout, true);
+            TextView IncomingFriendNameText = (TextView) friendLayout.findViewById(R.id.IncomingFriendNameEditText);
+            Button acceptFriendBtn = (Button) friendLayout.findViewById(R.id.AcceptFriendBtn);
+            Button denyFriendBtn = (Button) friendLayout.findViewById(R.id.DenyFriendBtn);
+
+            //Sets the friend's username in the text box next to the remove button
+            try {
+                IncomingFriendNameText.setText(PendingFriendReq.getString(i));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            //Accept friend button
+            acceptFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Puts sender's username and acceptor's username in a String to concatenate onto URL path
+                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = currUser.getUsername();
+
+                    acceptFriendReq();
+                }
+            });
+
+            denyFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Puts sender's username and acceptor's username in a String to concatenate onto URL path
+                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = currUser.getUsername();
+
+                    denyFriendReq();
+                }
+            });
+        }
+    }
+
+
+
+    private void acceptFriendReq() {
+        JsonObjectRequest AcceptFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_ACCEPTFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String temp;
+                try {
+                    temp = (String) response.get("message");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //If request cancel succeeded, update friends List
+                if (temp == "success") {
+                    //Update local list of friends and update display
+                    currUser.updateUserObject(currUser.getUsername());
+                    displayPendingFriendReq(currUser.getListOfPendingFriendReq());
+                } else {
+                    ErrorMessage.setText("An error Occurred");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error Occurred");
+            }
+        });
+        queue.add(AcceptFriendReq);
+    }
+
+
+
+    private void denyFriendReq() {
+        JsonObjectRequest DenyFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_DELETEFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String temp;
+                try {
+                    temp = (String) response.get("message");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //If request cancel succeeded, update friends List
+                if (temp == "success") {
+                    //Update local list of friends and update display
+                    currUser.updateUserObject(currUser.getUsername());
+                    displayPendingFriendReq(currUser.getListOfPendingFriendReq());
+                } else {
+                    ErrorMessage.setText("An error Occurred");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error Occurred");
+            }
+        });
+        queue.add(DenyFriendReq);
+    }
+
+
+
+    private void displaySentFriendReq(JSONArray SentFriendReq) {
+        //Clear scroll view
+        FriendsListLayout.removeAllViews();
+        FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //For each friend the user has, put that friend in the linear layout of activity_friends
+        for (int i = 0; i < SentFriendReq.length(); i++) {
+            View friendLayout = inflater.inflate(R.layout.sent_friend_request_layout, FriendsListLayout, true);
+            TextView requestedFriendNameText = (TextView) friendLayout.findViewById(R.id.RequestFriendNameEditText);
+            Button cancelFriendBtn = (Button) friendLayout.findViewById(R.id.CancelFriendBtn);
+
+            //Sets the friend's username in the text box next to the remove button
+            try {
+                requestedFriendNameText.setText(SentFriendReq.getString(i));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            //Remove friend button
+            cancelFriendBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Get user's username in a string to concatenate onto URL path
+                    URLConcatenation = currUser.getUsername() + "/";
+                    URLConcatenation += requestedFriendNameText.getText().toString();
+
+                    cancelFriendReq();
+                }
+            });
+        }
+    }
+
+
+
+    private void cancelFriendReq() {
+        JsonObjectRequest CancelFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_DELETEFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String temp;
+                try {
+                    temp = (String) response.get("message");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //If request cancel succeeded, update friends List
+                if (temp == "success") {
+                    //Update local list of friends and update display
+                    currUser.updateUserObject(currUser.getUsername());
+                    displaySentFriendReq(currUser.getListOfSentFriendReq());
+                } else {
+                    ErrorMessage.setText("An error Occurred");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error Occurred");
+            }
+        });
+        queue.add(CancelFriendReq);
+    }
+
+
+
+    private void displayFriendsList(JSONArray FriendsList) {
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
 
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < FriendsList.length(); i++) {
             View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsListLayout, true);
-            TextView friendNameText = (TextView) friendLayout.findViewById(R.id.FriendEditText);
+            TextView friendNameText = (TextView) friendLayout.findViewById(R.id.FriendNameEditText);
             Button removeFriendBtn = (Button) friendLayout.findViewById(R.id.RemoveFriendBtn);
 
             //Sets the friend's username in the text box next to the remove button
@@ -123,17 +367,11 @@ public class FriendsActivity extends AppCompatActivity {
             removeFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    //Get user's username in a string to concatenate onto URL path
+                    //Puts user's username and friend they are removing in a String to concatenate onto URL path
                     URLConcatenation = currUser.getUsername() + "/";
                     URLConcatenation += friendNameText.getText().toString();
 
                     removeFriend();
-
-                    //Update local list of friends and update display
-                    currUser.updateUserObject(currUser.getUsername());
-                    displayFriendsList(currUser.getListOfFriends());
-
                 }
             });
         }
@@ -142,12 +380,12 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void removeFriend() {
-        JsonArrayRequest RemoveFriendReq = new JsonArrayRequest(Request.Method.PUT, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest RemoveFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 String temp;
                 try {
-                    temp = (String) response.get(1);
+                    temp = (String) response.get("message");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -157,13 +395,13 @@ public class FriendsActivity extends AppCompatActivity {
                     currUser.updateUserObject(currUser.getUsername());
                     displayFriendsList(currUser.getListOfFriends());
                 } else {
-                    ErrorMessage.setText("An error Occured");
+                    ErrorMessage.setText("An error Occurred");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occured");
+                ErrorMessage.setText("An error Occurred");
             }
         });
         queue.add(RemoveFriendReq);
