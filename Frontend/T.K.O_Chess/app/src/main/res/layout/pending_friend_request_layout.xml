@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:background="@color/very_light_grey">
+
+    <EditText
+        android:id="@+id/IncomingFriendNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+
+        android:inputType="none"
+        android:enabled="false"
+        android:hint="User"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingVertical="1dp"
+        android:textColorHint="@color/black"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_weight="0.2">
+    </EditText>
+
+    <Button
+        android:id="@+id/AcceptFriendBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/soft_blue"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="2dp"
+        android:text="Accept"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_weight="0.37">
+
+    </Button>
+
+    <Button
+        android:id="@+id/DenyFriendBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/soft_blue"
+        android:paddingHorizontal="7dp"
+        android:paddingVertical="2dp"
+        android:text="Deny"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_weight="0.4">
+
+    </Button>
+</LinearLayout>
+
+
