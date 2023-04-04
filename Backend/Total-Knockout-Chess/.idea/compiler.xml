@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Total-Knockout-Chess" />
+        <module name="onetoone" />
       </profile>
     </annotationProcessing>
   </component>
