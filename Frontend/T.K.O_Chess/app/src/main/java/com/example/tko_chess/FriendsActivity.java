@@ -57,16 +57,13 @@ public class FriendsActivity extends AppCompatActivity {
 
     Context context = this;
 
-
-
-
     //LayoutInflater used to populate friends list scrollview
     //LayoutInflater inflater = getLayoutInflater();
 
     //Request que used to send JSON requests
     //RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
-    //Display Friends List
+
     //Create a string holding the username to concatenate to the URL
     String URLConcatenation = "";
 
