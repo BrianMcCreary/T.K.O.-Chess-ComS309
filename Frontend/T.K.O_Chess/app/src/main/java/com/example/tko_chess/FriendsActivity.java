@@ -68,7 +68,7 @@ public class FriendsActivity extends AppCompatActivity {
 
     //Display Friends List
     //Create a string holding the username to concatenate to the URL
-    String URLConcatenation = null;
+    String URLConcatenation = "";
 
 
 
@@ -128,7 +128,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                URLConcatenation = currUser.getUsername() + "/";
+                URLConcatenation += currUser.getUsername() + "/";
                 URLConcatenation += FriendReqTo.getText().toString();
                 sendRequest();
             }
@@ -164,7 +164,7 @@ public class FriendsActivity extends AppCompatActivity {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
-        JsonObjectRequest SendFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_SENDFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest SendFriendReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_SENDFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -174,7 +174,7 @@ public class FriendsActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 //If request was sent successfully, update screen.
-                if (temp == "success") {
+                if (temp.equals("success")) {
                     if (DisplayTracker == 1) { //displaySentFriendReq()
                         //Update local list of sent requests and update display
                         currUser.updateUserObject(currUser.getUsername(), context);
@@ -191,16 +191,18 @@ public class FriendsActivity extends AppCompatActivity {
                         displayFriendsList(currUser.getListOfPendingFriendReq());
                     }
                 } else {
-                    ErrorMessage.setText("An error Occurred");
+                    ErrorMessage.setText("Friend request unable to be sent.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occurred");
+                ErrorMessage.setText("An error occurred.");
             }
         });
         queue.add(SendFriendReq);
+
+        URLConcatenation = "";
     }
 
 
@@ -233,7 +235,7 @@ public class FriendsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
                     URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
-                    URLConcatenation = currUser.getUsername();
+                    URLConcatenation += currUser.getUsername();
 
                     acceptFriendReq();
                 }
@@ -244,7 +246,7 @@ public class FriendsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
                     URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
-                    URLConcatenation = currUser.getUsername();
+                    URLConcatenation += currUser.getUsername();
 
                     denyFriendReq();
                 }
@@ -257,7 +259,7 @@ public class FriendsActivity extends AppCompatActivity {
     private void acceptFriendReq() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
-        JsonObjectRequest AcceptFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_ACCEPTFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest AcceptFriendReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_ACCEPTFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -267,21 +269,23 @@ public class FriendsActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 //If request cancel succeeded, update friends List
-                if (temp == "success") {
+                if (temp.equals("success")) {
                     //Update local list of friends and update display
                     currUser.updateUserObject(currUser.getUsername(), context);
                     displayPendingFriendReq(currUser.getListOfPendingFriendReq());
                 } else {
-                    ErrorMessage.setText("An error Occurred");
+                    ErrorMessage.setText("Could not accept request.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occurred");
+                ErrorMessage.setText("An error occurred");
             }
         });
         queue.add(AcceptFriendReq);
+
+        URLConcatenation = "";
     }
 
 
@@ -299,21 +303,23 @@ public class FriendsActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 //If request cancel succeeded, update friends List
-                if (temp == "success") {
+                if (temp.equals("success")) {
                     //Update local list of friends and update display
                     currUser.updateUserObject(currUser.getUsername(), context);
                     displayPendingFriendReq(currUser.getListOfPendingFriendReq());
                 } else {
-                    ErrorMessage.setText("An error Occurred");
+                    ErrorMessage.setText("Could not deny request.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occurred");
+                ErrorMessage.setText("An error occurred");
             }
         });
         queue.add(DenyFriendReq);
+
+        URLConcatenation = "";
     }
 
 
@@ -368,21 +374,23 @@ public class FriendsActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 //If request cancel succeeded, update friends List
-                if (temp == "success") {
+                if (temp.equals("success")) {
                     //Update local list of friends and update display
                     currUser.updateUserObject(currUser.getUsername(), context);
                     displaySentFriendReq(currUser.getListOfSentFriendReq());
                 } else {
-                    ErrorMessage.setText("An error Occurred");
+                    ErrorMessage.setText("Could not cancel request.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occurred");
+                ErrorMessage.setText("An error occurred");
             }
         });
         queue.add(CancelFriendReq);
+
+        URLConcatenation = "";
     }
 
 
@@ -436,20 +444,22 @@ public class FriendsActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 //If removal succeeded, update friends List
-                if (temp == "success") {
+                if (temp.equals("success")) {
                     //Update local list of friends and update display
                     currUser.updateUserObject(currUser.getUsername(), context);
                     displayFriendsList(currUser.getListOfFriends());
                 } else {
-                    ErrorMessage.setText("An error Occurred");
+                    ErrorMessage.setText("Could not remove friend.");
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                ErrorMessage.setText("An error Occurred");
+                ErrorMessage.setText("An error occurred");
             }
         });
         queue.add(RemoveFriendReq);
+
+        URLConcatenation = "";
     }
 }
