@@ -1,5 +1,7 @@
 package com.example.tko_chess;
 
+import android.content.Context;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -51,10 +53,10 @@ public class SingletonUser extends AppCompatActivity {
 
 
     //Instantiates the UserObejct variable with a JSONObject representation of the user trying to login
-    public void updateUserObject(String user) {
+    public void updateUserObject(String user, Context context) {
 
         //Get user object from backend
-        RequestQueue queue = Volley.newRequestQueue(SingletonUser.getInstance());
+        RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest GetUserReq = new JsonObjectRequest(Request.Method.GET, Const.URL_SERVER_GETUSER + user, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -133,6 +135,7 @@ public class SingletonUser extends AppCompatActivity {
             return (JSONArray) UserObject.get("friends");
         } catch (JSONException e) {
             throw new RuntimeException(e);
+
         }
     }
 

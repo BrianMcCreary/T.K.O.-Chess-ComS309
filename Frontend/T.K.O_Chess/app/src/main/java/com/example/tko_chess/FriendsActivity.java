@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,11 +52,13 @@ public class FriendsActivity extends AppCompatActivity {
     //Creating request argument
     SingletonUser currUser = SingletonUser.getInstance();
 
+    Context context = this;
+
     //LayoutInflater used to populate friends list scrollview
-    LayoutInflater inflater = getLayoutInflater();
+    //LayoutInflater inflater = getLayoutInflater();
 
     //Request que used to send JSON requests
-    RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
+    //RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
 
     //Display Friends List
     //Create a string holding the username to concatenate to the URL
@@ -79,6 +82,12 @@ public class FriendsActivity extends AppCompatActivity {
 
         //EditText Initializations
         FriendReqTo = findViewById(R.id.SendFriendRequestText);
+
+        //LinearLayout Initializations
+        FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //LayoutInflater used to populate friends list scrollview
+        LayoutInflater inflater = getLayoutInflater();
 
 /*      //////////////////////////////////////////////////////////////////////////////
         //Delete this or comment out. Only for testing purposes when server is not up.
@@ -135,6 +144,9 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void sendRequest() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
+
         JsonObjectRequest SendFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_SENDFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -148,17 +160,17 @@ public class FriendsActivity extends AppCompatActivity {
                 if (temp == "success") {
                     if (DisplayTracker == 1) { //displaySentFriendReq()
                         //Update local list of sent requests and update display
-                        currUser.updateUserObject(currUser.getUsername());
+                        currUser.updateUserObject(currUser.getUsername(), context);
                         displaySentFriendReq(currUser.getListOfPendingFriendReq());
                     } else
                     if (DisplayTracker == 2) { //displayPendingFriendReq()
                         //Update local list of pending requests and update display
-                        currUser.updateUserObject(currUser.getUsername());
+                        currUser.updateUserObject(currUser.getUsername(), context);
                         displayPendingFriendReq(currUser.getListOfPendingFriendReq());
                     }
                     else { //displayFriendsList()
                         //Update local list of pending requests and update display
-                        currUser.updateUserObject(currUser.getUsername());
+                        currUser.updateUserObject(currUser.getUsername(), context);
                         displayFriendsList(currUser.getListOfPendingFriendReq());
                     }
                 } else {
@@ -180,6 +192,9 @@ public class FriendsActivity extends AppCompatActivity {
         //Clear scroll view
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //LayoutInflater used to populate friends list scrollview
+        LayoutInflater inflater = getLayoutInflater();
 
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < PendingFriendReq.length(); i++) {
@@ -223,6 +238,8 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void acceptFriendReq() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
         JsonObjectRequest AcceptFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_ACCEPTFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -235,7 +252,7 @@ public class FriendsActivity extends AppCompatActivity {
                 //If request cancel succeeded, update friends List
                 if (temp == "success") {
                     //Update local list of friends and update display
-                    currUser.updateUserObject(currUser.getUsername());
+                    currUser.updateUserObject(currUser.getUsername(), context);
                     displayPendingFriendReq(currUser.getListOfPendingFriendReq());
                 } else {
                     ErrorMessage.setText("An error Occurred");
@@ -253,6 +270,8 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void denyFriendReq() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
         JsonObjectRequest DenyFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_DELETEFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -265,7 +284,7 @@ public class FriendsActivity extends AppCompatActivity {
                 //If request cancel succeeded, update friends List
                 if (temp == "success") {
                     //Update local list of friends and update display
-                    currUser.updateUserObject(currUser.getUsername());
+                    currUser.updateUserObject(currUser.getUsername(), context);
                     displayPendingFriendReq(currUser.getListOfPendingFriendReq());
                 } else {
                     ErrorMessage.setText("An error Occurred");
@@ -286,6 +305,9 @@ public class FriendsActivity extends AppCompatActivity {
         //Clear scroll view
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //LayoutInflater used to populate friends list scrollview
+        LayoutInflater inflater = getLayoutInflater();
 
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < SentFriendReq.length(); i++) {
@@ -317,6 +339,8 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void cancelFriendReq() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
         JsonObjectRequest CancelFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_DELETEFRIENDREQUEST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -329,7 +353,7 @@ public class FriendsActivity extends AppCompatActivity {
                 //If request cancel succeeded, update friends List
                 if (temp == "success") {
                     //Update local list of friends and update display
-                    currUser.updateUserObject(currUser.getUsername());
+                    currUser.updateUserObject(currUser.getUsername(), context);
                     displaySentFriendReq(currUser.getListOfSentFriendReq());
                 } else {
                     ErrorMessage.setText("An error Occurred");
@@ -349,6 +373,9 @@ public class FriendsActivity extends AppCompatActivity {
     private void displayFriendsList(JSONArray FriendsList) {
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
+
+        //LayoutInflater used to populate friends list scrollview
+        LayoutInflater inflater = getLayoutInflater();
 
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < FriendsList.length(); i++) {
@@ -380,6 +407,8 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     private void removeFriend() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
         JsonObjectRequest RemoveFriendReq = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_FRIENDSLIST + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -392,7 +421,7 @@ public class FriendsActivity extends AppCompatActivity {
                 //If removal succeeded, update friends List
                 if (temp == "success") {
                     //Update local list of friends and update display
-                    currUser.updateUserObject(currUser.getUsername());
+                    currUser.updateUserObject(currUser.getUsername(), context);
                     displayFriendsList(currUser.getListOfFriends());
                 } else {
                     ErrorMessage.setText("An error Occurred");

@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -29,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 	EditText RegUsername, RegPassword, ConfirmPassword;
 	TextView RegisterError;
 	Button Register, RegisterToLogin;
+
+	Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
 									//"Logs in" the user by setting SingletonUser to their username and password.
 									SingletonUser currUser = SingletonUser.getInstance();
 									try {
-										currUser.updateUserObject(newUser.get("username").toString());
+										currUser.updateUserObject(newUser.get("username").toString(), context);
 									} catch (JSONException e) {
 										throw new RuntimeException(e);
 									}
