@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2023-04-02 15:41:26.414  INFO 16248 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-7SFDHRU with PID 16248 (E:\COMS309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by conno in E:\COMS309\1_an_5\Backend\Total-Knockout-Chess)
 2023-04-02 15:41:26.421  INFO 16248 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
 2023-04-02 15:41:26.930  INFO 16248 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
@@ -2868,3 +2869,5 @@ org.hibernate.TransientPropertyValueException: object references an unsaved tran
 2023-04-03 22:01:09.841  INFO 11204 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2023-04-03 22:01:10.063  INFO 11204 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
 2023-04-03 22:01:10.063  INFO 11204 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 4.49 seconds (JVM running for 4.763)
+=======
+>>>>>>> main
