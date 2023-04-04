@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ComponentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
+import com.example.tko_chess.SingletonUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class FriendsActivity extends AppCompatActivity {
     Button SendFriendReq;
     Button ViewSentFriendReq;
     Button ViewPendingFriendReq;
+    Button ViewFriendsReq;
     LinearLayout FriendsListLayout;
 
     //TextView Declarations
@@ -53,6 +56,9 @@ public class FriendsActivity extends AppCompatActivity {
     SingletonUser currUser = SingletonUser.getInstance();
 
     Context context = this;
+
+
+
 
     //LayoutInflater used to populate friends list scrollview
     //LayoutInflater inflater = getLayoutInflater();
@@ -71,11 +77,15 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
+        //Updating user info
+        currUser.updateUserObject(currUser.getUsername(), context);
+
         //Button Initializations
         FriendsToMenu = findViewById(R.id.FriendstoMenuBtn);
         SendFriendReq = findViewById(R.id.SendFriendRequestBtn);
         ViewPendingFriendReq = findViewById(R.id.PendingFriendRequestBtn);
         ViewSentFriendReq = findViewById(R.id.SentFriendRequestBtn);
+        ViewFriendsReq = findViewById(R.id.ViewFriendsBtn);
 
         //TextView Initializations
         ErrorMessage = findViewById(R.id.ErrorTextView);
@@ -137,6 +147,13 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 displaySentFriendReq(currUser.getListOfSentFriendReq());
+            }
+        });
+
+        ViewFriendsReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayFriendsList(currUser.getListOfFriends());
             }
         });
     }

@@ -83,10 +83,10 @@ public class SingletonUser extends AppCompatActivity {
 
 
 
-    //Returns a JSONObject of the currently logged in user.
+    /*//Returns a JSONObject of the currently logged in user.
     public JSONObject getUserObject() {
         return UserObject;
-    }
+    }*/
 
 
 
@@ -108,7 +108,7 @@ public class SingletonUser extends AppCompatActivity {
 
 
 
-    //Returns a JSONArray with Strings of the username and password of the currently logged in user.
+/*    //Returns a JSONArray with Strings of the username and password of the currently logged in user.
     public JSONArray getUserArray() {
         //Instantiate UserArray
         JSONArray UserArray = new JSONArray();
@@ -125,7 +125,7 @@ public class SingletonUser extends AppCompatActivity {
         }
 
         return UserArray;
-    }
+    }*/
 
 
 
@@ -144,7 +144,7 @@ public class SingletonUser extends AppCompatActivity {
     //Returns a JSONArray with Strings of the incoming friend requests of the currently logged in user.
     public JSONArray getListOfPendingFriendReq() {
         try {
-            return (JSONArray) UserObject.get("incomingFriendRequests");
+            return (JSONArray) UserObject.get("incomingRequests");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -155,7 +155,7 @@ public class SingletonUser extends AppCompatActivity {
     //Returns a JSONArray with Strings of the out going friend requests of the currently logged in user.
     public JSONArray getListOfSentFriendReq() {
         try {
-            return (JSONArray) UserObject.get("outgoingFriendRequests");
+            return (JSONArray) UserObject.get("outgoingRequests");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

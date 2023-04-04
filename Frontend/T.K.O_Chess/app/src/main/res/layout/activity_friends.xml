@@ -59,7 +59,7 @@
         android:id="@+id/SendFriendRequestText"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="@string/username"
@@ -85,35 +85,33 @@
 
     <Button
         android:id="@+id/PendingFriendRequestBtn"
-        android:layout_width="160dp"
+        android:layout_width="140dp"
         android:layout_height="55dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/soft_blue"
         android:text="Pending Friend Requests"
         android:textColor="@color/black"
-        android:backgroundTint="@color/soft_blue"
-        app:layout_constraintEnd_toEndOf="@+id/SendFriendRequestBtn"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="@+id/SendFriendRequestBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SendFriendRequestBtn" />
 
     <Button
         android:id="@+id/SentFriendRequestBtn"
-        android:layout_width="160dp"
+        android:layout_width="140dp"
         android:layout_height="55dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/soft_blue"
         android:text="Sent Friends Requests"
         android:textColor="@color/black"
-        android:backgroundTint="@color/soft_blue"
-        app:layout_constraintEnd_toEndOf="@+id/PendingFriendRequestBtn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/PendingFriendRequestBtn"
-        app:layout_constraintTop_toBottomOf="@+id/PendingFriendRequestBtn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SendFriendRequestBtn" />
 
     <TextView
         android:id="@+id/AddFriendView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:text="Add Friend"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -130,6 +128,18 @@
         android:textColor="@color/error_orange"
         app:layout_constraintEnd_toEndOf="@+id/FriendsScrollView"
         app:layout_constraintTop_toBottomOf="@+id/FriendsScrollView" />
+
+    <Button
+        android:id="@+id/ViewFriendsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="75dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="View Friends"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SendFriendRequestBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

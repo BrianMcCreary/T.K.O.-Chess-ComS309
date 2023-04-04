@@ -71,9 +71,11 @@ public class RegisterActivity extends AppCompatActivity {
 				//Creates a new user JsonObject that will be sent to the remote server
 				JSONObject newUser = new JSONObject();
 				try {
-					newUser.put("username", RegUsername.getText());
-					newUser.put("password", RegPassword.getText());
-					newUser.put("confirmPassword", ConfirmPassword.getText());
+					newUser.put("username", RegUsername.getText().toString());
+					newUser.put("password", RegPassword.getText().toString());
+					newUser.put("incomingFriendRequests", null);
+					newUser.put("outgoingFriendRequests", null);
+					newUser.put("friends", null);
 				}
 				catch (JSONException e) {
 					e.printStackTrace();
@@ -126,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						System.out.println(error.toString());
-						RegisterError.setText("An error occurred.");
+						RegisterError.setText("onErrorResponse.");
 					}
 				});
 				queue.add(registerObjectReq);
