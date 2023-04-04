@@ -37,7 +37,7 @@ autoDeploy:
     - sudo systemctl start system-web-demo
   only:
     - main # Only deploy when on main
-    changes:
+    - changes:
       - Backend/**/*
   when: on_success # Only deploy when maven-build and maven-test jobs are successful
 
