@@ -1,9 +1,6 @@
 package TotalKnockoutChess.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +9,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String username;
-    private String password;
+    private int id;     //User ID
+    private String username;        //User username
+    private String password;        //User password
 
-//    private List<User> friends;
-
-    /**
-     * List of this users incoming friend requests. User can accept or deny these requests.
-     */
-//    private List<User> pendingFriends;
-
+    @ElementCollection
+    private List<String> incomingFriendRequests;        //User's incoming friend requests
+    @ElementCollection
+    private List<String> outgoingFriendRequests;        //User's outgoing friend requests
+    @ElementCollection
+    private List<String> friends;       //User's friends
 
     /**
      * Constructor to initialize a new user with a specified name and password.
@@ -33,8 +29,9 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-//        friends = new ArrayList<User>();
-//        pendingFriends = new ArrayList<User>();
+        incomingFriendRequests = new ArrayList<String>();
+        outgoingFriendRequests = new ArrayList<String>();
+        friends = new ArrayList<String>();
     }
 
     public User() {
@@ -75,48 +72,40 @@ public class User {
         this.password = password;
     }
 
-    /**
-     * Admin method to set list of friends to a specific list of users.
-     * @param friends - list of friends to be set.
-     */
-//    public void setFriends(List<User> friends) {
-//        this.friends = friends;
-//        for (User f : friends) {
-//            f.friends.add(this);
-//        }
-//    }
-//
-//    protected void sendFriendRequest(User friend) {
-//        friend.pendingFriends.add(this);
-//    }
-//
-//    protected void acceptFriendRequest(User friend) {
-//        if (pendingFriends.contains(friend)) {
-//            friends.add(friend);
-//            pendingFriends.remove(friend);
-//            friend.friends.add(this);
-//        }
-//    }
-//
-//    protected void rejectFriendRequest(User friend){
-//        if (pendingFriends.contains(friend)) {
-//            pendingFriends.remove(friend);
-//        }
-//    }
-//
-//    protected void removeFriend(User friend) {
-//        if (friends.contains(friend)) {
-//            friends.remove(friend);
-//            friend.friends.remove(this);
-//        }
-//    }
-//
-//    public List<User> getPendingFriends() {
-//        return pendingFriends;
-//    }
-//
-//    public List<User> getFriends() {
-//        return friends;
-//    }
+    public void addIncomingRequest(String username) {
+        incomingFriendRequests.add(username);
+    }
+
+    public void removeIncomingRequest(String username) {
+        incomingFriendRequests.remove(username);
+    }
+
+    public List<String> getIncomingRequests() {
+        return incomingFriendRequests;
+    }
+
+    public void addOutgoingRequest(String username) {
+        outgoingFriendRequests.add(username);
+    }
+
+    public void removeOutgoingRequest(String username) {
+        outgoingFriendRequests.remove(username);
+    }
+
+    public List<String> getOutgoingRequests() {
+        return outgoingFriendRequests;
+    }
+
+    public void addFriend(String username) {
+        friends.add(username);
+    }
+
+    public void removeFriend(String username) {
+        friends.remove(username);
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
 }
 
