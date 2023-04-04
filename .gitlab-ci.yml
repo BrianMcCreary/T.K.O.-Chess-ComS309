@@ -36,8 +36,9 @@ autoDeploy:
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
   only:
-    - branch: main
-    - changes: Backend/*
+    - main # Only deploy when on main
+  when: on_success # Only deploy when maven-build and maven-test jobs are successful
+
 
 android-build:
   image: gjandres/android-ci:latest
