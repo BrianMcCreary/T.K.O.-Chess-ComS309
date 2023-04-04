@@ -110,7 +110,7 @@ public class FriendRequestController {
     }
 
     //Method that accepts a friend request given the sender and receiver's usernames
-    @PutMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
+    @PostMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
     public String acceptFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
         //Iterate through all friend requests until correct one is found and update lists/repositories accordingly
