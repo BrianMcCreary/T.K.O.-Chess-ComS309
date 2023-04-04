@@ -3,10 +3,24 @@ package TotalKnockoutChess.Chess;
 import TotalKnockoutChess.Chess.Pieces.*;
 import TotalKnockoutChess.Users.User;
 
+import javax.persistence.*;
+
+@Entity
 public class ChessGame {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     ChessGameTile[][] tiles;
-    User white, black;
+
+    @OneToOne
+    @JoinColumn(name = "whiteId")
+    User white;
+
+    @OneToOne
+    @JoinColumn(name = "blackId")
+    User black;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
@@ -53,5 +67,13 @@ public class ChessGame {
         tiles[5][row].piece = new Bishop(color);
         tiles[6][row].piece = new Knight(color);
         tiles[7][row].piece = new Rook(color);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

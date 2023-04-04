@@ -9,6 +9,7 @@ public class King extends ChessPiece {
     }
 
     List<Coordinate> calculateAvailableMoves() {
+
         return null;
     }
 }

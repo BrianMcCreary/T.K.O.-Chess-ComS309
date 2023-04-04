@@ -18,9 +18,9 @@ public class ChessPieceController {
         return selectedPiece.calculateAvailableMoves();
     }
 
-    @PutMapping("chess")
-    public void makeMove(@PathVariable int gameId, @RequestBody ChessPiece selectedPiece){
-        //TODO - need to create lobby system
+    @PutMapping("chess") // modify to update a specific game board based off an id
+    public void makeMove(@RequestBody ChessPiece selectedPiece){
+
     }
 
 
