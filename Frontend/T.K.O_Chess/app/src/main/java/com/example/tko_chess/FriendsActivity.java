@@ -409,23 +409,6 @@ public class FriendsActivity extends AppCompatActivity {
 
             FriendsListLayout.addView(inflatedLayout);
 
-
-
-            //LayoutInflater used to populate friends list scrollview
-            /*LayoutInflater inflater = getLayoutInflater();
-
-            View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsListLayout, true);
-            TextView friendNameText = (TextView) friendLayout.findViewById(R.id.FriendNameTextView);
-            Button removeFriendBtn = (Button) friendLayout.findViewById(R.id.RemoveFriendBtn);
-
-            //NEWER
-            try {
-                String name = (String) FriendsList.get(i);
-                friendNameText.setText(name);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }*/
-
             //Remove friend button
             removeFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
