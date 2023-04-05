@@ -28,7 +28,7 @@ public class LobbyPasswordActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LobbyPasswordActivity.this, HostOrJoinActivity.class);
+                Intent intent = new Intent(LobbyPasswordActivity.this, ChessHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });

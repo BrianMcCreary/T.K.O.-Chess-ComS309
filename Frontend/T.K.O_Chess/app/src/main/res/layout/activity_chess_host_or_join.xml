@@ -39,7 +39,6 @@
         android:contentDescription="Goes back to main menu"
         android:padding="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/LogoImageView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

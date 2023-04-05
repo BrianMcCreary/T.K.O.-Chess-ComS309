@@ -82,6 +82,18 @@
             android:exported="false">
         </activity>
 
+        <activity android:name=".TKOChessHostOrJoinActivity"
+                  android:exported="false">
+        </activity>
+
+        <activity android:name=".ChessHostOrJoinActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOHostOrJoinActivity"
+            android:exported="false">
+        </activity>
+
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:exported="false"/>

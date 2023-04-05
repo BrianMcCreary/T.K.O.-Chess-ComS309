@@ -13,7 +13,6 @@ public class MainMenuActivity extends AppCompatActivity {
     Button tkoChess;
     Button chess;
     Button Boxing;
-
     ImageButton MenuToSettings;
     ImageButton MenuToFriends;
     ImageButton MenuToProfiles;
@@ -29,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         tkoChess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ChessBoxingActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, TKOChessHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, ChessHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
@@ -48,7 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, TKOHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });

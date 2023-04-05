@@ -1,15 +1,15 @@
 package com.example.tko_chess;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.os.Bundle;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HostOrJoinActivity extends AppCompatActivity {
+public class TKOHostOrJoinActivity extends AppCompatActivity {
 
     Button hostBtn;
     Button joinBtn;
@@ -18,22 +18,22 @@ public class HostOrJoinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_host_or_join);
-        backBtn = findViewById(R.id.backBtn7);
+        setContentView(R.layout.activity_tko_host_or_join);
+        backBtn = findViewById(R.id.backBtn9);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HostOrJoinActivity.this, MainMenuActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });
 
-        hostBtn = findViewById(R.id.hostBtn);
+        hostBtn = findViewById(R.id.hostBtn3);
         hostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HostOrJoinActivity.this, LobbyActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, LobbyActivity.class);
                 startActivity(intent);
             }
         });
@@ -42,7 +42,7 @@ public class HostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HostOrJoinActivity.this, LobbyPasswordActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, LobbyPasswordActivity.class);
                 startActivity(intent);
             }
         });
