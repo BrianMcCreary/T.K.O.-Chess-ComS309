@@ -4,6 +4,7 @@ import TotalKnockoutChess.Users.User;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,20 +32,39 @@ public class Lobby {
     @OneToMany
     List<User> spectators;
 
+    public Lobby(){
+    }
+
+    /**
+     * Main constructor for lobby objects.
+     * @param owner - User object who made the lobby
+     */
     public Lobby(User owner) {
+        spectators = new ArrayList<>();
         owner.setLobby(this);
         this.owner = owner;
+        spectators.add(owner);
     }
 
     // Generate code for the lobby
-    public Long generateLobbyCode(){
+    public Long generateLobbyCode(List<Lobby> lobbies){
         Random rand = new Random(System.currentTimeMillis());
-        return rand.nextLong(1000000);
+        Long lobbyCode = rand.nextLong(1000000);
+
+        // Make sure lobby code is unique
+        for(Lobby l : lobbies){
+            while (l.getCode().equals(lobbyCode)){
+                lobbyCode = rand.nextLong(1000000);
+            }
+        }
+        return lobbyCode;
     }
 
+    // Getter and Setter for lobby code
     public Long getCode(){
         return code;
     }
+    public void setCode(Long code) { this.code = code; }
 
     // Getter and Setter for the id of the lobby
     public Long getId() {
@@ -81,5 +101,77 @@ public class Lobby {
     // Getter for spectators
     public List<User> getSpectators(){
         return spectators;
+    }
+
+    // The first time a player joins the lobby, they are a spectator. They can switch to be a player with
+    // the "switchToPlayer" method.
+    public void addToSpectators(User user){
+        spectators.add(user);
+    }
+
+    /**
+     *  Method to swap from spectator to player
+     *  @param user - User object to switch from spectator to player.
+     *  @param playerIndex - Index of which player slot 'user' will switch to. Must be either 1 or 2.
+      */
+    public void switchToPlayer(User user, int playerIndex){
+        spectators.remove(user);
+        if(playerIndex == 1){
+            player1 = user;
+        }
+        else if(playerIndex == 2){
+            player2 = user;
+        }
+    }
+
+    /**
+     *  Method to swap from player to spectator
+     *  @param user - User object to switch from player to spectator.
+     */
+    public void switchToSpectator(User user){
+        // Will only switch if user is not already spectating.
+        if(!spectators.contains(user)) {
+
+            // Before using .equals, must make sure player1 and player2 objects aren't null
+            if (player1 != null && player2 != null) {
+                if (player1.equals(user)) {
+                    player1 = null;
+                } else if (player2.equals(user)) {
+                    player2 = null;
+                }
+            } else if (player1 != null && player1.equals(user)) {
+                player1 = null;
+            } else if (player2 != null && player2.equals(user)) {
+                player2 = null;
+            }
+
+            spectators.add(user);
+        }
+    }
+
+    // Method to return whether a specific user is in the lobby
+    public boolean contains(User user){
+        // Check if user is spectating
+        for(User spectator : spectators) {
+            if (spectator.equals(user)) {
+                System.out.println("Spectator is spectating");
+                return true;
+            }
+            System.out.println("Spectator object:\n" + spectator.toString() + "\nCompared to the passed user object:\n" + user.toString());
+        }
+
+        // Check if both player objects are null (needed to not throw errors when calling .equals)
+        if(player1 == null && player2 == null){
+            return false;
+        }
+        else if(player1 == null){
+            if(player2.equals(user)){
+                return true;
+            }
+        }
+        else if(player1.equals(user)){
+            return true;
+        }
+        return false;
     }
 }

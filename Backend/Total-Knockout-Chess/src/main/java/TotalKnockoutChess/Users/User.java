@@ -122,5 +122,32 @@ public class User {
     public Lobby getLobby(){ return lobby; }
 
     public void setLobby(Lobby lobby) {this.lobby = lobby; }
+
+    public String toString(){
+        String str = "";
+        str += "ID: " + id + "\n";
+        str += "Username: " + username + "\n";
+        str += "Password: " + password + "\n";
+        str += "Lobby: " + lobby + "\n";
+        if(incomingFriendRequests != null) {
+            str += "IncomingFriendRequests: \n";
+            for (String s : incomingFriendRequests) {
+                str += "- " + s + "\n";
+            }
+        }
+        if(outgoingFriendRequests != null) {
+            str += "OutgoingFriendRequests: \n";
+            for (String s : outgoingFriendRequests) {
+                str += "- " + s + "\n";
+            }
+        }
+        if(friends != null) {
+            str += "Friends: \n";
+            for (String s : friends) {
+                str += "- " + s + "\n";
+            }
+        }
+        return str;
+    }
 }
 
