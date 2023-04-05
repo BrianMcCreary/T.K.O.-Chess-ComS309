@@ -31,20 +31,24 @@ public class UserController {
     }
 
     //Method that creates a new user given the username is > 0 characters, the password is >= 8 characters, and the username isn't already taken
-    @PostMapping(path = "/users")
-    public String createUser(@RequestBody User user) {
-        if (user == null || user.getUsername().length() <= 0) {
+    @PostMapping(path = "/users/{username}/{password}/{confirmPassword}")
+    public String createUser(@PathVariable String username,@PathVariable String password, @PathVariable String confirmPassword) {
+        if (password.length() < 8) {
+            return failure; //Password too short
+        }
+        if (!password.equals(confirmPassword)) {
+            return failure; //Passwords do not match
+        }
+        if (username.length() <= 0) {
             return failure;     //Username too short
         }
-        if (user.getPassword().length() < 8) {
-            return failure;     //Password too short
-        }
         for (User u : userRepository.findAll()) {
-            if (u.getUsername().equals(user.getUsername())) {
+            if (u.getUsername().equals(username)) {
                 return failure;     //Username taken
             }
         }
-        userRepository.save(user);
+        User u = new User(username, password);
+        userRepository.save(u);
         return success;
     }
 

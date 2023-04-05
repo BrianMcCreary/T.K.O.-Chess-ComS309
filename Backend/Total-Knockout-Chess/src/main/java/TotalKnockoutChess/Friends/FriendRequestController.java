@@ -23,7 +23,7 @@ public class FriendRequestController {
     private final String trueMessage = "{\"message\":\"true\"}";
     private final String falseMessage = "{\"message\":\"false\"}";
 
-    //Method that returns a user's incoming friend requests givnen their username
+    //Method that returns a user's incoming friend requests given their username
     @GetMapping(path = "/friendRequests/incoming/{username}")
     public List<String> getIncomingRequests(@PathVariable String username) {
         for (User u : userRepository.findAll()) {
@@ -34,7 +34,7 @@ public class FriendRequestController {
         return null;
     }
 
-    //Method that returns a user's outgoing friend requests givnen their username
+    //Method that returns a user's outgoing friend requests given their username
     @GetMapping(path = "/friendRequests/outgoing/{username}")
     public List<String> getOutgoingRequests(@PathVariable String username) {
         for (User u : userRepository.findAll()) {
@@ -110,7 +110,7 @@ public class FriendRequestController {
     }
 
     //Method that accepts a friend request given the sender and receiver's usernames
-    @PutMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
+    @PostMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
     public String acceptFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
         //Iterate through all friend requests until correct one is found and update lists/repositories accordingly
