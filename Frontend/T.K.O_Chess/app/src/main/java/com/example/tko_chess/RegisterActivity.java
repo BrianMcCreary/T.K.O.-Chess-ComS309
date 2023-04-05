@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
 				ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);
 				RegisterError = (TextView) findViewById(R.id.RegisterErrorText);
 
-				URLConcatenation += RegUsername.getText().toString();
-				URLConcatenation += RegPassword.getText().toString();
+				URLConcatenation += RegUsername.getText().toString() + "/";
+				URLConcatenation += RegPassword.getText().toString() + "/";
 				URLConcatenation += ConfirmPassword.getText().toString();
 
 				//Create a Request Que for the JsonObjectRequest
