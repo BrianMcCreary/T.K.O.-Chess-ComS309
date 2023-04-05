@@ -6,6 +6,5 @@ import javax.persistence.Table;
 @Table
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
     FriendRequest findById(int id);
-
     void deleteById(int id);
 }
