@@ -3,6 +3,9 @@ package com.example.tko_chess;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Lex Somers
+ */
 public class BoxingActivity extends AppCompatActivity {
 
     @Override

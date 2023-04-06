@@ -8,6 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * @author Zachary Scurlock
+ * @author Lex Somers
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     Button tkoChess;
@@ -22,6 +29,24 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+/*      //Delete this or comment out. Only for testing purposes when server is not up.
+        JSONObject user = new JSONObject();
+        try {
+            user.put("username", "testUsername");
+            user.put("password", "testPassword");
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            SingletonUser.login(user);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        //Delete this or comment out. Only for testing purposes when server is not up.*/
 
         tkoChess = findViewById(R.id.MenuToTKOChessBtn);
 
@@ -57,6 +82,10 @@ public class MainMenuActivity extends AppCompatActivity {
         LogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Logs user out by forgetting current user.
+                SingletonUser.logout();
+
                 Intent intent = new Intent(MainMenuActivity.this, LogInActivity.class);
                 startActivity(intent);
             }
