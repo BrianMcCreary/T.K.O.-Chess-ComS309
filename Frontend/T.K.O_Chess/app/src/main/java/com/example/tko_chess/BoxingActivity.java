@@ -1,7 +1,9 @@
 package com.example.tko_chess;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -90,5 +92,37 @@ public class BoxingActivity extends AppCompatActivity {
 
         //LinearLayout initializations
         OptionsLayout = findViewById(R.id.OptionsLayout);
+
+        //Opens the options menu
+        OptionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.boxing_menu_layout, null, false);
+                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.ConcedeBtn);
+                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
+
+                //Concedes game and returns user to main menu
+                ConcedeGameBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //TODO Implement Concede game functionality
+
+                        //Returns user to main menu
+                        Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                //Closes options menu
+                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OptionsLayout.removeAllViews();
+                    }
+                });
+                OptionsLayout.addView(inflatedLayout);
+            }
+        });
+
     }
 }
