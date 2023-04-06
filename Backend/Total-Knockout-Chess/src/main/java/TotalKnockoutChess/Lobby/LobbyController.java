@@ -20,11 +20,9 @@ public class LobbyController {
     @PostMapping("/lobby")
     public String hostLobby(@RequestBody User owner){
         // If user doesn't exist or already is in a lobby, return as a failure
-//        if(owner == null){
-//            return failure;
-//        }
-
-
+        //        if(owner == null){
+        //            return failure;
+        //        }
 
         Lobby lobby = new Lobby(owner);
         Long lobbyCode = lobby.generateLobbyCode(lobbyRepository.findAll());
