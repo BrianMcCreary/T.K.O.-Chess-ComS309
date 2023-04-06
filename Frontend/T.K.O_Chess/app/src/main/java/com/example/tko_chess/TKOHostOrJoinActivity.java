@@ -1,6 +1,5 @@
 package com.example.tko_chess;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +32,7 @@ public class TKOHostOrJoinActivity extends AppCompatActivity {
         hostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOHostOrJoinActivity.this, LobbyActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, ChessLobbyActivity.class);
                 startActivity(intent);
             }
         });
@@ -42,7 +41,7 @@ public class TKOHostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOHostOrJoinActivity.this, LobbyPasswordActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, ChessLobbyPasswordActivity.class);
                 startActivity(intent);
             }
         });

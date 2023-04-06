@@ -1,13 +1,13 @@
 package com.example.tko_chess;
 
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
-import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LobbyActivity extends AppCompatActivity {
+public class TKOChessLobbyActivity extends AppCompatActivity {
 
     Button startBtn;
     ScrollView lobby;

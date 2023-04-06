@@ -32,7 +32,7 @@ public class ChessHostOrJoinActivity extends AppCompatActivity {
         hostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChessHostOrJoinActivity.this, LobbyActivity.class);
+                Intent intent = new Intent(ChessHostOrJoinActivity.this, ChessLobbyActivity.class);
                 startActivity(intent);
             }
         });
@@ -41,7 +41,7 @@ public class ChessHostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChessHostOrJoinActivity.this, LobbyPasswordActivity.class);
+                Intent intent = new Intent(ChessHostOrJoinActivity.this, ChessLobbyPasswordActivity.class);
                 startActivity(intent);
             }
         });
