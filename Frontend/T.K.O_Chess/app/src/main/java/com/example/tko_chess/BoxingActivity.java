@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
+
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,6 +62,7 @@ public class BoxingActivity extends AppCompatActivity {
     //private WebSocketClient WebSocket;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,7 @@ public class BoxingActivity extends AppCompatActivity {
 
         //LinearLayout initializations
         OptionsLayout = findViewById(R.id.OptionsLayout);
+
 
 
         //Opens the options menu
