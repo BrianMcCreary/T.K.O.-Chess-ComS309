@@ -17,14 +17,15 @@ public class BoxingGameController {
 
     private final String success = "{\"message\":\"success\"}";
     private final String failure = "{\"message\":\"failure\"}";
-    private final String trueMessage = "{\"message\":\"true\"}";
-    private final String falseMessage = "{\"message\":\"false\"}";
 
+    //Method for creating the boxing game
     @PostMapping(path = "/boxingGame/{player1}/{player2}")
     public String createBoxingGame(String player1, String player2) {
-        User p1;
-        User p2;
+        User p1 = null;
+        User p2 = null;
         int tester = 0;
+
+        //Loop through all users and find the two players
         for (User user : userRepository.findAll()) {
             if (user.getUsername().equals(player1)) {
                 p1 = user;
@@ -38,7 +39,9 @@ public class BoxingGameController {
         if (tester != 2) {
             return failure;     //Users not found
         }
-        return null;
+        BoxingGame game = new BoxingGame(p1, p2);
+        boxingGameRepository.save(game);
+        return success;
     }
 
 }
