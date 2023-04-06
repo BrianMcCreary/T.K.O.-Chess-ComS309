@@ -91,7 +91,7 @@
 
         <activity android:name=".TKOHostOrJoinActivity"
             android:exported="false">
-        </activity>'
+        </activity>
 
         <activity android:name=".TKOChessLobbyPasswordActivity"
             android:exported="false">
@@ -102,6 +102,18 @@
         </activity>
 
         <activity android:name=".ChessLobbyPasswordActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".ChessLobbyActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOChessLobbyActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOLobbyActivity"
             android:exported="false">
         </activity>
 

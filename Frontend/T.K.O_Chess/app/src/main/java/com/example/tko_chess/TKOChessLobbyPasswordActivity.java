@@ -64,7 +64,7 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
 
                 RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyPasswordActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const."URL HERE", lobbyPass,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_TKOCHESSLOBBYPASSWORD, lobbyPass,
                         new Response.Listener<JSONObject>(){
 
                             @Override

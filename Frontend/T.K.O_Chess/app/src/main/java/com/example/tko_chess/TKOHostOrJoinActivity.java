@@ -32,7 +32,7 @@ public class TKOHostOrJoinActivity extends AppCompatActivity {
         hostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOHostOrJoinActivity.this, ChessLobbyActivity.class);
+                Intent intent = new Intent(TKOHostOrJoinActivity.this, TKOLobbyActivity.class);
                 startActivity(intent);
             }
         });

@@ -64,7 +64,7 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
 
                 RequestQueue queue = Volley.newRequestQueue(ChessLobbyPasswordActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const."URL HERE", lobbyPass,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_CHESSLOBBYPASSWORD, lobbyPass,
                         new Response.Listener<JSONObject>(){
 
                             @Override
