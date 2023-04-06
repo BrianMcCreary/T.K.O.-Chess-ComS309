@@ -13,9 +13,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Opens the boxing options menu."
         android:padding="0dp"
         android:scaleType="fitCenter"
-        android:contentDescription="Opens the boxing options menu."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/menu" />
@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/block" />
 
     <ImageView
-        android:id="@+id/player1BlockImg"
+        android:id="@+id/Player1BlockImg"
         android:layout_width="65dp"
         android:layout_height="97dp"
         android:layout_marginStart="96dp"
@@ -150,7 +150,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="00:00"
+        android:text="00:00s"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/TimeRemainingText"
@@ -359,5 +359,14 @@
         app:layout_constraintEnd_toEndOf="@+id/ConfirmMoveText"
         app:layout_constraintStart_toStartOf="@+id/ConfirmMoveText"
         app:layout_constraintTop_toBottomOf="@+id/ConfirmMoveText" />
+
+    <LinearLayout
+        android:id="@+id/OptionsLayout"
+        android:layout_width="125dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/BoxingMenuBtn"
+        app:layout_constraintTop_toTopOf="@+id/BoxingMenuBtn"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

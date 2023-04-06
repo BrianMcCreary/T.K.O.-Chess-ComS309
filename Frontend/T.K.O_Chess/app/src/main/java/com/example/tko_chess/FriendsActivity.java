@@ -400,7 +400,7 @@ public class FriendsActivity extends AppCompatActivity {
             TextView friendNameText = (TextView) inflatedLayout.findViewById(R.id.FriendNameTextView);
             Button removeFriendBtn = (Button) inflatedLayout.findViewById(R.id.RemoveFriendBtn);
 
-            //Sets the friend's username in the text box next to the remove button
+            //Sets the friend's username in the text box next to the remove buttons
             try {
                 friendNameText.setText(FriendsList.getString(i));
             } catch (JSONException e) {
