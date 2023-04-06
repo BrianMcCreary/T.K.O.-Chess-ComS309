@@ -6,8 +6,7 @@ import javax.persistence.Table;
 
 @Table
 public interface LobbyRepository extends JpaRepository<Lobby, Long>{
-//    Lobby getById(Long id);
-    void deleteById(Long id);
+    Lobby getById(int id);
 
     Lobby getByCode(Long code);
 }

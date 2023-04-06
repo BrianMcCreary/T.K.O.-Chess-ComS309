@@ -17,17 +17,13 @@ public class User {
     private String username;        //User username
     private String password;        //User password
 
-    @JsonIgnore
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private Lobby lobby;
 
-    @JsonIgnore
     @ElementCollection
     private List<String> incomingFriendRequests;        //User's incoming friend requests
-    @JsonIgnore
     @ElementCollection
     private List<String> outgoingFriendRequests;        //User's outgoing friend requests
-    @JsonIgnore
     @ElementCollection
     private List<String> friends;       //User's friends
 
@@ -119,16 +115,11 @@ public class User {
         return friends;
     }
 
-    public Lobby getLobby(){ return lobby; }
-
-    public void setLobby(Lobby lobby) {this.lobby = lobby; }
-
     public String toString(){
         String str = "";
         str += "ID: " + id + "\n";
         str += "Username: " + username + "\n";
         str += "Password: " + password + "\n";
-        str += "Lobby: " + lobby + "\n";
         if(incomingFriendRequests != null) {
             str += "IncomingFriendRequests: \n";
             for (String s : incomingFriendRequests) {

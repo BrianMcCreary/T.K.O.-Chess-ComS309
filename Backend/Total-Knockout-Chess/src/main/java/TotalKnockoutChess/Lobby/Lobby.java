@@ -12,10 +12,12 @@ import java.util.Random;
 public class Lobby {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     private Long code;
+
+    private int userCount;
 
     @OneToOne
     @JoinColumn(name = "ownerId")
@@ -41,9 +43,9 @@ public class Lobby {
      */
     public Lobby(User owner) {
         spectators = new ArrayList<>();
-        owner.setLobby(this);
         this.owner = owner;
         spectators.add(owner);
+        userCount = 1;
     }
 
     // Generate code for the lobby
@@ -67,10 +69,10 @@ public class Lobby {
     public void setCode(Long code) { this.code = code; }
 
     // Getter and Setter for the id of the lobby
-    public Long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(Long id){
+    public void setId(int id){
         this.id = id;
     }
 
@@ -86,7 +88,7 @@ public class Lobby {
     public User getPlayer1() {
         return player1;
     }
-    public void setPlayer1(){
+    public void setPlayer1(User player1){
         this.player1 = player1;
     }
 
@@ -94,7 +96,7 @@ public class Lobby {
     public User getPlayer2() {
         return player2;
     }
-    public void setPlayer2(){
+    public void setPlayer2(User player2){
         this.player2 = player2;
     }
 
@@ -130,7 +132,7 @@ public class Lobby {
      */
     public void switchToSpectator(User user){
         // Will only switch if user is not already spectating.
-        if(!spectators.contains(user)) {
+        if(!spectators.contains(user) && this.contains(user)) {
 
             // Before using .equals, must make sure player1 and player2 objects aren't null
             if (player1 != null && player2 != null) {
@@ -151,13 +153,14 @@ public class Lobby {
 
     // Method to return whether a specific user is in the lobby
     public boolean contains(User user){
+
         // Check if user is spectating
         for(User spectator : spectators) {
             if (spectator.equals(user)) {
                 System.out.println("Spectator is spectating");
                 return true;
             }
-            System.out.println("Spectator object:\n" + spectator.toString() + "\nCompared to the passed user object:\n" + user.toString());
+            System.out.println(" object:\n" + spectator.toString() + "\nCompared to the passed user object:\n" + user.toString());
         }
 
         // Check if both player objects are null (needed to not throw errors when calling .equals)
@@ -172,6 +175,33 @@ public class Lobby {
         else if(player1.equals(user)){
             return true;
         }
+        else if(player2.equals(user)){
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return "LobbyID: " + id + "\nLobby Code: " + code;
+    }
+
+    // Methods to control increase and decrease of users in the lobby
+    public void incrementUserCount(){
+        userCount++;
+    }
+    public void decrementUserCount(){
+        if(userCount > 0) {
+            userCount--;
+        }
+    }
+    // Method to return number of users in the lobby
+    public int getUserCount(){
+        return userCount;
+    }
+
+    // Method to remove someone from the spectators list
+    public void removeSpectator(User spectator) {
+        spectators.remove(spectator);
     }
 }
