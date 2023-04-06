@@ -10,6 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -52,6 +57,8 @@ public class BoxingActivity extends AppCompatActivity {
     //LinearLayout declarations
     LinearLayout OptionsLayout;
 
+    //private WebSocketClient WebSocket;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,7 @@ public class BoxingActivity extends AppCompatActivity {
 
         //LinearLayout initializations
         OptionsLayout = findViewById(R.id.OptionsLayout);
+
 
         //Opens the options menu
         OptionsBtn.setOnClickListener(new View.OnClickListener() {
