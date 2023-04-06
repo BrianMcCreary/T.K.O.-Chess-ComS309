@@ -1,9 +1,11 @@
 package TotalKnockoutChess.Users;
 
+import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Friends.FriendRequest;
 import TotalKnockoutChess.Friends.FriendRequestRepository;
 import TotalKnockoutChess.Friends.Friendship;
 import TotalKnockoutChess.Friends.FriendshipRepository;
+import TotalKnockoutChess.Statistics.UserStatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,6 +20,9 @@ public class UserController {
 
     @Autowired
     FriendshipRepository friendshipRepository;
+
+    @Autowired
+    UserStatsRepository userStatsRepository;
 
     private final String success = "{\"message\":\"success\"}";     //Messages to return to frontend
     private final String failure = "{\"message\":\"failure\"}";
@@ -49,6 +54,8 @@ public class UserController {
         }
         User u = new User(username, password);
         userRepository.save(u);
+        UserStats us = new UserStats(u);
+        userStatsRepository.save(us);
         return success;
     }
 
