@@ -72,7 +72,9 @@ public class MainMenuActivity extends AppCompatActivity {
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(MainMenuActivity.this, TKOHostOrJoinActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
+
+                //TODO Change this back Intent intent = new Intent(MainMenuActivity.this, TKOHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
