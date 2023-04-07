@@ -63,10 +63,11 @@ public class LogInActivity extends AppCompatActivity {
                 String username = Username.getText().toString();
                 String password = Username.getText().toString();
 
+                //JSONObejct containing login info that will be send to login for a login request
                 JSONObject user = new JSONObject();
                 try {
-                    user.put("username", Username.getText());
-                    user.put("password", Password.getText());
+                    user.put("username", username);
+                    user.put("password", password);
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -81,12 +82,14 @@ public class LogInActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 String temp;
+
                                 //Get confirmation/failure of login message from backend. Throw error if response is not string
                                 try {
                                     temp = (String) response.get("message");
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
+
                                 //If login was "success", take user to main menu screen.
                                 if (temp.equals("true")) {
                                     SingletonUser currUser = SingletonUser.getInstance();
@@ -99,6 +102,7 @@ public class LogInActivity extends AppCompatActivity {
                                     Intent intent = new Intent(LogInActivity.this, MainMenuActivity.class);
                                     startActivity(intent);
                                 }
+
                                 //else, show error message
                                 else {
                                     try {
@@ -115,6 +119,7 @@ public class LogInActivity extends AppCompatActivity {
                                 LoginError.setText("An error occurred.");
                             }
                         });
+
                 queue.add(userObjectReq);
             }
         });
