@@ -39,7 +39,7 @@ autoDeploy:
     refs:
       - main # Only deploy when on main
     changes:
-      - Frontend/**/* # Only deploy when there are changes to Frontend folder
+      - Frontend/**/* 
 
 
 android-build:
