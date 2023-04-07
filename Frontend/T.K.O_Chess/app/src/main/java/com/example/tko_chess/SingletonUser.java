@@ -139,6 +139,14 @@ public class SingletonUser extends AppCompatActivity {
         }
     }
 
+    public JSONArray getListOfUsers(){
+        try{
+            return (JSONArray) UserObject.get("users");
+        } catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     //Returns a JSONArray with Strings of the incoming friend requests of the currently logged in user.
