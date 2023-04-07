@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
+//import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.drafts.Draft_10;
 import org.java_websocket.handshake.ServerHandshake;
 
 
@@ -137,8 +139,6 @@ public class BoxingActivity extends AppCompatActivity {
         //String initializations
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
-
-
 
         //Connect to WebSocket
         try {
