@@ -111,46 +111,57 @@ public class BoxingGame {
 
     //Method used to get the username of the round winner
     public String getRoundWinner() {
-        p1Move = "";
-        p2Move = "";
-
         //If player1's move is kick, look at player2's move and determine who won
         if (p1Move.equals("kick")) {
             if (p2Move.equals("kick")) {
+                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("block")) {
+                clearMoves();
                 return player1.getUsername();
             }
             else if (p2Move.equals("jab")) {
+                clearMoves();
                 return player2.getUsername();
             }
         }
         //If player1's move is block, look at player2's move and determine who won
         else if (p1Move.equals("block")) {
             if (p2Move.equals("kick")) {
+                clearMoves();
                 return player2.getUsername();
             }
             else if (p2Move.equals("block")) {
+                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("jab")) {
+                clearMoves();
                 return player1.getUsername();
             }
         }
         //If player1's move is jab, look at player2's move and determine who won
         else if (p1Move.equals("jab")) {
             if (p2Move.equals("kick")) {
+                clearMoves();
                 return player1.getUsername();
             }
             else if (p2Move.equals("block")) {
+                clearMoves();
                 return player2.getUsername();
             }
             else if (p2Move.equals("jab")) {
+                clearMoves();
                 return "tie";
             }
         }
         return null;
+    }
+
+    public void clearMoves() {
+        p1Move = "";
+        p2Move = "";
     }
 
     //Method for determining if one of the players has won

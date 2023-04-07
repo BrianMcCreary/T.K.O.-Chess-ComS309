@@ -74,17 +74,17 @@ public class BoxingGameSocket {
                 //Find the round winner, send information to the client, and update the boxing game accordingly
                 if (roundWinner.equals(bg.getPlayer1().getUsername())) {
                     bg.dockLife(bg.getPlayer2().getUsername());
-                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("RoundWin");
-                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("RoundLoss");
+                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("RoundWin " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("RoundLoss " + bg.getP1Move());
                 }
                 else if (roundWinner.equals(bg.getPlayer2().getUsername())) {
                     bg.dockLife(bg.getPlayer1().getUsername());
-                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("RoundLoss");
-                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("RoundWin");
+                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
-                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("Tie");
-                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("Tie");
+                    usernameSessionMap.get(bg.getPlayer1().getUsername()).getBasicRemote().sendText("Tie" + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2().getUsername()).getBasicRemote().sendText("Tie" + bg.getP1Move());
                 }
             }
             boxingGameRepository.flush();
