@@ -145,6 +145,7 @@ public class BoxingActivity extends AppCompatActivity {
             WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
+                    System.out.println("onOpen returned");
 
                 }
 
