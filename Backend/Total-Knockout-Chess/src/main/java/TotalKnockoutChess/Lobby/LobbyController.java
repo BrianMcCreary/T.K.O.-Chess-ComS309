@@ -28,6 +28,13 @@ public class LobbyController {
             return failure;
         }
 
+        // If user is already in a lobby, return as a failure.
+        for(Lobby l : lobbyRepository.findAll()){
+            if(l.contains(owner)){
+                return failure;
+            }
+        }
+
         // Create new lobby, generate and set code.
         Lobby lobby = new Lobby(owner);
         Long lobbyCode = lobby.generateLobbyCode(lobbyRepository.findAll());
@@ -150,7 +157,7 @@ public class LobbyController {
 
     //Mapping to delete a lobby from the repository.
     @DeleteMapping("/lobby/{lobbyId}")
-    public void deleteLobby(@PathVariable int lobbyId){
+    public void deleteLobby(@PathVariable Long lobbyId){
         Lobby l = lobbyRepository.getById(lobbyId);
         l.setOwner(null);
         lobbyRepository.delete(l);
