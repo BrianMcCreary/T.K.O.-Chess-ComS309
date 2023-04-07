@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 
@@ -139,10 +140,17 @@ public class BoxingActivity extends AppCompatActivity {
         URLConcatenation += currUser.getUsername();
 
 
+        Draft[] drafts = {
+                new Draft_6455()
+        };
+
+
+
+
 
         //Connect to WebSocket
         try {
-            WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation)) {
+            WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation), (Draft)drafts[0]) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     System.out.println("onOpen returned");
@@ -198,7 +206,7 @@ public class BoxingActivity extends AppCompatActivity {
                             //Lowers health of User
                             UserHealth -= 1;
 
-                            //Lower's user's health and updates health bar
+                            //Lowers user's health and updates health bar
                             if (UserHealth == 2) {
                                 Player1FullHeart1.setVisibility(View.INVISIBLE);
                                 Player1EmptyHeart1.setVisibility(View.VISIBLE);
