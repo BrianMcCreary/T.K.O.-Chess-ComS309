@@ -327,7 +327,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-
+                    System.out.println("onClose returned");
                 }
 
                 @Override
@@ -462,6 +462,8 @@ public class BoxingActivity extends AppCompatActivity {
 
                             }
                         });
+
+                        queue.add(HostGameReq);
                     }
                 });
                 //TODO ////////////////////////////////////DELETE WHEN DONE TESTING //////////////////////////////////////////
