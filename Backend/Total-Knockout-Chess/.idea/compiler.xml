@@ -10,6 +10,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="onetoone" target="1.8" />
+      <module name="Total-Knockout-Chess" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
