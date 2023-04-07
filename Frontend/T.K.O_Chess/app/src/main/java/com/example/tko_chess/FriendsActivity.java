@@ -106,6 +106,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Puts sender's username and acceptor's username in a String to concatenate onto URL path
+                URLConcatenation = "";
                 URLConcatenation += currUser.getUsername() + "/";
                 URLConcatenation += FriendReqTo.getText().toString();
                 sendRequest();
