@@ -3,6 +3,7 @@ package TotalKnockoutChess.Boxing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import javax.websocket.Session;
@@ -18,8 +19,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@Controller
 @ServerEndpoint(value = "/boxingGame/{username}")
+@Component
 public class BoxingGameSocket {
 
     private static BoxingGameRepository boxingGameRepository;
@@ -37,6 +38,7 @@ public class BoxingGameSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException {
         logger.info("Entered into Open");
+        System.out.println("Opened connection");
 
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);

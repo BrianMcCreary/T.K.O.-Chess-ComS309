@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
+//import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.drafts.Draft_10;
 import org.java_websocket.handshake.ServerHandshake;
 
 
@@ -138,13 +140,12 @@ public class BoxingActivity extends AppCompatActivity {
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
-
-
         //Connect to WebSocket
         try {
             WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
+                    System.out.println("onOpen returned");
 
                 }
 
@@ -331,6 +332,9 @@ public class BoxingActivity extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
+
+        //Connect to the websocket
+        WebSocket.connect();
 
 
 
@@ -542,6 +546,7 @@ public class BoxingActivity extends AppCompatActivity {
         waitTime(1.0);
         ShowMoveCountDown1.setVisibility(View.INVISIBLE);
     }
+
 
 
     //Wait time seconds

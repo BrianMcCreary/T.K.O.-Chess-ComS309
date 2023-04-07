@@ -3,6 +3,7 @@ package TotalKnockoutChess.Boxing;
 import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class BoxingGameController {
 
     //Method for creating the boxing game
     @PostMapping(path = "/boxingGame/{player1}/{player2}")
-    public String createBoxingGame(String player1, String player2) {
+    public String createBoxingGame(@PathVariable String player1, @PathVariable String player2) {
         User p1 = null;
         User p2 = null;
         int tester = 0;
