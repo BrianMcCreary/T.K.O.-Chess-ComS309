@@ -6,16 +6,14 @@
     android:background="@color/very_light_grey">
 
     <EditText
-        android:id="@+id/RequestFriendNameEditText"
+        android:id="@+id/RequestFriendNameTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
 
-        android:inputType="none"
-        android:enabled="false"
+        android:background="?attr/editTextBackground"
         android:hint="User"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:paddingVertical="1dp"
         android:textColorHint="@color/black"
         android:textSize="24sp"
         android:textColor="@color/black"
@@ -26,9 +24,8 @@
         android:id="@+id/CancelFriendBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_gravity="center"
         android:backgroundTint="@color/soft_blue"
-        android:paddingHorizontal="7dp"
-        android:paddingVertical="2dp"
         android:text="Cancel"
         android:textColor="@color/black"
         android:textSize="20sp"
