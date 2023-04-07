@@ -5,65 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b92b46e-b36f-4de9-854b-2bb0931c8aea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ChessHostOrJoinActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ChessLobbyActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ChessLobbyPasswordActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOChessHostOrJoinActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOChessLobbyActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOChessLobbyPasswordActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOHostOrJoinActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOLobbyActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/TKOLobbyPasswordActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_bishop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_king.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_knight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_pawn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_queen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/black_rook.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/blackchesstile.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/bluechesstile.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/chess_board.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/chessboard_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/royal_blue_color_solid_background_1920x1080.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_bishop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_king.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_knight.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_pawn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_queen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/white_rook.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess_game_lobby.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess_host_or_join.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_lobby_password.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_tko_chess_game_lobby.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_tko_chess_host_or_join.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_tko_game_lobby.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_tko_host_or_join.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/game_result_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitlab-ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/TotalKnockoutChessApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/app/src/main/java/com/example/vamsi/myapplication/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/app/src/main/java/com/example/vamsi/myapplication/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/MainMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/MainMenuActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/Tile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/chessboard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ultils/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ultils/Const.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/menu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_boxing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_boxing.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/boxing_menu_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/boxing_menu_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,9 +24,29 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-19",
+    "last_opened_file_path": "E:/COMS309/1_an_5/Backend/Total-Knockout-Chess",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Total-Knockout-Chess" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Total-Knockout-Chess" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
