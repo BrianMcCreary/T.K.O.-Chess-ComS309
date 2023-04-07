@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ComponentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
-import com.example.tko_chess.SingletonUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +54,6 @@ public class FriendsActivity extends AppCompatActivity {
 
     Context context = this;
 
-    //Display Friends List
     //Create a string holding the username to concatenate to the URL
     String URLConcatenation = "";
 
@@ -67,6 +63,7 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
         //Updating user info
         currUser.updateUserObject(currUser.getUsername(), context);
 
@@ -194,7 +191,7 @@ public class FriendsActivity extends AppCompatActivity {
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < PendingFriendReq.length(); i++) {
             View inflatedLayout = getLayoutInflater().inflate(R.layout.pending_friend_request_layout, null, false);
-            TextView IncomingFriendNameText = (TextView) inflatedLayout.findViewById(R.id.IncomingFriendNameEditText);
+            TextView IncomingFriendNameText = (TextView) inflatedLayout.findViewById(R.id.IncomingFriendNameTextView);
             Button acceptFriendBtn = (Button) inflatedLayout.findViewById(R.id.AcceptFriendBtn);
             Button denyFriendBtn = (Button) inflatedLayout.findViewById(R.id.DenyFriendBtn);
 
@@ -212,7 +209,7 @@ public class FriendsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = IncomingFriendNameText.getText().toString() + "/";
                     URLConcatenation += currUser.getUsername();
 
                     acceptFriendReq();
@@ -223,13 +220,15 @@ public class FriendsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = IncomingFriendNameText.getText().toString() + "/";
                     URLConcatenation += currUser.getUsername();
 
                     denyFriendReq();
                 }
             });
         }
+        //Tracks that we are currently on the pending friends requests screen
+        DisplayTracker = 2;
     }
 
 
@@ -310,7 +309,7 @@ public class FriendsActivity extends AppCompatActivity {
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < SentFriendReq.length(); i++) {
             View inflatedLayout = getLayoutInflater().inflate(R.layout.sent_friend_request_layout, null, false);
-            TextView requestedFriendNameText = (TextView) inflatedLayout.findViewById(R.id.RequestFriendNameEditText);
+            TextView requestedFriendNameText = (TextView) inflatedLayout.findViewById(R.id.RequestFriendNameTextView);
             Button cancelFriendBtn = (Button) inflatedLayout.findViewById(R.id.CancelFriendBtn);
 
             //Sets the friend's username in the text box next to the remove button
@@ -334,6 +333,8 @@ public class FriendsActivity extends AppCompatActivity {
                 }
             });
         }
+        //Tracks that we are currently on the sent friends requests screen
+        DisplayTracker = 1;
     }
 
 
@@ -378,11 +379,12 @@ public class FriendsActivity extends AppCompatActivity {
 
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < FriendsList.length(); i++) {
+
             View inflatedLayout = getLayoutInflater().inflate(R.layout.friend_layout, null, false);
-            TextView friendNameText = (TextView) inflatedLayout.findViewById(R.id.FriendNameEditText);
+            TextView friendNameText = (TextView) inflatedLayout.findViewById(R.id.FriendNameTextView);
             Button removeFriendBtn = (Button) inflatedLayout.findViewById(R.id.RemoveFriendBtn);
 
-            //Sets the friend's username in the text box next to the remove buttons
+            //Sets the friend's username in the text box next to the remove button
             try {
                 friendNameText.setText(FriendsList.getString(i));
             } catch (JSONException e) {
@@ -403,6 +405,9 @@ public class FriendsActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //Tracks that we are currently on the view friends screen
+        DisplayTracker = 0;
     }
 
 
