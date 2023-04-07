@@ -332,6 +332,9 @@ public class BoxingActivity extends AppCompatActivity {
             return;
         }
 
+        //Connect to the websocket
+        WebSocket.connect();
+
 
 
         BlockBtn.setOnClickListener(new View.OnClickListener() {
@@ -542,6 +545,7 @@ public class BoxingActivity extends AppCompatActivity {
         waitTime(1.0);
         ShowMoveCountDown1.setVisibility(View.INVISIBLE);
     }
+
 
 
     //Wait time seconds
