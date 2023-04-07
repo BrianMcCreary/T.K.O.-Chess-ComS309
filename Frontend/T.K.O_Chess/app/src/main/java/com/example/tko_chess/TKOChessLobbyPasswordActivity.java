@@ -27,6 +27,7 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
     Button joinBtn;
     ImageButton backBtn;
     TextView error;
+    String URLConcatenation = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +59,14 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
                 JSONObject lobbyPass = new JSONObject();
                 try{
                     lobbyPass.put("Lobby Password", lobbyKey.getText());
+                    URLConcatenation += lobbyKey.getText();
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
 
                 RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyPasswordActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_TKOCHESSLOBBYPASSWORD, lobbyPass,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_TKOCHESSLOBBYPASSWORD + URLConcatenation, null,
                         new Response.Listener<JSONObject>(){
 
                             @Override

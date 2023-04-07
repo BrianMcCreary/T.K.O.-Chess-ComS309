@@ -32,7 +32,7 @@ public class Const {
 
     public static final String URL_SERVER_CHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
 
-    public static final String URL_SERVER_TKOCHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+    public static final String URL_SERVER_TKOCHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/";
 
     public static final String URL_SERVER_CHESSLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
 
