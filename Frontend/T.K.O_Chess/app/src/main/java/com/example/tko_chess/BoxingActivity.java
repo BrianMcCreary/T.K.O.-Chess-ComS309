@@ -145,6 +145,9 @@ public class BoxingActivity extends AppCompatActivity {
         };
 
 
+
+
+
         //Connect to WebSocket
         try {
             WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation), (Draft)drafts[0]) {
@@ -203,7 +206,7 @@ public class BoxingActivity extends AppCompatActivity {
                             //Lowers health of User
                             UserHealth -= 1;
 
-                            //Lower's user's health and updates health bar
+                            //Lowers user's health and updates health bar
                             if (UserHealth == 2) {
                                 Player1FullHeart1.setVisibility(View.INVISIBLE);
                                 Player1EmptyHeart1.setVisibility(View.VISIBLE);
