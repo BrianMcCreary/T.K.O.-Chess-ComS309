@@ -13,8 +13,6 @@ public class Profiles extends AppCompatActivity {
 
     ImageButton goBack;
     Button editProfile;
-    TextView username;
-    SingletonUser currUser = SingletonUser.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,5 @@ public class Profiles extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        username = findViewById(R.id.name);
-        username.setText(currUser.getUsername());
     }
 }
