@@ -19,7 +19,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@ServerEndpoint(value = "/boxingGame/{username}")
+@ServerEndpoint(value = "/websocket/{username}")
 @Component
 public class BoxingGameSocket {
 
