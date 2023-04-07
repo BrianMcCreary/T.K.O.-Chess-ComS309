@@ -22,25 +22,21 @@ public class BoxingGameController {
     //Method for creating the boxing game
     @PostMapping(path = "/boxingGame/{player1}/{player2}")
     public String createBoxingGame(@PathVariable String player1, @PathVariable String player2) {
-        User p1 = null;
-        User p2 = null;
         int tester = 0;
 
         //Loop through all users and find the two players
         for (User user : userRepository.findAll()) {
             if (user.getUsername().equals(player1)) {
-                p1 = user;
                 tester++;
             }
             else if (user.getUsername().equals(player2)) {
-                p2 = user;
                 tester++;
             }
         }
         if (tester != 2) {
             return failure;     //Users not found
         }
-        BoxingGame game = new BoxingGame(p1, p2);
+        BoxingGame game = new BoxingGame(player1, player2);
         boxingGameRepository.save(game);
         return success;
     }
