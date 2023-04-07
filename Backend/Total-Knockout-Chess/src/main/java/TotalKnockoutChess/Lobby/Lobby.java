@@ -51,12 +51,12 @@ public class Lobby {
     // Generate code for the lobby
     public Long generateLobbyCode(List<Lobby> lobbies){
         Random rand = new Random(System.currentTimeMillis());
-        Long lobbyCode = rand.nextLong(1000000);
+        Long lobbyCode = rand.nextLong() % 1000000;
 
         // Make sure lobby code is unique
         for(Lobby l : lobbies){
             while (l.getCode().equals(lobbyCode)){
-                lobbyCode = rand.nextLong(1000000);
+                lobbyCode = rand.nextLong() % 1000000;
             }
         }
         return lobbyCode;
