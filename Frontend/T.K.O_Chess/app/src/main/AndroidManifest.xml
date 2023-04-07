@@ -81,18 +81,41 @@
             android:exported="false">
         </activity>
 
-        <!--
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
-            android:exported="false"/>
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
-            android:exported="false"/>
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-            android:exported="false"/>
-        -->
+        <activity android:name=".TKOChessHostOrJoinActivity"
+                  android:exported="false">
+        </activity>
 
+        <activity android:name=".ChessHostOrJoinActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOHostOrJoinActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOChessLobbyPasswordActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOLobbyPasswordActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".ChessLobbyPasswordActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".ChessLobbyActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOChessLobbyActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".TKOLobbyActivity"
+            android:exported="false">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
