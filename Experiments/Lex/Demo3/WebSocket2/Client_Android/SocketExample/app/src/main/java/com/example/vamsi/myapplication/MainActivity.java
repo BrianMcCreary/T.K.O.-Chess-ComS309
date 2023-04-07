@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
   TextView t1;
 
   private WebSocketClient cc;
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
