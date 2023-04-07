@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.Log;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -153,12 +154,14 @@ public class BoxingActivity extends AppCompatActivity {
             WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation), (Draft)drafts[0]) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
                     System.out.println("onOpen returned");
 
                 }
 
                 @Override
                 public void onMessage(String message) {
+                    Log.d("", "run() returned: " + message);
                     String[] strings = message.split(" ");
 
                     //If user's move beat opponent's move
@@ -327,11 +330,13 @@ public class BoxingActivity extends AppCompatActivity {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
+                    Log.d("CLOSE", "onClose() returned: " + reason);
                     System.out.println("onClose returned");
                 }
 
                 @Override
                 public void onError(Exception ex) {
+                    Log.d("Exception:", ex.getMessage().toString());
 
                 }
             };
@@ -350,7 +355,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to block
-                SelectedMove = "";
                 SelectedMove = "block";
 
                 //Changes player1 icon to block pose
@@ -367,7 +371,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to kick
-                SelectedMove = "";
                 SelectedMove = "kick";
 
                 //Changes player1 icon to kick pose
@@ -384,7 +387,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to jab
-                SelectedMove = "";
                 SelectedMove = "jab";
 
                 //Changes player1 icon to jab pose
@@ -463,6 +465,7 @@ public class BoxingActivity extends AppCompatActivity {
                             }
                         });
 
+                        //Send the request we created
                         queue.add(HostGameReq);
                     }
                 });
