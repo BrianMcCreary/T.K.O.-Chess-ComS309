@@ -24,14 +24,14 @@
         android:id="@+id/BoxingRingImgView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
+        android:background="#FF5722"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.329"
+        app:layout_constraintVertical_bias="0.23000002"
         app:srcCompat="@drawable/boxingring" />
 
     <ImageView
@@ -160,7 +160,7 @@
 
 
     <ImageView
-        android:id="@+id/Player1FullHeart1"
+        android:id="@+id/Player1FullHeart3"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="@+id/Player1NameText"
@@ -171,12 +171,12 @@
         android:id="@+id/Player1FullHeart2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart1"
+        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart3"
         app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player1FullHeart3"
+        android:id="@+id/Player1FullHeart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toEndOf="@+id/Player1FullHeart2"
@@ -184,7 +184,7 @@
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player1EmptyHeart3"
+        android:id="@+id/Player1EmptyHeart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:visibility="invisible"
@@ -193,7 +193,16 @@
         app:srcCompat="@drawable/emptyheart" />
 
     <ImageView
-        android:id="@+id/Player1EmptyHeart1"
+        android:id="@+id/Player1EmptyHeart2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart3"
+        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
+        app:srcCompat="@drawable/emptyheart" />
+
+    <ImageView
+        android:id="@+id/Player1EmptyHeart3"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:visibility="invisible"
@@ -201,14 +210,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
         app:srcCompat="@drawable/emptyheart" />
 
-    <ImageView
-        android:id="@+id/Player1EmptyHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart1"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
+
 
     <TextView
         android:id="@+id/Player1NameText"
@@ -247,16 +249,6 @@
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
 
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
     <ImageView
         android:id="@+id/Player2EmptyHeart1"
         android:layout_width="30dp"
@@ -272,6 +264,15 @@
         android:layout_height="30dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/Player2EmptyHeart3"
+        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
+        app:srcCompat="@drawable/emptyheart" />
+
+    <ImageView
+        android:id="@+id/Player2EmptyHeart3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/emptyheart" />
 
@@ -292,11 +293,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="162dp"
-        android:backgroundTint="@color/soft_blue"
+        android:backgroundTint="#00A0FF"
         android:text="Block"
         android:textColor="#000000"
+
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
@@ -306,7 +308,7 @@
         android:id="@+id/JabBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Jab"
@@ -317,7 +319,7 @@
         android:id="@+id/KickBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="0dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Kick"
@@ -328,7 +330,7 @@
         android:id="@+id/ConfirmMoveBtn"
         android:layout_width="135dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/soft_blue"
         android:text="Confirm Move"
         android:textSize="14sp"
@@ -340,7 +342,7 @@
         android:id="@+id/ConfirmMoveText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Confirm move in: "
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -363,10 +365,63 @@
     <LinearLayout
         android:id="@+id/OptionsLayout"
         android:layout_width="125dp"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/BoxingMenuBtn"
         app:layout_constraintTop_toTopOf="@+id/BoxingMenuBtn"></LinearLayout>
+
+    <TextView
+        android:id="@+id/MoveCountdown3Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="100dp"
+        android:visibility="invisible"
+        android:text="3"
+        android:textColor="#4CAF50"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/MoveCountdown2Text"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
+
+    <TextView
+        android:id="@+id/MoveCountdown2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        android:text="2"
+        android:textColor="#FFEB3B"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
+
+    <TextView
+        android:id="@+id/MoveCountdown1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="100dp"
+        android:visibility="invisible"
+        android:text="1"
+        android:textColor="#FF5722"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/MoveCountdown2Text"
+        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
+
+    <LinearLayout
+        android:id="@+id/GameOverLayout"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:background="@color/very_light_grey"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

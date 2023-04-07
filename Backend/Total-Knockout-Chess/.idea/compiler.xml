@@ -9,10 +9,14 @@
         <module name="Total-Knockout-Chess" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="onetoone" target="1.8" />
+      <module name="Total-Knockout-Chess" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Total-Knockout-Chess" options="" />
+      <module name="Total-Knockout-Chess" options="-parameters" />
       <module name="Total-Knockout-Chess-New-Attempt" options="-parameters" />
       <module name="onetoone" options="-parameters" />
     </option>
