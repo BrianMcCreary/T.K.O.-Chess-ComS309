@@ -33,4 +33,10 @@ public class Const {
     public static final String URL_SERVER_CHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/";
 
     public static final String URL_SERVER_TKOCHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/";
+
+    //WebSocket Address
+    public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
+
+    //Boxing Test URL
+    public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
 }
