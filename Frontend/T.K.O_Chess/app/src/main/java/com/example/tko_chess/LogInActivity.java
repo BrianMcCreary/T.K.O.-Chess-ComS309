@@ -61,7 +61,7 @@ public class LogInActivity extends AppCompatActivity {
 
                 //Strings containing username/password. Used to check that user does exist in database.
                 String username = Username.getText().toString();
-                String password = Username.getText().toString();
+                String password = Password.getText().toString();
 
                 //JSONObejct containing login info that will be send to login for a login request
                 JSONObject user = new JSONObject();
