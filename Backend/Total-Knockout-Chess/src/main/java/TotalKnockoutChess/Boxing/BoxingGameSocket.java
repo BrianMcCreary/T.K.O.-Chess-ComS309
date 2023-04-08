@@ -89,8 +89,8 @@ public class BoxingGameSocket {
  //                   usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie" + bg.getP2Move());
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie" + bg.getP1Move());
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
                 }
                 bg.clearMoves();
             }
