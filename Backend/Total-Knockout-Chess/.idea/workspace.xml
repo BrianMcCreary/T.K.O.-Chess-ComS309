@@ -7,10 +7,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <list default="true" id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" afterDir="false" />
 =======
+=======
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
@@ -86,6 +89,9 @@
       <change beforePath="$PROJECT_DIR$/Total-Knockout-Chess.iml" beforeDir="false" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -106,6 +112,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -114,6 +121,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2O7fs6rk7kvvelrZsr5paVu7RIV" />
+=======
+  <component name="ProjectId" id="2O6R50veRsVoL8e63tmMEEIT7aO" />
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
   <component name="ProjectId" id="2O6R50veRsVoL8e63tmMEEIT7aO" />
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -147,6 +157,9 @@
     "vue.rearranger.settings.migration": "true"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -177,6 +190,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -220,6 +234,17 @@
     <servers />
   </component>
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
+      <changelist id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="" />
+      <created>1680878859595</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680878859595</updated>
+      <workItem from="1680882529119" duration="308000" />
+    </task>
+    <servers />
+  </component>
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
@@ -234,6 +259,9 @@
   </component>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -247,8 +275,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <line>57</line>
           <option name="timeStamp" value="3" />
+=======
+          <line>70</line>
+          <option name="timeStamp" value="5" />
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
           <line>70</line>
           <option name="timeStamp" value="5" />
