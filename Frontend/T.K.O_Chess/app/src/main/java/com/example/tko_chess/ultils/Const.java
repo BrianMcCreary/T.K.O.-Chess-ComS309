@@ -27,4 +27,22 @@ public class Const {
 
     //Used for accepting a friend request sent to you.
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
+
+    public static final String URL_SERVER_TKOLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+
+    public static final String URL_SERVER_CHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+
+    public static final String URL_SERVER_TKOCHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+
+    public static final String URL_SERVER_CHESSLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
+
+    public static final String URL_SERVER_TKOCHESSLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
+
+    public static final String URL_SERVER_TKOLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
+
+    //WebSocket Address
+    public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/";
+
+    //Boxing Test URL
+    public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
 }

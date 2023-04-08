@@ -9,7 +9,6 @@
         android:id="@+id/IncomingFriendNameTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-
         android:background="?attr/editTextBackground"
         android:hint="User"
         android:paddingStart="10dp"
@@ -30,7 +29,6 @@
         android:text="Accept"
         android:textColor="@color/black"
         android:textSize="20sp">
-
     </Button>
 
     <Button
@@ -44,8 +42,5 @@
         android:text="Deny"
         android:textColor="@color/black"
         android:textSize="20sp">
-
     </Button>
 </LinearLayout>
-
-

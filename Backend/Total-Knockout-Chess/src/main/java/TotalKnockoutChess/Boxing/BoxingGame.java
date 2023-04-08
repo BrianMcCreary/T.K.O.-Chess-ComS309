@@ -11,27 +11,31 @@ public class BoxingGame {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "player1Id")
-    private User player1;
+//    @OneToOne
+//    @JoinColumn(name = "player1")
+    @Column(columnDefinition = "TEXT")
+    private String player1;
 
     //Amount of lives player1 has left, starts with 3
     private int p1Lives;
 
     //Move that player1 is doing
+    @Column(columnDefinition = "TEXT")
     private String p1Move;
 
-    @OneToOne
-    @JoinColumn(name = "player2Id")
-    private User player2;
+//    @OneToOne
+//    @JoinColumn(name = "player2")
+    @Column(columnDefinition = "TEXT")
+    private String player2;
 
     //Amount of lives player2 has left, starts with 3
     private int p2Lives;
 
     //Move that player2 is doing
+    @Column(columnDefinition = "TEXT")
     private String p2Move;
 
-    public BoxingGame(User player1, User player2) {
+    public BoxingGame(String player1, String player2) {
         this.player1 = player1;
         this.player2 = player2;
         p1Lives = 3;
@@ -45,10 +49,10 @@ public class BoxingGame {
 
     //Method used to remove a life from the round losing player
     public void dockLife(String player) {
-        if (player.equals("p1")) {
+        if (player.equals(player1)) {
             p1Lives--;
         }
-        else if (player.equals("p2")) {
+        else if (player.equals(player2)) {
             p2Lives--;
         }
     }
@@ -69,19 +73,19 @@ public class BoxingGame {
         p2Lives = lives;
     }
 
-    public User getPlayer1() {
+    public String getPlayer1() {
         return player1;
     }
 
-    public void setPlayer1(User player1) {
+    public void setPlayer1(String player1) {
         this.player1 = player1;
     }
 
-    public User getPlayer2() {
+    public String getPlayer2() {
         return player2;
     }
 
-    public void setPlayer2(User player2) {
+    public void setPlayer2(String player2) {
         this.player2 = player2;
     }
 
@@ -114,45 +118,36 @@ public class BoxingGame {
         //If player1's move is kick, look at player2's move and determine who won
         if (p1Move.equals("kick")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
-                return player1.getUsername();
+                return player1;
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
-                return player2.getUsername();
+                return player2;
             }
         }
         //If player1's move is block, look at player2's move and determine who won
         else if (p1Move.equals("block")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
-                return player2.getUsername();
+                return player2;
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
-                return player1.getUsername();
+                return player1;
             }
         }
         //If player1's move is jab, look at player2's move and determine who won
         else if (p1Move.equals("jab")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
-                return player1.getUsername();
+                return player1;
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
-                return player2.getUsername();
+                return player2;
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
                 return "tie";
             }
         }
@@ -172,10 +167,10 @@ public class BoxingGame {
     //Method for determining who won the game
     public String getGameWinner() {
         if (p1Lives == 0) {
-            return player2.getUsername();
+            return player2;
         }
         else {
-            return player1.getUsername();
+            return player1;
         }
     }
 }
