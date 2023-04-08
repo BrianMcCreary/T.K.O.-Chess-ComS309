@@ -140,14 +140,9 @@ public class BoxingActivity extends AppCompatActivity {
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
-
         Draft[] drafts = {
                 new Draft_6455()
         };
-
-
-
-
 
         //Connect to WebSocket
         try {

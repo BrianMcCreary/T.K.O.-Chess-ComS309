@@ -89,13 +89,11 @@ public class BoxingGameSocket {
  //                   usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie" + bg.getP2Move());
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie" + bg.getP1Move());
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
                 }
+                bg.clearMoves();
             }
-            BoxingGame saver = bg;
-            boxingGameRepository.delete(bg);
-            boxingGameRepository.save(saver);
 
             //If one of the players is out of lives, send information to the client and delete the boxing game from the repository
             if (bg.isGameOver()) {
@@ -109,6 +107,11 @@ public class BoxingGameSocket {
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameWin");
                 }
                 boxingGameRepository.delete(bg);
+            }
+            else {
+                BoxingGame saver = bg;
+                boxingGameRepository.delete(bg);    //Had to do this because .flush() wasn't working
+                boxingGameRepository.save(saver);
             }
         }
         //If the user leaves, send information to their opponent's client and delete the boxing game from the repository
