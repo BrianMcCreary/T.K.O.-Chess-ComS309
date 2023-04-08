@@ -13,11 +13,11 @@ public class ChessGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    ChessGameTile[][] tiles;
+    private ChessGameTile[][] tiles;
 
     @OneToOne
     @JoinColumn(name = "lobbyId")
-    Lobby lobby;
+    private Lobby lobby;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;

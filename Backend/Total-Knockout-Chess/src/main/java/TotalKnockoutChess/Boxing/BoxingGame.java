@@ -8,11 +8,11 @@ import javax.persistence.*;
 public class BoxingGame {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "player1")
+    @JoinColumn(name = "player1Id")
     private User player1;
 
     //Amount of lives player1 has left, starts with 3
@@ -22,7 +22,7 @@ public class BoxingGame {
     private String p1Move;
 
     @OneToOne
-    @JoinColumn(name = "player2")
+    @JoinColumn(name = "player2Id")
     private User player2;
 
     //Amount of lives player2 has left, starts with 3

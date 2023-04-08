@@ -22,7 +22,7 @@ public class LobbyController {
 
     // Mapping to create a new lobby with the given User object as its owner.
     @PostMapping("/hostLobby")
-    public String hostLobby(@RequestBody User owner){
+    public String hostLobby(@RequestBody User owner, @PathVariable Long chessGameId){
         // If user doesn't exist, return as a failure
         if(owner == null){
             return failure;
@@ -34,6 +34,9 @@ public class LobbyController {
                 return failure;
             }
         }
+
+        // Find chess game
+
 
         // Create new lobby, generate and set code.
         Lobby lobby = new Lobby(owner);
@@ -157,8 +160,8 @@ public class LobbyController {
 
     //Mapping to delete a lobby from the repository.
     @DeleteMapping("/lobby/{lobbyId}")
-    public void deleteLobby(@PathVariable Long lobbyId){
-        Lobby l = lobbyRepository.getById(lobbyId);
+    public void deleteLobby(@PathVariable int lobbyId){
+        Lobby l = lobbyRepository.findById(lobbyId);
         l.setOwner(null);
         lobbyRepository.delete(l);
     }

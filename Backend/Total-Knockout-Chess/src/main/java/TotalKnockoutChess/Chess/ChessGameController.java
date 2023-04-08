@@ -31,10 +31,10 @@ public class ChessGameController {
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
 
         ChessGame game = new ChessGame(lobby);
-        lobbyRepository.flush();
+        chessGameRepository.save(game);
         chessGameRepository.flush();
 
-        chessGameRepository.save(game);
+
 
     }
 

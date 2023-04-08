@@ -15,6 +15,5 @@ TotalKnockoutChess\Users\UserRepository.class
 TotalKnockoutChess\Chess\Pieces\King.class
 TotalKnockoutChess\Users\User.class
 TotalKnockoutChess\Chess\Pieces\Empty.class
-TotalKnockoutChess\Chess\ChessGame.class
 TotalKnockoutChess\Lobby\LobbyRepository.class
 TotalKnockoutChess\Lobby\LobbyController.class

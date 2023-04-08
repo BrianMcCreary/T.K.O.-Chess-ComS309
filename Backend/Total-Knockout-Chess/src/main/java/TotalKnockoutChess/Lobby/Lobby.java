@@ -2,8 +2,6 @@ package TotalKnockoutChess.Lobby;
 
 import TotalKnockoutChess.Chess.ChessGame;
 import TotalKnockoutChess.Users.User;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +11,8 @@ import java.util.Random;
 public class Lobby {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private Long code;
 
@@ -35,9 +33,6 @@ public class Lobby {
     @OneToMany
     List<User> spectators;
 
-    @OneToOne
-    ChessGame chessGame;
-
     public Lobby(){
     }
 
@@ -55,12 +50,12 @@ public class Lobby {
     // Generate code for the lobby
     public Long generateLobbyCode(List<Lobby> lobbies){
         Random rand = new Random(System.currentTimeMillis());
-        Long lobbyCode = rand.nextLong(900000) + 100000; // Values from 100,000 to 999,999
+        Long lobbyCode = rand.nextLong(100000, 1000000); // Values from 100,000 to 999,999
 
         // Make sure lobby code is unique
         for(Lobby l : lobbies){
             while (l.getCode().equals(lobbyCode)){
-                lobbyCode = rand.nextLong(900000) + 100000; // Values from 100,000 to 999,999
+                lobbyCode = rand.nextLong(100000, 1000000); // Values from 100,000 to 999,999
             }
         }
         return lobbyCode;
@@ -73,10 +68,10 @@ public class Lobby {
     public void setCode(Long code) { this.code = code; }
 
     // Getter and Setter for the id of the lobby
-    public Long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(Long id){
+    public void setId(int id){
         this.id = id;
     }
 
