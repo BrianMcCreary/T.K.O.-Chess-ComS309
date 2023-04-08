@@ -110,7 +110,7 @@ public class BoxingGameSocket {
             }
             else {
                 BoxingGame saver = bg;
-                boxingGameRepository.delete(bg);
+                boxingGameRepository.delete(bg);    //Had to do this because .flush() wasn't working
                 boxingGameRepository.save(saver);
             }
         }
