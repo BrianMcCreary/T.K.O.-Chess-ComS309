@@ -3,36 +3,9 @@ package TotalKnockoutChess.Boxing;
 import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-=======
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-=======
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
->>>>>>> 5dbea53058508ad775a524fad450efb369315058
 
 @RestController
 public class BoxingGameController {
