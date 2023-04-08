@@ -539,6 +539,10 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Show move reveal countdown
     private void showCountDown() {
+        ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
+        ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
+        ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
+
         //Show 3
         ShowMoveCountDown3.setVisibility(View.VISIBLE);
         waitTime(1.0);
