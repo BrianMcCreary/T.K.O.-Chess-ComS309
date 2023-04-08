@@ -164,6 +164,7 @@ public class BoxingActivity extends AppCompatActivity {
                         case "RoundWin":
                             //Count down to showing move
                             showCountDown();
+                            System.out.println("countdown returned");
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -197,6 +198,7 @@ public class BoxingActivity extends AppCompatActivity {
                         case "RoundLoss":
                             //Count down to showing move
                             showCountDown();
+                            System.out.println("countdown returned");
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -231,6 +233,7 @@ public class BoxingActivity extends AppCompatActivity {
                         case "Tie":
                             //Count down to showing move
                             showCountDown();
+                            System.out.println("countdown returned");
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -510,28 +513,33 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Shows opponent's moves and then reverts back to default block stance.
     private void showOpponentMove(String move) {
+
         //Show opponent's move
-        if (move.equals("block")) {
-            //Do nothing because default stance is block
-            waitTime(3.0);
+        switch (move) {
+            case "block":
+                //Do nothing because default stance is block
+                waitTime(3.0);
+                break;
 
-        } else if (move.equals("kick")) {
-            //Hides block and shows kick
-            Player2Block.setVisibility(View.INVISIBLE);
-            Player2Kick.setVisibility(View.VISIBLE);
-            waitTime(3.0);
-            //Hides kick and goes back to default block stance
-            Player2Kick.setVisibility(View.INVISIBLE);
-            Player2Block.setVisibility(View.VISIBLE);
+            case "kick":
+                //Hides block and shows kick
+                Player2Block.setVisibility(View.INVISIBLE);
+                Player2Kick.setVisibility(View.VISIBLE);
+                waitTime(3.0);
+                //Hides kick and goes back to default block stance
+                Player2Kick.setVisibility(View.INVISIBLE);
+                Player2Block.setVisibility(View.VISIBLE);
+                break;
 
-        } else if (move.equals("jab")) {
-            //Hides block and shows jab
-            Player2Block.setVisibility(View.INVISIBLE);
-            Player2Jab.setVisibility(View.VISIBLE);
-            waitTime(3.0);
-            //Hides jab and goes back to default block stance
-            Player2Jab.setVisibility(View.INVISIBLE);
-            Player2Block.setVisibility(View.VISIBLE);
+            case "jab":
+                //Hides block and shows jab
+                Player2Block.setVisibility(View.INVISIBLE);
+                Player2Jab.setVisibility(View.VISIBLE);
+                waitTime(3.0);
+                //Hides jab and goes back to default block stance
+                Player2Jab.setVisibility(View.INVISIBLE);
+                Player2Block.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -541,18 +549,24 @@ public class BoxingActivity extends AppCompatActivity {
     private void showCountDown() {
         //Show 3
         ShowMoveCountDown3.setVisibility(View.VISIBLE);
+        System.out.println("show 3");
         waitTime(1.0);
         ShowMoveCountDown3.setVisibility(View.INVISIBLE);
+        System.out.println("hide 3");
 
         //Show 2
         ShowMoveCountDown2.setVisibility(View.VISIBLE);
+        System.out.println("show 2");
         waitTime(1.0);
         ShowMoveCountDown2.setVisibility(View.INVISIBLE);
+        System.out.println("hide 2");
 
         //Show 1
         ShowMoveCountDown1.setVisibility(View.VISIBLE);
+        System.out.println("show 1");
         waitTime(1.0);
         ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+        System.out.println("hide 1");
     }
 
 
