@@ -93,6 +93,8 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //currUser.UpdateUserObject(currUser.getUsername());
+
                 Intent intent = new Intent(FriendsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
