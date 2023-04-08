@@ -5,50 +5,42 @@
     android:orientation="horizontal"
     android:background="@color/very_light_grey">
 
-    <EditText
-        android:id="@+id/IncomingFriendNameEditText"
+    <TextView
+        android:id="@+id/IncomingFriendNameTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-
-        android:inputType="none"
-        android:enabled="false"
+        android:background="?attr/editTextBackground"
         android:hint="User"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:paddingVertical="1dp"
         android:textColorHint="@color/black"
         android:textSize="24sp"
         android:textColor="@color/black"
         android:layout_weight="0.2">
-    </EditText>
+    </TextView>
 
     <Button
         android:id="@+id/AcceptFriendBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_weight="0.36"
+        android:layout_gravity="center"
         android:backgroundTint="@color/soft_blue"
-        android:paddingHorizontal="7dp"
-        android:paddingVertical="2dp"
         android:text="Accept"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_weight="0.37">
-
+        android:textSize="20sp">
     </Button>
 
     <Button
         android:id="@+id/DenyFriendBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_weight="0.4"
+        android:layout_gravity="center"
         android:backgroundTint="@color/soft_blue"
         android:paddingHorizontal="7dp"
-        android:paddingVertical="2dp"
         android:text="Deny"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_weight="0.4">
-
+        android:textSize="20sp">
     </Button>
 </LinearLayout>
-
-
