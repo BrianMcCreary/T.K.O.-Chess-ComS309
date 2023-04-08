@@ -132,6 +132,9 @@ public class BoxingGame {
             else if (p2Move.equals("jab")) {
                 clearMoves();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -145,6 +148,9 @@ public class BoxingGame {
 =======
                 clearMoves();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -158,6 +164,9 @@ public class BoxingGame {
 =======
                 clearMoves();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
@@ -178,6 +187,9 @@ public class BoxingGame {
             else if (p2Move.equals("block")) {
                 clearMoves();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058

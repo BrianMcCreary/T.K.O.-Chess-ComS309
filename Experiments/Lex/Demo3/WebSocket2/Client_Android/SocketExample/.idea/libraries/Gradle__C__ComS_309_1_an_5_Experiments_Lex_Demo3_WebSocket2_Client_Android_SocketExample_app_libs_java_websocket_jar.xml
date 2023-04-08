@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: C./ComS 309/1_an_5/Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/app/libs/java_websocket.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/java_websocket.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
