@@ -90,8 +90,13 @@ public class BoxingGameSocket {
                 }
                 else if (roundWinner.equals("tie")) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
+=======
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie" + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie" + bg.getP1Move());
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie" + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie" + bg.getP1Move());
@@ -100,6 +105,12 @@ public class BoxingGameSocket {
                 bg.clearMoves();
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            BoxingGame saver = bg;
+            boxingGameRepository.delete(bg);
+            boxingGameRepository.save(saver);
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
 =======
             BoxingGame saver = bg;
             boxingGameRepository.delete(bg);

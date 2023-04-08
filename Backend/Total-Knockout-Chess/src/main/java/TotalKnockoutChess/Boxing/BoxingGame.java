@@ -131,6 +131,9 @@ public class BoxingGame {
             }
             else if (p2Move.equals("jab")) {
                 clearMoves();
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
@@ -141,6 +144,9 @@ public class BoxingGame {
 <<<<<<< HEAD
 =======
                 clearMoves();
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
@@ -151,6 +157,9 @@ public class BoxingGame {
 <<<<<<< HEAD
 =======
                 clearMoves();
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player1;
             }
@@ -168,6 +177,9 @@ public class BoxingGame {
             }
             else if (p2Move.equals("block")) {
                 clearMoves();
+<<<<<<< HEAD
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
+=======
 >>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
