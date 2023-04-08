@@ -16,8 +16,8 @@ public class ChessGame {
     private ChessGameTile[][] tiles;
 
     @OneToOne
-    @JoinColumn(name = "lobbyId")
-    private Lobby lobby;
+    @JoinColumn(name = "lobby_id", referencedColumnName = "id")
+    Lobby lobby;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;

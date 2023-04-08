@@ -4,60 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Bishop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/ChessPiece.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/ChessPieceController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Coordinate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Empty.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/King.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Knight.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/Lobby.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/TotalKnockoutChessApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/7.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/7.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/7.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/7.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ChessActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ChessActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/FriendsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/FriendsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LogInActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/MainMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/MainMenuActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/Profiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/Profiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/SingletonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/SingletonUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/Tile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/chessboard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ultils/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/ultils/Const.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/drawable/menu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_chess.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_friends.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_friends.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/friend_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/friend_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/pending_friend_request_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/pending_friend_request_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/sent_friend_request_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/sent_friend_request_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/values/colors.xml" afterDir="false" />
+    <list default="true" id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +42,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="" />
+      <changelist id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="" />
       <created>1680916746971</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
