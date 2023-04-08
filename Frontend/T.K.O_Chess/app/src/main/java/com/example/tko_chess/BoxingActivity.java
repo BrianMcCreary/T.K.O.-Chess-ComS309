@@ -479,94 +479,113 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Makes buttons clickable and lightens their color back
     private void enableButtons() {
-        //Changes appearance of buttons
-        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Changes appearance of buttons
+                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
 
-        //Enables buttons again
-        BlockBtn.setClickable(true);
-        KickBtn.setClickable(true);
-        JabBtn.setClickable(true);
-        ConfirmMoveBtn.setClickable(true);
+                //Enables buttons again
+                BlockBtn.setClickable(true);
+                KickBtn.setClickable(true);
+                JabBtn.setClickable(true);
+                ConfirmMoveBtn.setClickable(true);
+            }
+        });
     }
 
 
 
     //Makes buttons un-clickable and darkens their color
     private void disableButtons() {
-        //Changes appearance of buttons
-        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Changes appearance of buttons
+                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
 
-        //Disables buttons until opponent confirms their move
-        BlockBtn.setClickable(false);
-        KickBtn.setClickable(false);
-        JabBtn.setClickable(false);
-        ConfirmMoveBtn.setClickable(false);
+                //Disables buttons until opponent confirms their move
+                BlockBtn.setClickable(false);
+                KickBtn.setClickable(false);
+                JabBtn.setClickable(false);
+                ConfirmMoveBtn.setClickable(false);
+            }
+        });
     }
 
 
 
     //Shows opponent's moves and then reverts back to default block stance.
     private void showOpponentMove(String move) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Show opponent's move
+                switch (move) {
+                    case "block":
+                        //Do nothing because default stance is block
+                        waitTime(3.0);
+                        break;
 
-        //Show opponent's move
-        switch (move) {
-            case "block":
-                //Do nothing because default stance is block
-                waitTime(3.0);
-                break;
+                    case "kick":
+                        //Hides block and shows kick
+                        Player2Block.setVisibility(View.INVISIBLE);
+                        Player2Kick.setVisibility(View.VISIBLE);
+                        waitTime(3.0);
+                        //Hides kick and goes back to default block stance
+                        Player2Kick.setVisibility(View.INVISIBLE);
+                        Player2Block.setVisibility(View.VISIBLE);
+                        break;
 
-            case "kick":
-                //Hides block and shows kick
-                Player2Block.setVisibility(View.INVISIBLE);
-                Player2Kick.setVisibility(View.VISIBLE);
-                waitTime(3.0);
-                //Hides kick and goes back to default block stance
-                Player2Kick.setVisibility(View.INVISIBLE);
-                Player2Block.setVisibility(View.VISIBLE);
-                break;
-
-            case "jab":
-                //Hides block and shows jab
-                Player2Block.setVisibility(View.INVISIBLE);
-                Player2Jab.setVisibility(View.VISIBLE);
-                waitTime(3.0);
-                //Hides jab and goes back to default block stance
-                Player2Jab.setVisibility(View.INVISIBLE);
-                Player2Block.setVisibility(View.VISIBLE);
-                break;
-        }
+                    case "jab":
+                        //Hides block and shows jab
+                        Player2Block.setVisibility(View.INVISIBLE);
+                        Player2Jab.setVisibility(View.VISIBLE);
+                        waitTime(3.0);
+                        //Hides jab and goes back to default block stance
+                        Player2Jab.setVisibility(View.INVISIBLE);
+                        Player2Block.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
     }
 
 
 
     //Show move reveal countdown
     private void showCountDown() {
-        //Show 3
-        ShowMoveCountDown3.setVisibility(View.VISIBLE);
-        System.out.println("show 3");
-        waitTime(1.0);
-        ShowMoveCountDown3.setVisibility(View.INVISIBLE);
-        System.out.println("hide 3");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Show 3
+                ShowMoveCountDown3.setVisibility(View.VISIBLE);
+                System.out.println("show 3");
+                waitTime(1.0);
+                ShowMoveCountDown3.setVisibility(View.INVISIBLE);
+                System.out.println("hide 3");
 
-        //Show 2
-        ShowMoveCountDown2.setVisibility(View.VISIBLE);
-        System.out.println("show 2");
-        waitTime(1.0);
-        ShowMoveCountDown2.setVisibility(View.INVISIBLE);
-        System.out.println("hide 2");
+                //Show 2
+                ShowMoveCountDown2.setVisibility(View.VISIBLE);
+                System.out.println("show 2");
+                waitTime(1.0);
+                ShowMoveCountDown2.setVisibility(View.INVISIBLE);
+                System.out.println("hide 2");
 
-        //Show 1
-        ShowMoveCountDown1.setVisibility(View.VISIBLE);
-        System.out.println("show 1");
-        waitTime(1.0);
-        ShowMoveCountDown1.setVisibility(View.INVISIBLE);
-        System.out.println("hide 1");
+                //Show 1
+                ShowMoveCountDown1.setVisibility(View.VISIBLE);
+                System.out.println("show 1");
+                waitTime(1.0);
+                ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+                System.out.println("hide 1");
+            }
+        });
     }
 
 
