@@ -163,21 +163,7 @@ public class BoxingActivity extends AppCompatActivity {
                     switch (strings[0]) {
                         case "RoundWin":
                             //Count down to showing move
-                            //showCountDown();
-                                //Show 3
-                                ShowMoveCountDown3.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown3.setVisibility(View.INVISIBLE);
-
-                                //Show 2
-                                ShowMoveCountDown2.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown2.setVisibility(View.INVISIBLE);
-
-                                //Show 1
-                                ShowMoveCountDown1.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+                            showCountDown();
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -210,21 +196,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                         case "RoundLoss":
                             //Count down to showing move
-                            //showCountDown();
-                                //Show 3
-                                ShowMoveCountDown3.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown3.setVisibility(View.INVISIBLE);
-
-                                //Show 2
-                                ShowMoveCountDown2.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown2.setVisibility(View.INVISIBLE);
-
-                                //Show 1
-                                ShowMoveCountDown1.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+                            showCountDown();
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -258,21 +230,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                         case "Tie":
                             //Count down to showing move
-                            //showCountDown();
-                                //Show 3
-                                ShowMoveCountDown3.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown3.setVisibility(View.INVISIBLE);
-
-                                //Show 2
-                                ShowMoveCountDown2.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown2.setVisibility(View.INVISIBLE);
-
-                                //Show 1
-                                ShowMoveCountDown1.setVisibility(View.VISIBLE);
-                                waitTime(1.0);
-                                ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+                            showCountDown();
 
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -581,10 +539,6 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Show move reveal countdown
     private void showCountDown() {
-        ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
-        ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
-        ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
-
         //Show 3
         ShowMoveCountDown3.setVisibility(View.VISIBLE);
         waitTime(1.0);
