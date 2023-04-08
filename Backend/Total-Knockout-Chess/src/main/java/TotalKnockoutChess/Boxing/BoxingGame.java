@@ -121,30 +121,54 @@ public class BoxingGame {
                 return "tie";
             }
             else if (p2Move.equals("block")) {
+<<<<<<< HEAD
                 return player1;
             }
             else if (p2Move.equals("jab")) {
+=======
+                clearMoves();
+                return player1;
+            }
+            else if (p2Move.equals("jab")) {
+                clearMoves();
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
         }
         //If player1's move is block, look at player2's move and determine who won
         else if (p1Move.equals("block")) {
             if (p2Move.equals("kick")) {
+<<<<<<< HEAD
+=======
+                clearMoves();
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
             else if (p2Move.equals("block")) {
                 return "tie";
             }
             else if (p2Move.equals("jab")) {
+<<<<<<< HEAD
+=======
+                clearMoves();
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player1;
             }
         }
         //If player1's move is jab, look at player2's move and determine who won
         else if (p1Move.equals("jab")) {
             if (p2Move.equals("kick")) {
+<<<<<<< HEAD
                 return player1;
             }
             else if (p2Move.equals("block")) {
+=======
+                clearMoves();
+                return player1;
+            }
+            else if (p2Move.equals("block")) {
+                clearMoves();
+>>>>>>> 5dbea53058508ad775a524fad450efb369315058
                 return player2;
             }
             else if (p2Move.equals("jab")) {
