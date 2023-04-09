@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9bb4480c-d1b1-411e-8ce9-791c896341db" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../../../Frontend/T.K.O_Chess/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,15 +36,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/ComS309/1_an_5/Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/ComS309/1_an_5/Experiments/Lex/Demo3/WebSocket2/Client_Android/SocketExample&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="SocketExample.app.main" />

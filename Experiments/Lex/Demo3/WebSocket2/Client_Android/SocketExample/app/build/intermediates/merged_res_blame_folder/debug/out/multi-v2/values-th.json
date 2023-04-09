@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\ComS 309\\tutorials\\WebSocket2\\Client_Android\\SocketExample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-th\\values-th.xml",
+            "outputFile": "C:\\ComS309\\1_an_5\\Experiments\\Lex\\Demo3\\WebSocket2\\Client_Android\\SocketExample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-th\\values-th.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Lex\\.gradle\\caches\\transforms-3\\c46b48a1cd8a923efcdc455efa82aea0\\transformed\\appcompat-v7-27.1.1\\res\\values-th\\values-th.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,210,308,416,505,607,717,794,872,953,1061,1165,1263,1371,1476,1577,1730,1825",
-                        "endColumns": "104,97,107,88,101,109,76,77,80,107,103,97,107,104,100,152,94,80",
-                        "endOffsets": "205,303,411,500,602,712,789,867,948,1056,1160,1258,1366,1471,1572,1725,1820,1901"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Lex\\.gradle\\caches\\transforms-3\\73125ac6f6f3b6d0a1f9ead07f95e6ca\\transformed\\support-compat-27.1.1\\res\\values-th\\values-th.xml",
+                    "source": "C:\\Users\\lexso\\.gradle\\caches\\transforms-3\\73125ac6f6f3b6d0a1f9ead07f95e6ca\\transformed\\support-compat-27.1.1\\res\\values-th\\values-th.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -28,6 +18,16 @@
                         "startOffsets": "1906",
                         "endColumns": "100",
                         "endOffsets": "2002"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\lexso\\.gradle\\caches\\transforms-3\\c46b48a1cd8a923efcdc455efa82aea0\\transformed\\appcompat-v7-27.1.1\\res\\values-th\\values-th.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,210,308,416,505,607,717,794,872,953,1061,1165,1263,1371,1476,1577,1730,1825",
+                        "endColumns": "104,97,107,88,101,109,76,77,80,107,103,97,107,104,100,152,94,80",
+                        "endOffsets": "205,303,411,500,602,712,789,867,948,1056,1160,1258,1366,1471,1572,1725,1820,1901"
                     }
                 }
             ]
