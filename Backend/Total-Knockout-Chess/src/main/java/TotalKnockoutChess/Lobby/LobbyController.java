@@ -28,12 +28,14 @@ public class LobbyController {
 
         // If user doesn't exist, return as a failure
         if(owner == null){
+            System.out.println("User not found");
             return failure;
         }
-        // If user is already in a lobby, return as a failure.
+        // If user is already in a lobby, delete old lobby
         for(Lobby l : lobbyRepository.findAll()){
             if(l.contains(owner)){
-                return failure;
+                System.out.println("User is in another lobby");
+                deleteLobby(l.getId());
             }
         }
 
