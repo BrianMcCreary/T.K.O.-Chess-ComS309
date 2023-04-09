@@ -92,7 +92,7 @@ public class TKOLobbyActivity extends AppCompatActivity {
 
     public void kickUser(){
         RequestQueue queue = Volley.newRequestQueue(TKOLobbyActivity.this);
-        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_TKOLOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_LOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -119,7 +119,7 @@ public class TKOLobbyActivity extends AppCompatActivity {
     }
     public void grabLobbyKey(){
         RequestQueue queue = Volley.newRequestQueue(TKOLobbyActivity.this);
-        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_TKOLOBBYPASSWORD, new Response.Listener<String>(){
+        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYKEY, new Response.Listener<String>(){
             @Override
             public void onResponse(String response){
                 LobbyKeyText.setText(response);

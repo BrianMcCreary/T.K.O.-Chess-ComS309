@@ -28,17 +28,14 @@ public class Const {
     //Used for accepting a friend request sent to you.
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
 
-    public static final String URL_SERVER_TKOLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+    //Key to get into game lobby
+    public static final String URL_SERVER_LOBBYKEY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
 
-    public static final String URL_SERVER_CHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/joinLobby/";
+    //Lobby web address
+    public static final String URL_SERVER_LOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
 
-    public static final String URL_SERVER_TKOCHESSLOBBYPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/";
-
-    public static final String URL_SERVER_CHESSLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
-
-    public static final String URL_SERVER_TKOCHESSLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
-
-    public static final String URL_SERVER_TKOLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/hostLobby";
+    //Spectator Address
+    public static final String URL_SERVER_LOBBYSPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
 
     //WebSocket Address
     public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/";

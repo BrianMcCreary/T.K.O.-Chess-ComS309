@@ -21,7 +21,7 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ChessLobbyPasswordActivity extends AppCompatActivity {
+public class TKOLobbyKeyActivity extends AppCompatActivity {
 
     EditText lobbyKey;
     Button joinBtn;
@@ -31,7 +31,7 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lobby_password);
+        setContentView(R.layout.activity_lobby_key);
 
         backBtn = findViewById(R.id.backBtn8);
 
@@ -39,7 +39,7 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChessLobbyPasswordActivity.this, ChessHostOrJoinActivity.class);
+                Intent intent = new Intent(TKOLobbyKeyActivity.this, ChessHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
@@ -62,9 +62,9 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                RequestQueue queue = Volley.newRequestQueue(ChessLobbyPasswordActivity.this);
+                RequestQueue queue = Volley.newRequestQueue(TKOLobbyKeyActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_CHESSLOBBYPASSWORD, lobbyPass,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_LOBBYKEY, lobbyPass,
                         new Response.Listener<JSONObject>(){
 
                             @Override
@@ -78,7 +78,7 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
                                 }
 
                                 if(temp.equals("true")){
-                                    Intent intent = new Intent(ChessLobbyPasswordActivity.this, ChessLobbyActivity.class);
+                                    Intent intent = new Intent(TKOLobbyKeyActivity.this, TKOLobbyActivity.class);
                                     startActivity(intent);
                                 }
 
@@ -100,5 +100,6 @@ public class ChessLobbyPasswordActivity extends AppCompatActivity {
                 queue.add(userObjectRequest);
             }
         });
+
     }
 }

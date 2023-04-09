@@ -95,7 +95,7 @@ public class ChessLobbyActivity extends AppCompatActivity {
 
     public void kickUser(){
         RequestQueue queue = Volley.newRequestQueue(ChessLobbyActivity.this);
-        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_CHESSLOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_LOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -122,7 +122,7 @@ public class ChessLobbyActivity extends AppCompatActivity {
     }
     public void grabLobbyKey(){
         RequestQueue queue = Volley.newRequestQueue(ChessLobbyActivity.this);
-        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_CHESSLOBBYPASSWORD, new Response.Listener<String>(){
+        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYKEY, new Response.Listener<String>(){
             @Override
             public void onResponse(String response){
                 LobbyKeyText.setText(response);

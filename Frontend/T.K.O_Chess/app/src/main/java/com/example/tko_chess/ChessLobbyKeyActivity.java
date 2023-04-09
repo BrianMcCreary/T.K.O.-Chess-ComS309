@@ -21,18 +21,17 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
+public class ChessLobbyKeyActivity extends AppCompatActivity {
 
     EditText lobbyKey;
     Button joinBtn;
     ImageButton backBtn;
     TextView error;
-    String URLConcatenation = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lobby_password);
+        setContentView(R.layout.activity_lobby_key);
 
         backBtn = findViewById(R.id.backBtn8);
 
@@ -40,7 +39,7 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOChessLobbyPasswordActivity.this, TKOChessHostOrJoinActivity.class);
+                Intent intent = new Intent(ChessLobbyKeyActivity.this, ChessHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
@@ -59,14 +58,13 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
                 JSONObject lobbyPass = new JSONObject();
                 try{
                     lobbyPass.put("Lobby Password", lobbyKey.getText());
-                    URLConcatenation += lobbyKey.getText();
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
 
-                RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyPasswordActivity.this);
+                RequestQueue queue = Volley.newRequestQueue(ChessLobbyKeyActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_TKOCHESSLOBBYPASSWORD + URLConcatenation, null,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_LOBBYKEY, lobbyPass,
                         new Response.Listener<JSONObject>(){
 
                             @Override
@@ -80,7 +78,7 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
                                 }
 
                                 if(temp.equals("true")){
-                                    Intent intent = new Intent(TKOChessLobbyPasswordActivity.this, ChessLobbyActivity.class);
+                                    Intent intent = new Intent(ChessLobbyKeyActivity.this, ChessLobbyActivity.class);
                                     startActivity(intent);
                                 }
 
@@ -102,6 +100,5 @@ public class TKOChessLobbyPasswordActivity extends AppCompatActivity {
                 queue.add(userObjectRequest);
             }
         });
-
     }
 }
