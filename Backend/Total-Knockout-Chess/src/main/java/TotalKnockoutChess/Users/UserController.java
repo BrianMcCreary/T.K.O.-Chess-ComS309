@@ -168,15 +168,4 @@ public class UserController {
         }
         return failure;     //return failure if user isn't found
     }
-
-    @PutMapping("/id")
-    public String changeUserID(@RequestParam(value="currId") int currID, @RequestParam(value="newId") int newId){
-        User u = userRepository.findById(currID);
-        u.setId(newId);
-        userRepository.flush();
-        if(u.getId() == newId) {
-            return success;
-        }
-        return failure;
-    }
 }

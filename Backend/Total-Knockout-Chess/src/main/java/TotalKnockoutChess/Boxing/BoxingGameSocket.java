@@ -51,7 +51,7 @@ public class BoxingGameSocket {
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
 
-        //Boxing game that the user in this sesssion is in
+        //Boxing game that the user in this session is in
         BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
 
         //If the received message is a move, update game accordingly

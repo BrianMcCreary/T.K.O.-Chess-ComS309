@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lobby")
+//@RequestMapping("/lobby")
 public class LobbyController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class LobbyController {
     private final String failure = "{\"message\":\"failure\"}";
 
     // Mapping to create a new lobby with the given User object as its owner.
-    @PostMapping("/host/{creator}")
+    @PostMapping("/lobby/host/{creator}")
     public String hostLobby(@PathVariable String creator){
         User owner = getUser(creator);
 
@@ -50,16 +50,18 @@ public class LobbyController {
     }
 
     // Mapping for people other than the owner to join the lobby.
-    @PutMapping("/join/{lobbyCode}/{joiner}")
+    @PutMapping("/lobby/join/{lobbyCode}/{joiner}")
     public String joinLobby(@PathVariable Long lobbyCode, @PathVariable String joiner){
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
         User usr = getUser(joiner);
+        System.out.println("Entered joinLobby method.");
 
         // Method will return failure if any of the following:
         // 1 - user is not found in database
         // 2 - lobby is not found in database
         // 3 - user is already in a lobby in the database
         if(usr == null || lobby == null || lobby.contains(usr)){
+            System.out.println("Going to return failure.");
             return failure;
         }
 
@@ -67,6 +69,8 @@ public class LobbyController {
         lobby.addToSpectators(usr);
         lobby.incrementUserCount();
         lobbyRepository.flush();
+        System.out.println("Going to return success.");
+
         return success;
     }
 
