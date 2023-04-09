@@ -196,7 +196,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
                         case "RoundLoss":
-                            //Count down to showing move
+                            ///Count down to showing move
                             showCountDown();
                             System.out.println("countdown returned");
 
@@ -564,6 +564,10 @@ public class BoxingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
+                ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
+                ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
+
                 //Show 3
                 ShowMoveCountDown3.setVisibility(View.VISIBLE);
                 System.out.println("show 3");
