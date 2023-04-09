@@ -44,6 +44,7 @@ public class TKOChessLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tko_chess_game_lobby);
 
+        URLConcatenation = currUser.getUsername();
         RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyActivity.this);
         StringRequest createLobby = new StringRequest(Request.Method.POST, Const.URL_SERVER_LOBBY + URLConcatenation, new Response.Listener<String>() {
             @Override
