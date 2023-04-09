@@ -18,8 +18,10 @@ public class LobbyController {
     UserRepository userRepository;
 
     // Messages to send to the frontend
-    private final String success = "{\"message\":\"success\"}";
-    private final String failure = "{\"message\":\"failure\"}";
+//    private final String success = "{\"message\":\"success\"}";
+//    private final String failure = "{\"message\":\"failure\"}";
+      private final String success = "success";
+      private final String failure = "failure";
 
     // Mapping to create a new lobby with the given User object as its owner.
     @PostMapping("/host/{creator}")
@@ -62,7 +64,7 @@ public class LobbyController {
         // 3 - user is already in a lobby in the database
         if(usr == null || lobby == null || lobby.contains(usr)){
             System.out.println("Going to return failure.");
-            return "failure";
+            return failure;
         }
 
         // When you first join a lobby you start as a spectator.
@@ -71,7 +73,7 @@ public class LobbyController {
         lobbyRepository.flush();
         System.out.println("Going to return success.");
 
-        return "success";
+        return success;
     }
 
     // Mapping for users to swap from playing in the lobby to spectating.
