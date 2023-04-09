@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
@@ -28,6 +30,8 @@ public class TKOChessLobbyKeyActivity extends AppCompatActivity {
     ImageButton backBtn;
     TextView error;
     String URLConcatenation = "";
+    SingletonUser currUser = SingletonUser.getInstance();
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,40 +60,34 @@ public class TKOChessLobbyKeyActivity extends AppCompatActivity {
 
                 String lobbyPassword = lobbyKey.getText().toString();
 
-                JSONObject lobbyPass = new JSONObject();
-                try{
-                    lobbyPass.put("Lobby Password", lobbyKey.getText());
-                    URLConcatenation += lobbyKey.getText();
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
+                URLConcatenation = lobbyPassword + "/" + currUser.getUsername();
+
+                JSONObject user = new JSONObject();
 
                 RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyKeyActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_LOBBYKEY + URLConcatenation, lobbyPass,
+                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.PUT,Const.URL_SERVER_LOBBYKEY + URLConcatenation, null,
                         new Response.Listener<JSONObject>(){
-
                             @Override
                             public void onResponse(JSONObject response){
                                 String temp;
 
-                                try{
+                                try {
                                     temp = (String) response.get("message");
                                 } catch (JSONException e){
                                     throw new RuntimeException(e);
                                 }
 
-                                if(temp.equals("true")){
-                                    Intent intent = new Intent(TKOChessLobbyKeyActivity.this, ChessLobbyActivity.class);
-                                    startActivity(intent);
-                                }
-
-                                else {
+                                if(temp.equals("success")){
+                                    SingletonUser currUser = SingletonUser.getInstance();
                                     try{
-                                        error.setText(response.get("message").toString());
+                                        currUser.updateUserObject(user.get("username").toString(), context);
                                     } catch (JSONException e){
                                         throw new RuntimeException(e);
                                     }
+
+                                    Intent intent = new Intent(TKOChessLobbyKeyActivity.this, TKOChessLobbyActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                         }, new Response.ErrorListener(){

@@ -29,7 +29,6 @@ import org.json.JSONObject;
 public class TKOChessLobbyActivity extends AppCompatActivity {
 
     Button startBtn;
-    Button generateKeyBtn;
     ImageButton backBtn;
     SingletonUser currUser = SingletonUser.getInstance();
     TextView ErrorMessage;
@@ -44,18 +43,25 @@ public class TKOChessLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tko_chess_game_lobby);
 
+        LobbyKeyText = findViewById(R.id.LobbyKey);
+
+        //Sets the textview object on lobby screen to the lobby key used to access the lobby
         URLConcatenation = currUser.getUsername();
         RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyActivity.this);
         StringRequest createLobby = new StringRequest(Request.Method.POST, Const.URL_SERVER_LOBBY + URLConcatenation, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                System.out.println("----------------------------------------------------------------------------------------------------" + response);
                 lobbyKey = response;
                 LobbyKeyText.setText(lobbyKey);
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {}
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
         });
+        queue.add(createLobby);
 
         backBtn = findViewById(R.id.backBtn2);
         backBtn.setOnClickListener(new View.OnClickListener() {
