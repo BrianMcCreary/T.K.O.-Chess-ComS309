@@ -62,6 +62,8 @@ public class TKOChessLobbyKeyActivity extends AppCompatActivity {
 
                 URLConcatenation = lobbyPassword + "/" + currUser.getUsername();
 
+
+
                 JSONObject user = new JSONObject();
 
                 RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyKeyActivity.this);
