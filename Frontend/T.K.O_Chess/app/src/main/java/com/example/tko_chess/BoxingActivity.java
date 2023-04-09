@@ -94,6 +94,8 @@ public class BoxingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
 
+        Handler mHandler = new Handler();
+
         //ImageView initializations
         Player1Block = findViewById(R.id.Player1BlockImg);
         Player1Jab = findViewById(R.id.Player1JabImg);
@@ -163,11 +165,20 @@ public class BoxingActivity extends AppCompatActivity {
                     switch (strings[0]) {
                         case "RoundWin":
                             //Count down to showing move
-                            showCountDown();
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showCountDown();
+                                }
+                            });
                             System.out.println("countdown returned");
 
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showOpponentMove(strings[1]);
+                                }
+                            });
+
 
                             //Lowers health of opponent
                             OpponentHealth -= 1;
@@ -177,13 +188,47 @@ public class BoxingActivity extends AppCompatActivity {
                                 Player2FullHeart1.setVisibility(View.INVISIBLE);
                                 Player2EmptyHeart1.setVisibility(View.VISIBLE);
                                 //Enables buttons again for the new "round"
-                                enableButtons();
+                                //TODO/////////////////////////////////////////////////////////
+                                //Changes appearance of buttons
+                                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+                                //Enables buttons again
+                                BlockBtn.setClickable(true);
+                                KickBtn.setClickable(true);
+                                JabBtn.setClickable(true);
+                                ConfirmMoveBtn.setClickable(true);
+                                //TODO/////////////////////////////////////////////////////////
+                                /*mHandler.post(new Runnable() {
+                                    public void run() {
+                                        enableButtons();
+                                    }
+                                });*/
 
                             } else if (OpponentHealth == 1) {
                                 Player2FullHeart2.setVisibility(View.INVISIBLE);
                                 Player2EmptyHeart2.setVisibility(View.VISIBLE);
                                 //Enables buttons again for the new "round"
-                                enableButtons();
+                                //TODO/////////////////////////////////////////////////////////
+                                //Changes appearance of buttons
+                                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+                                //Enables buttons again
+                                BlockBtn.setClickable(true);
+                                KickBtn.setClickable(true);
+                                JabBtn.setClickable(true);
+                                ConfirmMoveBtn.setClickable(true);
+                                //TODO/////////////////////////////////////////////////////////
+                                /*mHandler.post(new Runnable() {
+                                    public void run() {
+                                        enableButtons();
+                                    }
+                                });*/
 
                             } else if (OpponentHealth == 0) {
                                 Player2FullHeart1.setVisibility(View.INVISIBLE);
@@ -196,12 +241,20 @@ public class BoxingActivity extends AppCompatActivity {
 
 
                         case "RoundLoss":
-                            ///Count down to showing move
-                            showCountDown();
+                            //Count down to showing move
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showCountDown();
+                                }
+                            });
                             System.out.println("countdown returned");
 
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showOpponentMove(strings[1]);
+                                }
+                            });
 
                             //Lowers health of User
                             UserHealth -= 1;
@@ -211,14 +264,47 @@ public class BoxingActivity extends AppCompatActivity {
                                 Player1FullHeart1.setVisibility(View.INVISIBLE);
                                 Player1EmptyHeart1.setVisibility(View.VISIBLE);
                                 //Enables buttons again for the new "round"
-                                enableButtons();
+                                //TODO/////////////////////////////////////////////////////////
+                                //Changes appearance of buttons
+                                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+                                //Enables buttons again
+                                BlockBtn.setClickable(true);
+                                KickBtn.setClickable(true);
+                                JabBtn.setClickable(true);
+                                ConfirmMoveBtn.setClickable(true);
+                                //TODO/////////////////////////////////////////////////////////
+                                /*mHandler.post(new Runnable() {
+                                    public void run() {
+                                        enableButtons();
+                                    }
+                                });*/
 
                             } else if (UserHealth == 1) {
                                 Player1FullHeart2.setVisibility(View.INVISIBLE);
                                 Player1EmptyHeart2.setVisibility(View.VISIBLE);
-
                                 //Enables buttons again for the new "round"
-                                enableButtons();
+                                //TODO/////////////////////////////////////////////////////////
+                                //Changes appearance of buttons
+                                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+                                //Enables buttons again
+                                BlockBtn.setClickable(true);
+                                KickBtn.setClickable(true);
+                                JabBtn.setClickable(true);
+                                ConfirmMoveBtn.setClickable(true);
+                                //TODO/////////////////////////////////////////////////////////
+                                /*mHandler.post(new Runnable() {
+                                    public void run() {
+                                        enableButtons();
+                                    }
+                                });*/
 
                             } else if (UserHealth == 0) {
                                 Player1FullHeart1.setVisibility(View.INVISIBLE);
@@ -232,14 +318,39 @@ public class BoxingActivity extends AppCompatActivity {
 
                         case "Tie":
                             //Count down to showing move
-                            showCountDown();
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showCountDown();
+                                }
+                            });
                             System.out.println("countdown returned");
 
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            mHandler.post(new Runnable() {
+                                public void run() {
+                                    showOpponentMove(strings[1]);
+                                }
+                            });
 
                             //Enables buttons again for the new "round"
-                            enableButtons();
+                            //TODO/////////////////////////////////////////////////////////
+                            //Changes appearance of buttons
+                            BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                            KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                            JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                            ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+                            //Enables buttons again
+                            BlockBtn.setClickable(true);
+                            KickBtn.setClickable(true);
+                            JabBtn.setClickable(true);
+                            ConfirmMoveBtn.setClickable(true);
+                            //TODO/////////////////////////////////////////////////////////
+                                /*mHandler.post(new Runnable() {
+                                    public void run() {
+                                        enableButtons();
+                                    }
+                                });*/
 
                             //Exit switch statement
                             break;
@@ -479,7 +590,20 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Makes buttons clickable and lightens their color back
     private void enableButtons() {
-        runOnUiThread(new Runnable() {
+
+        //Changes appearance of buttons
+        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+
+        //Enables buttons again
+        BlockBtn.setClickable(true);
+        KickBtn.setClickable(true);
+        JabBtn.setClickable(true);
+        ConfirmMoveBtn.setClickable(true);
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //Changes appearance of buttons
@@ -494,14 +618,27 @@ public class BoxingActivity extends AppCompatActivity {
                 JabBtn.setClickable(true);
                 ConfirmMoveBtn.setClickable(true);
             }
-        });
+        });*/
     }
 
 
 
     //Makes buttons un-clickable and darkens their color
     private void disableButtons() {
-        runOnUiThread(new Runnable() {
+
+        //Changes appearance of buttons
+        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+
+        //Disables buttons until opponent confirms their move
+        BlockBtn.setClickable(false);
+        KickBtn.setClickable(false);
+        JabBtn.setClickable(false);
+        ConfirmMoveBtn.setClickable(false);
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //Changes appearance of buttons
@@ -516,14 +653,43 @@ public class BoxingActivity extends AppCompatActivity {
                 JabBtn.setClickable(false);
                 ConfirmMoveBtn.setClickable(false);
             }
-        });
+        });*/
     }
 
 
 
     //Shows opponent's moves and then reverts back to default block stance.
     private void showOpponentMove(String move) {
-        runOnUiThread(new Runnable() {
+
+        //Show opponent's move
+        switch (move) {
+            case "block":
+                //Do nothing because default stance is block
+                waitTime(3.0);
+                break;
+
+            case "kick":
+                //Hides block and shows kick
+                Player2Block.setVisibility(View.INVISIBLE);
+                Player2Kick.setVisibility(View.VISIBLE);
+                waitTime(3.0);
+                //Hides kick and goes back to default block stance
+                Player2Kick.setVisibility(View.INVISIBLE);
+                Player2Block.setVisibility(View.VISIBLE);
+                break;
+
+            case "jab":
+                //Hides block and shows jab
+                Player2Block.setVisibility(View.INVISIBLE);
+                Player2Jab.setVisibility(View.VISIBLE);
+                waitTime(3.0);
+                //Hides jab and goes back to default block stance
+                Player2Jab.setVisibility(View.INVISIBLE);
+                Player2Block.setVisibility(View.VISIBLE);
+                break;
+        }
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //Show opponent's move
@@ -554,19 +720,46 @@ public class BoxingActivity extends AppCompatActivity {
                         break;
                 }
             }
-        });
+        });*/
     }
 
 
 
     //Show move reveal countdown
     private void showCountDown() {
-        runOnUiThread(new Runnable() {
+        ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
+        ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
+        ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
+
+        //Show 3
+        ShowMoveCountDown3.setVisibility(View.VISIBLE);
+        System.out.println("show 3");
+        waitTime(1.0);
+        ShowMoveCountDown3.setVisibility(View.INVISIBLE);
+        System.out.println("hide 3");
+
+        //Show 2
+        ShowMoveCountDown2.setVisibility(View.VISIBLE);
+        System.out.println("show 2");
+        waitTime(1.0);
+        ShowMoveCountDown2.setVisibility(View.INVISIBLE);
+        System.out.println("hide 2");
+
+        //Show 1
+        ShowMoveCountDown1.setVisibility(View.VISIBLE);
+        System.out.println("show 1");
+        waitTime(1.0);
+        ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+        System.out.println("hide 1");
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
                 ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
                 ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
+
+
 
                 //Show 3
                 ShowMoveCountDown3.setVisibility(View.VISIBLE);
@@ -589,7 +782,7 @@ public class BoxingActivity extends AppCompatActivity {
                 ShowMoveCountDown1.setVisibility(View.INVISIBLE);
                 System.out.println("hide 1");
             }
-        });
+        });*/
     }
 
 
