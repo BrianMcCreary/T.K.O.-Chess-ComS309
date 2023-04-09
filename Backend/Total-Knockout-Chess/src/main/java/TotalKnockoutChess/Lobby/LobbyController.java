@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/lobby")
+@RequestMapping("/lobby")
 public class LobbyController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class LobbyController {
     private final String failure = "{\"message\":\"failure\"}";
 
     // Mapping to create a new lobby with the given User object as its owner.
-    @PostMapping("/lobby/host/{creator}")
+    @PostMapping("/host/{creator}")
     public String hostLobby(@PathVariable String creator){
         User owner = getUser(creator);
 
@@ -50,7 +50,7 @@ public class LobbyController {
     }
 
     // Mapping for people other than the owner to join the lobby.
-    @PutMapping("/lobby/join/{lobbyCode}/{joiner}")
+    @PutMapping("/join/{lobbyCode}/{joiner}")
     public String joinLobby(@PathVariable Long lobbyCode, @PathVariable String joiner){
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
         User usr = getUser(joiner);
@@ -62,7 +62,7 @@ public class LobbyController {
         // 3 - user is already in a lobby in the database
         if(usr == null || lobby == null || lobby.contains(usr)){
             System.out.println("Going to return failure.");
-            return failure;
+            return "failure";
         }
 
         // When you first join a lobby you start as a spectator.
@@ -71,7 +71,7 @@ public class LobbyController {
         lobbyRepository.flush();
         System.out.println("Going to return success.");
 
-        return success;
+        return "success";
     }
 
     // Mapping for users to swap from playing in the lobby to spectating.
