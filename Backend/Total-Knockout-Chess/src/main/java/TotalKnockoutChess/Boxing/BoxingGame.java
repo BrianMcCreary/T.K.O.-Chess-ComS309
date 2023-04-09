@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class BoxingGame {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
 //    @OneToOne
 //    @JoinColumn(name = "player1")
@@ -89,11 +89,11 @@ public class BoxingGame {
         this.player2 = player2;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

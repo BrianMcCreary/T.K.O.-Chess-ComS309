@@ -10,7 +10,7 @@ import java.util.Random;
 public class Lobby {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private Long code;
@@ -18,15 +18,15 @@ public class Lobby {
     private int userCount;
 
     @OneToOne
-    @JoinColumn(name = "ownerId")
+    @JoinColumn(name = "owner")
     User owner;
 
     @OneToOne
-    @JoinColumn(name = "player1Id")
+    @JoinColumn(name = "player1")
     User player1;
 
     @OneToOne
-    @JoinColumn(name = "player2Id")
+    @JoinColumn(name = "player2")
     User player2;
 
     @OneToMany

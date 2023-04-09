@@ -16,7 +16,7 @@ public class ChessGame {
     private ChessGameTile[][] tiles;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "lobby", referencedColumnName = "id")
+    @JoinColumn(name = "lobby")
     Lobby lobby;
 
     private final int BOARD_WIDTH = 8;
