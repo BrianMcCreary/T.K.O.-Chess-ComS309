@@ -41,7 +41,7 @@ public class ChessHostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChessHostOrJoinActivity.this, ChessLobbyPasswordActivity.class);
+                Intent intent = new Intent(ChessHostOrJoinActivity.this, ChessLobbyKeyActivity.class);
                 startActivity(intent);
             }
         });

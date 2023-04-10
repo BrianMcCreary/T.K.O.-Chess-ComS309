@@ -33,6 +33,7 @@ public class ChessLobbyActivity extends AppCompatActivity {
     ImageButton backBtn;
     SingletonUser currUser = SingletonUser.getInstance();
     String URLConcatenation = "";
+    String lobbyKey = "";
     Context context = this;
     TextView ErrorMessage;
     TextView LobbyKeyText;
@@ -43,6 +44,26 @@ public class ChessLobbyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chess_game_lobby);
+
+        LobbyKeyText = findViewById(R.id.lobbyKey4);
+
+        //Sets the textview object on lobby screen to the lobby key used to access the lobby
+        URLConcatenation = currUser.getUsername();
+        RequestQueue queue = Volley.newRequestQueue(ChessLobbyActivity.this);
+        StringRequest createLobby = new StringRequest(Request.Method.POST, Const.URL_SERVER_LOBBY + URLConcatenation, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println("----------------------------------------------------------------------------------------------------" + response);
+                lobbyKey = response;
+                LobbyKeyText.setText(lobbyKey);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+        queue.add(createLobby);
 
         backBtn = findViewById(R.id.backBtn2);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +116,7 @@ public class ChessLobbyActivity extends AppCompatActivity {
 
     public void kickUser(){
         RequestQueue queue = Volley.newRequestQueue(ChessLobbyActivity.this);
-        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_CHESSLOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_LOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -122,7 +143,7 @@ public class ChessLobbyActivity extends AppCompatActivity {
     }
     public void grabLobbyKey(){
         RequestQueue queue = Volley.newRequestQueue(ChessLobbyActivity.this);
-        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_CHESSLOBBYPASSWORD, new Response.Listener<String>(){
+        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYKEY, new Response.Listener<String>(){
             @Override
             public void onResponse(String response){
                 LobbyKeyText.setText(response);
