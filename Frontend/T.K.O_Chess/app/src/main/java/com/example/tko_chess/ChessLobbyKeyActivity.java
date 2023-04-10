@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
@@ -27,13 +28,15 @@ public class ChessLobbyKeyActivity extends AppCompatActivity {
     Button joinBtn;
     ImageButton backBtn;
     TextView error;
+    SingletonUser currUser = SingletonUser.getInstance();
+    String URLConcatenation = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lobby_key);
+        setContentView(R.layout.activity_chess_lobby_key);
 
-        backBtn = findViewById(R.id.backBtn8);
+        backBtn = findViewById(R.id.backBtn11);
 
         //Goes back to Host or Join Screen
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,60 +47,38 @@ public class ChessLobbyKeyActivity extends AppCompatActivity {
             }
         });
 
-        joinBtn = findViewById(R.id.joinBtn2);
+        joinBtn = findViewById(R.id.joinBtn4);
 
         //Takes user to joined lobby
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lobbyKey = (EditText) findViewById(R.id.lobbyPassword);
+                lobbyKey = (EditText) findViewById(R.id.lobbyKey);
                 error = (TextView) findViewById(R.id.loginErrorText);
 
                 String lobbyPassword = lobbyKey.getText().toString();
 
-                JSONObject lobbyPass = new JSONObject();
-                try{
-                    lobbyPass.put("Lobby Password", lobbyKey.getText());
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
+                URLConcatenation = lobbyPassword + "/" + currUser.getUsername();
 
                 RequestQueue queue = Volley.newRequestQueue(ChessLobbyKeyActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_LOBBYKEY, lobbyPass,
-                        new Response.Listener<JSONObject>(){
-
+                StringRequest joinLobby = new StringRequest(Request.Method.PUT,Const.URL_SERVER_LOBBYKEY + URLConcatenation,
+                        new Response.Listener<String>(){
                             @Override
-                            public void onResponse(JSONObject response){
-                                String temp;
-
-                                try{
-                                    temp = (String) response.get("message");
-                                } catch (JSONException e){
-                                    throw new RuntimeException(e);
-                                }
-
-                                if(temp.equals("true")){
+                            public void onResponse(String response){
+                                if(response.equals("success")){
                                     Intent intent = new Intent(ChessLobbyKeyActivity.this, ChessLobbyActivity.class);
                                     startActivity(intent);
                                 }
-
-                                else {
-                                    try{
-                                        error.setText(response.get("message").toString());
-                                    } catch (JSONException e){
-                                        throw new RuntimeException(e);
-                                    }
-                                }
                             }
                         }, new Response.ErrorListener(){
-                           @Override
-                           public void onErrorResponse(VolleyError Error){
-                               System.out.println(error.toString());
-                               error.setText("Uh Oh SpaghettiOs");
-                           }
-                        });
-                queue.add(userObjectRequest);
+                    @Override
+                    public void onErrorResponse(VolleyError Error){
+                        System.out.println(error.toString());
+                        error.setText("Uh Oh SpaghettiOs");
+                    }
+                });
+                queue.add(joinLobby);
             }
         });
     }

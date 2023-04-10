@@ -15,13 +15,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class TKOChessLobbyKeyActivity extends AppCompatActivity {
 
@@ -36,7 +32,7 @@ public class TKOChessLobbyKeyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lobby_key);
+        setContentView(R.layout.activity_tko_chess_lobby_key);
 
         backBtn = findViewById(R.id.backBtn8);
 
@@ -55,51 +51,33 @@ public class TKOChessLobbyKeyActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lobbyKey = (EditText) findViewById(R.id.lobbyPassword);
+                lobbyKey = (EditText) findViewById(R.id.lobbyKey);
                 error = (TextView) findViewById(R.id.loginErrorText);
 
                 String lobbyPassword = lobbyKey.getText().toString();
 
                 URLConcatenation = lobbyPassword + "/" + currUser.getUsername();
 
-                JSONObject user = new JSONObject();
-
                 RequestQueue queue = Volley.newRequestQueue(TKOChessLobbyKeyActivity.this);
 
-                JsonObjectRequest userObjectRequest = new JsonObjectRequest(Request.Method.PUT,Const.URL_SERVER_LOBBYKEY + URLConcatenation, null,
-                        new Response.Listener<JSONObject>(){
+                StringRequest joinLobby = new StringRequest(Request.Method.PUT,Const.URL_SERVER_LOBBYKEY + URLConcatenation,
+                        new Response.Listener<String>(){
                             @Override
-                            public void onResponse(JSONObject response){
-                                String temp;
-
-                                try {
-                                    temp = (String) response.get("message");
-                                } catch (JSONException e){
-                                    throw new RuntimeException(e);
-                                }
-
-                                if(temp.equals("success")){
-                                    SingletonUser currUser = SingletonUser.getInstance();
-                                    try{
-                                        currUser.updateUserObject(user.get("username").toString(), context);
-                                    } catch (JSONException e){
-                                        throw new RuntimeException(e);
-                                    }
-
+                            public void onResponse(String response){
+                                if(response.equals("success")){
                                     Intent intent = new Intent(TKOChessLobbyKeyActivity.this, TKOChessLobbyActivity.class);
                                     startActivity(intent);
                                 }
                             }
                         }, new Response.ErrorListener(){
-                           @Override
-                           public void onErrorResponse(VolleyError Error){
-                               System.out.println(error.toString());
-                               error.setText("Uh Oh SpaghettiOs");
-                           }
-                        });
-                queue.add(userObjectRequest);
+                    @Override
+                    public void onErrorResponse(VolleyError Error){
+                        System.out.println(error.toString());
+                        error.setText("Uh Oh SpaghettiOs");
+                    }
+                });
+                queue.add(joinLobby);
             }
         });
-
     }
 }

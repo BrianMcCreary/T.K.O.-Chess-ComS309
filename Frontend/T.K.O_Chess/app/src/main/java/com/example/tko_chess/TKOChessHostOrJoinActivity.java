@@ -51,7 +51,7 @@ public class TKOChessHostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOChessHostOrJoinActivity.this, ChessLobbyKeyActivity.class);
+                Intent intent = new Intent(TKOChessHostOrJoinActivity.this, TKOChessLobbyKeyActivity.class);
                 startActivity(intent);
             }
         });
