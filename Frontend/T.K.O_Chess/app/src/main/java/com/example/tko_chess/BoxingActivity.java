@@ -273,11 +273,6 @@ public class BoxingActivity extends AppCompatActivity {
                 Player1Jab.setVisibility(View.INVISIBLE);
 
                 Player1Block.setVisibility(View.VISIBLE);
-
-                //Lowers health of User
-                UserHealth -= 1;
-                lowerUserHealth(UserHealth);
-                System.out.println("lower health returned");
             }
         });
 
