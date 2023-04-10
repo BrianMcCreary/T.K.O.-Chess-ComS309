@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +42,7 @@ public class TKOChessLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tko_chess_game_lobby);
 
-        LobbyKeyText = findViewById(R.id.LobbyKey);
+        LobbyKeyText = findViewById(R.id.lobbyKey5);
 
         //Sets the textview object on lobby screen to the lobby key used to access the lobby
         URLConcatenation = currUser.getUsername();
