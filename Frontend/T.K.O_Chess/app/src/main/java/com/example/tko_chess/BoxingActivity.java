@@ -226,16 +226,19 @@ public class BoxingActivity extends AppCompatActivity {
                         case "GameWin":
                             //Displays game over popup
                             displayGameResult("You win!");
+                            break;
 
 
                         case "GameLoss":
                             //Displays game over popup
                             displayGameResult("You lose.");
+                            break;
 
 
                         case "OpponentLeft":
                             //Displays game over popup
                             displayGameResult("Opponent conceded.");
+                            break;
                     }
                 }
 
