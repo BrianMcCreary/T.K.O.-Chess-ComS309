@@ -584,7 +584,7 @@ public class BoxingActivity extends AppCompatActivity {
                 Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.BoxingToMenuBtn);
 
                 //Displays win message on screen
-                resultText.setText("result");
+                resultText.setText(result);
 
                 GameOverLayout.addView(inflatedLayout);
 
