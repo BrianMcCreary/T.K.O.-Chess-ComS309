@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Total-Knockout-Chess.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Total-Knockout-Chess.iml" afterDir="false" />
+    <list default="true" id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +26,7 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2O6R50veRsVoL8e63tmMEEIT7aO" />
+  <component name="ProjectId" id="2O7fs6rk7kvvelrZsr5paVu7RIV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

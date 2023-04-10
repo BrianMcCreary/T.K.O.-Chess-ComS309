@@ -56,5 +56,4 @@ public class BoxingGameController {
     public List<BoxingGame> getBoxingGames() {
         return boxingGameRepository.findAll();
     }
-
 }

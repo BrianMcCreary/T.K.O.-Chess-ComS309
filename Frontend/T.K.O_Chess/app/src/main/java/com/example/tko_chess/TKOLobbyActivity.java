@@ -35,6 +35,7 @@ public class TKOLobbyActivity extends AppCompatActivity {
     TextView ErrorMessage;
     TextView LobbyKeyText;
     String URLConcatenation = "";
+    String lobbyKey = "";
     Context context = this;
     LinearLayout joinedUserLayout;
 
@@ -42,6 +43,26 @@ public class TKOLobbyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tko_game_lobby);
+
+        LobbyKeyText = findViewById(R.id.LobbyKey);
+
+        //Sets the textview object on lobby screen to the lobby key used to access the lobby
+        URLConcatenation = currUser.getUsername();
+        RequestQueue queue = Volley.newRequestQueue(TKOLobbyActivity.this);
+        StringRequest createLobby = new StringRequest(Request.Method.POST, Const.URL_SERVER_LOBBY + URLConcatenation, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println("----------------------------------------------------------------------------------------------------" + response);
+                lobbyKey = response;
+                LobbyKeyText.setText(lobbyKey);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.toString());
+            }
+        });
+        queue.add(createLobby);
 
         backBtn = findViewById(R.id.backBtn2);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +113,7 @@ public class TKOLobbyActivity extends AppCompatActivity {
 
     public void kickUser(){
         RequestQueue queue = Volley.newRequestQueue(TKOLobbyActivity.this);
-        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_TKOLOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest kickUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_LOBBY + URLConcatenation, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String temp;
@@ -113,20 +134,6 @@ public class TKOLobbyActivity extends AppCompatActivity {
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse (VolleyError error) {
-                ErrorMessage.setText("An error occurred");
-            }
-        });
-    }
-    public void grabLobbyKey(){
-        RequestQueue queue = Volley.newRequestQueue(TKOLobbyActivity.this);
-        StringRequest lobbyKey = new StringRequest(Request.Method.GET, Const.URL_SERVER_TKOLOBBYPASSWORD, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response){
-                LobbyKeyText.setText(response);
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse (VolleyError error){
                 ErrorMessage.setText("An error occurred");
             }
         });

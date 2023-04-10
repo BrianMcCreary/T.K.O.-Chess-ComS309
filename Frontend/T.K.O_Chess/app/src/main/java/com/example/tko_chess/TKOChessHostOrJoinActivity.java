@@ -8,11 +8,21 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tko_chess.ultils.Const;
+
 public class TKOChessHostOrJoinActivity extends AppCompatActivity {
 
     Button hostBtn;
     Button joinBtn;
     ImageButton backBtn;
+    String URLConcatenation = "";
+    public String lobbyKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +51,11 @@ public class TKOChessHostOrJoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TKOChessHostOrJoinActivity.this, ChessLobbyPasswordActivity.class);
+                Intent intent = new Intent(TKOChessHostOrJoinActivity.this, TKOChessLobbyKeyActivity.class);
                 startActivity(intent);
             }
         });
+
+
     }
 }
