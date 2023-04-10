@@ -1,6 +1,7 @@
 package TotalKnockoutChess.Chess;
 
 import TotalKnockoutChess.Chess.Pieces.*;
+import TotalKnockoutChess.Lobby.Lobby;
 import TotalKnockoutChess.Users.User;
 
 import javax.persistence.*;
@@ -12,15 +13,11 @@ public class ChessGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    ChessGameTile[][] tiles;
+    private ChessGameTile[][] tiles;
 
-    @OneToOne
-    @JoinColumn(name = "whiteId")
-    User white;
-
-    @OneToOne
-    @JoinColumn(name = "blackId")
-    User black;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lobby")
+    Lobby lobby;
 
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
@@ -28,14 +25,15 @@ public class ChessGame {
     private final String TOP_COLOR = "black";
     private final String BOTTOM_COLOR = "white";
 
-    public ChessGame(User white, User black) {
-        this.white = white;
-        this.black = black;
+    public ChessGame(Lobby lobby) {
+        this.lobby = lobby;
         initializeGame();
     }
 
     // Helper method to initialize the game
     private void initializeGame() {
+        tiles = new ChessGameTile[8][8];
+
         // Create ChessGameTile's to fill "tiles" 2d array
         for (int row = 0; row < BOARD_HEIGHT; row++) {
             for (int col = 0; col < BOARD_WIDTH; col++) {
@@ -76,4 +74,8 @@ public class ChessGame {
     public void setId(int id) {
         this.id = id;
     }
+
+    // Getters and setters for lobby field.
+    public Lobby getLobby() { return lobby; }
+    public void setLobby(Lobby lobby) { this.lobby = lobby; }
 }

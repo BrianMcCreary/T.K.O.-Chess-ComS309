@@ -5,7 +5,6 @@ import javax.persistence.Table;
 
 @Table
 public interface BoxingGameRepository extends JpaRepository<BoxingGame, Long> {
-    BoxingGame findById(int id);
-
-    void deleteById(int id);
+    BoxingGame getById(Long id);
+    void deleteById(Long id);
 }

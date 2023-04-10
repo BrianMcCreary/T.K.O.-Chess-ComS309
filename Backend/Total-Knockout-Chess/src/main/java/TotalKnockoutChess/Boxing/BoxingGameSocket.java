@@ -51,7 +51,7 @@ public class BoxingGameSocket {
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
 
-        //Boxing game that the user in this sesssion is in
+        //Boxing game that the user in this session is in
         BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
 
         //If the received message is a move, update game accordingly
@@ -81,12 +81,12 @@ public class BoxingGameSocket {
                 }
                 else if (roundWinner.equals(bg.getPlayer2())) {
                     bg.dockLife(bg.getPlayer1());
- //                   usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
                     Session s = usernameSessionMap.get(bg.getPlayer1());
                     s.getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
                     Session s2 = usernameSessionMap.get(bg.getPlayer2());
                     s2.getBasicRemote().sendText("RoundWin " + bg.getP1Move());
- //                   usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
