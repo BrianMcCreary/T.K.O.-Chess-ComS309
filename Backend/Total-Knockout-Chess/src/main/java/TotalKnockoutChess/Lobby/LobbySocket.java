@@ -54,17 +54,27 @@ public class LobbySocket {
     @OnMessage
     public void onMessage(Session session, String message) throws IOException {
         logger.info("Entered into Message. Got Message: " + message);
-
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
 
-        //Lobby that the user in this session is in
         Lobby lobby = findLobby(lobbyRepository.findAll(), username);
 
+//        LobbyController controller = new LobbyController();
+
+        // If the user is not in a lobby yet
+//        if(lobby == null){
         // TODO
-//        if(message.equals("")){
+        // When a user wants to host a lobby
+//        if(message.equals("host")){
+//            String lobbyCode = controller.hostLobby(username);
+
+//        }
+        // When a user wants to join the lobby
+//        else if(message.equals("join")){
 //
 //        }
+//        }
+
 
 
     }
