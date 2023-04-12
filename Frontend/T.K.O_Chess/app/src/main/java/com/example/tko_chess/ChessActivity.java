@@ -14,7 +14,7 @@ public class ChessActivity extends AppCompatActivity {
 
     Drawable piece;
     Drawable selectedSpot;
-    boolean isPressed = false;
+    boolean isClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +92,12 @@ public class ChessActivity extends AppCompatActivity {
         ImageButton F8 = findViewById(R.id.F8);
         ImageButton G8 = findViewById(R.id.G8);
         ImageButton H8 = findViewById(R.id.H8);
+
+        A1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isClicked = true;
+            }
+        });
     }
 }
