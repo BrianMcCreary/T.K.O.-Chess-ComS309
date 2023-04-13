@@ -159,58 +159,54 @@
         app:layout_constraintTop_toBottomOf="@+id/TimeRemainingText" />
 
 
+
     <ImageView
-        android:id="@+id/Player1FullHeart3"
+        android:id="@+id/Player1Heart6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart5"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart4"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="@+id/Player1Heart1"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart2"
+        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart1"
+        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="@+id/Player1NameText"
         app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
         app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1FullHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1FullHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/Player1NameText"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-
 
     <TextView
         android:id="@+id/Player1NameText"
@@ -225,56 +221,54 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
+
     <ImageView
-        android:id="@+id/Player2FullHeart1"
+        android:id="@+id/Player2Heart6"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/Player2FullHeart2"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart5"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart4"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart2"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player2FullHeart2"
+        android:id="@+id/Player2Heart2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/Player2FullHeart3"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart1"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player2FullHeart3"
+        android:id="@+id/Player2Heart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/Player2EmptyHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/Player2EmptyHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
 
     <TextView
         android:id="@+id/Player2NameText"
@@ -287,6 +281,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView" />
+
+
 
     <Button
         android:id="@+id/BlockBtn"

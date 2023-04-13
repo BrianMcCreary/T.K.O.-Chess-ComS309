@@ -43,22 +43,23 @@ public class BoxingActivity extends AppCompatActivity {
     ImageView Player1Block;
     ImageView Player1Kick;
     ImageView Player1Jab;
-    ImageView Player1FullHeart1;
-    ImageView Player1FullHeart2;
-    ImageView Player1FullHeart3;
-    ImageView Player1EmptyHeart1;
-    ImageView Player1EmptyHeart2;
-    ImageView Player1EmptyHeart3;
+
+    ImageView UserHeart6;
+    ImageView UserHeart5;
+    ImageView UserHeart4;
+    ImageView UserHeart3;
+    ImageView UserHeart2;
+    ImageView UserHeart1;
 
     ImageView Player2Block;
     ImageView Player2Kick;
     ImageView Player2Jab;
-    ImageView Player2FullHeart1;
-    ImageView Player2FullHeart2;
-    ImageView Player2FullHeart3;
-    ImageView Player2EmptyHeart1;
-    ImageView Player2EmptyHeart2;
-    ImageView Player2EmptyHeart3;
+    ImageView OpponentHeart6;
+    ImageView OpponentHeart5;
+    ImageView OpponentHeart4;
+    ImageView OpponentHeart3;
+    ImageView OpponentHeart2;
+    ImageView OpponentHeart1;
 
     //Button declarations
     Button BlockBtn;
@@ -101,22 +102,23 @@ public class BoxingActivity extends AppCompatActivity {
         Player1Block = findViewById(R.id.Player1BlockImg);
         Player1Jab = findViewById(R.id.Player1JabImg);
         Player1Kick = findViewById(R.id.Player1KickImg);
-        Player1FullHeart1 = findViewById(R.id.Player1FullHeart1);
-        Player1FullHeart2 = findViewById(R.id.Player1FullHeart2);
-        Player1FullHeart3 = findViewById(R.id.Player1FullHeart3);
-        Player1EmptyHeart1 = findViewById(R.id.Player1EmptyHeart1);
-        Player1EmptyHeart2 = findViewById(R.id.Player1EmptyHeart2);
-        Player1EmptyHeart3 = findViewById(R.id.Player1EmptyHeart3);
+        UserHeart6 = findViewById(R.id.Player1Heart6);
+        UserHeart5 = findViewById(R.id.Player1Heart5);
+        UserHeart4 = findViewById(R.id.Player1Heart4);
+        UserHeart3 = findViewById(R.id.Player1Heart3);
+        UserHeart2 = findViewById(R.id.Player1Heart2);
+        UserHeart1 = findViewById(R.id.Player1Heart1);
 
         Player2Block = findViewById(R.id.Player2BlockImg);
         Player2Jab = findViewById(R.id.Player2JabImg);
         Player2Kick = findViewById(R.id.Player2KickImg);
-        Player2FullHeart1 = findViewById(R.id.Player2FullHeart1);
-        Player2FullHeart2 = findViewById(R.id.Player2FullHeart2);
-        Player2FullHeart3 = findViewById(R.id.Player2FullHeart3);
-        Player2EmptyHeart1 = findViewById(R.id.Player2EmptyHeart1);
-        Player2EmptyHeart2 = findViewById(R.id.Player2EmptyHeart2);
-        Player2EmptyHeart3 = findViewById(R.id.Player2EmptyHeart3);
+        OpponentHeart6 = findViewById(R.id.Player2Heart6);
+        OpponentHeart5 = findViewById(R.id.Player2Heart5);
+        OpponentHeart4 = findViewById(R.id.Player2Heart4);
+        OpponentHeart3 = findViewById(R.id.Player2Heart3);
+        OpponentHeart2 = findViewById(R.id.Player2Heart2);
+        OpponentHeart1 = findViewById(R.id.Player2Heart1);
+
 
         //Button initializations
         BlockBtn = findViewById(R.id.BlockBtn);
@@ -162,20 +164,25 @@ public class BoxingActivity extends AppCompatActivity {
 
                     //If user's move beat opponent's move
                     switch (strings[0]) {
-
-
                         case "RoundWin":
                             //Show opponent's move
-                            //showOpponentMove(strings[1]);
-                            //System.out.println("show move returned");
+                            showOpponentMove(strings[1]);
+                            System.out.println("show move returned");
+                            waitTime(3.0);
+
+                            //Hide opponent's move
+                            hideOpponentMove();
+                            System.out.println("hide move returned");
+
 
                             //Lowers health of opponent
                             OpponentHealth -= 1;
                             lowerOpponentHealth(OpponentHealth);
+                            System.out.println("lower health returned");
 
                             //Enables buttons again for the new "round"
                             enableButtons();
-                            System.out.println("enable");
+                            System.out.println("buttons enabled");
 
                             //Exit switch statement
                             break;
@@ -183,8 +190,14 @@ public class BoxingActivity extends AppCompatActivity {
 
                         case "RoundLoss":
                             //Show opponent's move
-                            //showOpponentMove(strings[1]);
-                            //System.out.println("show move returned");
+                            showOpponentMove(strings[1]);
+                            System.out.println("show move returned");
+                            waitTime(3.0);
+
+                            //Hide opponent's move
+                            hideOpponentMove();
+                            System.out.println("hide move returned");
+
 
                             //Lowers health of User
                             UserHealth -= 1;
@@ -193,7 +206,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                             //Enables buttons again for the new "round"
                             enableButtons();
-                            System.out.println("enable");
+                            System.out.println("buttons enabled");
 
                             //Exit switch statement
                             break;
@@ -201,8 +214,13 @@ public class BoxingActivity extends AppCompatActivity {
 
                         case "Tie":
                             //Show opponent's move
-                            //showOpponentMove(strings[1]);
-                            //System.out.println("show move returned");
+                            showOpponentMove(strings[1]);
+                            System.out.println("show move returned");
+                            waitTime(3.0);
+
+                            //Hide opponent's move
+                            hideOpponentMove();
+                            System.out.println("hide move returned");
 
                             //Enables buttons again for the new "round"
                             enableButtons();
@@ -402,8 +420,6 @@ public class BoxingActivity extends AppCompatActivity {
                 ConfirmMoveBtn.setClickable(true);
             }
         });
-
-
     }
 
 
@@ -435,14 +451,14 @@ public class BoxingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                //TODO Implement method that requests opponent's name and then displays it in textview?
             }
         });
     }
 
 
 
-    //Shows opponent's moves and then reverts back to default block stance.
+    //Shows opponent's move on screen.
     private void showOpponentMove(String move) {
 
         runOnUiThread(new Runnable() {
@@ -450,31 +466,35 @@ public class BoxingActivity extends AppCompatActivity {
             public void run() {
                 //Show opponent's move
                 switch (move) {
-                    case "block":
-                        //Do nothing because default stance is block
-                        waitTime(3.0);
-                        break;
-
                     case "kick":
                         //Hides block and shows kick
                         Player2Block.setVisibility(View.INVISIBLE);
                         Player2Kick.setVisibility(View.VISIBLE);
-                        waitTime(3.0);
-                        //Hides kick and goes back to default block stance
-                        Player2Kick.setVisibility(View.INVISIBLE);
-                        Player2Block.setVisibility(View.VISIBLE);
                         break;
 
                     case "jab":
                         //Hides block and shows jab
                         Player2Block.setVisibility(View.INVISIBLE);
                         Player2Jab.setVisibility(View.VISIBLE);
-                        waitTime(3.0);
-                        //Hides jab and goes back to default block stance
-                        Player2Jab.setVisibility(View.INVISIBLE);
-                        Player2Block.setVisibility(View.VISIBLE);
+                        break;
+
+                    default:
+                        //Do nothing because default stance is block
                         break;
                 }
+            }
+        });
+    }
+
+
+    //Hides opponent's move on screen and displays default block stance again
+    private void hideOpponentMove() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Player2Kick.setVisibility(View.INVISIBLE);
+                Player2Jab.setVisibility(View.INVISIBLE);
+                Player2Block.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -486,37 +506,24 @@ public class BoxingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                /*//TODO Change hearts so I just have to change the image of the hearts rather than set visibility.
                 //Changes image of Player1Heartx
-                if (health == 2) {
-                    Player1Heart1.setImageResource(R.drawable.emptyheart);
+                if (health == 5) {
+                    UserHeart6.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 4) {
+                    UserHeart5.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 3) {
+                    UserHeart4.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 2) {
+                    UserHeart3.setImageResource(R.drawable.emptyheart);
 
                 } else if (health == 1) {
-                    Player1Heart2.setImageResource(R.drawable.emptyheart);
+                    UserHeart2.setImageResource(R.drawable.emptyheart);
 
                 } else if (health == 0) {
-                    Player1Heart3.setImageResource(R.drawable.emptyheart);
-                }*/
-
-                //Hides the full heart image and shows the empty heart image corresponding to their current health
-                if (health == 2) {
-                    Player1FullHeart1.setVisibility(View.INVISIBLE);
-                    Player1EmptyHeart1.setVisibility(View.VISIBLE);
-                    //Enables buttons again for the new "round"
-                    enableButtons();
-
-                } else if (health == 1) {
-                    Player1FullHeart2.setVisibility(View.INVISIBLE);
-                    Player1EmptyHeart2.setVisibility(View.VISIBLE);
-                    //Enables buttons again for the new "round"
-                    enableButtons();
-
-                } else if (health == 0) {
-                    Player1FullHeart3.setVisibility(View.INVISIBLE);
-                    Player1EmptyHeart3.setVisibility(View.VISIBLE);
-                    //Enables buttons because it seems like it doesn't work unless I do
-                    enableButtons();
-                    //Don't enable buttons again because game should be over.
+                    UserHeart1.setImageResource(R.drawable.emptyheart);
                 }
             }
         });
@@ -529,37 +536,24 @@ public class BoxingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                /*//TODO Change hearts so I just have to change the image of the hearts rather than set visibility.
                 //Changes image of Player1Heartx
-                if (health == 2) {
-                    Player2Heart1.setImageResource(R.drawable.emptyheart);
+                if (health == 5) {
+                    OpponentHeart6.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 4) {
+                    OpponentHeart5.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 3) {
+                    OpponentHeart4.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 2) {
+                    OpponentHeart3.setImageResource(R.drawable.emptyheart);
 
                 } else if (health == 1) {
-                    Player2Heart2.setImageResource(R.drawable.emptyheart);
+                    OpponentHeart2.setImageResource(R.drawable.emptyheart);
 
                 } else if (health == 0) {
-                    Player2Heart3.setImageResource(R.drawable.emptyheart);
-                }*/
-
-                //Hides the full heart image and shows the empty heart image corresponding to their current health
-                if (health == 2) {
-                    Player2FullHeart1.setVisibility(View.INVISIBLE);
-                    Player2EmptyHeart1.setVisibility(View.VISIBLE);
-                    //Enables buttons again for the new "round"
-                    enableButtons();
-
-                } else if (health == 1) {
-                    Player2FullHeart2.setVisibility(View.INVISIBLE);
-                    Player2EmptyHeart2.setVisibility(View.VISIBLE);
-                    //Enables buttons again for the new "round"
-                    enableButtons();
-
-                } else if (health == 0) {
-                    Player2FullHeart3.setVisibility(View.INVISIBLE);
-                    Player2EmptyHeart3.setVisibility(View.VISIBLE);
-                    //Enables buttons because it seems like it doesn't work unless I do
-                    enableButtons();
-                    //Don't enable buttons again because game should be over.
+                    OpponentHeart1.setImageResource(R.drawable.emptyheart);
                 }
             }
         });
@@ -598,7 +592,6 @@ public class BoxingActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 
