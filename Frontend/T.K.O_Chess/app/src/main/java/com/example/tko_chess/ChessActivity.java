@@ -95,7 +95,7 @@ public class ChessActivity extends AppCompatActivity {
         A1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         A2.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +143,7 @@ public class ChessActivity extends AppCompatActivity {
         B1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         B2.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +191,7 @@ public class ChessActivity extends AppCompatActivity {
         C1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         C2.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +239,7 @@ public class ChessActivity extends AppCompatActivity {
         D1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         D2.setOnClickListener(new View.OnClickListener() {
@@ -287,7 +287,7 @@ public class ChessActivity extends AppCompatActivity {
         E1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         E2.setOnClickListener(new View.OnClickListener() {
@@ -335,7 +335,7 @@ public class ChessActivity extends AppCompatActivity {
         F1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                piece = A1.getDrawable();
+
             }
         });
         F2.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +375,102 @@ public class ChessActivity extends AppCompatActivity {
             }
         });
         F8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        G8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        H8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
