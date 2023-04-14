@@ -20,7 +20,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@ServerEndpoint(value = "/lobbysocket/{username}")
+@ServerEndpoint(value = "/websocket/lobby/{username}/{joinOrHost}/{lobbyCode}")
 @Component
 public class LobbySocket {
 
@@ -43,12 +43,20 @@ public class LobbySocket {
     private final Logger logger = LoggerFactory.getLogger(LobbySocket.class);
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException {
+    public void onOpen(Session session, @PathParam("username") String username, @PathParam("joinOrHost") String joinOrHost, @PathParam("lobbyCode") Long lobbyCode) throws IOException {
         logger.info("Entered into Open");
-        System.out.println("Opened connection");
-
+        System.out.println("Opened connection");        //Don't need to know who the owner is, just put users into spectators
+                                                        //when they join the lobby
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
+
+        if (joinOrHost.equals("host")) {
+            Lobby lobby = new Lobby(getUser(username));
+            lobbyRepository.save(lobby);
+        }
+        else if (joinOrHost.equals("join")) {
+
+        }
     }
 
     @OnMessage
@@ -114,6 +122,16 @@ public class LobbySocket {
         for (Lobby l : lobbies) {
             if (l.contains(usr)) {
                 return l;
+            }
+        }
+        return null;
+    }
+
+    //Helper method used to find a User given their username
+    private User getUser(String username) {
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                return u;
             }
         }
         return null;
