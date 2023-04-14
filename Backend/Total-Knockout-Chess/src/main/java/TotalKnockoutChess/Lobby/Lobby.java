@@ -10,7 +10,7 @@ import java.util.Random;
 public class Lobby {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private Long code;

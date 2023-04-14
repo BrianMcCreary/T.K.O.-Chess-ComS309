@@ -20,7 +20,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@ServerEndpoint(value = "/lobbysocket/{username}")
+@ServerEndpoint(value = "/websocket/lobby/{username}/{lobbyCode}")
 @Component
 public class LobbySocket {
 
@@ -43,10 +43,10 @@ public class LobbySocket {
     private final Logger logger = LoggerFactory.getLogger(LobbySocket.class);
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) throws IOException {
+    public void onOpen(Session session, @PathParam("username") String username, @PathParam("lobbyCode") Long lobbyCode) throws IOException {
         logger.info("Entered into Open");
-        System.out.println("Opened connection");
-
+        System.out.println("Opened connection");        //Don't need to know who the owner is, just put users into spectators
+                                                        //when they join the lobby
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
     }

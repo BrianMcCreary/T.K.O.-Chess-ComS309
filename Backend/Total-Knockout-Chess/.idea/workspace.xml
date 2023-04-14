@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="">
+    <list default="true" id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,13 +43,14 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/conno/Documents/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="" />
+      <changelist id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="" />
       <created>1680916746971</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -66,16 +68,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
