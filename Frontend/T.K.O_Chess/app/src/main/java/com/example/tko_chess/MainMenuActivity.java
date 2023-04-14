@@ -12,8 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author Zachary Scurlock
  * @author Lex Somers
+ * @author Zachary Scurlock
  */
 public class MainMenuActivity extends AppCompatActivity {
 
