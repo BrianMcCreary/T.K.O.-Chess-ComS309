@@ -89,7 +89,7 @@ public class TKOLobbyActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
 
         for(int i = 0; i < UsersList.length(); i++){
-            View userLayout = inflater.inflate(R.layout.joined_users_layout, joinedUserLayout, true);
+            View userLayout = inflater.inflate(R.layout.lobby_member_layout, joinedUserLayout, true);
             TextView usernameText = (TextView) userLayout.findViewById(R.id.JoinedUserNameEditText);
             Button kickBtn = (Button) userLayout.findViewById(R.id.KickUserBtn);
 

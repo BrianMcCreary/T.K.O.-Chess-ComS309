@@ -134,11 +134,11 @@
         app:srcCompat="@drawable/jab" />
 
     <TextView
-        android:id="@+id/TimeRemainingText"
+        android:id="@+id/GameNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Time Remaining"
+        android:text="Total Knock Out!"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,17 +146,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/GameTimeText"
+        android:id="@+id/RoundNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="00:00s"
+        android:text="Round 0"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/TimeRemainingText"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="@+id/GameNameText"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/TimeRemainingText"
-        app:layout_constraintTop_toBottomOf="@+id/TimeRemainingText" />
+        app:layout_constraintStart_toStartOf="@+id/GameNameText"
+        app:layout_constraintTop_toBottomOf="@+id/GameNameText" />
 
 
 
@@ -294,11 +294,10 @@
         android:backgroundTint="#00A0FF"
         android:text="Block"
         android:textColor="#000000"
-
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
-        app:layout_constraintTop_toBottomOf="@+id/RoundNumberText" />
+        app:layout_constraintTop_toBottomOf="@+id/SelectMoveText" />
 
     <Button
         android:id="@+id/JabBtn"
@@ -335,28 +334,16 @@
         app:layout_constraintTop_toBottomOf="@+id/KickBtn" />
 
     <TextView
-        android:id="@+id/CurrRoundText"
+        android:id="@+id/SelectMoveText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Round "
+        android:text="Select your move"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
         app:layout_constraintTop_toBottomOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/RoundNumberText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="0"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/CurrRoundText"
-        app:layout_constraintStart_toStartOf="@+id/CurrRoundText"
-        app:layout_constraintTop_toBottomOf="@+id/CurrRoundText" />
 
     <LinearLayout
         android:id="@+id/OptionsLayout"

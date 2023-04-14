@@ -5,7 +5,6 @@ import static android.text.TextUtils.split;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,13 +69,13 @@ public class BoxingActivity extends AppCompatActivity {
 
     //TextView declarations
     TextView GameTimeText;
-    TextView MoveTimeText;
     TextView Player1Name;
     TextView Player2Name;
+    TextView SelectMoveText;
 
     //Int declarations
-    int UserHealth = 3;
-    int OpponentHealth = 3;
+    int UserHealth = 6;
+    int OpponentHealth = 6;
 
     //LinearLayout declarations
     LinearLayout OptionsLayout;
@@ -95,8 +94,6 @@ public class BoxingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
-
-        Handler mHandler = new Handler();
 
         //ImageView initializations
         Player1Block = findViewById(R.id.Player1BlockImg);
@@ -128,10 +125,10 @@ public class BoxingActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.BoxingMenuBtn);
 
         //TextView initializations
-        GameTimeText = findViewById(R.id.GameTimeText);
-        MoveTimeText = findViewById(R.id.RoundNumberText);
+        GameTimeText = findViewById(R.id.RoundNumberText);
         Player1Name = findViewById(R.id.Player1NameText);
         Player2Name = findViewById(R.id.Player2NameText);
+        SelectMoveText = findViewById(R.id.SelectMoveText);
 
         //LinearLayout initializations
         OptionsLayout = findViewById(R.id.OptionsLayout);
@@ -180,6 +177,10 @@ public class BoxingActivity extends AppCompatActivity {
                             lowerOpponentHealth(OpponentHealth);
                             System.out.println("lower health returned");
 
+                            //Reset user's stance to default
+                            showDefaultStance();
+                            SelectedMove = "";
+
                             //Enables buttons again for the new "round"
                             enableButtons();
                             System.out.println("buttons enabled");
@@ -204,6 +205,10 @@ public class BoxingActivity extends AppCompatActivity {
                             lowerUserHealth(UserHealth);
                             System.out.println("lower health returned");
 
+                            //Reset user's stance to default
+                            showDefaultStance();
+                            SelectedMove = "";
+
                             //Enables buttons again for the new "round"
                             enableButtons();
                             System.out.println("buttons enabled");
@@ -221,6 +226,10 @@ public class BoxingActivity extends AppCompatActivity {
                             //Hide opponent's move
                             hideOpponentMove();
                             System.out.println("hide move returned");
+
+                            //Reset user's stance to default
+                            showDefaultStance();
+                            SelectedMove = "";
 
                             //Enables buttons again for the new "round"
                             enableButtons();
@@ -589,6 +598,19 @@ public class BoxingActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+            }
+        });
+    }
+
+
+
+    private void showDefaultStance() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Player1Kick.setVisibility(View.INVISIBLE);
+                Player1Jab.setVisibility(View.INVISIBLE);
+                Player1Block.setVisibility(View.VISIBLE);
             }
         });
     }
