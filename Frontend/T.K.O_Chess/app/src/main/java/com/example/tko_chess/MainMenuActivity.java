@@ -53,8 +53,9 @@ public class MainMenuActivity extends AppCompatActivity {
         tkoChess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, TKOChessHostOrJoinActivity.class);
-                startActivity(intent);
+                //TODO take user to lobby screen
+                //Intent intent = new Intent(MainMenuActivity.this, something.class);
+                //startActivity(intent);
             }
         });
 
@@ -63,7 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ChessHostOrJoinActivity.class);
+                //TODO take user to lobby screen
+                Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class);
                 startActivity(intent);
             }
         });
@@ -72,9 +74,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //TODO take user to lobby screen
                 Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
-
-                //TODO Change this back Intent intent = new Intent(MainMenuActivity.this, TKOHostOrJoinActivity.class);
                 startActivity(intent);
             }
         });
