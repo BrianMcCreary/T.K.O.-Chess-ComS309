@@ -7,7 +7,7 @@
     android:background="@color/dark_grey">
 
     <ImageButton
-        android:id="@+id/HostLobbytoMenuBtn"
+        android:id="@+id/JoinLobbytoMenuBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -23,19 +23,19 @@
         app:srcCompat="@drawable/ic_backbtn" />
 
     <TextView
-        android:id="@+id/HostLobbyNameText"
+        android:id="@+id/JoinLobbyNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Lobby"
         android:textColor="@color/white"
         android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="@+id/HostLobbytoMenuBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/HostLobbytoMenuBtn" />
+        app:layout_constraintTop_toTopOf="@+id/JoinLobbytoMenuBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/JoinLobbytoMenuBtn"/>
 
     <ScrollView
-        android:id="@+id/HostLobbyScrollView"
+        android:id="@+id/JoinLobbyScrollView"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:layout_marginTop="30dp"
@@ -44,10 +44,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HostLobbyNameText">
+        app:layout_constraintTop_toBottomOf="@+id/JoinLobbyNameText">
 
         <LinearLayout
-            android:id="@+id/HostLobbyLinearLayout"
+            android:id="@+id/JoinLobbyLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -55,7 +55,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/HostReadytoStartText"
+        android:id="@+id/JoinReadytoStartText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -64,10 +64,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HostLobbyScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/JoinLobbyScrollView" />
 
     <Button
-        android:id="@+id/HostReadyUpBtn"
+        android:id="@+id/JoinReadyUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -75,12 +75,12 @@
         android:text="Ready up"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/HostReadytoStartText"
-        app:layout_constraintStart_toStartOf="@+id/HostReadytoStartText"
-        app:layout_constraintTop_toBottomOf="@+id/HostReadytoStartText" />
+        app:layout_constraintEnd_toEndOf="@+id/JoinReadytoStartText"
+        app:layout_constraintStart_toStartOf="@+id/JoinReadytoStartText"
+        app:layout_constraintTop_toBottomOf="@+id/JoinReadytoStartText" />
 
     <Button
-        android:id="@+id/HostStartGameBtn"
+        android:id="@+id/JoinStartGameBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -88,24 +88,24 @@
         android:text="Start Game"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/HostReadyUpBtn"
-        app:layout_constraintStart_toStartOf="@+id/HostReadyUpBtn"
-        app:layout_constraintTop_toBottomOf="@+id/HostReadyUpBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/JoinReadyUpBtn"
+        app:layout_constraintStart_toStartOf="@+id/JoinReadyUpBtn"
+        app:layout_constraintTop_toBottomOf="@+id/JoinReadyUpBtn" />
 
     <TextView
-        android:id="@+id/HostChangeGameSettingsText"
+        android:id="@+id/JoinChangeGameSettingsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Game Settings"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/HostStartGameBtn"
-        app:layout_constraintStart_toStartOf="@+id/HostStartGameBtn"
-        app:layout_constraintTop_toBottomOf="@+id/HostStartGameBtn" />
+        app:layout_constraintEnd_toEndOf="@+id/JoinStartGameBtn"
+        app:layout_constraintStart_toStartOf="@+id/JoinStartGameBtn"
+        app:layout_constraintTop_toBottomOf="@+id/JoinStartGameBtn" />
 
     <Button
-        android:id="@+id/HostChangeSettingsBtn"
+        android:id="@+id/JoinChangeSettingsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -113,7 +113,7 @@
         android:text="Change Settings"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/HostChangeGameSettingsText"
-        app:layout_constraintStart_toStartOf="@+id/HostChangeGameSettingsText"
-        app:layout_constraintTop_toBottomOf="@+id/HostChangeGameSettingsText" />
+        app:layout_constraintEnd_toEndOf="@+id/JoinChangeGameSettingsText"
+        app:layout_constraintStart_toStartOf="@+id/JoinChangeGameSettingsText"
+        app:layout_constraintTop_toBottomOf="@+id/JoinChangeGameSettingsText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

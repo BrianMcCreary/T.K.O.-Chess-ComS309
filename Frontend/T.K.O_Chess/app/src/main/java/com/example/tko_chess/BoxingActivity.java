@@ -157,13 +157,6 @@ public class BoxingActivity extends AppCompatActivity {
                     Log.d("", "run() returned: " + message);
                     String[] strings = message.split(" ");
 
-                    // "OpponentMoved pawn a3"
-                    // String[3] = {OpponentMoved, a3, pawn}
-                    // case "OpponentMoved":
-                    //      updateSquareDisplay(a3, pawn) {
-                    //          imageviewA3.setbackground(R.drawable.blackpawn);
-                    //      }
-
                     //If user's move beat opponent's move
                     switch (strings[0]) {
                         case "RoundWin":
