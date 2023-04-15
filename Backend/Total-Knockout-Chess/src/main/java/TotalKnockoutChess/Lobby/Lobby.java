@@ -25,9 +25,13 @@ public class Lobby {
     @JoinColumn(name = "player1")
     User player1;
 
+    private boolean player1Ready;
+
     @OneToOne
     @JoinColumn(name = "player2")
     User player2;
+
+    private boolean player2Ready;
 
     @OneToMany
     List<User> spectators;
@@ -40,21 +44,38 @@ public class Lobby {
      * @param owner - User object who made the lobby
      */
     public Lobby(User owner) {
-        spectators = new ArrayList<>();
+        spectators = new ArrayList<User>();
         this.owner = owner;
-        spectators.add(owner);
+        player1 = owner;
+//        spectators.add(owner);
         userCount = 1;
+        player1Ready = false;
+        player2Ready = false;
     }
 
     // Generate code for the lobby
     public Long generateLobbyCode(List<Lobby> lobbies){
         Random rand = new Random(System.currentTimeMillis());
         Long lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
+        boolean isUnique = false;
+        boolean changed = false;
 
         // Make sure lobby code is unique
-        for(Lobby l : lobbies){
-            while (l.getCode().equals(lobbyCode)){
-                lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
+        while (!isUnique) {
+            for (Lobby l : lobbies) {
+                if (l.getCode().equals(lobbyCode)) {
+                    lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000;
+                    changed = true;
+                }
+//                while (l.getCode().equals(lobbyCode)) {
+//                    lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
+//                }
+            }
+            if (changed) {
+                changed = false;
+            }
+            else {
+                isUnique = true;
             }
         }
         return lobbyCode;
@@ -96,6 +117,22 @@ public class Lobby {
     }
     public void setPlayer2(User player2){
         this.player2 = player2;
+    }
+
+    public boolean getPlayer1Ready() {
+        return player1Ready;
+    }
+
+    public void setPlayer1Ready(boolean player1Ready) {
+        this.player1Ready = player1Ready;
+    }
+
+    public boolean getPlayer2Ready() {
+        return player2Ready;
+    }
+
+    public void setPlayer2Ready(boolean player2Ready) {
+        this.player2Ready = player2Ready;
     }
 
     // Getter for spectators

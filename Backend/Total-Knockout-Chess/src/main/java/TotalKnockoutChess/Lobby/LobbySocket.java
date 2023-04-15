@@ -50,12 +50,30 @@ public class LobbySocket {
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
 
-        if (joinOrHost.equals("host")) {
+        if (joinOrHost.equals("host")) {        //If hosting, create lobby and generate code.
             Lobby lobby = new Lobby(getUser(username));
+            lobby.setCode(lobby.generateLobbyCode(lobbyRepository.findAll()));
             lobbyRepository.save(lobby);
         }
         else if (joinOrHost.equals("join")) {
-
+            Lobby lobby = findLobbyWithCode(lobbyCode);
+            if (lobby != null) {
+                User user = getUser(username);
+                if (lobby.getPlayer1() == null) {
+                    lobby.setPlayer1(user);
+                    sendOtherUsersMessage(username, "Player1 " + username);
+                }
+                else if (lobby.getPlayer2() == null) {
+                    lobby.setPlayer2(user);
+                    sendOtherUsersMessage(username, "Player2 " + username);
+                }
+                else {
+                    lobby.addToSpectators(user);
+                    sendOtherUsersMessage(username, "Spectator " + username);
+                }
+                lobby.incrementUserCount();
+                lobbyRepository.flush();
+            }
         }
     }
 
@@ -65,7 +83,6 @@ public class LobbySocket {
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
 
-        Lobby lobby = findLobby(lobbyRepository.findAll(), username);
 
 //        LobbyController controller = new LobbyController();
 
@@ -104,7 +121,7 @@ public class LobbySocket {
     }
 
     //Helper method used to find the lobby that the given user is in
-    private Lobby findLobby(List<Lobby> lobbies, String username) {
+    private Lobby findLobbyWithUsername(List<Lobby> lobbies, String username) {
         User usr = null;
 
         // Find user in database with the given username
@@ -127,6 +144,16 @@ public class LobbySocket {
         return null;
     }
 
+    //Helper method used to find the lobby that the given code correlates to
+    private Lobby findLobbyWithCode(Long code) {
+        for (Lobby l : lobbyRepository.findAll()) {
+            if (l.getCode().equals(code)) {
+                return l;
+            }
+        }
+        return null;
+    }
+
     //Helper method used to find a User given their username
     private User getUser(String username) {
         for (User u : userRepository.findAll()) {
@@ -135,5 +162,29 @@ public class LobbySocket {
             }
         }
         return null;
+    }
+
+    //Helper method to send all other users a message
+    private void sendOtherUsersMessage(String username, String message) throws IOException {
+        User user = getUser(username);
+        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
+        if (lobby != null) {
+            if (lobby.getPlayer1() != null) {
+                if (!lobby.getPlayer1().getUsername().equals(username)) {
+                    usernameSessionMap.get(lobby.getPlayer1().getUsername()).getBasicRemote().sendText(message);
+                }
+            }
+            if (lobby.getPlayer2() != null) {
+                if (!lobby.getPlayer2().getUsername().equals(username)) {
+                    usernameSessionMap.get(lobby.getPlayer2().getUsername()).getBasicRemote().sendText(message);
+                }
+            }
+            List<User> spectators = lobby.getSpectators();
+            for (User u : spectators) {
+                if (!u.getUsername().equals(username)) {
+                    usernameSessionMap.get(u.getUsername()).getBasicRemote().sendText(message);
+                }
+            }
+        }
     }
 }
