@@ -114,7 +114,6 @@ public class BoxingActivity extends AppCompatActivity {
         OpponentHeart2 = findViewById(R.id.Player2Heart2);
         OpponentHeart1 = findViewById(R.id.Player2Heart1);
 
-
         //Button initializations
         BlockBtn = findViewById(R.id.BlockBtn);
         KickBtn = findViewById(R.id.KickBtn);
@@ -338,7 +337,6 @@ public class BoxingActivity extends AppCompatActivity {
 
                 //Disables buttons until other user confirms
                 disableButtons();
-
             }
         });
 

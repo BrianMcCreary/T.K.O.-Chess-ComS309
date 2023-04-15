@@ -54,8 +54,11 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO take user to lobby screen
-                //Intent intent = new Intent(MainMenuActivity.this, something.class);
-                //startActivity(intent);
+                String temp = "Total Knockout Chess";
+
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", temp);
+                startActivity(intent);
             }
         });
 
@@ -65,7 +68,10 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO take user to lobby screen
-                Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class);
+                String temp = "Chess";
+
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", temp);
                 startActivity(intent);
             }
         });
@@ -75,7 +81,10 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //TODO take user to lobby screen
-                Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
+                String temp = "Boxing";
+
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", temp);
                 startActivity(intent);
             }
         });
@@ -105,6 +114,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
+
         MenuToProfiles = findViewById(R.id.MenuToProfileBtn);
 
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +126,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         MenuToFriends = findViewById(R.id.MenuToFriendsBtn);
+
 
 
         MenuToFriends.setOnClickListener(new View.OnClickListener() {
