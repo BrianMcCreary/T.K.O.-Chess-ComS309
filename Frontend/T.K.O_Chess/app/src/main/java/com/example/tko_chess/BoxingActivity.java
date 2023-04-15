@@ -13,25 +13,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
-
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.handshake.ServerHandshake;
-
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.tko_chess.ultils.Const;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import com.example.tko_chess.ultils.Const;
 
 /**
  * @author Lex Somers
@@ -158,6 +156,13 @@ public class BoxingActivity extends AppCompatActivity {
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
                     String[] strings = message.split(" ");
+
+                    // "OpponentMoved pawn a3"
+                    // String[3] = {OpponentMoved, a3, pawn}
+                    // case "OpponentMoved":
+                    //      updateSquareDisplay(a3, pawn) {
+                    //          imageviewA3.setbackground(R.drawable.blackpawn);
+                    //      }
 
                     //If user's move beat opponent's move
                     switch (strings[0]) {

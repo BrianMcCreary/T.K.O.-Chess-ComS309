@@ -38,7 +38,7 @@ public class Const {
     public static final String URL_SERVER_LOBBY_SPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
 
     //WebSocket Address
-    public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/";
+    public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/boxing/";
 
     //Boxing Test URL
     public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
