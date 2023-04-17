@@ -137,6 +137,9 @@ public class ChessActivity extends AppCompatActivity {
                             updateSquare(); //updates board accordingly
                             enableOpponentButtons();
                             break;
+                        case "Check":
+                            isCheck();
+                            break;
                         case "Checkmate":
                             isCheckmate();  //if the case is a checkmate it will run through this method and end the game
                             break;
@@ -566,5 +569,8 @@ public class ChessActivity extends AppCompatActivity {
 
     public void enableOpponentButtons(){
 
+    }
+    public void isCheck(){
+        
     }
 }
