@@ -147,8 +147,21 @@ public class LobbySocket {
 //        }
 //        return null;
         for(Lobby l : lobbyRepository.findAll()) {
-            if (l.contains(username)) {
-                return l;
+            List<String> spectators = l.getSpectators();
+            for (String s : spectators) {
+                if (s.equals(username)) {
+                    return l;
+                }
+            }
+            if (l.getPlayer1() != null) {
+                if (l.getPlayer1().equals(username)) {
+                    return l;
+                }
+            }
+            if (l.getPlayer2() != null) {
+                if (l.getPlayer2().equals(username)) {
+                    return l;
+                }
             }
         }
         return null;
