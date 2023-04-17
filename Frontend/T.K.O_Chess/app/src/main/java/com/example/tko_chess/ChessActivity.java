@@ -31,6 +31,9 @@ public class ChessActivity extends AppCompatActivity {
     Drawable piece;
     Drawable selectedSpot;
 
+    int tracker = 0;
+    String[] possibleMoves = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,16 +129,22 @@ public class ChessActivity extends AppCompatActivity {
                     String[] strings = message.split(" ");
 
                     switch (strings[0]){
-                        case "Checkmate":
-                            isCheckmate();  //if the case is a checkmate it will run through this method and end the game
-                            break;
                         case "OpponentMoved":
-                            updateSquare(); //updates board accordingly
-                            isCheckmate();  //checks if the move resulted in a checkmate and ends the game
+                            updateSquare();
+                            enableUserButtons();
                             break;
                         case "UserMoved":
                             updateSquare(); //updates board accordingly
-                            isCheckmate();  //checks if the move resulted in a checkmate and ends the game
+                            enableOpponentButtons();
+                            break;
+                        case "Checkmate":
+                            isCheckmate();  //if the case is a checkmate it will run through this method and end the game
+                            break;
+                        case "UserWin":
+                            System.out.println("You Won!");
+                            break;
+                        case "UserLoss":
+                            System.out.println("You Lost!");
                             break;
                     }
                 }
@@ -548,6 +557,14 @@ public class ChessActivity extends AppCompatActivity {
     }
 
     public void isCheckmate(){
+
+    }
+
+    public void enableUserButtons(){
+
+    }
+
+    public void enableOpponentButtons(){
 
     }
 }
