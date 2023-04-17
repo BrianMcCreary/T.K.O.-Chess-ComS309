@@ -31,7 +31,7 @@ public class Lobby {
     private boolean player2Ready;
 
     @ElementCollection
-    List<String> spectators;
+    private List<String> spectators;
 
     public Lobby(){
     }

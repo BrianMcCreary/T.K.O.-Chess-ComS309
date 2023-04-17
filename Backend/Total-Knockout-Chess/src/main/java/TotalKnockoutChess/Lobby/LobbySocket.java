@@ -146,25 +146,33 @@ public class LobbySocket {
 //            }
 //        }
 //        return null;
-        for(Lobby l : lobbyRepository.findAll()) {
-            List<String> spectators = l.getSpectators();
-            for (String s : spectators) {
-                if (s.equals(username)) {
-                    return l;
-                }
-            }
-            if (l.getPlayer1() != null) {
-                if (l.getPlayer1().equals(username)) {
-                    return l;
-                }
-            }
-            if (l.getPlayer2() != null) {
-                if (l.getPlayer2().equals(username)) {
-                    return l;
-                }
+
+        for (Lobby l : lobbies) {
+            if (l.contains(username)) {
+                return l;
             }
         }
         return null;
+
+//        for(Lobby l : lobbyRepository.findAll()) {
+//            List<String> spectators = l.getSpectators();
+//            for (String s : spectators) {
+//                if (s.equals(username)) {
+//                    return l;
+//                }
+//            }
+//            if (l.getPlayer1() != null) {
+//                if (l.getPlayer1().equals(username)) {
+//                    return l;
+//                }
+//            }
+//            if (l.getPlayer2() != null) {
+//                if (l.getPlayer2().equals(username)) {
+//                    return l;
+//                }
+//            }
+//        }
+//        return null;
     }
 
     //Helper method used to find the lobby that the given code correlates to
