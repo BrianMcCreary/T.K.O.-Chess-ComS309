@@ -17,24 +17,21 @@ public class Lobby {
 
     private int userCount;
 
-    @OneToOne
-    @JoinColumn(name = "owner")
-    User owner;
+    @Column(columnDefinition = "TEXT")
+    String owner;
 
-    @OneToOne
-    @JoinColumn(name = "player1")
-    User player1;
+    @Column(columnDefinition = "TEXT")
+    String player1;
 
     private boolean player1Ready;
 
-    @OneToOne
-    @JoinColumn(name = "player2")
-    User player2;
+    @Column(columnDefinition = "TEXT")
+    String player2;
 
     private boolean player2Ready;
 
-    @OneToMany
-    List<User> spectators;
+    @ElementCollection
+    List<String> spectators;
 
     public Lobby(){
     }
@@ -43,11 +40,11 @@ public class Lobby {
      * Main constructor for lobby objects.
      * @param owner - User object who made the lobby
      */
-    public Lobby(User owner) {
-        spectators = new ArrayList<User>();
+    public Lobby(String owner) {
+        spectators = new ArrayList<String>();
         this.owner = owner;
         player1 = owner;
-//        spectators.add(owner);
+        player2 = null;
         userCount = 1;
         player1Ready = false;
         player2Ready = false;
@@ -96,26 +93,26 @@ public class Lobby {
     }
 
     // Getter and Setter for the owner of the lobby
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
-    public void setOwner(User owner){
+    public void setOwner(String owner){
         this.owner = owner;
     }
 
     // Getter and Setter for player1
-    public User getPlayer1() {
+    public String getPlayer1() {
         return player1;
     }
-    public void setPlayer1(User player1){
+    public void setPlayer1(String player1){
         this.player1 = player1;
     }
 
     // Getter and Setter for player2
-    public User getPlayer2() {
+    public String getPlayer2() {
         return player2;
     }
-    public void setPlayer2(User player2){
+    public void setPlayer2(String player2){
         this.player2 = player2;
     }
 
@@ -136,13 +133,13 @@ public class Lobby {
     }
 
     // Getter for spectators
-    public List<User> getSpectators(){
+    public List<String> getSpectators(){
         return spectators;
     }
 
     // The first time a player joins the lobby, they are a spectator. They can switch to be a player with
     // the "switchToPlayer" method.
-    public void addToSpectators(User user){
+    public void addToSpectators(String user){
         spectators.add(user);
     }
 
@@ -151,7 +148,7 @@ public class Lobby {
      *  @param user - User object to switch from spectator to player.
      *  @param playerIndex - Index of which player slot 'user' will switch to. Must be either 1 or 2.
       */
-    public void switchToPlayer(User user, int playerIndex){
+    public void switchToPlayer(String user, int playerIndex){
         spectators.remove(user);
         if(playerIndex == 1){
             player1 = user;
@@ -165,7 +162,7 @@ public class Lobby {
      *  Method to swap from player to spectator
      *  @param user - User object to switch from player to spectator.
      */
-    public void switchToSpectator(User user){
+    public void switchToSpectator(String user){
         // Will only switch if user is not already spectating.
         if(!spectators.contains(user) && this.contains(user)) {
 
@@ -187,13 +184,16 @@ public class Lobby {
     }
 
     // Method to return whether a specific user is in the lobby
-    public boolean contains(User user){
+    public boolean contains(String user){
 
         // Check if user is spectating
-        for(User spectator : spectators) {
-            if (spectator.equals(user)) {
+//        for(String spectator : spectators) {
+//            if (spectator.equals(user)) {
+//                return true;
+//            }
+//        }
+        if (spectators.contains(user)) {
                 return true;
-            }
         }
 
         // Check if both player objects are null (needed to not throw errors when calling .equals)
@@ -234,7 +234,7 @@ public class Lobby {
     }
 
     // Method to remove someone from the spectators list
-    public void removeSpectator(User spectator) {
+    public void removeSpectator(String spectator) {
         spectators.remove(spectator);
     }
 }

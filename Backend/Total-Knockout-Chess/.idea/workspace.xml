@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="b3574c37-9ebb-4995-bcbb-5938dbe6e749" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.log.2023-04-04.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.log.2023-04-05.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.log.2023-04-06.0.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application.log.2023-04-08.0.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocketConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/Lobby.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/Lobby.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbySocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbySocket.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,12 +55,37 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/conno/Documents/COMS309/1_an_5/Backend/Total-Knockout-Chess",
+    "last_opened_file_path": "E:/COMS309/1_an_5/Backend/Total-Knockout-Chess/src/main/java/TotalKnockoutChess",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\COMS309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
+      <module name="Total-Knockout-Chess" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TotalKnockoutChess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TotalKnockoutChessApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,5 +107,20 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
