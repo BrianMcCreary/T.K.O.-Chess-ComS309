@@ -2,15 +2,31 @@ package com.example.tko_chess;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import org.java_websocket.WebSocket;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tko_chess.ultils.Const;
+
 public class ChessActivity extends AppCompatActivity {
+
+    private WebSocketClient WebSocket;
+
+    String URLConcatenation = "";
+    SingletonUser currUser = SingletonUser.getInstance();
 
     Drawable piece;
     Drawable selectedSpot;
@@ -91,6 +107,56 @@ public class ChessActivity extends AppCompatActivity {
         ImageButton F8 = findViewById(R.id.F8);
         ImageButton G8 = findViewById(R.id.G8);
         ImageButton H8 = findViewById(R.id.H8);
+
+        Draft[] drafts = {new Draft_6455()};
+
+        URLConcatenation = currUser.getUsername();
+
+        try{
+            WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
+                @Override
+                public void onOpen(ServerHandshake serverHandshake) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+                    System.out.println("onOpen returned");
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    Log.d("", "run() returned: " + message);
+                    String[] strings = message.split(" ");
+
+                    switch (strings[0]){
+                        case "Checkmate":
+                            isCheckmate();  //if the case is a checkmate it will run through this method and end the game
+                            break;
+                        case "OpponentMoved":
+                            updateSquare(); //updates board accordingly
+                            isCheckmate();  //checks if the move resulted in a checkmate and ends the game
+                            break;
+                        case "UserMoved":
+                            updateSquare(); //updates board accordingly
+                            isCheckmate();  //checks if the move resulted in a checkmate and ends the game
+                            break;
+                    }
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.d("CLOSE", "onClose() returned: " + reason);
+                    System.out.println("onClose returned");
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    Log.d("Exception:", ex.getMessage().toString());
+                }
+            };
+        } catch (URISyntaxException e){
+            e.printStackTrace();
+            return;
+        }
+
+        WebSocket.connect();
 
         A1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -476,5 +542,12 @@ public class ChessActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void updateSquare(){
+
+    }
+
+    public void isCheckmate(){
+
     }
 }

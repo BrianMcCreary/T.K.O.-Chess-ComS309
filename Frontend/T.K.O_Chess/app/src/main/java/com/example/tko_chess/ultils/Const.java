@@ -40,6 +40,9 @@ public class Const {
     //WebSocket Address
     public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/";
 
+    //WebSocket Address for Chess
+    public static final String URL_CHESS_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/chess/";
+
     //Boxing Test URL
     public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
 }
