@@ -23,4 +23,5 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tko_chess.ultils.Const;
 
 public class LobbyActivity extends AppCompatActivity {
+
 }
