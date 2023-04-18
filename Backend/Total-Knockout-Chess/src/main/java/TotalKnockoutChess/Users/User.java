@@ -14,9 +14,6 @@ public class User {
     private String username;        //User username
     private String password;        //User password
 
-    @ManyToOne
-    private Lobby lobby;
-
     @ElementCollection
     private List<String> incomingFriendRequests;        //User's incoming friend requests
     @ElementCollection

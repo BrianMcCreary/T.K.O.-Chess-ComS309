@@ -62,18 +62,21 @@ public class LobbySocket {
                 if (lobby.getPlayer1() == null) {
                     lobby.setPlayer1(username);
                     lobby.incrementUserCount();
+                    lobbyRepository.save(lobby);
                     lobbyRepository.flush();
                     sendOtherUsersMessage(username, "Player1 " + username);
                 }
                 else if (lobby.getPlayer2() == null) {
                     lobby.setPlayer2(username);
                     lobby.incrementUserCount();
+                    lobbyRepository.save(lobby);
                     lobbyRepository.flush();
                     sendOtherUsersMessage(username, "Player2 " + username);
                 }
                 else {
                     lobby.addToSpectators(username);
                     lobby.incrementUserCount();
+                    lobbyRepository.save(lobby);
                     lobbyRepository.flush();
                     sendOtherUsersMessage(username, "Spectator " + username);
                 }
@@ -86,26 +89,36 @@ public class LobbySocket {
         logger.info("Entered into Message. Got Message: " + message);
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
+        String[] messages = message.split(" ");
 
+        if (message.equals("Ready")) {
+            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
+            if (l.getPlayer1() != null) {
+                if (l.getPlayer1().equals(username)) {
+                    l.setPlayer1Ready(true);
+                }
+            }
+            else if (l.getPlayer2() != null) {
+                if (l.getPlayer2().equals(username)) {
+                    l.setPlayer2Ready(true);
+                }
+            }
+            //TODO Start game if both players ready
 
-//        LobbyController controller = new LobbyController();
-
-        // If the user is not in a lobby yet
-//        if(lobby == null){
-        // TODO
-        // When a user wants to host a lobby
-//        if(message.equals("host")){
-//            String lobbyCode = controller.hostLobby(username);
-
-//        }
-        // When a user wants to join the lobby
-//        else if(message.equals("join")){
-//
-//        }
-//        }
-
-
-
+        }
+        else if (message.equals("UnReady")) {
+            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
+            if (l.getPlayer1() != null) {
+                if (l.getPlayer1().equals(username)) {
+                    l.setPlayer1Ready(false);
+                }
+            }
+            else if (l.getPlayer2() != null) {
+                if (l.getPlayer2().equals(username)) {
+                    l.setPlayer2Ready(false);
+                }
+            }
+        }
     }
 
     @OnClose
@@ -114,6 +127,41 @@ public class LobbySocket {
 
         //Remove the session and username from the Maps
         String username = sessionUsernameMap.get(session);
+
+        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
+
+        if (lobby != null) {
+            if (lobby.getOwner().equals(username)) {
+                sendOtherUsersMessage(username, "HostLeft");
+                lobbyRepository.delete(lobby);
+            }
+            else {
+                String who = null;
+                if (lobby.getPlayer1().equals(username)) {
+                    who = "Player1 ";
+                }
+                else if (lobby.getPlayer2().equals(username)) {
+                    who = "Player2 ";
+                }
+                else {
+                    who = "Spectator ";
+                }
+                sendOtherUsersMessage(username, "PlayerLeft " + who + username);
+
+                if (lobby.getPlayer1().equals(username)) {
+                    lobby.setPlayer1(null);
+                }
+                else if (lobby.getPlayer2().equals(username)) {
+                    lobby.setPlayer2(null);
+                }
+                else if (lobby.getSpectators().contains(username)) {
+                    lobby.removeSpectator(username);
+                }
+                lobbyRepository.save(lobby);
+                lobbyRepository.flush();
+            }
+        }
+
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
     }
@@ -126,53 +174,12 @@ public class LobbySocket {
 
     //Helper method used to find the lobby that the given user is in
     private Lobby findLobbyWithUsername(List<Lobby> lobbies, String username) {
-//        User usr = null;
-//
-//        // Find user in database with the given username
-//        for(User u : userRepository.findAll()){
-//            if(u.getUsername().equals(username)){
-//                usr = u;
-//                break;
-//            }
-//        }
-//
-//        // If user is not found in database, return null
-//        if(usr == null){ return null; }
-//
-//        // Search for lobby that contains the usr object
-//        for (Lobby l : lobbies) {
-//            if (l.contains(usr)) {
-//                return l;
-//            }
-//        }
-//        return null;
-
         for (Lobby l : lobbies) {
             if (l.contains(username)) {
                 return l;
             }
         }
         return null;
-
-//        for(Lobby l : lobbyRepository.findAll()) {
-//            List<String> spectators = l.getSpectators();
-//            for (String s : spectators) {
-//                if (s.equals(username)) {
-//                    return l;
-//                }
-//            }
-//            if (l.getPlayer1() != null) {
-//                if (l.getPlayer1().equals(username)) {
-//                    return l;
-//                }
-//            }
-//            if (l.getPlayer2() != null) {
-//                if (l.getPlayer2().equals(username)) {
-//                    return l;
-//                }
-//            }
-//        }
-//        return null;
     }
 
     //Helper method used to find the lobby that the given code correlates to
@@ -214,6 +221,21 @@ public class LobbySocket {
                 if (!u.equals(username)) {
                     usernameSessionMap.get(u).getBasicRemote().sendText(message);
                 }
+            }
+        }
+    }
+
+    private void sendAllUsersMessage(String username, String message) throws IOException {
+        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
+        if (lobby != null) {
+            if (lobby.getPlayer1() != null) {
+                usernameSessionMap.get(lobby.getPlayer1()).getBasicRemote().sendText(message);
+            }
+            if (lobby.getPlayer2() != null) {
+                usernameSessionMap.get(lobby.getPlayer2()).getBasicRemote().sendText(message);
+            }
+            for (String user : lobby.getSpectators()) {
+                usernameSessionMap.get(user).getBasicRemote().sendText(message);
             }
         }
     }

@@ -30,7 +30,7 @@ public class Lobby {
 
     private boolean player2Ready;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> spectators;
 
     public Lobby(){
@@ -197,19 +197,29 @@ public class Lobby {
         }
 
         // Check if both player objects are null (needed to not throw errors when calling .equals)
-        if(player1 == null && player2 == null){
-            return false;
-        }
-        else if(player1 == null){
-            if(player2.equals(user)){
+//        if(player1 == null && player2 == null){
+//            return false;
+//        }
+//        else if(player1 == null){
+//            if(player2.equals(user)){
+//                return true;
+//            }
+//        }
+//        else if(player1.equals(user)){
+//            return true;
+//        }
+//        else if(player2.equals(user)){
+//            return true;
+//        }
+        if (player1 != null) {
+            if (player1.equals(user)) {
                 return true;
             }
         }
-        else if(player1.equals(user)){
-            return true;
-        }
-        else if(player2.equals(user)){
-            return true;
+        if (player2 != null) {
+            if (player2.equals(user)) {
+                return true;
+            }
         }
         return false;
     }
