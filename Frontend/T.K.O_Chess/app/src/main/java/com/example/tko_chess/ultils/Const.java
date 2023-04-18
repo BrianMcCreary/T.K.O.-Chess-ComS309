@@ -29,10 +29,10 @@ public class Const {
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
 
     //Key to get into game lobby
-    public static final String URL_SERVER_LOBBYKEY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
+    public static final String URL_SERVER_LOBBYJOIN = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
 
     //Lobby web address
-    public static final String URL_SERVER_LOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
+    public static final String URL_SERVER_LOBBYHOST = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
 
     //Spectator Address
     public static final String URL_SERVER_LOBBY_SPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
