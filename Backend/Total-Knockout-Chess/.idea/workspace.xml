@@ -5,9 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be553bc3-cdce-43af-973c-65f17784ce2a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Boxing/BoxingGameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Total-Knockout-Chess.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocketConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Bishop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/ChessPiece.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/ChessPieceController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Coordinate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Empty.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/King.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Knight.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/FriendRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/FriendRequestController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/FriendRequestRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/Friendship.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/FriendshipController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Friends/FriendshipRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/Lobby.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Lobby/LobbySocket.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/TotalKnockoutChessApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserRepository.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
