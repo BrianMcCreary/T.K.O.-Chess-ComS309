@@ -1,8 +1,6 @@
 package TotalKnockoutChess.Lobby;
 
 import TotalKnockoutChess.Users.User;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +18,15 @@ public class Lobby {
     private int userCount;
 
     @OneToOne
-    @JoinColumn(name = "ownerId")
+    @JoinColumn(name = "owner")
     User owner;
 
     @OneToOne
-    @JoinColumn(name = "player1Id")
+    @JoinColumn(name = "player1")
     User player1;
 
     @OneToOne
-    @JoinColumn(name = "player2Id")
+    @JoinColumn(name = "player2")
     User player2;
 
     @OneToMany
@@ -51,12 +49,12 @@ public class Lobby {
     // Generate code for the lobby
     public Long generateLobbyCode(List<Lobby> lobbies){
         Random rand = new Random(System.currentTimeMillis());
-        Long lobbyCode = rand.nextLong() % 1000000;
+        Long lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
 
         // Make sure lobby code is unique
         for(Lobby l : lobbies){
             while (l.getCode().equals(lobbyCode)){
-                lobbyCode = rand.nextLong() % 1000000;
+                lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
             }
         }
         return lobbyCode;
@@ -157,10 +155,8 @@ public class Lobby {
         // Check if user is spectating
         for(User spectator : spectators) {
             if (spectator.equals(user)) {
-                System.out.println("Spectator is spectating");
                 return true;
             }
-            System.out.println(" object:\n" + spectator.toString() + "\nCompared to the passed user object:\n" + user.toString());
         }
 
         // Check if both player objects are null (needed to not throw errors when calling .equals)

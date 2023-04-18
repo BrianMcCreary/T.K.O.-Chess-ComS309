@@ -9,7 +9,7 @@ public class BoxingGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
 //    @OneToOne
 //    @JoinColumn(name = "player1")
@@ -49,10 +49,10 @@ public class BoxingGame {
 
     //Method used to remove a life from the round losing player
     public void dockLife(String player) {
-        if (player.equals("p1")) {
+        if (player.equals(player1)) {
             p1Lives--;
         }
-        else if (player.equals("p2")) {
+        else if (player.equals(player2)) {
             p2Lives--;
         }
     }
@@ -89,11 +89,11 @@ public class BoxingGame {
         this.player2 = player2;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -118,45 +118,36 @@ public class BoxingGame {
         //If player1's move is kick, look at player2's move and determine who won
         if (p1Move.equals("kick")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
                 return player1;
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
                 return player2;
             }
         }
         //If player1's move is block, look at player2's move and determine who won
         else if (p1Move.equals("block")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
                 return player2;
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
                 return "tie";
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
                 return player1;
             }
         }
         //If player1's move is jab, look at player2's move and determine who won
         else if (p1Move.equals("jab")) {
             if (p2Move.equals("kick")) {
-                clearMoves();
                 return player1;
             }
             else if (p2Move.equals("block")) {
-                clearMoves();
                 return player2;
             }
             else if (p2Move.equals("jab")) {
-                clearMoves();
                 return "tie";
             }
         }

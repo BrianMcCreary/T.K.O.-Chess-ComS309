@@ -2,7 +2,6 @@ package com.example.tko_chess;
 
 import static android.text.TextUtils.split;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.Log;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -70,9 +70,8 @@ public class BoxingActivity extends AppCompatActivity {
     //TextView declarations
     TextView GameTimeText;
     TextView MoveTimeText;
-    TextView ShowMoveCountDown3;
-    TextView ShowMoveCountDown2;
-    TextView ShowMoveCountDown1;
+    TextView Player1Name;
+    TextView Player2Name;
 
     //Int declarations
     int UserHealth = 3;
@@ -85,6 +84,9 @@ public class BoxingActivity extends AppCompatActivity {
     //String declarations
     String SelectedMove = "";
 
+    //Get access to currently logged in user info.
+    SingletonUser currUser = SingletonUser.getInstance();
+
     //WebSocket declarations
     private WebSocketClient WebSocket;
 
@@ -92,6 +94,8 @@ public class BoxingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
+
+        Handler mHandler = new Handler();
 
         //ImageView initializations
         Player1Block = findViewById(R.id.Player1BlockImg);
@@ -123,215 +127,119 @@ public class BoxingActivity extends AppCompatActivity {
 
         //TextView initializations
         GameTimeText = findViewById(R.id.GameTimeText);
-        MoveTimeText = findViewById(R.id.ConfirmMoveTime);
-        ShowMoveCountDown3 = findViewById(R.id.MoveCountdown3Text);
-        ShowMoveCountDown2 = findViewById(R.id.MoveCountdown2Text);
-        ShowMoveCountDown1 = findViewById(R.id.MoveCountdown1Text);
+        MoveTimeText = findViewById(R.id.RoundNumberText);
+        Player1Name = findViewById(R.id.Player1NameText);
+        Player2Name = findViewById(R.id.Player2NameText);
 
         //LinearLayout initializations
         OptionsLayout = findViewById(R.id.OptionsLayout);
         GameOverLayout = findViewById(R.id.GameOverLayout);
 
-        //Get access to currently logged in user info.
-        SingletonUser currUser = SingletonUser.getInstance();
-
         //String initializations
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
+        Player1Name.setText(currUser.getUsername());
+        //TODO Display opponent's name on screen as well using displayOpponentName();
 
         Draft[] drafts = {
                 new Draft_6455()
         };
-
-
-
-
 
         //Connect to WebSocket
         try {
             WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation), (Draft)drafts[0]) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
                     System.out.println("onOpen returned");
-
                 }
 
                 @Override
                 public void onMessage(String message) {
+                    Log.d("", "run() returned: " + message);
                     String[] strings = message.split(" ");
 
                     //If user's move beat opponent's move
                     switch (strings[0]) {
-                        case "RoundWin":
-                            //Count down to showing move
-                            showCountDown();
 
+
+                        case "RoundWin":
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            //showOpponentMove(strings[1]);
+                            //System.out.println("show move returned");
 
                             //Lowers health of opponent
                             OpponentHealth -= 1;
+                            lowerOpponentHealth(OpponentHealth);
 
-                            //Hides the full heart image and shows the empty heart image corresponding to their current health
-                            if (OpponentHealth == 2) {
-                                Player2FullHeart1.setVisibility(View.INVISIBLE);
-                                Player2EmptyHeart1.setVisibility(View.VISIBLE);
-                                //Enables buttons again for the new "round"
-                                enableButtons();
-
-                            } else if (OpponentHealth == 1) {
-                                Player2FullHeart2.setVisibility(View.INVISIBLE);
-                                Player2EmptyHeart2.setVisibility(View.VISIBLE);
-                                //Enables buttons again for the new "round"
-                                enableButtons();
-
-                            } else if (OpponentHealth == 0) {
-                                Player2FullHeart1.setVisibility(View.INVISIBLE);
-                                Player2EmptyHeart1.setVisibility(View.VISIBLE);
-                                //Don't enable buttons again because game should be over.
-                            }
+                            //Enables buttons again for the new "round"
+                            enableButtons();
+                            System.out.println("enable");
 
                             //Exit switch statement
                             break;
 
 
                         case "RoundLoss":
-                            //Count down to showing move
-                            showCountDown();
-
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            //showOpponentMove(strings[1]);
+                            //System.out.println("show move returned");
 
                             //Lowers health of User
                             UserHealth -= 1;
+                            lowerUserHealth(UserHealth);
+                            System.out.println("lower health returned");
 
-                            //Lowers user's health and updates health bar
-                            if (UserHealth == 2) {
-                                Player1FullHeart1.setVisibility(View.INVISIBLE);
-                                Player1EmptyHeart1.setVisibility(View.VISIBLE);
-                                //Enables buttons again for the new "round"
-                                enableButtons();
-
-                            } else if (UserHealth == 1) {
-                                Player1FullHeart2.setVisibility(View.INVISIBLE);
-                                Player1EmptyHeart2.setVisibility(View.VISIBLE);
-
-                                //Enables buttons again for the new "round"
-                                enableButtons();
-
-                            } else if (UserHealth == 0) {
-                                Player1FullHeart1.setVisibility(View.INVISIBLE);
-                                Player1EmptyHeart1.setVisibility(View.VISIBLE);
-                                //Don't enable buttons again because game should be over.
-                            }
+                            //Enables buttons again for the new "round"
+                            enableButtons();
+                            System.out.println("enable");
 
                             //Exit switch statement
                             break;
 
 
                         case "Tie":
-                            //Count down to showing move
-                            showCountDown();
-
                             //Show opponent's move
-                            showOpponentMove(strings[1]);
+                            //showOpponentMove(strings[1]);
+                            //System.out.println("show move returned");
 
                             //Enables buttons again for the new "round"
                             enableButtons();
+                            System.out.println("enable");
 
                             //Exit switch statement
                             break;
 
 
                         case "GameWin":
-                            //Clears and displays game over overlay
-                            GameOverLayout.removeAllViews();
-                            GameOverLayout.setVisibility(View.VISIBLE);
+                            //Displays game over popup
+                            displayGameResult("You win!");
+                            break;
 
-                            //Populates overlay with win text.
-                            View inflatedLayout = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
-                            TextView resultText = (TextView) inflatedLayout.findViewById(R.id.ResultText);
-                            Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.BoxingToMenuBtn);
-
-                            //Displays win message on screen
-                            resultText.setText("You win!");
-
-                            GameOverLayout.addView(inflatedLayout);
-
-                            BoxingToMenuBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    WebSocket.close();
-
-                                    //Returns user to main menu
-                                    Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
 
                         case "GameLoss":
-                            //Clears and displays game over overlay
-                            GameOverLayout.removeAllViews();
-                            GameOverLayout.setVisibility(View.VISIBLE);
-
-                            //Populates overlay with win text.
-                            View inflatedLayout2 = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
-                            TextView resultText2 = (TextView) inflatedLayout2.findViewById(R.id.ResultText);
-                            Button BoxingToMenuBtn2 = (Button) inflatedLayout2.findViewById(R.id.BoxingToMenuBtn);
-
-                            //Displays win message on screen
-                            resultText2.setText("You win!");
-
-                            GameOverLayout.addView(inflatedLayout2);
-
-                            BoxingToMenuBtn2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    WebSocket.close();
-
-                                    //Returns user to main menu
-                                    Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
+                            //Displays game over popup
+                            displayGameResult("You lose.");
+                            break;
 
 
                         case "OpponentLeft":
-                            //Clears and displays game over overlay
-                            GameOverLayout.removeAllViews();
-                            GameOverLayout.setVisibility(View.VISIBLE);
-
-                            //Populates overlay with win text.
-                            View inflatedLayout3 = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
-                            TextView resultText3 = (TextView) inflatedLayout3.findViewById(R.id.ResultText);
-                            Button BoxingToMenuBtn3 = (Button) inflatedLayout3.findViewById(R.id.BoxingToMenuBtn);
-
-                            //Displays win message on screen
-                            resultText3.setText("You win!");
-
-                            GameOverLayout.addView(inflatedLayout3);
-
-                            BoxingToMenuBtn3.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    WebSocket.close();
-
-                                    //Returns user to main menu
-                                    Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
+                            //Displays game over popup
+                            displayGameResult("Opponent conceded.");
+                            break;
                     }
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
+                    Log.d("CLOSE", "onClose() returned: " + reason);
                     System.out.println("onClose returned");
                 }
 
                 @Override
                 public void onError(Exception ex) {
+                    Log.d("Exception:", ex.getMessage().toString());
 
                 }
             };
@@ -350,7 +258,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to block
-                SelectedMove = "";
                 SelectedMove = "block";
 
                 //Changes player1 icon to block pose
@@ -367,7 +274,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to kick
-                SelectedMove = "";
                 SelectedMove = "kick";
 
                 //Changes player1 icon to kick pose
@@ -384,7 +290,6 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sets currently selected move to jab
-                SelectedMove = "";
                 SelectedMove = "jab";
 
                 //Changes player1 icon to jab pose
@@ -401,7 +306,9 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Sends move to backend
-                //TODO Uncomment once websockets get pushed on the backend
+                if (SelectedMove.equals("")) {
+                    SelectedMove = "block";
+                }
                 WebSocket.send(SelectedMove);
 
                 //Disables buttons until other user confirms
@@ -463,6 +370,7 @@ public class BoxingActivity extends AppCompatActivity {
                             }
                         });
 
+                        //Send the request we created
                         queue.add(HostGameReq);
                     }
                 });
@@ -478,84 +386,219 @@ public class BoxingActivity extends AppCompatActivity {
 
     //Makes buttons clickable and lightens their color back
     private void enableButtons() {
-        //Changes appearance of buttons
-        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Changes appearance of buttons
+                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
 
-        //Enables buttons again
-        BlockBtn.setClickable(true);
-        KickBtn.setClickable(true);
-        JabBtn.setClickable(true);
-        ConfirmMoveBtn.setClickable(true);
+                //Enables buttons again
+                BlockBtn.setClickable(true);
+                KickBtn.setClickable(true);
+                JabBtn.setClickable(true);
+                ConfirmMoveBtn.setClickable(true);
+            }
+        });
+
+
     }
 
 
 
     //Makes buttons un-clickable and darkens their color
     private void disableButtons() {
-        //Changes appearance of buttons
-        BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-        ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Changes appearance of buttons
+                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
 
-        //Disables buttons until opponent confirms their move
-        BlockBtn.setClickable(false);
-        KickBtn.setClickable(false);
-        JabBtn.setClickable(false);
-        ConfirmMoveBtn.setClickable(false);
+                //Disables buttons until opponent confirms their move
+                BlockBtn.setClickable(false);
+                KickBtn.setClickable(false);
+                JabBtn.setClickable(false);
+                ConfirmMoveBtn.setClickable(false);
+            }
+        });
+    }
+
+
+
+    //Displays opponent's username on the screen
+    private void displayOpponentName() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
     }
 
 
 
     //Shows opponent's moves and then reverts back to default block stance.
     private void showOpponentMove(String move) {
-        //Show opponent's move
-        if (move.equals("block")) {
-            //Do nothing because default stance is block
-            waitTime(3.0);
 
-        } else if (move.equals("kick")) {
-            //Hides block and shows kick
-            Player2Block.setVisibility(View.INVISIBLE);
-            Player2Kick.setVisibility(View.VISIBLE);
-            waitTime(3.0);
-            //Hides kick and goes back to default block stance
-            Player2Kick.setVisibility(View.INVISIBLE);
-            Player2Block.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Show opponent's move
+                switch (move) {
+                    case "block":
+                        //Do nothing because default stance is block
+                        waitTime(3.0);
+                        break;
 
-        } else if (move.equals("jab")) {
-            //Hides block and shows jab
-            Player2Block.setVisibility(View.INVISIBLE);
-            Player2Jab.setVisibility(View.VISIBLE);
-            waitTime(3.0);
-            //Hides jab and goes back to default block stance
-            Player2Jab.setVisibility(View.INVISIBLE);
-            Player2Block.setVisibility(View.VISIBLE);
-        }
+                    case "kick":
+                        //Hides block and shows kick
+                        Player2Block.setVisibility(View.INVISIBLE);
+                        Player2Kick.setVisibility(View.VISIBLE);
+                        waitTime(3.0);
+                        //Hides kick and goes back to default block stance
+                        Player2Kick.setVisibility(View.INVISIBLE);
+                        Player2Block.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "jab":
+                        //Hides block and shows jab
+                        Player2Block.setVisibility(View.INVISIBLE);
+                        Player2Jab.setVisibility(View.VISIBLE);
+                        waitTime(3.0);
+                        //Hides jab and goes back to default block stance
+                        Player2Jab.setVisibility(View.INVISIBLE);
+                        Player2Block.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
     }
 
 
 
-    //Show move reveal countdown
-    private void showCountDown() {
-        //Show 3
-        ShowMoveCountDown3.setVisibility(View.VISIBLE);
-        waitTime(1.0);
-        ShowMoveCountDown3.setVisibility(View.INVISIBLE);
+    //Displays user's health on screen
+    private void lowerUserHealth(int health) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                /*//TODO Change hearts so I just have to change the image of the hearts rather than set visibility.
+                //Changes image of Player1Heartx
+                if (health == 2) {
+                    Player1Heart1.setImageResource(R.drawable.emptyheart);
 
-        //Show 2
-        ShowMoveCountDown2.setVisibility(View.VISIBLE);
-        waitTime(1.0);
-        ShowMoveCountDown2.setVisibility(View.INVISIBLE);
+                } else if (health == 1) {
+                    Player1Heart2.setImageResource(R.drawable.emptyheart);
 
-        //Show 1
-        ShowMoveCountDown1.setVisibility(View.VISIBLE);
-        waitTime(1.0);
-        ShowMoveCountDown1.setVisibility(View.INVISIBLE);
+                } else if (health == 0) {
+                    Player1Heart3.setImageResource(R.drawable.emptyheart);
+                }*/
+
+                //Hides the full heart image and shows the empty heart image corresponding to their current health
+                if (health == 2) {
+                    Player1FullHeart1.setVisibility(View.INVISIBLE);
+                    Player1EmptyHeart1.setVisibility(View.VISIBLE);
+                    //Enables buttons again for the new "round"
+                    enableButtons();
+
+                } else if (health == 1) {
+                    Player1FullHeart2.setVisibility(View.INVISIBLE);
+                    Player1EmptyHeart2.setVisibility(View.VISIBLE);
+                    //Enables buttons again for the new "round"
+                    enableButtons();
+
+                } else if (health == 0) {
+                    Player1FullHeart3.setVisibility(View.INVISIBLE);
+                    Player1EmptyHeart3.setVisibility(View.VISIBLE);
+                    //Enables buttons because it seems like it doesn't work unless I do
+                    enableButtons();
+                    //Don't enable buttons again because game should be over.
+                }
+            }
+        });
     }
+
+
+
+    //Displays opponent's health on screen
+    private void lowerOpponentHealth(int health) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                /*//TODO Change hearts so I just have to change the image of the hearts rather than set visibility.
+                //Changes image of Player1Heartx
+                if (health == 2) {
+                    Player2Heart1.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 1) {
+                    Player2Heart2.setImageResource(R.drawable.emptyheart);
+
+                } else if (health == 0) {
+                    Player2Heart3.setImageResource(R.drawable.emptyheart);
+                }*/
+
+                //Hides the full heart image and shows the empty heart image corresponding to their current health
+                if (health == 2) {
+                    Player2FullHeart1.setVisibility(View.INVISIBLE);
+                    Player2EmptyHeart1.setVisibility(View.VISIBLE);
+                    //Enables buttons again for the new "round"
+                    enableButtons();
+
+                } else if (health == 1) {
+                    Player2FullHeart2.setVisibility(View.INVISIBLE);
+                    Player2EmptyHeart2.setVisibility(View.VISIBLE);
+                    //Enables buttons again for the new "round"
+                    enableButtons();
+
+                } else if (health == 0) {
+                    Player2FullHeart3.setVisibility(View.INVISIBLE);
+                    Player2EmptyHeart3.setVisibility(View.VISIBLE);
+                    //Enables buttons because it seems like it doesn't work unless I do
+                    enableButtons();
+                    //Don't enable buttons again because game should be over.
+                }
+            }
+        });
+    }
+
+
+
+    private void displayGameResult(String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Clears and displays game over overlay
+                GameOverLayout.removeAllViews();
+                GameOverLayout.setVisibility(View.VISIBLE);
+
+                //Populates overlay with win text.
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
+                TextView resultText = (TextView) inflatedLayout.findViewById(R.id.ResultText);
+                Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.BoxingToMenuBtn);
+
+                //Displays win message on screen
+                resultText.setText(result);
+
+                GameOverLayout.addView(inflatedLayout);
+
+                BoxingToMenuBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WebSocket.close();
+
+                        //Returns user to main menu
+                        Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+    }
+
 
 
 

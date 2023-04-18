@@ -1,9 +1,6 @@
 package TotalKnockoutChess.Users;
 
 import TotalKnockoutChess.Lobby.Lobby;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

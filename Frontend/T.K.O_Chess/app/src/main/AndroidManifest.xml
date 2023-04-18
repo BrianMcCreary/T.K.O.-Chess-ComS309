@@ -97,15 +97,15 @@
             android:exported="false">
         </activity>
 
-        <activity android:name=".TKOChessLobbyPasswordActivity"
+        <activity android:name=".TKOChessLobbyKeyActivity"
             android:exported="false">
         </activity>
 
-        <activity android:name=".TKOLobbyPasswordActivity"
+        <activity android:name=".TKOLobbyKeyActivity"
             android:exported="false">
         </activity>
 
-        <activity android:name=".ChessLobbyPasswordActivity"
+        <activity android:name=".ChessLobbyKeyActivity"
             android:exported="false">
         </activity>
 

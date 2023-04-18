@@ -282,7 +282,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="30dp"
-        android:text="Player2 Name"
+        android:text="Opponent"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
@@ -302,7 +302,7 @@
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmMoveTime" />
+        app:layout_constraintTop_toBottomOf="@+id/RoundNumberText" />
 
     <Button
         android:id="@+id/JabBtn"
@@ -339,11 +339,11 @@
         app:layout_constraintTop_toBottomOf="@+id/KickBtn" />
 
     <TextView
-        android:id="@+id/ConfirmMoveText"
+        android:id="@+id/CurrRoundText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Confirm move in: "
+        android:text="Round "
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
@@ -351,16 +351,16 @@
         app:layout_constraintTop_toBottomOf="@+id/BoxingRingImgView" />
 
     <TextView
-        android:id="@+id/ConfirmMoveTime"
+        android:id="@+id/RoundNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="00:00s"
+        android:text="0"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/ConfirmMoveText"
-        app:layout_constraintStart_toStartOf="@+id/ConfirmMoveText"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmMoveText" />
+        app:layout_constraintEnd_toEndOf="@+id/CurrRoundText"
+        app:layout_constraintStart_toStartOf="@+id/CurrRoundText"
+        app:layout_constraintTop_toBottomOf="@+id/CurrRoundText" />
 
     <LinearLayout
         android:id="@+id/OptionsLayout"
@@ -370,45 +370,6 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/BoxingMenuBtn"
         app:layout_constraintTop_toTopOf="@+id/BoxingMenuBtn"></LinearLayout>
-
-    <TextView
-        android:id="@+id/MoveCountdown3Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="100dp"
-        android:visibility="invisible"
-        android:text="3"
-        android:textColor="#4CAF50"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/MoveCountdown2Text"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/MoveCountdown2Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:visibility="invisible"
-        android:text="2"
-        android:textColor="#FFEB3B"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/MoveCountdown1Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="100dp"
-        android:visibility="invisible"
-        android:text="1"
-        android:textColor="#FF5722"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/MoveCountdown2Text"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
 
     <LinearLayout
         android:id="@+id/GameOverLayout"

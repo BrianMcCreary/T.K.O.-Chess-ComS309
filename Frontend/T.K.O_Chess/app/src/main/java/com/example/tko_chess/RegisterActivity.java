@@ -21,6 +21,8 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
+
 
 /**
  * @author Lex Somers
@@ -38,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
-
-
 		//toLogin button that takes user back to login screen.
 		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);
 		RegisterToLogin.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
 		Register.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				//Create a string holding the username to concatenate to the URL
+				String URLConcatenation = "";
+
 
 				//Text fields for users to enter username/password for their account
 				RegUsername = (EditText) findViewById(R.id.RegUsernameText);
@@ -63,22 +66,16 @@ public class RegisterActivity extends AppCompatActivity {
 				ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);
 				RegisterError = (TextView) findViewById(R.id.RegisterErrorText);
 
-				//Creates a new user JsonObject that will be sent to the remote server
-				JSONObject newUser = new JSONObject();
-				try {
-					newUser.put("username", RegUsername.getText().toString());
-					newUser.put("password", RegPassword.getText().toString());
-					newUser.put("confirmPassword", ConfirmPassword.getText().toString());
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-				}
+				URLConcatenation += RegUsername.getText().toString() + "/";
+				URLConcatenation += RegPassword.getText().toString() + "/";
+				URLConcatenation += ConfirmPassword.getText().toString();
+
 
 				//Create a Request Que for the JsonObjectRequest
 				RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
 
 				//Attempts to post a new user to remote server.
-				JsonObjectRequest registerObjectReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_USERS, newUser,
+				JsonObjectRequest registerObjectReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_USERS + URLConcatenation, null,
 						new Response.Listener<JSONObject>() {
 							@Override
 							public void onResponse(JSONObject response) {
@@ -94,19 +91,15 @@ public class RegisterActivity extends AppCompatActivity {
 								//If registration was "success", take user to main menu and clear error
 								if (temp.equals("success")) {
 
-									//If registration was "success" then remove the "confirmPassword" maping from the jsonObject
-									newUser.remove("confirmPassword");
 									//"Logs in" the user by setting SingletonUser to their username and password.
 									SingletonUser currUser = SingletonUser.getInstance();
-									try {
-										currUser.updateUserObject(newUser.get("username").toString(), context);
-									} catch (JSONException e) {
-										throw new RuntimeException(e);
-									}
+									currUser.updateUserObject(RegUsername.getText().toString(), context);
+
 
 									RegisterError.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
+
 								}
 								//else, show error message
 								else {
@@ -125,6 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
 					}
 				});
 				queue.add(registerObjectReq);
+
+				URLConcatenation = "";
 			}
 		});
 	}
