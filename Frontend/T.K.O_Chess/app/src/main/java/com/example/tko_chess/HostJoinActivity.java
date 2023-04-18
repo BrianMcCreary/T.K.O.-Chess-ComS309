@@ -33,6 +33,7 @@ public class HostJoinActivity extends AppCompatActivity {
 
 	//String Declarations
 	String GameMode = "";
+	String URLConcatenation = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +51,39 @@ public class HostJoinActivity extends AppCompatActivity {
 		HostGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//Gets lobby name
+				String temp = LobbyName.getText().toString();
 
+				//Takes user to hosted lobby screen
+				Intent intent = new Intent(HostJoinActivity.this, LobbyActivity.class);
+				intent.putExtra("LobbyName", temp);
+				intent.putExtra("Gamemode", GameMode);
+				startActivity(intent);
 			}
 		});
-		
+
 		JoinGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				URLConcatenation = LobbyCode.getText().toString();
 
+				RequestQueue queue = Volley.newRequestQueue(HostJoinActivity.this);
+				StringRequest FindLobbyReq = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYFIND + URLConcatenation, new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						if (response.equals("success")) {
+							
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+					}
+				});
+
+				//Send the request we created
+				queue.add(FindLobbyReq);
 			}
 		});
 	}
