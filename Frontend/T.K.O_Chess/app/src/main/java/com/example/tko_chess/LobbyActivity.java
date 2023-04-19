@@ -95,6 +95,10 @@ public class LobbyActivity extends AppCompatActivity {
 		//Disable the StartGameBtn initially until host gets CanStart message
 		disableStartGame();
 
+		//TODO ///Disable game settings button until we implement something for it./// DELETE AFTER IMPLEMENTING
+		GameSettingsBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+		GameSettingsBtn.setClickable(false);
+		//TODO ///Disable game settings button until we implement something for it./// DELETE AFTER IMPLEMENTING
 
 
 		//Beginning of WebSocket code
