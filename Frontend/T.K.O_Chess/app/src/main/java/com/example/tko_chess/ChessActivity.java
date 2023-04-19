@@ -1,6 +1,7 @@
 package com.example.tko_chess;
 
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tko_chess.ultils.Const;
 
+/**
+ * @author Zachary Scurlock
+ */
 public class ChessActivity extends AppCompatActivity {
 
     ImageButton A1;
@@ -87,16 +92,18 @@ public class ChessActivity extends AppCompatActivity {
     ImageButton F8;
     ImageButton G8;
     ImageButton H8;
+
     private WebSocketClient WebSocket;
 
     String URLConcatenation = "";
     SingletonUser currUser = SingletonUser.getInstance();
 
     Drawable piece;
-    Drawable selectedSpot;
 
-    int tracker = 0;
+    //Image piece;
+
     String[] possibleMoves = null;
+    int tracker = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,25 +250,53 @@ public class ChessActivity extends AppCompatActivity {
         A1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if((tracker == 1) && possibleMoves != null){
+                    piece = A1.getDrawable();
+                    A1.setImageResource(R.drawable.transparent);
+                } else if(tracker > 1){
+                    A1.setBackground(piece);
+                    tracker = 0;
+                }
             }
         });
         A2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if((tracker == 1)){
+                    piece = A2.getDrawable();
+                    A2.setImageResource(R.drawable.transparent);
+                } else if(tracker > 1){
+                    A2.setBackground(piece);
+                    tracker = 0;
+                }
             }
         });
         A3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if((tracker == 1)){
+                    piece = A3.getDrawable();
+                    A3.setImageResource(R.drawable.transparent);
+                } else if(tracker > 1){
+                    A3.setImageResource(R.drawable.white_pawn);
+                    tracker = 0;
+                }
             }
         });
         A4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if((tracker == 1)){
+                    piece = A4.getDrawable();
+                    A4.setImageResource(R.drawable.transparent);
+                } else if(tracker > 1){
+                    A4.setBackground(piece);
+                    tracker = 0;
+                }
             }
         });
         A5.setOnClickListener(new View.OnClickListener() {
@@ -633,6 +668,10 @@ public class ChessActivity extends AppCompatActivity {
 
     }
 
+    public void isCheck(){
+
+    }
+
     public void enableButtons(){
         runOnUiThread(new Runnable() {
             @Override
@@ -791,8 +830,5 @@ public class ChessActivity extends AppCompatActivity {
                 H8.setClickable(false);
             }
         });
-    }
-    public void isCheck(){
-        
     }
 }
