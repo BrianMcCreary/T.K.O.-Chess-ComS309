@@ -19,7 +19,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@ServerEndpoint(value = "/websocket/{username}")
+@ServerEndpoint(value = "/websocket/boxing/{username}")
 @Component
 public class BoxingGameSocket {
 
@@ -82,10 +82,6 @@ public class BoxingGameSocket {
                 else if (roundWinner.equals(bg.getPlayer2())) {
                     bg.dockLife(bg.getPlayer1());
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
-                    Session s = usernameSessionMap.get(bg.getPlayer1());
-                    s.getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
-                    Session s2 = usernameSessionMap.get(bg.getPlayer2());
-                    s2.getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
@@ -109,9 +105,9 @@ public class BoxingGameSocket {
                 boxingGameRepository.delete(bg);
             }
             else {
-                BoxingGame saver = bg;
-                boxingGameRepository.delete(bg);    //Had to do this because .flush() wasn't working
-                boxingGameRepository.save(saver);
+//                BoxingGame saver = bg;
+//                boxingGameRepository.delete(bg);    //Had to do this because .flush() wasn't working
+                boxingGameRepository.save(bg);
             }
         }
         //If the user leaves, send information to their opponent's client and delete the boxing game from the repository
