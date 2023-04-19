@@ -53,11 +53,8 @@ public class MainMenuActivity extends AppCompatActivity {
         tkoChess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO take user to lobby screen
-                String temp = "Total Knockout Chess";
-
                 Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
-                intent.putExtra("Gamemode", temp);
+                intent.putExtra("Gamemode", "Total Knockout Chess");
                 startActivity(intent);
             }
         });
@@ -67,11 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO take user to lobby screen
-                String temp = "Chess";
-
                 Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
-                intent.putExtra("Gamemode", temp);
+                intent.putExtra("Gamemode", "Chess");
                 startActivity(intent);
             }
         });
@@ -80,11 +74,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //TODO take user to lobby screen
-                String temp = "Boxing";
-
                 Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
-                intent.putExtra("Gamemode", temp);
+                intent.putExtra("Gamemode", "Boxing");
                 startActivity(intent);
             }
         });

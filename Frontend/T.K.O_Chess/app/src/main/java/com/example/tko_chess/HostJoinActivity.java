@@ -24,12 +24,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HostJoinActivity extends AppCompatActivity {
 
 	//Button Declarations
+	ImageButton HorJToMenuBtn;
 	Button HostGameBtn;
 	Button JoinGameBtn;
 
-	//EditText Declarations
-	EditText LobbyName;
+	//Text Declarations
 	EditText LobbyCode;
+	TextView JoinError;
 
 	//String Declarations
 	String GameMode = "";
@@ -42,22 +43,30 @@ public class HostJoinActivity extends AppCompatActivity {
 		GameMode = getIntent().getExtras().getString("Gamemode");
 
 		//Button Initializations
+		HorJToMenuBtn = findViewById(R.id.HorJGametoMenuBtn);
 		HostGameBtn = findViewById(R.id.HostGameBtn);
 		JoinGameBtn = findViewById(R.id.JoinGameBtn);
 
-		LobbyName = findViewById(R.id.LobbyNameEditText);
+		//Text Initializations
 		LobbyCode = findViewById(R.id.LobbyCodeEditText);
+		JoinError = findViewById(R.id.JoinErrorText);
+
+		HorJToMenuBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(HostJoinActivity.this, MainMenuActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		HostGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				//Gets lobby name
-				String temp = LobbyName.getText().toString();
-
 				//Takes user to hosted lobby screen
 				Intent intent = new Intent(HostJoinActivity.this, LobbyActivity.class);
-				intent.putExtra("LobbyName", temp);
 				intent.putExtra("Gamemode", GameMode);
+				intent.putExtra("HostOrJoin", "host");
+				intent.putExtra("LobbyCode", "0");
 				startActivity(intent);
 			}
 		});
@@ -65,20 +74,32 @@ public class HostJoinActivity extends AppCompatActivity {
 		JoinGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//Concatenates the lobby code to the URL for the find lobby request
 				URLConcatenation = LobbyCode.getText().toString();
 
 				RequestQueue queue = Volley.newRequestQueue(HostJoinActivity.this);
 				StringRequest FindLobbyReq = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYFIND + URLConcatenation, new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
+						//If lobby exists, take user to lobby screen and join that lobby.
 						if (response.equals("success")) {
-							
+							Intent intent = new Intent(HostJoinActivity.this, LobbyActivity.class);
+
+							//Sending extra info about type of lobby and type of user joining the lobby
+							intent.putExtra("Gamemode", GameMode);
+							intent.putExtra("HostOrJoin", "join");
+							intent.putExtra("LobbyCode", URLConcatenation);
+
+							startActivity(intent);
+						} else { //Display error message from backend
+							JoinError.setText(response);
 						}
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-
+						//Display error message
+						JoinError.setText("An error occurred.");
 					}
 				});
 

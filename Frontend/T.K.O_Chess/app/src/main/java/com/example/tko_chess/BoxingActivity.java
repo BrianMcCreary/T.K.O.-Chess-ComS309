@@ -144,7 +144,7 @@ public class BoxingActivity extends AppCompatActivity {
 
         //Connect to WebSocket
         try {
-            WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKET + URLConcatenation), (Draft)drafts[0]) {
+            WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKETBOXING + URLConcatenation), (Draft)drafts[0]) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.d("OPEN", "run() returned: " + "is connecting");
@@ -267,8 +267,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                 }
             };
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             return;
         }

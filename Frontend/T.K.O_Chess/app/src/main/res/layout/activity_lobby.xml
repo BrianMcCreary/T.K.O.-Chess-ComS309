@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey">
+
+    <ImageButton
+        android:id="@+id/LobbyToHostJoinBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="19dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/goes_back_to_main_menu"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_backbtn" />
+
+    <TextView
+        android:id="@+id/LobbyNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Lobby"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/LobbyToHostJoinBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/LobbyToHostJoinBtn" />
+
+    <ScrollView
+        android:id="@+id/LobbyScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/very_light_grey"
+        android:contentDescription="@string/scrollview_holding_a_user_s_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LobbyNameText">
+
+        <LinearLayout
+            android:id="@+id/LobbyLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/PlayOrSpectateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Play or spectate?"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LobbyScrollView" />
+
+    <Button
+        android:id="@+id/PlayerBtn"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Play"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/SpectatorBtn"
+        app:layout_constraintTop_toBottomOf="@+id/PlayOrSpectateText" />
+
+    <Button
+        android:id="@+id/SpectatorBtn"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Spectate"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/PlayOrSpectateText"
+        app:layout_constraintStart_toStartOf="@+id/PlayOrSpectateText"
+        app:layout_constraintTop_toBottomOf="@+id/PlayOrSpectateText" />
+
+
+    <TextView
+        android:id="@+id/ReadyStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:text="Ready to play?"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlayOrSpectateText" />
+
+    <ImageButton
+        android:id="@+id/NotReadyBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/ReadyStatusText"
+        app:layout_constraintTop_toTopOf="@+id/ReadyStatusText"
+        app:srcCompat="@drawable/notreadystatus" />
+
+    <ImageButton
+        android:id="@+id/ReadyBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/ReadyStatusText"
+        app:layout_constraintTop_toTopOf="@+id/ReadyStatusText"
+        app:srcCompat="@drawable/readystatus" />
+
+
+
+    <TextView
+        android:id="@+id/HostOptionsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:text="Host options"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReadyStatusText" />
+
+    <Button
+        android:id="@+id/StartGameBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Start game"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HostOptionsText" />
+
+    <Button
+        android:id="@+id/GameSettingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Game settings"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/StartGameBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>

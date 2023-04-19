@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_weight="0.75"
-        app:srcCompat="@drawable/NotReadyMark" />
+        app:srcCompat="@drawable/notreadystatus" />
 
     <Button
         android:id="@+id/KickMemberBtn"
