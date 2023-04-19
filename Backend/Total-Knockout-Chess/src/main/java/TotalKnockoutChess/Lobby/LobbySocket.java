@@ -104,6 +104,11 @@ public class LobbySocket {
                 }
             }
             //TODO Start game if both players ready
+            if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
+                usernameSessionMap.get(l.getPlayer1()).getBasicRemote().sendText("BothReady");
+                usernameSessionMap.get(l.getPlayer2()).getBasicRemote().sendText("BothReady");
+                usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText("CanStart");
+            }
 
         }
         else if (message.equals("UnReady")) {
@@ -116,6 +121,42 @@ public class LobbySocket {
             else if (l.getPlayer2() != null) {
                 if (l.getPlayer2().equals(username)) {
                     l.setPlayer2Ready(false);
+                }
+            }
+        }
+        else if (messages[0].equals("Start")) {
+            if (messages[1].equals("Boxing")) {
+                //TODO
+            }
+            else if (messages[1].equals("Chess")) {
+
+            }
+            else if (messages[1].equals("ChessBoxing")) {
+
+            }
+        }
+        else if (message.equals("SwitchToP1")) {
+            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
+            if (l != null) {
+                String who = "";
+                if (l.getPlayer1() != null) {
+
+                }
+            }
+        }
+        else if (message.equals("SwitchToP2")) {
+            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
+            if (l != null) {
+                if (l.getPlayer2() == null) {
+
+                }
+            }
+        }
+        else if (message.equals("SwitchToSpectate")) {
+            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
+            if (l != null) {
+                if (l.getPlayer1() == null) {
+
                 }
             }
         }
@@ -157,6 +198,7 @@ public class LobbySocket {
                 else if (lobby.getSpectators().contains(username)) {
                     lobby.removeSpectator(username);
                 }
+                lobby.decrementUserCount();
                 lobbyRepository.save(lobby);
                 lobbyRepository.flush();
             }

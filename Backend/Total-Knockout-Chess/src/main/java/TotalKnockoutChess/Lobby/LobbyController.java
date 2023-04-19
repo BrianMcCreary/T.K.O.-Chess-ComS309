@@ -18,10 +18,10 @@ public class LobbyController {
     UserRepository userRepository;
 
     // Messages to send to the frontend
-    private final String success = "{\"message\":\"success\"}";
-    private final String failure = "{\"message\":\"failure\"}";
-//    private final String success = "success";
-//    private final String failure = "failure";
+//    private final String success = "{\"message\":\"success\"}";
+//    private final String failure = "{\"message\":\"failure\"}";
+    private final String success = "success";
+    private final String failure = "failure";
 
     @GetMapping("/find/{lobbyCode}")
     public String findLobby(@PathVariable Long lobbyCode) {
@@ -30,7 +30,7 @@ public class LobbyController {
                 return success;
             }
         }
-        return "{\"message\":\"Lobby not found\"}";
+        return "Lobby not found";
     }
 
     // Mapping to create a new lobby with the given User object as its owner.
