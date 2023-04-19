@@ -196,7 +196,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/G6"
@@ -226,7 +228,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/A4"
@@ -241,7 +245,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/B4"
@@ -271,7 +277,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/H3"
@@ -286,7 +294,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/G3"
@@ -301,7 +311,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/F3"
@@ -316,7 +328,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/E3"
@@ -331,7 +345,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/E1"
@@ -597,7 +613,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/C3"
@@ -612,7 +630,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/A3"
@@ -626,7 +646,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/A2"
@@ -676,7 +698,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/D4"
@@ -706,7 +730,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/F4"
@@ -736,7 +762,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/H4"
@@ -765,7 +793,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/B5"
@@ -795,7 +825,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/D5"
@@ -825,7 +857,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/F5"
@@ -855,7 +889,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/H5"
@@ -885,7 +921,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/D6"
@@ -900,7 +938,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/C6"
@@ -915,7 +955,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/A6"
@@ -929,7 +971,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/B6"
@@ -944,7 +988,9 @@
         android:visibility="visible"
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
-        app:layout_constraintTop_toTopOf="@id/chessboard" />
+        app:layout_constraintTop_toTopOf="@id/chessboard"
+        android:padding="6dp"
+        android:scaleType="centerCrop"/>
 
     <ImageButton
         android:id="@+id/B7"
@@ -1087,18 +1133,5 @@
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
         app:layout_constraintTop_toTopOf="@id/chessboard" />
-
-    <TextView
-        android:id="@+id/timeRemaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time Remaining"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/chessboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
