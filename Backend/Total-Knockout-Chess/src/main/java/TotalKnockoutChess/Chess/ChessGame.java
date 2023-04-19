@@ -32,7 +32,7 @@ public class ChessGame {
 
     // Helper method to initialize the game
     private void initializeGame() {
-        tiles = new ChessGameTile[8][8];
+        tiles = new ChessGameTile[BOARD_HEIGHT][BOARD_WIDTH];
 
         // Create ChessGameTile's to fill "tiles" 2d array
         for (int row = 0; row < BOARD_HEIGHT; row++) {
@@ -78,4 +78,23 @@ public class ChessGame {
     // Getters and setters for lobby field.
     public Lobby getLobby() { return lobby; }
     public void setLobby(Lobby lobby) { this.lobby = lobby; }
+
+    /**
+     * Method to update the ChessGameTiles array
+     * @param startX - original x coordinate of the moving piece
+     * @param startY - original y coordinate of the moving piece
+     * @param endX   - new x coordinate of the moving piece
+     * @param endY   - new y coordinate of the moving piece
+     */
+    public void makeMove(int startX, int startY, int endX, int endY){
+        // If coordinates are out of bounds, return without updating the board
+        if(startX < 0 || startY < 0 || endX < 0 || endY < 0 || startX >= BOARD_WIDTH || startY >= BOARD_HEIGHT || endX >= BOARD_WIDTH || endY >= BOARD_HEIGHT){
+            return;
+        }
+
+        ChessGameTile movingPiece = tiles[startX][startY];
+        if(movingPiece.getClass().equals(ChessGameTile.class)){
+
+        }
+    }
 }

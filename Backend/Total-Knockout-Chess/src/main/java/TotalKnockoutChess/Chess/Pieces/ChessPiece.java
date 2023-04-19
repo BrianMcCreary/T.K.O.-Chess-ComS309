@@ -1,8 +1,9 @@
 package TotalKnockoutChess.Chess.Pieces;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Serializable {
     String color;
 
     public ChessPiece(String color) {

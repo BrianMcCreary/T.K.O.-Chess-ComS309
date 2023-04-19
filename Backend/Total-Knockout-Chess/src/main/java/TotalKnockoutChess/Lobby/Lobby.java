@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 @Entity
+@Table(name = "lobby")
 public class Lobby {
 
     @Id
@@ -17,19 +18,19 @@ public class Lobby {
 
     private int userCount;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "lobby")
     @JoinColumn(name = "owner")
     User owner;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "lobby")
     @JoinColumn(name = "player1")
     User player1;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "lobby")
     @JoinColumn(name = "player2")
     User player2;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lobby")
     List<User> spectators;
 
     public Lobby(){

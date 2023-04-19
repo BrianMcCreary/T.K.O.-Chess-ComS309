@@ -18,8 +18,6 @@ public class LobbyController {
     UserRepository userRepository;
 
     // Messages to send to the frontend
-//    private final String success = "{\"message\":\"success\"}";
-//    private final String failure = "{\"message\":\"failure\"}";
       private final String success = "success";
       private final String failure = "failure";
 
@@ -35,6 +33,7 @@ public class LobbyController {
         }
         // If user is already in a lobby, delete old lobby
         for(Lobby l : lobbyRepository.findAll()){
+            System.out.println(l);
             if(l.contains(owner)){
                 System.out.println("User is in another lobby");
                 deleteLobby(l.getId());
