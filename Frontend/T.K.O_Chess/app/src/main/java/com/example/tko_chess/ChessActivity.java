@@ -252,11 +252,9 @@ public class ChessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tracker += 1;
                 if((tracker == 1) && possibleMoves != null){
-                    piece = A1.getDrawable();
-                    A1.setImageResource(R.drawable.transparent);
+
                 } else if(tracker > 1){
-                    A1.setBackground(piece);
-                    tracker = 0;
+
                 }
             }
         });
@@ -265,10 +263,10 @@ public class ChessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tracker += 1;
                 if((tracker == 1)){
-                    piece = A2.getDrawable();
-                    A2.setImageResource(R.drawable.transparent);
+
+
                 } else if(tracker > 1){
-                    A2.setBackground(piece);
+
                     tracker = 0;
                 }
             }
@@ -278,10 +276,15 @@ public class ChessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tracker += 1;
                 if((tracker == 1)){
-                    piece = A3.getDrawable();
-                    A3.setImageResource(R.drawable.transparent);
+                    //TODO
+                    // Send something to the backend telling them what button was pressed
+                    // store the name of the piece
+                    // show available moves by setting the background to a shade of green
+                    //A3.setImageResource(R.drawable.transparent);
                 } else if(tracker > 1){
-                    A3.setImageResource(R.drawable.white_pawn);
+                    //TODO
+                    // Update tile with piece received from backend
+                    //A3.setImageResource(R.drawable.white_pawn);
                     tracker = 0;
                 }
             }
