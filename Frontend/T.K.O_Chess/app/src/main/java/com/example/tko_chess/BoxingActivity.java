@@ -156,7 +156,6 @@ public class BoxingActivity extends AppCompatActivity {
                     Log.d("", "run() returned: " + message);
                     String[] strings = message.split(" ");
 
-                    //If user's move beat opponent's move
                     switch (strings[0]) {
                         case "RoundWin":
                             //Show opponent's move

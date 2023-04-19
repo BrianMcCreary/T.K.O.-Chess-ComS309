@@ -54,7 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
-                intent.putExtra("Gamemode", "Total Knockout Chess");
+                intent.putExtra("Gamemode", "ChessBoxing");
                 startActivity(intent);
             }
         });
