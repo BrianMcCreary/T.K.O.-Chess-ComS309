@@ -53,36 +53,36 @@ public class LobbySocket {
         if (joinOrHost.equals("host")) {        //If hosting, create lobby and generate code.
             Lobby lobby = new Lobby(username);
             lobby.setCode(lobby.generateLobbyCode(lobbyRepository.findAll()));
-            usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Player1");
+//            usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Spectator");
             lobbyRepository.save(lobby);
         }
         else if (joinOrHost.equals("join")) {
             Lobby lobby = findLobbyWithCode(lobbyCode);
             if (lobby != null) {
-                if (lobby.getPlayer1() == null) {
-                    lobby.setPlayer1(username);
-                    lobby.incrementUserCount();
-                    lobbyRepository.save(lobby);
-                    lobbyRepository.flush();
-                    sendOtherUsersMessage(username, "Player1 " + username);
-                    usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Player1");
-                }
-                else if (lobby.getPlayer2() == null) {
-                    lobby.setPlayer2(username);
-                    lobby.incrementUserCount();
-                    lobbyRepository.save(lobby);
-                    lobbyRepository.flush();
-                    sendOtherUsersMessage(username, "Player2 " + username);
-                    usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Player2");
-                }
-                else {
+//                if (lobby.getPlayer1() == null) {
+//                    lobby.setPlayer1(username);
+//                    lobby.incrementUserCount();
+//                    lobbyRepository.save(lobby);
+//                    lobbyRepository.flush();
+//                    sendOtherUsersMessage(username, "Player1 " + username);
+//                    usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Player1");
+//                }
+//                else if (lobby.getPlayer2() == null) {
+//                    lobby.setPlayer2(username);
+//                    lobby.incrementUserCount();
+//                    lobbyRepository.save(lobby);
+//                    lobbyRepository.flush();
+//                    sendOtherUsersMessage(username, "Player2 " + username);
+//                    usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Player2");
+//                }
+//                else {
                     lobby.addToSpectators(username);
                     lobby.incrementUserCount();
                     lobbyRepository.save(lobby);
                     lobbyRepository.flush();
-                    sendOtherUsersMessage(username, "Spectator " + username);
+                    sendAllUsersMessage(username, "Spectator " + username);
                     usernameSessionMap.get(username).getBasicRemote().sendText("PlayerJoin Spectator");
-                }
+//                }
             }
         }
     }
@@ -99,11 +99,13 @@ public class LobbySocket {
             if (l.getPlayer1() != null) {
                 if (l.getPlayer1().equals(username)) {
                     l.setPlayer1Ready(true);
+                    sendAllUsersMessage(username, "Ready " + username);
                 }
             }
             else if (l.getPlayer2() != null) {
                 if (l.getPlayer2().equals(username)) {
                     l.setPlayer2Ready(true);
+                    sendAllUsersMessage(username, "Ready " + username);
                 }
             }
             if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
@@ -118,11 +120,13 @@ public class LobbySocket {
             if (l.getPlayer1() != null) {
                 if (l.getPlayer1().equals(username)) {
                     l.setPlayer1Ready(false);
+                    sendAllUsersMessage(username, "UnReady " + username);
                 }
             }
             else if (l.getPlayer2() != null) {
                 if (l.getPlayer2().equals(username)) {
                     l.setPlayer2Ready(false);
+                    sendAllUsersMessage(username, "UnReady " + username);
                 }
             }
             if (sendCantStart) {
@@ -153,12 +157,14 @@ public class LobbySocket {
                         if (l.getPlayer2().equals(username)) {
                             prev = "Player2 ";
                             l.setPlayer2(null);
+                            sendAllUsersMessage(username, "UnReady " + username);
                             l.setPlayer2Ready(false);
                             l.setPlayer1(username);
                             sendAllUsersMessage(username, "Switch " + prev + "Player1 " + username);
                         }
                     }
-                    else if (l.getSpectators().contains(username)) {
+
+                    if (l.getSpectators().contains(username)) {
                         prev = "Spectator ";
                         l.removeSpectator(username);
                         l.setPlayer1(username);
@@ -178,12 +184,14 @@ public class LobbySocket {
                         if (l.getPlayer1().equals(username)) {
                             prev = "Player1 ";
                             l.setPlayer1(null);
+                            sendAllUsersMessage(username, "UnReady " + username);
                             l.setPlayer1Ready(false);
                             l.setPlayer2(username);
                             sendAllUsersMessage(username, "Switch " + prev + "Player2 " + username);
                         }
                     }
-                    else if (l.getSpectators().contains(username)) {
+
+                    if (l.getSpectators().contains(username)) {
                         prev = "Spectator ";
                         l.removeSpectator(username);
                         l.setPlayer2(username);
@@ -207,8 +215,9 @@ public class LobbySocket {
                         if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
 //                            usernameSessionMap.get(l.getPlayer2()).getBasicRemote().sendText("BothNotReady");
                             usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText("CannotStart");
-                            sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                         }
+                        sendAllUsersMessage(username, "UnReady " + username);
+                        sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                         l.setPlayer1Ready(false);
                         l.addToSpectators(username);
                     }
@@ -222,8 +231,9 @@ public class LobbySocket {
                             if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
 //                                usernameSessionMap.get(l.getPlayer1()).getBasicRemote().sendText("BothNotReady");
                                 usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText("CannotStart");
-                                sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                             }
+                            sendAllUsersMessage(username, "UnReady " + username);
+                            sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                             l.setPlayer2Ready(false);
                             l.addToSpectators(username);
                         }
@@ -233,6 +243,11 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        else if (messages[0].equals("Kick")) {
+            String usernameKicked = messages[1];
+            usernameSessionMap.get(usernameKicked).getBasicRemote().sendText("Kicked");
+        }
+
     }
 
     @OnClose
@@ -246,18 +261,22 @@ public class LobbySocket {
 
         if (lobby != null) {
             if (lobby.getOwner().equals(username)) {
-                sendOtherUsersMessage(username, "HostLeft");
+                sendAllUsersMessage(username, "HostLeft");
                 lobbyRepository.delete(lobby);
             }
             else {
-                String who = null;
+                String who = "";
                 if (lobby.getPlayer1().equals(username)) {
                     who = "Player1 ";
                     lobby.setPlayer1(null);
+                    lobby.setPlayer1Ready(false);
+                    sendOtherUsersMessage(username, "Unready " + username);
                 }
                 else if (lobby.getPlayer2().equals(username)) {
                     who = "Player2 ";
                     lobby.setPlayer2(null);
+                    lobby.setPlayer2Ready(false);
+                    sendOtherUsersMessage(username, "Unready " + username);
                 }
                 else {
                     who = "Spectator ";
