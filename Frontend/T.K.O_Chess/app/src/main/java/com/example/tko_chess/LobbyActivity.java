@@ -16,10 +16,18 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONArray;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -84,7 +92,7 @@ public class LobbyActivity extends AppCompatActivity {
 		GameMode = getIntent().getExtras().getString("Gamemode");
 		HostOrJoin = getIntent().getExtras().getString("HostOrJoin");
 		LobbyCode = getIntent().getExtras().getString("LobbyCode");
-		//TODO Assign PlayerOrSpectator a value
+		PlayerOrSpectator = "Spectator";
 		URLConcatenation = currUser.getUsername() + "/" + HostOrJoin + "/" + LobbyCode;
 
 		//LinearLayout Initializations
@@ -117,16 +125,18 @@ public class LobbyActivity extends AppCompatActivity {
 					String[] strings = message.split(" ");
 
 					switch (strings[0]) {
-						case "PlayerJoin":
-							//Gets the user's player type.
-							PlayerOrSpectator = strings[1];
-							//TODO Display the Lobby members on screen
+						//A new user has joined the lobby and been assigned Spectator.
+						case "Spectator":
+							//TODO
+							displayLobby();
 
 							//Exit switch statement
 							break;
 
 
-						//Removes all users from lobby and takes them back to main menu
+
+						//Closes websocket, hides all buttons and displays lobby exit overlay
+						case "Kicked":
 						case "HostLeft":
 							WebSocket.close();
 
@@ -134,7 +144,7 @@ public class LobbyActivity extends AppCompatActivity {
 							hideAllButtons();
 
 							//Displays overlay for host leaving
-							displayHostLeftOverlay();
+							displayExitLobbyOverlay(strings[0]);
 
 							//Exit switch statement
 							break;
@@ -154,24 +164,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 							//Exit switch statement
 							break;
-
-
-						/*//Disables the ready status buttons
-						case "BothReady":
-							//Disables ready buttons
-							disableReadyBtns();
-
-							//Exit switch statement
-							break;
-
-
-						//Disables the ready status buttons
-						case "BothNotReady":
-							//Disables ready buttons
-							enableReadyBtns();
-
-							//Exit switch statement
-							break;*/
 					}
 				}
 
@@ -356,12 +348,16 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	//Displays the host left overlay
-	private void displayHostLeftOverlay() {
+	private void displayExitLobbyOverlay(String message) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_hostleft_layout, null, false);
+				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_exitlobby_layout, null, false);
 				Button LobbyToMenuBtn = (Button) inflatedLayout.findViewById(R.id.LobbyToMenuBtn);
+				TextView ExitLobbyText = (TextView) inflatedLayout.findViewById(R.id.ExitLobbyText);
+
+				ExitLobbyText.setText(message);
+
 
 				LobbyToMenuBtn.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -429,33 +425,22 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 
-	/*//Disables ready status buttons
-	private void disableReadyBtns() {
-		runOnUiThread(new Runnable() {
+	//Displays the lobby's current members and related info.
+	private void displayLobby() {
+		RequestQueue queue = Volley.newRequestQueue(LobbyActivity.this);
+		JsonArrayRequest lobbyMembersReq	 = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
 			@Override
-			public void run() {
-				NotReadyBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-				ReadyBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+			public void onResponse(JSONArray response) {
+				//TODO
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
 
-				NotReadyBtn.setClickable(false);
-				ReadyBtn.setClickable(false);
 			}
 		});
+
+		//Send the request we created
+		queue.add(lobbyMembersReq);
 	}
-
-
-
-	//Disables ready status buttons
-	private void enableReadyBtns() {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				NotReadyBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-				ReadyBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-
-				NotReadyBtn.setClickable(true);
-				ReadyBtn.setClickable(true);
-			}
-		});
-	}*/
 }

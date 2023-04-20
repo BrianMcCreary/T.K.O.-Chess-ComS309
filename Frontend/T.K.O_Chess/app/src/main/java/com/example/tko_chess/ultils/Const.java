@@ -8,12 +8,18 @@ public class Const {
 
     public static final String URL_SERVER_LOGIN = "http://coms-309-005.class.las.iastate.edu:8080/users/login";
 
+
+
     public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/name/";
 
     public static final String URL_SERVER_CHANGEPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/users/password/";
 
+
+
     //Concatenate desired User's username
     public static final String URL_SERVER_GETUSER = "http://coms-309-005.class.las.iastate.edu:8080/users/getByName/";
+
+
 
     //This URL can be used to GET the friends list, and also to REMOVE a friend from the list.
     //For GET, concatenate currUser's Username. For REMOVE, concatenate currUser's username and the friend being removed
@@ -28,6 +34,8 @@ public class Const {
     //Used for accepting a friend request sent to you.
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
 
+
+
     //Used to confirm if lobby exists.
     public static final String URL_SERVER_LOBBYFIND = "http://coms-309-005.class.las.iastate.edu:8080/lobby/find/";
 
@@ -41,11 +49,16 @@ public class Const {
     //Spectator Address
     public static final String URL_SERVER_LOBBYSPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
 
-    //Boxing WebSocket Address
-    public static final String URL_SERVER_WEBSOCKETBOXING = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/boxing/";
-
     //Lobby WebSocket Address
     public static final String URL_SERVER_WEBSOCKETLOBBY = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/lobby/";
+
+    //Lobby WebSocket Address
+    public static final String URL_SERVER_GETLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/justJoined/";
+
+
+
+    //Boxing WebSocket Address
+    public static final String URL_SERVER_WEBSOCKETBOXING = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/boxing/";
 
     //Boxing Test URL
     public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";
