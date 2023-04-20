@@ -261,7 +261,7 @@ public class LobbySocket {
 
         if (lobby != null) {
             if (lobby.getOwner().equals(username)) {
-                sendAllUsersMessage(username, "HostLeft");
+                sendOtherUsersMessage(username, "HostLeft");
                 lobbyRepository.delete(lobby);
             }
             else {

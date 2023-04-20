@@ -5,6 +5,7 @@ import TotalKnockoutChess.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -215,6 +216,34 @@ public class LobbyController {
     public List<String> getLobbySpectators(@PathVariable Long lobbyCode){
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
         return lobby.getSpectators();
+    }
+
+    @GetMapping("/justJoined/{lobbyCode}")
+    public List<String> getUsersInLobby(@PathVariable Long lobbyCode) {
+        Lobby lobby = lobbyRepository.getByCode(lobbyCode);
+        List<String> users = new ArrayList<String>();
+        if (lobby != null) {
+            if (lobby.getPlayer1() != null) {
+                String readyStatus = "NotReady";
+                if (lobby.getPlayer1Ready()) {
+                    readyStatus = "Ready";
+                }
+                users.add(lobby.getPlayer1() + " Player1 " + readyStatus);
+            }
+            if (lobby.getPlayer2() != null) {
+                String readyStatus = "NotReady";
+                if (lobby.getPlayer2Ready()) {
+                    readyStatus = "Ready";
+                }
+                users.add(lobby.getPlayer2() + " Player2 " + readyStatus);
+            }
+            if (!lobby.getSpectators().isEmpty()) {
+                for (String spectator : lobby.getSpectators()) {
+                    users.add(spectator + " Spectator NotReady");
+                }
+            }
+        }
+        return users;
     }
 
     // Helper method to get the user from the repository given their username
