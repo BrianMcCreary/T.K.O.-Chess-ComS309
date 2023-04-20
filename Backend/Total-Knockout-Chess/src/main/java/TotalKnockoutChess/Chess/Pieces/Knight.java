@@ -11,4 +11,8 @@ public class Knight extends ChessPiece {
     List<Coordinate> calculateAvailableMoves() {
         return null;
     }
+
+    boolean move(int fromX, int fromY, int toX, int toY) {
+        return false;
+    }
 }

@@ -10,4 +10,6 @@ public abstract class ChessPiece {
     }
 
     abstract List<Coordinate> calculateAvailableMoves();
+
+    abstract boolean move(int fromX, int fromY, int toX, int toY);
 }
