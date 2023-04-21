@@ -39,6 +39,8 @@ public class LobbyActivity extends AppCompatActivity {
 	TextView ReadyStatus;
 	TextView HostOptions;
 	TextView LeaveLobbyError;
+	TextView LobbyError;
+	TextView LobbyEvent;
 
 	//Button Declarations
 	ImageButton LobbyToHostJoin;
@@ -51,10 +53,14 @@ public class LobbyActivity extends AppCompatActivity {
 	Button GameSettingsBtn;
 
 	//String Declarations
-	String HostOrJoin;
-	String PlayerOrSpectator;
 	String GameMode;
 	String LobbyCode;
+	String HostOrJoin;
+	String PlayerOrSpectator = "Spectator";
+	String WhoPlayer1;
+	String WhoPlayer2;
+	String lobbyMessage;
+
 	String URLConcatenation;
 
 	//LinearLayout Declarations
@@ -67,7 +73,7 @@ public class LobbyActivity extends AppCompatActivity {
 	//User ready tracker
 	boolean UserReady = false;
 
-	//Get access to currently logged in user info.
+	//Currently logged in user.
 	SingletonUser currUser = SingletonUser.getInstance();
 
 	//WebSocket declarations
@@ -93,18 +99,17 @@ public class LobbyActivity extends AppCompatActivity {
 		ReadyStatus = findViewById(R.id.ReadyStatusText);
 		HostOptions = findViewById(R.id.HostOptionsText);
 		LeaveLobbyError = findViewById(R.id.LeaveLobbyErrorText);
+		LobbyError = findViewById(R.id.LobbyErrorText);
+		LobbyEvent = findViewById(R.id.LobbyEventText);
 
 		//String Initializations
 		GameMode = getIntent().getExtras().getString("Gamemode");
-		HostOrJoin = getIntent().getExtras().getString("HostOrJoin");
 		LobbyCode = getIntent().getExtras().getString("LobbyCode");
-		PlayerOrSpectator = "Spectator";
+		HostOrJoin = getIntent().getExtras().getString("HostOrJoin");
 		URLConcatenation = currUser.getUsername() + "/" + HostOrJoin + "/" + LobbyCode;
 
 		//LinearLayout Initializations
 		LobbyOverlay = findViewById(R.id.LobbyOverlayLinearLayout);
-
-
 
 		//Disable the StartGameBtn initially until host gets CanStart message
 		disableStartGame();
@@ -134,6 +139,11 @@ public class LobbyActivity extends AppCompatActivity {
 					Log.d("", "run() returned: " + message);
 					String[] strings = message.split(" ");
 
+					//Clears latest error messages
+					LobbyError.setText("");
+					LeaveLobbyError.setText("");
+					LobbyEvent.setText("");
+
 					switch (strings[0]) {
 						//Starts the game for everyone
 						case "StartGame":
@@ -144,31 +154,148 @@ public class LobbyActivity extends AppCompatActivity {
 
 								//Sending extra info about type of game and user's role in that game (Spectator or player)
 								intent.putExtra("UserRole", PlayerOrSpectator);
+								intent.putExtra("Gamemode", GameMode);
 
 								startActivity(intent);
 							} else
 
 							//Take user to chess boxing game
 							if (GameMode.equals("ChessBoxing")) {
+								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);
 
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+								intent.putExtra("UserRole", PlayerOrSpectator);
+								intent.putExtra("Gamemode", GameMode);
+
+								startActivity(intent);
 							} else
 
 							//Take user to boxing game
 							if (GameMode.equals("Boxing")) {
+								Intent intent = new Intent(LobbyActivity.this, BoxingActivity.class);
 
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+								intent.putExtra("UserRole", PlayerOrSpectator);
+								intent.putExtra("Gamemode", GameMode);
+
+								startActivity(intent);
 							}
+
+							//Disconnects from lobby
+							WebSocket.close();
 
 							//Exit switch statement
 							break;
 
 
-						//Update the screen display to reflect the changes made to the lobby.
-						case "Ready": //Change Ready status variable
-						case "UnReady": //Change Ready status variable
-						case "Spectator": //Change player or spectator  variable
-						case "Switch": //Change player or spectator  variable
-						case "PlayerLeft": //Update display
-							//TODO
+						//Updates screen with new ready status of user specified by strings[1]
+						case "Ready":
+							//Tell users who readied up
+							lobbyMessage = strings[1] + "has readied-up.";
+							LobbyEvent.setText(lobbyMessage);
+
+							//If user who changed ready status was currUser, store their new ready status.
+							if (strings[1].equals(currUser.getUsername())) {
+								UserReady = true;
+							}
+
+							//Updates lobby display
+							getLobbyMembers();
+							displayLobbyMembers();
+
+							//Exit switch statement
+							break;
+
+
+						//Updates screen with new ready status of the specified user (strings[1]).
+						case "UnReady":
+							//Tell users who unreadied
+							lobbyMessage = strings[1] + "has un-readied.";
+							LobbyEvent.setText(lobbyMessage);
+
+							//If user who changed ready status was currUser, store their new ready status.
+							if (strings[1].equals(currUser.getUsername())) {
+								UserReady = false;
+							}
+
+							//Updates lobby display
+							getLobbyMembers();
+							displayLobbyMembers();
+
+							//Exit switch statement
+							break;
+
+
+						//Updates screen with new PlayerType of the specified user (strings[1]).
+						case "Switch":
+							//Tell users who switched to what
+							lobbyMessage = strings[3] + "(" + strings[1] + ")" + "switched to " + strings[2] + ".";
+							LobbyEvent.setText(lobbyMessage);
+
+							//If user who changed PlayerType was currUser, store their new PlayerType.
+							if (strings[3].equals(currUser.getUsername())) {
+								PlayerOrSpectator = strings[2];
+							}
+
+							//If player 1 is the user changing their PlayerType, then update WhoPlayer1
+							if (strings[3].equals(WhoPlayer1)) {
+								WhoPlayer1 = "";
+							}
+
+							//If player 2 is the user changing their PlayerType, then update WhoPlayer2
+							if (strings[3].equals(WhoPlayer2)) {
+								WhoPlayer2 = "";
+							}
+
+							//If user is changing to player 1, update WhoPlayer1
+							if (strings[2].equals("Player1")) {
+								WhoPlayer1 = strings[3];
+							}
+
+							//If user is changing to player 2, update WhoPlayer2
+							if (strings[2].equals("Player2")) {
+								WhoPlayer2 = strings[3];
+							}
+
+							//Updates lobby display
+							getLobbyMembers();
+							displayLobbyMembers();
+
+							//Exit switch statement
+							break;
+
+
+						//Updates screen by removing the user who left.
+						case "PlayerLeft":
+							//Tell users who left
+							lobbyMessage = strings[2] + "(" + strings[1] + ")" + "has left.";
+							LobbyEvent.setText(lobbyMessage);
+
+							//Updates who is player 1
+							if (strings[1].equals("Player1")) {
+								WhoPlayer1 = "";
+							} else
+
+								//Updates who is player 2
+								if (strings[1].equals("Player2")) {
+									WhoPlayer2 = "";
+								}
+
+							//Updates lobby display
+							getLobbyMembers();
+							displayLobbyMembers();
+
+							//Exit switch statement
+							break;
+
+
+						//Updates screen by adding the new user that joined. User will be spectator by default.
+						case "Spectator":
+							//Tell users who joined
+							lobbyMessage = strings[1] + "has joined.";
+							LobbyEvent.setText(lobbyMessage);
+
+							//Updates lobby display
 							getLobbyMembers();
 							displayLobbyMembers();
 
@@ -193,6 +320,10 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Enables the start game button
 						case "CanStart":
+							//Tell host both players are ready
+							lobbyMessage = "Both players ready.";
+							LobbyEvent.setText(lobbyMessage);
+
 							enableStartGame();
 
 							//Exit switch statement
@@ -217,6 +348,8 @@ public class LobbyActivity extends AppCompatActivity {
 				@Override
 				public void onError(Exception e) {
 					Log.d("Exception:", e.getMessage().toString());
+					LobbyError.setText("An error occurred.");
+
 				}
 			};
 		} catch (URISyntaxException e) {
@@ -234,6 +367,11 @@ public class LobbyActivity extends AppCompatActivity {
 		LobbyToHostJoin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
+
 				//If User is a player, and are readied up, then don't leave lobby.
 				if ((!PlayerOrSpectator.equals("Spectator")) && (UserReady)) {
 					LeaveLobbyError.setText("Please unready before leaving.");
@@ -255,17 +393,33 @@ public class LobbyActivity extends AppCompatActivity {
 		Player1Btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("SwitchToP1");
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
+
+				//Change user PlayerType to player 1 if user is not already player 1
+				if (!WhoPlayer1.equals(currUser.getUsername())) {
+					WebSocket.send("SwitchToP1");
+				}
 			}
 		});
 
 
 
 		//Changes user's role in the lobby to player 2 if possible.
-		Player1Btn.setOnClickListener(new View.OnClickListener() {
+		Player2Btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("SwitchToP2");
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
+
+				//Change user PlayerType to player 2 if user is not already player 2
+				if (!WhoPlayer2.equals(currUser.getUsername())) {
+					WebSocket.send("SwitchToP2");
+				}
 			}
 		});
 
@@ -275,7 +429,15 @@ public class LobbyActivity extends AppCompatActivity {
 		SpectatorBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("SwitchToSpectate");
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
+
+				//Change user PlayerType to spectator if user is not already spectator
+				if (!PlayerOrSpectator.equals("Spectator")) {
+					WebSocket.send("SwitchToSpectate"); //TODO check that message should not be "SwitchToSpectator" instead of "SwitchToSpectate"
+				}
 			}
 		});
 
@@ -285,11 +447,18 @@ public class LobbyActivity extends AppCompatActivity {
 		NotReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("UnReady");
-				UserReady = false;
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
 
-				//If user is not ready, enable leaving the lobby.
-				enableLeaveLobby();
+				//Change user's ready status to unready if user is not already "not ready".
+				if (UserReady) {
+					WebSocket.send("UnReady");
+
+					//If user is not ready, enable leaving the lobby.
+					enableLeaveLobby();
+				}
 			}
 		});
 
@@ -299,12 +468,18 @@ public class LobbyActivity extends AppCompatActivity {
 		ReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("Ready");
-				UserReady = true;
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
 
-				//If user is ready, disable leaving the lobby.
-				disableLeaveLobby();
+				//Change user's ready status to ready if user is not already "ready".
+				if (UserReady) {
+					WebSocket.send("Ready");
 
+					//If user is ready, disable leaving the lobby.
+					disableLeaveLobby();
+				}
 			}
 		});
 
@@ -314,6 +489,11 @@ public class LobbyActivity extends AppCompatActivity {
 		StartGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//Clears latest error messages
+				LobbyError.setText("");
+				LeaveLobbyError.setText("");
+				LobbyEvent.setText("");
+
 				WebSocket.send("Start " + GameMode);
 			}
 		});
@@ -392,11 +572,20 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+
 				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_exitlobby_layout, null, false);
 				Button LobbyToMenuBtn = (Button) inflatedLayout.findViewById(R.id.LobbyToMenuBtn);
 				TextView ExitLobbyText = (TextView) inflatedLayout.findViewById(R.id.ExitLobbyText);
 
-				ExitLobbyText.setText(message);
+				//If host left, display host left message
+				if (message.equals("HostLeft")) {
+					ExitLobbyText.setText("The host has left the lobby.");
+				} else
+
+				//If kicked, display kicked message
+				if (message.equals("Kicked")) {
+					ExitLobbyText.setText("You have been kicked.");
+				}
 
 
 				LobbyToMenuBtn.setOnClickListener(new View.OnClickListener() {
