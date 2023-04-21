@@ -253,6 +253,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A1";
                     movePiece();
                     tracker = 0;
                 }
@@ -266,6 +267,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A2";
                     movePiece();
                     tracker = 0;
                 }
@@ -284,8 +286,8 @@ public class ChessActivity extends AppCompatActivity {
                 } else if(tracker > 1){
                     //TODO
                     // Update tile with piece received from backend
-                    //A3.setImageResource(R.drawable.white_pawn);
                     setTransparent();
+                    tile = "A3";
                     movePiece();
                     tracker = 0;
                 }
@@ -299,6 +301,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A4";
                     movePiece();
                     tracker = 0;
                 }
@@ -312,6 +315,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A5";
                     movePiece();
                     tracker = 0;
                 }
@@ -325,6 +329,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A6";
                     movePiece();
                     tracker = 0;
                 }
@@ -338,6 +343,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A7";
                     movePiece();
                     tracker = 0;
                 }
@@ -351,6 +357,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "A8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "A8";
                     movePiece();
                     tracker = 0;
                 }
@@ -364,6 +371,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B1";
                     movePiece();
                     tracker = 0;
                 }
@@ -377,6 +385,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B2";
                     movePiece();
                     tracker = 0;
                 }
@@ -390,6 +399,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B3";
                     movePiece();
                     tracker = 0;
                 }
@@ -403,6 +413,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B4";
                     movePiece();
                     tracker = 0;
                 }
@@ -416,6 +427,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B5";
                     movePiece();
                     tracker = 0;
                 }
@@ -429,6 +441,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B6";
                     movePiece();
                     tracker = 0;
                 }
@@ -442,6 +455,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B7";
                     movePiece();
                     tracker = 0;
                 }
@@ -455,6 +469,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "B8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "B8";
                     movePiece();
                     tracker = 0;
                 }
@@ -468,6 +483,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C1";
                     movePiece();
                     tracker = 0;
                 }
@@ -481,6 +497,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C2";
                     movePiece();
                     tracker = 0;
                 }
@@ -494,6 +511,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C3";
                     movePiece();
                     tracker = 0;
                 }
@@ -507,6 +525,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C4";
                     movePiece();
                     tracker = 0;
                 }
@@ -520,6 +539,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C5";
                     movePiece();
                     tracker = 0;
                 }
@@ -533,6 +553,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C6";
                     movePiece();
                     tracker = 0;
                 }
@@ -546,6 +567,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C7";
                     movePiece();
                     tracker = 0;
                 }
@@ -559,6 +581,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "C8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "C8";
                     movePiece();
                     tracker = 0;
                 }
@@ -572,6 +595,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D1";
                     movePiece();
                     tracker = 0;
                 }
@@ -585,6 +609,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D2";
                     movePiece();
                     tracker = 0;
                 }
@@ -598,6 +623,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D3";
                     movePiece();
                     tracker = 0;
                 }
@@ -611,6 +637,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D4";
                     movePiece();
                     tracker = 0;
                 }
@@ -624,6 +651,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D5";
                     movePiece();
                     tracker = 0;
                 }
@@ -637,6 +665,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D6";
                     movePiece();
                     tracker = 0;
                 }
@@ -650,6 +679,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D7";
                     movePiece();
                     tracker = 0;
                 }
@@ -663,6 +693,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "D8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "D8";
                     movePiece();
                     tracker = 0;
                 }
@@ -676,6 +707,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E1";
                     movePiece();
                     tracker = 0;
                 }
@@ -689,6 +721,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E2";
                     movePiece();
                     tracker = 0;
                 }
@@ -702,6 +735,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E3";
                     movePiece();
                     tracker = 0;
                 }
@@ -715,6 +749,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E4";
                     movePiece();
                     tracker = 0;
                 }
@@ -728,6 +763,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E5";
                     movePiece();
                     tracker = 0;
                 }
@@ -741,6 +777,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E6";
                     movePiece();
                     tracker = 0;
                 }
@@ -754,6 +791,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E7";
                     movePiece();
                     tracker = 0;
                 }
@@ -767,6 +805,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "E8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "E8";
                     movePiece();
                     tracker = 0;
                 }
@@ -780,6 +819,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F1";
                     movePiece();
                     tracker = 0;
                 }
@@ -793,6 +833,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F2";
                     movePiece();
                     tracker = 0;
                 }
@@ -806,6 +847,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F3";
                     movePiece();
                     tracker = 0;
                 }
@@ -819,6 +861,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F4";
                     movePiece();
                     tracker = 0;
                 }
@@ -832,6 +875,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F5";
                     movePiece();
                     tracker = 0;
                 }
@@ -845,6 +889,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F6";
                     movePiece();
                     tracker = 0;
                 }
@@ -858,6 +903,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F7";
                     movePiece();
                     tracker = 0;
                 }
@@ -871,6 +917,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "F8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "F8";
                     movePiece();
                     tracker = 0;
                 }
@@ -884,6 +931,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G1";
                     movePiece();
                     tracker = 0;
                 }
@@ -897,6 +945,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G2";
                     movePiece();
                     tracker = 0;
                 }
@@ -910,6 +959,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G3";
                     movePiece();
                     tracker = 0;
                 }
@@ -923,6 +973,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G4";
                     movePiece();
                     tracker = 0;
                 }
@@ -936,6 +987,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G5";
                     movePiece();
                     tracker = 0;
                 }
@@ -949,6 +1001,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G6";
                     movePiece();
                     tracker = 0;
                 }
@@ -962,6 +1015,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G7";
                     movePiece();
                     tracker = 0;
                 }
@@ -975,6 +1029,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "G8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "G8";
                     movePiece();
                     tracker = 0;
                 }
@@ -988,6 +1043,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H1";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H1";
                     movePiece();
                     tracker = 0;
                 }
@@ -1001,6 +1057,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H2";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H2";
                     movePiece();
                     tracker = 0;
                 }
@@ -1014,6 +1071,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H3";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H3";
                     movePiece();
                     tracker = 0;
                 }
@@ -1027,6 +1085,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H4";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H4";
                     movePiece();
                     tracker = 0;
                 }
@@ -1040,6 +1099,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H5";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H5";
                     movePiece();
                     tracker = 0;
                 }
@@ -1053,6 +1113,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H6";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H6";
                     movePiece();
                     tracker = 0;
                 }
@@ -1066,6 +1127,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H7";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H7";
                     movePiece();
                     tracker = 0;
                 }
@@ -1079,6 +1141,7 @@ public class ChessActivity extends AppCompatActivity {
                     tile = "H8";
                 } else if(tracker > 1){
                     setTransparent();
+                    tile = "H8";
                     movePiece();
                     tracker = 0;
                 }
