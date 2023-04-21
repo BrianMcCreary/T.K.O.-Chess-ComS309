@@ -1037,7 +1037,10 @@ public class ChessActivity extends AppCompatActivity {
 
     }
 
-    public void enableButtons(){
+    /*
+     * Enables buttons for the user
+     */
+    public void enableButtons() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -1117,6 +1120,9 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     * Disables buttons for the user
+     */
     public void disableButtons(){
         runOnUiThread(new Runnable() {
             @Override
@@ -1197,6 +1203,9 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     * This method sets the previous tile clicked become transparent
+     */
     public void setTransparent(){
 
         if(tile.equals("A1")){
