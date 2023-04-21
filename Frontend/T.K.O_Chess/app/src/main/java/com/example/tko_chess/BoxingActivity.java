@@ -81,6 +81,8 @@ public class BoxingActivity extends AppCompatActivity {
 
     //String declarations
     String SelectedMove = "";
+    String GameMode;
+    String UserRole;
 
     //Get access to currently logged in user info.
     SingletonUser currUser = SingletonUser.getInstance();
@@ -92,6 +94,8 @@ public class BoxingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
+
+
 
         //ImageView initializations
         Player1Block = findViewById(R.id.Player1BlockImg);
@@ -132,6 +136,9 @@ public class BoxingActivity extends AppCompatActivity {
         GameOverLayout = findViewById(R.id.GameOverLayout);
 
         //String initializations
+        GameMode = getIntent().getExtras().getString("Gamemode");
+        UserRole = getIntent().getExtras().getString("UserRole");
+
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
