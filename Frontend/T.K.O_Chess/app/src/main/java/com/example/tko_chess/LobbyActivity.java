@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -57,6 +59,10 @@ public class LobbyActivity extends AppCompatActivity {
 
 	//LinearLayout Declarations
 	LinearLayout LobbyOverlay;
+	LinearLayout LobbyMembersLayout;
+
+	//JSONArray Declarations
+	JSONArray LobbyMembers;
 
 	//User ready tracker
 	boolean UserReady = false;
@@ -132,7 +138,8 @@ public class LobbyActivity extends AppCompatActivity {
 						//A new user has joined the lobby and been assigned Spectator.
 						case "Spectator":
 							//TODO
-							displayLobby();
+							getLobbyMembers();
+							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -429,13 +436,13 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 
-	//Displays the lobby's current members and related info.
-	private void displayLobby() {
+	//Gets array of all members in the lobby and their information
+	private void getLobbyMembers() {
 		RequestQueue queue = Volley.newRequestQueue(LobbyActivity.this);
-		JsonArrayRequest lobbyMembersReq	 = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
+		JsonArrayRequest lobbyMembersReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
 			@Override
 			public void onResponse(JSONArray response) {
-				//TODO
+				LobbyMembers = response;
 			}
 		}, new Response.ErrorListener() {
 			@Override
@@ -446,5 +453,88 @@ public class LobbyActivity extends AppCompatActivity {
 
 		//Send the request we created
 		queue.add(lobbyMembersReq);
+	}
+
+
+
+	//Displays the lobby's current members and related info.
+	private void displayLobbyMembers() {
+		//TODO May need to put this code within a runOnUiThread()?
+		LobbyMembersLayout.removeAllViews();
+		LobbyMembersLayout = findViewById(R.id.LobbyLinearLayout);
+
+		for (int i = 0; i < LobbyMembers.length(); i++) {
+			//Get lobby member's username, player type, and ready status (for spectators, ready status default is NotReady)
+			String[] memberInfo;
+			try {
+				memberInfo = LobbyMembers.get(i).toString().split(" ");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+
+			//Display members in lobby for host (with kick button)
+			if (HostOrJoin.equals("host")) {
+				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
+				TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberNameTextView);
+				ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.ReadyStatusImageView);
+				Button KickMemberBtn = (Button) inflatedLayout.findViewById(R.id.KickMemberBtn);
+
+				//Display member's username
+				MemberNameText.setText(memberInfo[1]);
+
+				//Display member as spectator
+				if (memberInfo[2].equals("Spectator")) {
+					MemberReadyStatus.setImageResource(R.drawable.spectator);
+				} else
+
+				//Display member's ready status if they are a player
+				if (memberInfo[2].equals("Player1") || memberInfo[2].equals("Player2")) {
+					if (memberInfo[3].equals("Ready")) {
+						MemberReadyStatus.setImageResource(R.drawable.readystatus);
+					} else if (memberInfo[3].equals("NotReady")) {
+						MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+					}
+				}
+
+				//Kicks user from lobby
+				KickMemberBtn.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						WebSocket.send("Kick " + memberInfo[1]);
+					}
+				});
+
+				//Add's member object to screen
+				LobbyMembersLayout.addView(inflatedLayout);
+
+			} else
+
+			//Display members in lobby for member (without kick button)
+			if (HostOrJoin.equals("join")) {
+				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_member_layout, null, false);
+				TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberTextView);
+				ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.PlayerStatusImageView);
+
+				//Display member's username
+				MemberNameText.setText(memberInfo[1]);
+
+				//Display member as spectator
+				if (memberInfo[2].equals("Spectator")) {
+					MemberReadyStatus.setImageResource(R.drawable.spectator);
+				} else
+
+					//Display member's ready status if they are a player
+					if (memberInfo[2].equals("Player1") || memberInfo[2].equals("Player2")) {
+						if (memberInfo[3].equals("Ready")) {
+							MemberReadyStatus.setImageResource(R.drawable.readystatus);
+						} else if (memberInfo[3].equals("NotReady")) {
+							MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+						}
+					}
+
+				//Add's member object to screen
+				LobbyMembersLayout.addView(inflatedLayout);
+			}
+		}
 	}
 }

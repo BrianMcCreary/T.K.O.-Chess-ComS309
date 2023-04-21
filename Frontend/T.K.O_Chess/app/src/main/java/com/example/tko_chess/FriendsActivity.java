@@ -203,8 +203,6 @@ public class FriendsActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
-            FriendsListLayout.addView(inflatedLayout);
-
             //Accept friend button
             acceptFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -227,6 +225,8 @@ public class FriendsActivity extends AppCompatActivity {
                     denyFriendReq();
                 }
             });
+
+            FriendsListLayout.addView(inflatedLayout);
         }
         //Tracks that we are currently on the pending friends requests screen
         DisplayTracker = 2;
