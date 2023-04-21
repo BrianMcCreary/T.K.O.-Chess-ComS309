@@ -42,8 +42,9 @@ public class Lobby {
      */
     public Lobby(String owner) {
         spectators = new ArrayList<String>();
+        spectators.add(owner);
         this.owner = owner;
-        player1 = owner;
+        player1 = null;
         player2 = null;
         userCount = 1;
         player1Ready = false;
