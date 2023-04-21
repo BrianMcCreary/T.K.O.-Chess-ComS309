@@ -133,11 +133,9 @@ public class LobbySocket {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
                 if (messages[1].equals("Boxing")) {
+                    sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     BoxingGame bg = new BoxingGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     boxingGameRepository.save(bg);
-//                    sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
-                    sendSpectatorsMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
-                    sendPlayersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     lobbyRepository.delete(l);
                 } else if (messages[1].equals("Chess")) {
 
