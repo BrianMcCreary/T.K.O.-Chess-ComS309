@@ -103,6 +103,7 @@ public class ChessActivity extends AppCompatActivity {
     //Image piece;
 
     String[] possibleMoves = null;
+    String tile = "";
     int tracker = 0;
 
     @Override
@@ -251,10 +252,11 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tracker += 1;
-                if((tracker == 1) && possibleMoves != null){
-
+                if(tracker == 1){
+                    tile = "A1";
                 } else if(tracker > 1){
-
+                    setTransparent();
+                    tracker = 0;
                 }
             }
         });
@@ -262,11 +264,10 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tracker += 1;
-                if((tracker == 1)){
-
-
+                if(tracker == 1){
+                    tile = "A2";
                 } else if(tracker > 1){
-
+                    setTransparent();
                     tracker = 0;
                 }
             }
@@ -280,11 +281,12 @@ public class ChessActivity extends AppCompatActivity {
                     // Send something to the backend telling them what button was pressed
                     // store the name of the piece
                     // show available moves by setting the background to a shade of green
-                    //A3.setImageResource(R.drawable.transparent);
+                    tile = "A3";
                 } else if(tracker > 1){
                     //TODO
                     // Update tile with piece received from backend
                     //A3.setImageResource(R.drawable.white_pawn);
+                    setTransparent();
                     tracker = 0;
                 }
             }
@@ -293,11 +295,10 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tracker += 1;
-                if((tracker == 1)){
-                    piece = A4.getDrawable();
-                    A4.setImageResource(R.drawable.transparent);
+                if(tracker == 1){
+                    tile = "A4";
                 } else if(tracker > 1){
-                    A4.setBackground(piece);
+                    setTransparent();
                     tracker = 0;
                 }
             }
@@ -305,364 +306,725 @@ public class ChessActivity extends AppCompatActivity {
         A5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "A5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         A6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "A6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         A7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "A7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         A8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "A8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         B8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "B8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         C8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "C8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         D8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "D8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         E8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "E8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         F8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "F8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         G8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "G8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H1";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H2";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H3";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H4";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H5";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H6";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H7";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
         H8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                tracker += 1;
+                if(tracker == 1){
+                    tile = "H8";
+                } else if(tracker > 1){
+                    setTransparent();
+                    tracker = 0;
+                }
             }
         });
     }
+
     public void updateSquare(){
 
     }
@@ -833,5 +1195,208 @@ public class ChessActivity extends AppCompatActivity {
                 H8.setClickable(false);
             }
         });
+    }
+
+    public void setTransparent(){
+
+        if(tile.equals("A1")){
+            A1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A2")){
+            A2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A3")){
+            A3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A4")){
+            A4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A5")){
+            A5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A6")){
+            A6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A7")){
+            A7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("A8")){
+            A8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("B1")){
+            B1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B2")){
+            B2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B3")){
+            B3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B4")){
+            B4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B5")){
+            B5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B6")){
+            B6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B7")){
+            B7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("B8")){
+            B8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("C1")){
+            C1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C2")){
+            C2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C3")){
+            C3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C4")){
+            C4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C5")){
+            C5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C6")){
+            C6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C7")){
+            C7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("C8")){
+            C8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("D1")){
+            D1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D2")){
+            D2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D3")){
+            D3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D4")){
+            D4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D5")){
+            D5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D6")){
+            D6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D7")){
+            D7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("D8")){
+            D8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("E1")){
+            E1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E2")){
+            E2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E3")){
+            E3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E4")){
+            E4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E5")){
+            E5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E6")){
+            E6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E7")){
+            E7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("E8")){
+            E8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("F1")){
+            F1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F2")){
+            F2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F3")){
+            F3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F4")){
+            F4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F5")){
+            F5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F6")){
+            F6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F7")){
+            F7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("F8")){
+            F8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("G1")){
+            G1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G2")){
+            G2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G3")){
+            G3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G4")){
+            G4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G5")){
+            G5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G6")){
+            G6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G7")){
+            G7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("G8")){
+            G8.setImageResource(R.drawable.transparent);
+        }
+
+        if(tile.equals("H1")){
+            H1.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H2")){
+            H2.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H3")){
+            H3.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H4")){
+            H4.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H5")){
+            H5.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H6")){
+            H6.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H7")){
+            H7.setImageResource(R.drawable.transparent);
+        }
+        if(tile.equals("H8")){
+            H8.setImageResource(R.drawable.transparent);
+        }
     }
 }
