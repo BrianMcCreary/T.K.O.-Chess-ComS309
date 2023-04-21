@@ -135,8 +135,39 @@ public class LobbyActivity extends AppCompatActivity {
 					String[] strings = message.split(" ");
 
 					switch (strings[0]) {
-						//A new user has joined the lobby and been assigned Spectator.
-						case "Spectator":
+						//Starts the game for everyone
+						case "StartGame":
+							//TODO. Don't forget to close the websocket
+							//Take user to chess game
+							if (GameMode.equals("Chess")) {
+								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);
+
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+								intent.putExtra("UserRole", PlayerOrSpectator);
+
+								startActivity(intent);
+							} else
+
+							//Take user to chess boxing game
+							if (GameMode.equals("ChessBoxing")) {
+
+							} else
+
+							//Take user to boxing game
+							if (GameMode.equals("Boxing")) {
+
+							}
+
+							//Exit switch statement
+							break;
+
+
+						//Update the screen display to reflect the changes made to the lobby.
+						case "Ready": //Change Ready status variable
+						case "UnReady": //Change Ready status variable
+						case "Spectator": //Change player or spectator  variable
+						case "Switch": //Change player or spectator  variable
+						case "PlayerLeft": //Update display
 							//TODO
 							getLobbyMembers();
 							displayLobbyMembers();
@@ -145,8 +176,7 @@ public class LobbyActivity extends AppCompatActivity {
 							break;
 
 
-
-						//Closes websocket, hides all buttons and displays lobby exit overlay
+						//Closes websocket and displays lobby exit overlay
 						case "Kicked":
 						case "HostLeft":
 							WebSocket.close();
@@ -245,7 +275,7 @@ public class LobbyActivity extends AppCompatActivity {
 		SpectatorBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				WebSocket.send("SwitchToSpectator");
+				WebSocket.send("SwitchToSpectate");
 			}
 		});
 
@@ -285,7 +315,6 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				WebSocket.send("Start " + GameMode);
-				//TODO Implement moving host to correct game mode screen. Also, close the websocket
 			}
 		});
 
@@ -504,7 +533,7 @@ public class LobbyActivity extends AppCompatActivity {
 					}
 				});
 
-				//Add's member object to screen
+				//Adds member object to screen
 				LobbyMembersLayout.addView(inflatedLayout);
 
 			} else
@@ -532,7 +561,7 @@ public class LobbyActivity extends AppCompatActivity {
 						}
 					}
 
-				//Add's member object to screen
+				//Adds member object to screen
 				LobbyMembersLayout.addView(inflatedLayout);
 			}
 		}

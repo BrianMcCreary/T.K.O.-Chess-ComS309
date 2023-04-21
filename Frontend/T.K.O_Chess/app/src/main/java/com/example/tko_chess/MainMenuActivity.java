@@ -30,24 +30,6 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-
-/*      //Delete this or comment out. Only for testing purposes when server is not up.
-        JSONObject user = new JSONObject();
-        try {
-            user.put("username", "testUsername");
-            user.put("password", "testPassword");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            SingletonUser.login(user);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        //Delete this or comment out. Only for testing purposes when server is not up.*/
-
         tkoChess = findViewById(R.id.MenuToTKOChessBtn);
 
         tkoChess.setOnClickListener(new View.OnClickListener() {
