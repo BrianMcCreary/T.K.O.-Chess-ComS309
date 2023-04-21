@@ -3,6 +3,7 @@ package TotalKnockoutChess.Boxing;
 import TotalKnockoutChess.Users.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class BoxingGame {
@@ -35,9 +36,13 @@ public class BoxingGame {
     @Column(columnDefinition = "TEXT")
     private String p2Move;
 
-    public BoxingGame(String player1, String player2) {
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> spectators;
+
+    public BoxingGame(String player1, String player2, List<String> spectators) {
         this.player1 = player1;
         this.player2 = player2;
+        this.spectators = spectators;
         p1Lives = 3;
         p2Lives = 3;
         p1Move = "";
@@ -111,6 +116,22 @@ public class BoxingGame {
 
     public String getP2Move() {
         return p2Move;
+    }
+
+    public void addToSpectators(String username) {
+        spectators.add(username);
+    }
+
+    public void removeFromSpectators(String username) {
+        spectators.remove(username);
+    }
+
+    public List<String> getSpectators() {
+        return spectators;
+    }
+
+    public boolean contains(String username) {
+        return player1.equals(username) || player2.equals(username) || spectators.contains(username);
     }
 
     //Method used to get the username of the round winner
