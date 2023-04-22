@@ -160,7 +160,6 @@ public class LobbyActivity extends AppCompatActivity {
 							LobbyCode = strings[1];
 							LobbyCodeText.setText(LobbyCode);
 
-
 							//Exit switch statement
 							break;
 
