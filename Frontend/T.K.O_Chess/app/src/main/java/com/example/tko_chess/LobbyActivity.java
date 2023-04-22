@@ -175,6 +175,8 @@ public class LobbyActivity extends AppCompatActivity {
 								//Sending extra info about type of game and user's role in that game (Spectator or player)
 								intent.putExtra("UserRole", PlayerOrSpectator);
 								intent.putExtra("Gamemode", GameMode);
+								intent.putExtra("Player1", WhoPlayer1);
+								intent.putExtra("Player2", WhoPlayer2);
 
 								startActivity(intent);
 							} else
