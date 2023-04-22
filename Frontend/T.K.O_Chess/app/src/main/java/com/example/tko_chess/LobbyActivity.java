@@ -53,22 +53,19 @@ public class LobbyActivity extends AppCompatActivity {
 	Button GameSettingsBtn;
 
 	//String Declarations
-	String GameMode;
-	String LobbyCode;
-	String HostOrJoin;
+	String GameMode = "";
+	String LobbyCode = "";
+	String HostOrJoin = "";
 	String PlayerOrSpectator = "Spectator";
-	String WhoPlayer1;
-	String WhoPlayer2;
-	String lobbyMessage;
+	String WhoPlayer1 = "";
+	String WhoPlayer2 = "";
+	String lobbyMessage = "";
 
-	String URLConcatenation;
+	String URLConcatenation = "";
 
 	//LinearLayout Declarations
 	LinearLayout LobbyOverlay;
 	LinearLayout LobbyMembersLayout;
-
-	//JSONArray Declarations
-	JSONArray LobbyMembers;
 
 	//User ready tracker
 	boolean UserReady = false;
@@ -158,7 +155,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
+							//displayLobbyMembers();
 
 
 							//Exit switch statement
@@ -167,7 +164,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Starts the game for everyone
 						case "StartGame":
-							//TODO. Don't forget to close the websocket
+							//Disconnects from lobby
+							WebSocket.close();
+
 							//Take user to chess game
 							if (GameMode.equals("Chess")) {
 								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);
@@ -201,27 +200,20 @@ public class LobbyActivity extends AppCompatActivity {
 								startActivity(intent);
 							}
 
-							//Disconnects from lobby
-							WebSocket.close();
-
 							//Exit switch statement
 							break;
 
 
 						//Updates screen with new ready status of user specified by strings[1]
 						case "Ready":
-							//Tell users who readied up
-							lobbyMessage = strings[1] + "has readied-up.";
-							LobbyEvent.setText(lobbyMessage);
+							//Updates client side info
+							userReadied(strings);
 
-							//If user who changed ready status was currUser, store their new ready status.
-							if (strings[1].equals(currUser.getUsername())) {
-								UserReady = true;
-							}
+							//If user is ready, disable leaving the lobby.
+							disableLeaveLobby();
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -229,18 +221,14 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Updates screen with new ready status of the specified user (strings[1]).
 						case "UnReady":
-							//Tell users who unreadied
-							lobbyMessage = strings[1] + "has un-readied.";
-							LobbyEvent.setText(lobbyMessage);
+							//Updates client side info
+							userUnReadied(strings);
 
-							//If user who changed ready status was currUser, store their new ready status.
-							if (strings[1].equals(currUser.getUsername())) {
-								UserReady = false;
-							}
+							//If user is not ready, enable leaving the lobby.
+							enableLeaveLobby();
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -248,38 +236,11 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Updates screen with new PlayerType of the specified user (strings[1]).
 						case "Switch":
-							//Tell users who switched to what
-							lobbyMessage = strings[3] + "(" + strings[1] + ")" + "switched to " + strings[2] + ".";
-							LobbyEvent.setText(lobbyMessage);
-
-							//If user who changed PlayerType was currUser, store their new PlayerType.
-							if (strings[3].equals(currUser.getUsername())) {
-								PlayerOrSpectator = strings[2];
-							}
-
-							//If player 1 is the user changing their PlayerType, then update WhoPlayer1
-							if (strings[3].equals(WhoPlayer1)) {
-								WhoPlayer1 = "";
-							}
-
-							//If player 2 is the user changing their PlayerType, then update WhoPlayer2
-							if (strings[3].equals(WhoPlayer2)) {
-								WhoPlayer2 = "";
-							}
-
-							//If user is changing to player 1, update WhoPlayer1
-							if (strings[2].equals("Player1")) {
-								WhoPlayer1 = strings[3];
-							}
-
-							//If user is changing to player 2, update WhoPlayer2
-							if (strings[2].equals("Player2")) {
-								WhoPlayer2 = strings[3];
-							}
+							//Updates client side info
+							switchPlayerType(strings);
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -287,23 +248,11 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Updates screen by removing the user who left.
 						case "PlayerLeft":
-							//Tell users who left
-							lobbyMessage = strings[2] + "(" + strings[1] + ")" + "has left.";
-							LobbyEvent.setText(lobbyMessage);
-
-							//Updates who is player 1
-							if (strings[1].equals("Player1")) {
-								WhoPlayer1 = "";
-							} else
-
-								//Updates who is player 2
-								if (strings[1].equals("Player2")) {
-									WhoPlayer2 = "";
-								}
+							//Updates client side info
+							playerLeftLobby(strings);
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -311,13 +260,11 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Updates screen by adding the new user that joined. User will be spectator by default.
 						case "Spectator":
-							//Tell users who joined
-							lobbyMessage = strings[1] + "has joined.";
-							LobbyEvent.setText(lobbyMessage);
+							//Tells users spectator joined
+							spectatorJoined(strings);
 
 							//Updates lobby display
 							getLobbyMembers();
-							displayLobbyMembers();
 
 							//Exit switch statement
 							break;
@@ -340,9 +287,8 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Enables the start game button
 						case "CanStart":
-							//Tell host both players are ready
-							lobbyMessage = "Both players ready.";
-							LobbyEvent.setText(lobbyMessage);
+							//Tells host they can start the game
+							hostCanStart(strings);
 
 							enableStartGame();
 
@@ -475,9 +421,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user's ready status to unready if user is not already "not ready".
 				if (UserReady) {
 					WebSocket.send("UnReady");
-
-					//If user is not ready, enable leaving the lobby.
-					enableLeaveLobby();
 				}
 			}
 		});
@@ -496,9 +439,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user's ready status to ready if user is not already "ready".
 				if (UserReady) {
 					WebSocket.send("Ready");
-
-					//If user is ready, disable leaving the lobby.
-					disableLeaveLobby();
 				}
 			}
 		});
@@ -663,7 +603,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	//Disables leave lobby button
-	private  void enableLeaveLobby() {
+	private void enableLeaveLobby() {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -674,137 +614,230 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 
-	//Gets array of all members in the lobby and their information
-	private void getLobbyMembers() {
-		RequestQueue queue = Volley.newRequestQueue(LobbyActivity.this);
-		JsonArrayRequest lobbyMembersReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
+	//Switches client side data for role that was switched
+	private void switchPlayerType(String[] response) {
+		runOnUiThread(new Runnable() {
 			@Override
-			public void onResponse(JSONArray response) {
-				response.length();
-				LobbyMembers = response;
+			public void run() {
+				//Tell users who switched to what
+				lobbyMessage = response[3] + " (" + response[1] + ")" + " switched to " + response[2] + ".";
+				LobbyEvent.setText(lobbyMessage);
 
-				/*int i = 0;
-				while (true) {
-					try {
-						if (response.get(i) != null) {
-							LobbyMembers.put(response.get(i));
-							i++;
-						} else {
-							break;
-						}
-					} catch (JSONException e) {
-						throw new RuntimeException(e);
-					}
-				}*/
-			}
-		}, new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				error.printStackTrace();
-				System.out.println("getLobbyMembers() failed.");
+				//If user who changed PlayerType was currUser, store their new PlayerType.
+				if (response[3].equals(currUser.getUsername())) {
+					PlayerOrSpectator = response[2];
+				}
+
+				//If player 1 is the user changing their PlayerType, then update WhoPlayer1
+				if (response[3].equals(WhoPlayer1)) {
+					WhoPlayer1 = "";
+				}
+
+				//If player 2 is the user changing their PlayerType, then update WhoPlayer2
+				if (response[3].equals(WhoPlayer2)) {
+					WhoPlayer2 = "";
+				}
+
+				//If user is changing to player 1, update WhoPlayer1
+				if (response[2].equals("Player1")) {
+					WhoPlayer1 = response[3];
+				}
+
+				//If user is changing to player 2, update WhoPlayer2
+				if (response[2].equals("Player2")) {
+					WhoPlayer2 = response[3];
+				}
 			}
 		});
-
-		//Send the request we created
-		queue.add(lobbyMembersReq);
 	}
 
 
 
-	//Displays the lobby's current members and related info.
-	private void displayLobbyMembers() {
+	//Updates client info about user ready status
+	private void userUnReadied(String[] response) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				LobbyMembersLayout.removeAllViews();
-				LobbyMembersLayout = findViewById(R.id.LobbyLinearLayout);
+				//Tell users who unreadied
+				lobbyMessage = response[1] + " has un-readied.";
+				LobbyEvent.setText(lobbyMessage);
 
-				for (int i = 0; i < LobbyMembers.length(); i++) {
-					//Get lobby member's username, player type, and ready status (for spectators, ready status default is NotReady)
-					String[] memberInfo;
-					try {
-						memberInfo = LobbyMembers.get(i).toString().split(" ");
-					} catch (JSONException e) {
-						throw new RuntimeException(e);
-					}
+				//If user who changed ready status was currUser, store their new ready status.
+				if (response[1].equals(currUser.getUsername())) {
+					UserReady = false;
+				}
+			}
+		});
+	}
 
-					//Display members in lobby for host (with kick button)
-					if (HostOrJoin.equals("host")) {
-						View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
-						TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberNameTextView);
-						ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.ReadyStatusImageView);
-						Button KickMemberBtn = (Button) inflatedLayout.findViewById(R.id.KickMemberBtn);
 
-						//Display member's username
-						MemberNameText.setText(memberInfo[1]);
 
-						//Display member as spectator
-						if (memberInfo[2].equals("Spectator")) {
-							MemberReadyStatus.setImageResource(R.drawable.spectator);
-						} else
+	//Updates client info about user ready status
+	private void userReadied(String[] response) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Tell users who readied up
+				lobbyMessage = response[1] + " has readied-up.";
+				LobbyEvent.setText(lobbyMessage);
 
-							//Display member's ready status if they are a player
-							if (memberInfo[2].equals("Player1") || memberInfo[2].equals("Player2")) {
-								if (memberInfo[3].equals("Ready")) {
-									MemberReadyStatus.setImageResource(R.drawable.readystatus);
-								} else if (memberInfo[3].equals("NotReady")) {
-									MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
-								}
+				//If user who changed ready status was currUser, store their new ready status.
+				if (response[1].equals(currUser.getUsername())) {
+					UserReady = true;
+				}
+			}
+		});
+	}
+
+
+
+	//Updates client info about players
+	private void playerLeftLobby(String[] response) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Tell users who left
+				lobbyMessage = response[2] + " (" + response[1] + ")" + " has left.";
+				LobbyEvent.setText(lobbyMessage);
+
+				//Updates who is player 1
+				if (response[1].equals("Player1")) {
+					WhoPlayer1 = "";
+				} else
+
+				//Updates who is player 2
+				if (response[1].equals("Player2")) {
+					WhoPlayer2 = "";
+				}
+			}
+		});
+	}
+
+
+
+	//Updates client that spectator has joined
+	private void spectatorJoined(String[] response) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Tell users who joined
+				lobbyMessage = response[1] + " has joined.";
+				LobbyEvent.setText(lobbyMessage);
+			}
+		});
+	}
+
+
+
+	//Updates host that they can start the game
+	private void hostCanStart(String[] response) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Tell host both players are ready
+				lobbyMessage = "Both players ready.";
+				LobbyEvent.setText(lobbyMessage);
+			}
+		});
+	}
+
+
+
+	//Gets array of all members in the lobby and their information
+	private void getLobbyMembers() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				RequestQueue queue = Volley.newRequestQueue(LobbyActivity.this);
+				JsonArrayRequest lobbyMembersReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
+					@Override
+					public void onResponse(JSONArray response) {
+						LobbyMembersLayout.removeAllViews();
+						LobbyMembersLayout = findViewById(R.id.LobbyLinearLayout);
+
+						for (int i = 0; i < response.length(); i++) {
+							//Get lobby member's username, player type, and ready status (for spectators, ready status default is NotReady)
+							String[] memberInfo;
+							try {
+								memberInfo = response.get(i).toString().split(" ");
+							} catch (JSONException e) {
+								throw new RuntimeException(e);
 							}
 
-						//Kicks user from lobby
-						KickMemberBtn.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View view) {
-								WebSocket.send("Kick " + memberInfo[1]);
-							}
-						});
+							//Display members in lobby for host (with kick button)
+							if (HostOrJoin.equals("host")) {
+								View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
+								TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberNameTextView);
+								ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.ReadyStatusImageView);
+								Button KickMemberBtn = (Button) inflatedLayout.findViewById(R.id.KickMemberBtn);
 
-						//Adds member object to screen
-						LobbyMembersLayout.addView(inflatedLayout);
+								//Display member's username
+								MemberNameText.setText(memberInfo[0]);
 
-					} else
-
-						//Display members in lobby for member (without kick button)
-						if (HostOrJoin.equals("join")) {
-							View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_member_layout, null, false);
-							TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberTextView);
-							ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.PlayerStatusImageView);
-
-							//Display member's username
-							MemberNameText.setText(memberInfo[1]);
-
-							//Display member as spectator
-							if (memberInfo[2].equals("Spectator")) {
-								MemberReadyStatus.setImageResource(R.drawable.spectator);
-							} else
+								//Display member as spectator
+								if (memberInfo[1].equals("Spectator")) {
+									MemberReadyStatus.setImageResource(R.drawable.spectator);
+								} else
 
 								//Display member's ready status if they are a player
-								if (memberInfo[2].equals("Player1") || memberInfo[2].equals("Player2")) {
-									if (memberInfo[3].equals("Ready")) {
+								if (memberInfo[1].equals("Player1") || memberInfo[1].equals("Player2")) {
+									if (memberInfo[2].equals("Ready")) {
 										MemberReadyStatus.setImageResource(R.drawable.readystatus);
-									} else if (memberInfo[3].equals("NotReady")) {
+									} else if (memberInfo[2].equals("NotReady")) {
 										MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
 									}
 								}
 
-							//Adds member object to screen
-							LobbyMembersLayout.addView(inflatedLayout);
-						}
-				}
+								//Kicks user from lobby
+								KickMemberBtn.setOnClickListener(new View.OnClickListener() {
+									@Override
+									public void onClick(View view) {
+										WebSocket.send("Kick " + memberInfo[1]);
+									}
+								});
 
-				//Clear LobbyMembers for next time getLobbyMembers() is called.
-				while (true) {
-					try {
-						if (LobbyMembers.get(0) != null) {
-							LobbyMembers.remove(0);
-						} else {
-							break;
+								//Adds member object to screen
+								LobbyMembersLayout.addView(inflatedLayout);
+							} else
+
+							//Display members in lobby for member (without kick button)
+							if (HostOrJoin.equals("join")) {
+								View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_member_layout, null, false);
+								TextView MemberNameText = (TextView) inflatedLayout.findViewById(R.id.MemberTextView);
+								ImageView MemberReadyStatus = (ImageView) inflatedLayout.findViewById(R.id.PlayerStatusImageView);
+
+								//Display member's username
+								MemberNameText.setText(memberInfo[0]);
+
+								//Display member as spectator
+								if (memberInfo[1].equals("Spectator")) {
+									MemberReadyStatus.setImageResource(R.drawable.spectator);
+								} else
+
+								//Display member's ready status if they are a player
+								if (memberInfo[1].equals("Player1") || memberInfo[1].equals("Player2")) {
+									if (memberInfo[2].equals("Ready")) {
+										MemberReadyStatus.setImageResource(R.drawable.readystatus);
+									} else if (memberInfo[2].equals("NotReady")) {
+										MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+									}
+								}
+
+								//Adds member object to screen
+								LobbyMembersLayout.addView(inflatedLayout);
+							}
 						}
-					} catch (JSONException e) {
-						throw new RuntimeException(e);
 					}
-				}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						error.printStackTrace();
+						System.out.println("getLobbyMembers() failed.");
+					}
+				});
+
+				//Send the request we created
+				queue.add(lobbyMembersReq);
 			}
 		});
 	}
