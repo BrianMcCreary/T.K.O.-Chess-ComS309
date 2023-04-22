@@ -63,7 +63,7 @@ public class LobbySocket {
             lobby.setCode(lobby.generateLobbyCode(lobbyRepository.findAll()));
             lobbyRepository.save(lobby);
         }
-        else if (joinOrHost.equals("join")) {
+        else if (joinOrHost.equals("join")) {       //If joining a lobby, find lobby with the code and insert the user
             Lobby lobby = findLobbyWithCode(lobbyCode);
             if (lobby != null) {
                 lobby.addToSpectators(username);
@@ -83,6 +83,7 @@ public class LobbySocket {
         String username = sessionUsernameMap.get(session);
         String[] messages = message.split(" ");
 
+        //If the message received is "Ready", find which player the user is (Player1 or Player2), and set their ready status
         if (message.equals("Ready")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             boolean wasNotP1 = true;
@@ -107,6 +108,7 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //If the message is "UnReady", find which player the user is and clear their ready status
         else if (message.equals("UnReady")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
@@ -129,6 +131,7 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //If the message is "Start", start the correct type of game with the correct players and spectators
         else if (messages[0].equals("Start")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
@@ -144,6 +147,8 @@ public class LobbySocket {
                 }
             }
         }
+        //If the message is "SwitchToP1", find which type of user they are and switch them to
+        //Player1 if applicable, if they were Player2, make sure Player2 ready status is false
         else if (message.equals("SwitchToP1")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
@@ -171,6 +176,8 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //If the message is "SwitchToP2", find which type of user they are and switch them to
+        //Player2 if applicable, if they were Player1, make sure Player1 ready status is false
         else if (message.equals("SwitchToP2")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
@@ -197,6 +204,8 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //If the message is "SwitchToSpectate", find which type of player the user is and switch them
+        //to a spectator, make sure their Player number ready status is set to false
         else if (message.equals("SwitchToSpectate")) {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
@@ -235,6 +244,7 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //If the message is "Kick", use the appended username and send that user a message saying they were kicked
         else if (messages[0].equals("Kick")) {
             String usernameKicked = messages[1];
             usernameSessionMap.get(usernameKicked).getBasicRemote().sendText("Kicked");
@@ -245,12 +255,13 @@ public class LobbySocket {
     public void onClose(Session session) throws IOException {
         logger.info("Entered into close");
 
-        //Remove the session and username from the Maps
         String username = sessionUsernameMap.get(session);
-
         Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
 
         if (lobby != null) {
+            //Upon closure of the websocket connection, check if the user was the host, if they were, delete the lobby and
+            //tell everyone the host left. If the user was a player or spectator, remove them from the lobby and tell everyone
+            //else who left.
             if (lobby.getOwner().equals(username)) {
                 sendOtherUsersMessage(username, "HostLeft");
                 lobbyRepository.delete(lobby);
@@ -293,6 +304,7 @@ public class LobbySocket {
                 lobbyRepository.flush();
             }
         }
+        //Remove the session and username from the Maps
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
     }
@@ -346,6 +358,7 @@ public class LobbySocket {
         }
     }
 
+    //Helper method to send all users in the lobby a message
     private void sendAllUsersMessage(String username, String message) throws IOException {
         Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
         if (lobby != null) {
@@ -358,27 +371,6 @@ public class LobbySocket {
             List<String> spectators = lobby.getSpectators();
             for (String u : spectators) {
                 usernameSessionMap.get(u).getBasicRemote().sendText(message);
-            }
-        }
-    }
-
-    private void sendSpectatorsMessage(String username, String message) throws IOException {
-        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
-        if (lobby != null) {
-            for (String u : lobby.getSpectators()) {
-                usernameSessionMap.get(u).getBasicRemote().sendText(message);
-            }
-        }
-    }
-
-    private void sendPlayersMessage(String username, String message) throws IOException {
-        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
-        if (lobby != null) {
-            if (lobby.getPlayer1() != null) {
-                usernameSessionMap.get(lobby.getPlayer1()).getBasicRemote().sendText(message);
-            }
-            if (lobby.getPlayer2() != null) {
-                usernameSessionMap.get(lobby.getPlayer2()).getBasicRemote().sendText(message);
             }
         }
     }

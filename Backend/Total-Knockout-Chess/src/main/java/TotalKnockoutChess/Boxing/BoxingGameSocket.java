@@ -78,13 +78,13 @@ public class BoxingGameSocket {
                     bg.dockLife(bg.getPlayer2());
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundWin " + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundLoss " + bg.getP1Move());
-                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player1 " + bg.getP1Move() + " " + bg.getP2Move());
+                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player1 " + bg.getP1Move() + " Player2 " + bg.getP2Move());
                 }
                 else if (roundWinner.equals(bg.getPlayer2())) {
                     bg.dockLife(bg.getPlayer1());
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
-                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player2 " + bg.getP2Move() + " " + bg.getP1Move());
+                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player2 " + bg.getP2Move() + " Player1 " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());

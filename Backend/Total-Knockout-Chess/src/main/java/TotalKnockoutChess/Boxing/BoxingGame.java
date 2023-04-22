@@ -12,8 +12,6 @@ public class BoxingGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @OneToOne
-//    @JoinColumn(name = "player1")
     @Column(columnDefinition = "TEXT")
     private String player1;
 
@@ -24,8 +22,6 @@ public class BoxingGame {
     @Column(columnDefinition = "TEXT")
     private String p1Move;
 
-//    @OneToOne
-//    @JoinColumn(name = "player2")
     @Column(columnDefinition = "TEXT")
     private String player2;
 
@@ -36,6 +32,7 @@ public class BoxingGame {
     @Column(columnDefinition = "TEXT")
     private String p2Move;
 
+    //List of spectators in the game
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> spectators;
 
