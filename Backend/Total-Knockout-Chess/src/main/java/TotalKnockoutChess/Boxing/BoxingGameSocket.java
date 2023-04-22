@@ -138,6 +138,9 @@ public class BoxingGameSocket {
                 bg.removeFromSpectators(username);
                 boxingGameRepository.save(bg);
             }
+            else if (bg.getPlayer1().equals(username) || bg.getPlayer2().equals(username)) {
+                boxingGameRepository.delete(bg);
+            }
         }
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
