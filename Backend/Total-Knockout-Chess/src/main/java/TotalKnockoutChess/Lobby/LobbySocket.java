@@ -62,6 +62,7 @@ public class LobbySocket {
             Lobby lobby = new Lobby(username);
             lobby.setCode(lobby.generateLobbyCode(lobbyRepository.findAll()));
             lobbyRepository.save(lobby);
+            lobbyRepository.flush();
             usernameSessionMap.get(username).getBasicRemote().sendText("LobbyCode " + lobby.getCode().toString());
         }
         else if (joinOrHost.equals("join")) {       //If joining a lobby, find lobby with the code and insert the user
