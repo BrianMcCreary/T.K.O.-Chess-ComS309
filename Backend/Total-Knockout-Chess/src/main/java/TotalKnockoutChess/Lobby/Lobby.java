@@ -65,9 +65,6 @@ public class Lobby {
                     lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000;
                     changed = true;
                 }
-//                while (l.getCode().equals(lobbyCode)) {
-//                    lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999
-//                }
             }
             if (changed) {
                 changed = false;
@@ -188,30 +185,11 @@ public class Lobby {
     public boolean contains(String user){
 
         // Check if user is spectating
-//        for(String spectator : spectators) {
-//            if (spectator.equals(user)) {
-//                return true;
-//            }
-//        }
         if (spectators.contains(user)) {
                 return true;
         }
 
         // Check if both player objects are null (needed to not throw errors when calling .equals)
-//        if(player1 == null && player2 == null){
-//            return false;
-//        }
-//        else if(player1 == null){
-//            if(player2.equals(user)){
-//                return true;
-//            }
-//        }
-//        else if(player1.equals(user)){
-//            return true;
-//        }
-//        else if(player2.equals(user)){
-//            return true;
-//        }
         if (player1 != null) {
             if (player1.equals(user)) {
                 return true;
