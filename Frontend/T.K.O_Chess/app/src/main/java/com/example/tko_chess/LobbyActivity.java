@@ -138,10 +138,6 @@ public class LobbyActivity extends AppCompatActivity {
 				public void onOpen(ServerHandshake serverHandshake) {
 					Log.d("OPEN", "run() returned: " + "is connecting");
 					System.out.println("onOpen returned");
-
-					//Updates lobby display
-					getLobbyMembers();
-					displayLobbyMembers();
 				}
 
 				@Override
@@ -159,6 +155,10 @@ public class LobbyActivity extends AppCompatActivity {
 							//Display lobby code
 							LobbyCode = strings[1];
 							LobbyCodeText.setText(LobbyCode);
+
+							//Updates lobby display
+							getLobbyMembers();
+							displayLobbyMembers();
 
 
 							//Exit switch statement
@@ -680,7 +680,10 @@ public class LobbyActivity extends AppCompatActivity {
 		JsonArrayRequest lobbyMembersReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
 			@Override
 			public void onResponse(JSONArray response) {
-				int i = 0;
+				response.length();
+				LobbyMembers = response;
+
+				/*int i = 0;
 				while (true) {
 					try {
 						if (response.get(i) != null) {
@@ -692,12 +695,13 @@ public class LobbyActivity extends AppCompatActivity {
 					} catch (JSONException e) {
 						throw new RuntimeException(e);
 					}
-				}
+				}*/
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				error.printStackTrace();
+				System.out.println("getLobbyMembers() failed.");
 			}
 		});
 
