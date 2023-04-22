@@ -464,8 +464,6 @@ public class BoxingActivity extends AppCompatActivity {
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.boxing_menu_layout, null, false);
                 Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBoxingBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-                Button TestBoxingBtn = (Button) inflatedLayout.findViewById(R.id.TestBoxingBtn);
-                EditText BoxingTestText = (EditText) inflatedLayout.findViewById(R.id.BoxingTestText);
                 TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);
 
                 //Set leave game prompt depending on UserRole
@@ -501,32 +499,6 @@ public class BoxingActivity extends AppCompatActivity {
                         OptionsLayout.removeAllViews();
                     }
                 });
-
-                //TODO ////////////////////////////////////DELETE WHEN DONE TESTING //////////////////////////////////////////
-                //Temporary button meant for hosting a test game
-                TestBoxingBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RequestQueue queue = Volley.newRequestQueue(BoxingActivity.this);
-
-                        String temp = currUser.getUsername() + "/" + BoxingTestText.getText().toString();
-                        StringRequest HostGameReq = new StringRequest(Request.Method.POST, Const.URL_SERVER_BOXINGTEST + temp, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
-
-                        //Send the request we created
-                        queue.add(HostGameReq);
-                    }
-                });
-                //TODO ////////////////////////////////////DELETE WHEN DONE TESTING //////////////////////////////////////////
 
                 OptionsLayout.addView(inflatedLayout);
             }

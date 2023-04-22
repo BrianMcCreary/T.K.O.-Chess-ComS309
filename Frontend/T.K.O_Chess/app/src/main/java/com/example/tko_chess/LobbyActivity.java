@@ -167,7 +167,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Starts the game for everyone
 						case "StartGame":
-							//TODO. Don't forget to close the websocket
 							//Take user to chess game
 							if (GameMode.equals("Chess")) {
 								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);
@@ -458,7 +457,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 				//Change user PlayerType to spectator if user is not already spectator
 				if (!PlayerOrSpectator.equals("Spectator")) {
-					WebSocket.send("SwitchToSpectate"); //TODO check that message should not be "SwitchToSpectator" instead of "SwitchToSpectate"
+					WebSocket.send("SwitchToSpectate");
 				}
 			}
 		});
