@@ -31,7 +31,7 @@
         android:textSize="10sp"/>
 
     <TextView
-        android:id="@+id/LobbyNameText"
+        android:id="@+id/LobbyCodeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Lobby"
@@ -50,9 +50,9 @@
         android:text=""
         android:textColor="@color/very_light_grey"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="@+id/LobbyNameText"
-        app:layout_constraintStart_toStartOf="@+id/LobbyNameText"
-        app:layout_constraintTop_toBottomOf="@+id/LobbyNameText" />
+        app:layout_constraintEnd_toEndOf="@+id/LobbyCodeText"
+        app:layout_constraintStart_toStartOf="@+id/LobbyCodeText"
+        app:layout_constraintTop_toBottomOf="@+id/LobbyCodeText" />
 
     <ScrollView
         android:id="@+id/LobbyScrollView"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LobbyNameText">
+        app:layout_constraintTop_toBottomOf="@+id/LobbyCodeText">
 
         <LinearLayout
             android:id="@+id/LobbyLinearLayout"
