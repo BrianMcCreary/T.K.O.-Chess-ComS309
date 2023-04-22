@@ -37,7 +37,7 @@ public class LobbyActivity extends AppCompatActivity {
 	TextView LobbyName;
 	TextView ReadyStatus;
 	TextView HostOptions;
-	TextView LobbyCode;
+	TextView LobbyCodeText;
 	TextView LeaveLobbyError;
 	TextView LobbyError;
 	TextView LobbyEvent;
@@ -54,7 +54,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 	//String Declarations
 	String GameMode;
-	String lobbyCode;
+	String LobbyCode;
 	String HostOrJoin;
 	String PlayerOrSpectator = "Spectator";
 	String WhoPlayer1;
@@ -98,23 +98,24 @@ public class LobbyActivity extends AppCompatActivity {
 		LobbyName = findViewById(R.id.LobbyCodeText);
 		ReadyStatus = findViewById(R.id.ReadyStatusText);
 		HostOptions = findViewById(R.id.HostOptionsText);
-		LobbyCode = findViewById(R.id.LobbyCodeText);
+		LobbyCodeText = findViewById(R.id.LobbyCodeText);
 		LeaveLobbyError = findViewById(R.id.LeaveLobbyErrorText);
 		LobbyError = findViewById(R.id.LobbyErrorText);
 		LobbyEvent = findViewById(R.id.LobbyEventText);
 
 		//String Initializations
 		GameMode = getIntent().getExtras().getString("Gamemode");
-		lobbyCode = getIntent().getExtras().getString("LobbyCode");
+		LobbyCode = getIntent().getExtras().getString("LobbyCode");
 		HostOrJoin = getIntent().getExtras().getString("HostOrJoin");
 		URLConcatenation = currUser.getUsername() + "/" + HostOrJoin + "/" + LobbyCode;
 
 		//LinearLayout Initializationss
 		LobbyOverlay = findViewById(R.id.LobbyOverlayLinearLayout);
+		LobbyMembersLayout = findViewById(R.id.LobbyLinearLayout);
 
 		//Display lobby code if spectator.
 		if (!HostOrJoin.equals("host")) {
-			LobbyCode.setText(lobbyCode);
+			LobbyCodeText.setText(LobbyCode);
 		}
 
 		//Disable the StartGameBtn initially until host gets CanStart message
@@ -137,6 +138,10 @@ public class LobbyActivity extends AppCompatActivity {
 				public void onOpen(ServerHandshake serverHandshake) {
 					Log.d("OPEN", "run() returned: " + "is connecting");
 					System.out.println("onOpen returned");
+
+					//Updates lobby display
+					getLobbyMembers();
+					displayLobbyMembers();
 				}
 
 				@Override
@@ -152,7 +157,9 @@ public class LobbyActivity extends AppCompatActivity {
 					switch (strings[0]) {
 						case "LobbyCode":
 							//Display lobby code
-							LobbyCode.setText(strings[1]);
+							LobbyCode = strings[1];
+							LobbyCodeText.setText(LobbyCode);
+
 
 							//Exit switch statement
 							break;
@@ -673,12 +680,24 @@ public class LobbyActivity extends AppCompatActivity {
 		JsonArrayRequest lobbyMembersReq = new JsonArrayRequest(Request.Method.GET, Const.URL_SERVER_GETLOBBY + LobbyCode, null, new Response.Listener<JSONArray>() {
 			@Override
 			public void onResponse(JSONArray response) {
-				LobbyMembers = response;
+				int i = 0;
+				while (true) {
+					try {
+						if (response.get(i) != null) {
+							LobbyMembers.put(response.get(i));
+							i++;
+						} else {
+							break;
+						}
+					} catch (JSONException e) {
+						throw new RuntimeException(e);
+					}
+				}
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-
+				error.printStackTrace();
 			}
 		});
 
@@ -768,6 +787,19 @@ public class LobbyActivity extends AppCompatActivity {
 							//Adds member object to screen
 							LobbyMembersLayout.addView(inflatedLayout);
 						}
+				}
+
+				//Clear LobbyMembers for next time getLobbyMembers() is called.
+				while (true) {
+					try {
+						if (LobbyMembers.get(0) != null) {
+							LobbyMembers.remove(0);
+						} else {
+							break;
+						}
+					} catch (JSONException e) {
+						throw new RuntimeException(e);
+					}
 				}
 			}
 		});
