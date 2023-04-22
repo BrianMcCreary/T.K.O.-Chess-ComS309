@@ -155,8 +155,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 							//Updates lobby display
 							getLobbyMembers();
-							//displayLobbyMembers();
-
 
 							//Exit switch statement
 							break;
@@ -241,6 +239,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 							//Updates lobby display
 							getLobbyMembers();
+
+							//Hides or displays ready status buttons
+							hideOrShowViews();
 
 							//Exit switch statement
 							break;
@@ -461,13 +462,13 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 		//Hide and disable host options/ready status
-		hideViews();
+		hideOrShowViews();
 	}
 
 
 
 	//Hides views on screen depending on the user's role in the lobby
-	private void hideViews() {
+	private void hideOrShowViews() {
 		//If user is not host, hide host options
 		if (HostOrJoin.equals("join")) {
 			//Hides host options from user.
@@ -481,7 +482,7 @@ public class LobbyActivity extends AppCompatActivity {
 		} else
 
 		//If user is spectator, hide ready status options
-		if (PlayerOrSpectator.equals("spectator")) {
+		if (PlayerOrSpectator.equals("Spectator")) {
 			//Hides ready status options from user
 			ReadyStatus.setVisibility(View.INVISIBLE);
 			NotReadyBtn.setVisibility(View.INVISIBLE);
@@ -489,6 +490,16 @@ public class LobbyActivity extends AppCompatActivity {
 
 			NotReadyBtn.setClickable(false);
 			ReadyBtn.setClickable(false);
+		} else
+
+		if (PlayerOrSpectator.equals("Player1") || PlayerOrSpectator.equals("Player2")) {
+			//Hides ready status options from user
+			ReadyStatus.setVisibility(View.VISIBLE);
+			NotReadyBtn.setVisibility(View.VISIBLE);
+			ReadyBtn.setVisibility(View.VISIBLE);
+
+			NotReadyBtn.setClickable(true);
+			ReadyBtn.setClickable(true);
 		}
 	}
 
