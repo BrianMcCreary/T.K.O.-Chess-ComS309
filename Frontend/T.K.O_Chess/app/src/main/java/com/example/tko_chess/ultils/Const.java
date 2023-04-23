@@ -28,17 +28,27 @@ public class Const {
     //Used for accepting a friend request sent to you.
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
 
-    //Key to get into game lobby
-    public static final String URL_SERVER_LOBBYKEY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
+    //Used to confirm if lobby exists.
+    public static final String URL_SERVER_LOBBYFIND = "http://coms-309-005.class.las.iastate.edu:8080/lobby/find/";
 
-    //Lobby web address
-    public static final String URL_SERVER_LOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
+    //Used for joining an existing game lobby.
+    public static final String URL_SERVER_LOBBYJOIN = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
+
+    //Used for creating and hosting a new game lobby
+    //TODO Probably not needed. Lobby creation happens automatically by connecting to websocket.
+    public static final String URL_SERVER_LOBBYHOST = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
 
     //Spectator Address
-    public static final String URL_SERVER_LOBBY_SPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
+    public static final String URL_SERVER_LOBBYSPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
 
-    //WebSocket Address
-    public static final String URL_SERVER_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/";
+    //Boxing WebSocket Address
+    public static final String URL_SERVER_WEBSOCKETBOXING = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/boxing/";
+
+    //Lobby WebSocket Address
+    public static final String URL_SERVER_WEBSOCKETLOBBY = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/lobby/";
+
+    //WebSocket Address for Chess
+    public static final String URL_CHESS_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/chess/";
 
     //Boxing Test URL
     public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";

@@ -11,4 +11,6 @@ public abstract class ChessPiece implements Serializable {
     }
 
     abstract List<Coordinate> calculateAvailableMoves();
+
+    abstract boolean move(int fromX, int fromY, int toX, int toY);
 }
