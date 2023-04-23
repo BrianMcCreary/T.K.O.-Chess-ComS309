@@ -22,7 +22,9 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/*
+ * @author Zachary Scurlock
+ */
 public class ChangeUsername extends AppCompatActivity {
 
     ImageButton goBack;
