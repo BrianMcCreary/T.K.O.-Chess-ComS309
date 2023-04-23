@@ -4,10 +4,13 @@ import TotalKnockoutChess.Friends.FriendRequest;
 import TotalKnockoutChess.Friends.FriendRequestRepository;
 import TotalKnockoutChess.Friends.Friendship;
 import TotalKnockoutChess.Friends.FriendshipRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Api(value = "UserController", description = "Controller used to manage User entities")
 @RestController
 public class UserController {
     @Autowired
@@ -25,12 +28,14 @@ public class UserController {
     private final String falseMessage = "{\"message\":\"false\"}";
 
     //Method that returns a list of all users
+    @ApiOperation(value = "Returns list of all Users")
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     //Method that creates a new user given the username is > 0 characters, the password is >= 8 characters, and the username isn't already taken
+    @ApiOperation(value = "Create a user with the given username and password")
     @PostMapping(path = "/users/{username}/{password}/{confirmPassword}")
     public String createUser(@PathVariable String username,@PathVariable String password, @PathVariable String confirmPassword) {
         if (password.length() < 8) {
@@ -53,6 +58,7 @@ public class UserController {
     }
 
     //Method that deletes a user and all friend requests or friendships associated with it
+    @ApiOperation(value = "Delete the user with the given username")
     @PutMapping(path = "/users/{username}")
     public String deleteUser(@PathVariable String username) {
         for (FriendRequest fr : friendRequestRepository.findAll()) {        //Iterate through all friend requests and remove the one's associated with this user
@@ -85,6 +91,7 @@ public class UserController {
     }
 
     //Method that returns a user object given a username
+    @ApiOperation(value = "Returns a User object by their username")
     @GetMapping(path = "/users/getByName/{username}")
     public User getUserByName(@PathVariable String username) {
         List<User> userList = userRepository.findAll();
@@ -97,6 +104,7 @@ public class UserController {
     }
 
     //Method that allows the user to login
+    @ApiOperation(value = "Returns a true or false message allowing the user to login")
     @PostMapping(path = "/users/login")
     public @ResponseBody String login(@RequestBody User user) {
         for (User u : userRepository.findAll()) {
@@ -108,24 +116,28 @@ public class UserController {
     }
 
     //Method that returns a user object given their ID
+    @ApiOperation(value = "Returns a user object given its ID")
     @GetMapping(path = "/users/{id}")
     public User getUserById(@PathVariable int id) {
         return userRepository.findById(id);
     }
 
     //Method that returns a user's username given their ID
+    @ApiOperation(value = "Returns a username given the user's ID")
     @GetMapping(path = "/users/name/{id}")
     public String getUserName(@PathVariable int id) {
         return userRepository.findById(id).getUsername();
     }
 
     //Method that returns a user's password given their ID
+    @ApiOperation(value = "Returns a password given the user's ID")
     @GetMapping(path = "/users/password/{id}")
     public String getUserPassword(@PathVariable int id) {
         return userRepository.findById(id).getPassword();
     }
 
     //Method that changes a user's username given their current username, new username, and password
+    @ApiOperation(value = "Allows the user to change their username as long as they know their password")
     @PutMapping(path = "/users/name/{currentUsername}/{username}/{password}")
     public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @PathVariable String password) {
         for (User u : userRepository.findAll()) {
@@ -149,6 +161,7 @@ public class UserController {
     }
 
     //Method that changes a user's password given their username, current password, and new password
+    @ApiOperation(value = "Allows the user to change their password as long as they know their old password")
     @PutMapping(path = "/users/password/{username}/{password}/{currentPassword}")
     public @ResponseBody String changeUserPassword(@PathVariable String username, @PathVariable String password, @PathVariable String currentPassword) {
         if (password.length() < 8) {

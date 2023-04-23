@@ -2,11 +2,14 @@ package TotalKnockoutChess.Friends;
 
 import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(value = "FriendRequestController", description = "Controller used to manage Friend Request entities")
 @RestController
 public class FriendRequestController {
     @Autowired
@@ -24,6 +27,7 @@ public class FriendRequestController {
     private final String falseMessage = "{\"message\":\"false\"}";
 
     //Method that returns a user's incoming friend requests given their username
+    @ApiOperation(value = "Returns a list of a user's incoming friend requests given their username")
     @GetMapping(path = "/friendRequests/incoming/{username}")
     public List<String> getIncomingRequests(@PathVariable String username) {
         for (User u : userRepository.findAll()) {
@@ -35,6 +39,7 @@ public class FriendRequestController {
     }
 
     //Method that returns a user's outgoing friend requests given their username
+    @ApiOperation(value = "Returns a list of a user's outgoing friend requests given their username")
     @GetMapping(path = "/friendRequests/outgoing/{username}")
     public List<String> getOutgoingRequests(@PathVariable String username) {
         for (User u : userRepository.findAll()) {
@@ -46,6 +51,7 @@ public class FriendRequestController {
     }
 
     //Method that sends a friend request given the sender's username, and the receiver's username
+    @ApiOperation(value = "Sends a friend request given the sender's username, and the receiver's username")
     @PostMapping(path = "/friendRequest/{sender}/{receiver}")
     public String sendFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
@@ -91,6 +97,7 @@ public class FriendRequestController {
     }
 
     //Method that deletes a friend request given the sender and receiver's usernames
+    @ApiOperation(value = "Deletes a friend request given the sender and receiver's usernames")
     @PutMapping(path = "/deleteFriendRequest/{sender}/{receiver}")
     public String deleteFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
@@ -110,6 +117,7 @@ public class FriendRequestController {
     }
 
     //Method that accepts a friend request given the sender and receiver's usernames
+    @ApiOperation(value = "Accepts a friend request and creates a friendship entity given the sender and receiver's usernames")
     @PostMapping(path = "/acceptFriendRequest/{sender}/{receiver}")
     public String acceptFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
         List<FriendRequest> friendRequests = friendRequestRepository.findAll();
