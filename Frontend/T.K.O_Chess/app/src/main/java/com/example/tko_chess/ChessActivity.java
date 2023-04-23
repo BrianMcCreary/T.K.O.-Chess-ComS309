@@ -1,13 +1,9 @@
 package com.example.tko_chess;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
@@ -17,17 +13,19 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tko_chess.ultils.Const;
 
 /**
  * @author Zachary Scurlock
+ * This is where the real meat and potatoes of chess can be found
  */
 public class ChessActivity extends AppCompatActivity {
 
+    /*
+     * Declarations of every tile of the chess board
+     */
     ImageButton A1;
     ImageButton B1;
     ImageButton C1;
@@ -95,19 +93,28 @@ public class ChessActivity extends AppCompatActivity {
 
     private WebSocketClient WebSocket;
 
-    String URLConcatenation = "";
-    SingletonUser currUser = SingletonUser.getInstance();
+    String URLConcatenation = ""; // Used to append changes to the end of the URL
+    SingletonUser currUser = SingletonUser.getInstance(); // used to get the user's name
+    String tile = ""; // Stores the name of the pressed tile
+    String piece = ""; // stores the name of the selected piece
+    int tracker = 0; // tracks if whether or not the user has previously pressed a tile
 
-    String[] possibleMoves = null;
-    String tile = "";
-    String piece = "";
-    int tracker = 0;
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     *  Loads the chess screen and handles the moves of the user
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chess);
 
+        /*
+         * Assigns the image buttons to their proper ID
+         */
         A1 = findViewById(R.id.A1);
         B1 = findViewById(R.id.B1);
         C1 = findViewById(R.id.C1);
@@ -182,7 +189,7 @@ public class ChessActivity extends AppCompatActivity {
 
         Draft[] drafts = {new Draft_6455()};
 
-        URLConcatenation = currUser.getUsername();
+        URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
 
         try{
             WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
@@ -243,8 +250,14 @@ public class ChessActivity extends AppCompatActivity {
             return;
         }
 
-        WebSocket.connect();
+        WebSocket.connect(); // Connects to websocket
 
+        /*
+         * A1 through H8 all have nearly identical internals with the only difference being tile
+         * If it is the first time the user has selected a tile, the tile string is set to the name of the tile.
+         * If it is the second time the user has selected a tile, the previously selected tile is set to be transparent,
+         * and the second tile pressed is updated with the piece from the previous tile
+         */
         A1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1149,19 +1162,28 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates the tile for the other player through the backend
+     */
     public void updateSquare(){
 
     }
 
+    /**
+     * Checks if the last move resulted in a checkmate
+     */
     public void isCheckmate(){
 
     }
 
+    /**
+     * Checks if the last move resulted in check
+     */
     public void isCheck(){
 
     }
 
-    /*
+    /**
      * Enables buttons for the user
      */
     public void enableButtons() {
@@ -1244,8 +1266,8 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
-    /*
-     * Disables buttons for the user
+    /**
+       Disables buttons for the user
      */
     public void disableButtons(){
         runOnUiThread(new Runnable() {
@@ -1327,7 +1349,7 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
-    /*
+    /**
      * This method sets the previous tile clicked become transparent
      */
     public void setTransparent(){
@@ -1532,6 +1554,10 @@ public class ChessActivity extends AppCompatActivity {
             H8.setImageResource(R.drawable.transparent);
         }
     }
+
+    /**
+     * This method updates the second tile pressed with the piece from the previously selected tile
+     */
     public void movePiece(){
         if(piece.equals("blackPawn")){
             if(tile.equals("A1")){

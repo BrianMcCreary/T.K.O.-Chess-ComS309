@@ -22,19 +22,28 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/*
+/**
  * @author Zachary Scurlock
+ * This is where the user can change their username
  */
 public class ChangeUsername extends AppCompatActivity {
 
-    ImageButton goBack;
-    Button save;
+    ImageButton goBack; // takes user back to the profile editor screen
+    Button save; // applies the changes the user made
+    EditText currentUser; // where the user will input their current username
+    EditText userPassword; // where the user will input their password
+    EditText newUser; // where the user will input their new username
+    TextView checker; // updates to an error message if the user made a mistake
 
-    EditText currentUser;
-    EditText userPassword;
-    EditText newUser;
-    TextView checker;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     *     loads the change username screen for the user
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +52,10 @@ public class ChangeUsername extends AppCompatActivity {
         goBack = findViewById(R.id.backBtn5);
 
         goBack.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param view The view that was clicked.
+             * When pressed the user is take back to the profile screen
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChangeUsername.this, Profiles.class);
@@ -53,6 +66,10 @@ public class ChangeUsername extends AppCompatActivity {
         save = findViewById(R.id.savebtn2);
 
         save.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param v The view that was clicked.
+             * When pressed the changes the user made are applied and updated on the backend and brought back to the profile editor screen
+             */
             @Override
             public void onClick(View v) {
                    currentUser = (EditText) findViewById(R.id.currentUsername);
@@ -75,7 +92,6 @@ public class ChangeUsername extends AppCompatActivity {
 
                    RequestQueue queue = Volley.newRequestQueue(ChangeUsername.this);
 
-
                    JsonObjectRequest changeUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_CHANGEUSERNAME + currentUsername + "/" + username + "/" + password, null, new Response.Listener<JSONObject>() {
                        @Override
                        public void onResponse(JSONObject response) {
@@ -89,12 +105,8 @@ public class ChangeUsername extends AppCompatActivity {
 
                            if(temp.equals("success")){
                                newUser = findViewById(R.id.newUsername);
-                               String name = newUser.getText().toString();
                                Intent intent = new Intent(ChangeUsername.this, Profile_Editor.class);
-                               //Intent intent2 = new Intent(ChangeUsername.this, Profiles.class);
-                               //intent.putExtra("key1", name);
                                startActivity(intent);
-                               //startActivity(intent2);
                            }
                            else{
                                try{

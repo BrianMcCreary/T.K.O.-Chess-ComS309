@@ -21,18 +21,28 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/*
+/**
  * @author Zachary Scurlock
+ * This is where the user can change their password
  */
 public class ChangePassword extends AppCompatActivity {
 
-    ImageButton goBack;
-    Button save;
-    EditText username;
-    EditText currentPassword;
-    EditText newPassword;
-    TextView checker;
+    ImageButton goBack; // takes user back to the profile editor screen
+    Button save; // applies the changes the user made
+    EditText username; // where the user will input their username
+    EditText currentPassword; // where the user will input their current password
+    EditText newPassword; // where the user will input their new password
+    TextView checker; // displays an error message if the user made a mistake
 
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     *     loads the change password screen for the user
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +51,11 @@ public class ChangePassword extends AppCompatActivity {
         goBack = findViewById(R.id.backBtn6);
 
         goBack.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param view The view that was clicked.
+             *
+             * When pressed the user is take back to the profile screen
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChangePassword.this, Profiles.class);
@@ -51,6 +66,10 @@ public class ChangePassword extends AppCompatActivity {
         save = findViewById(R.id.savebtn3);
 
         save.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param v The view that was clicked.
+             * When pressed the changes the user made are applied and updated on the backend and the user is brought back to the profile editor screen
+             */
             @Override
             public void onClick(View v) {
                 username = (EditText) findViewById(R.id.Username);
