@@ -64,6 +64,7 @@ public class LobbySocket {
             lobbyRepository.save(lobby);
             lobbyRepository.flush();
             usernameSessionMap.get(username).getBasicRemote().sendText("LobbyCode " + lobby.getCode().toString());
+            usernameSessionMap.get(username).getBasicRemote().sendText("JustJoined " + username + ".Spectator.NotReady");
         }
         else if (joinOrHost.equals("join")) {       //If joining a lobby, find lobby with the code and insert the user
             Lobby lobby = findLobbyWithCode(lobbyCode);
@@ -73,6 +74,26 @@ public class LobbySocket {
                 lobbyRepository.save(lobby);
                 lobbyRepository.flush();
                 sendOtherUsersMessage(username, "Spectator " + username);
+                String lobbySetup = "JustJoined ";
+                if (lobby.getPlayer1() != null) {
+                    String readyStatus = "NotReady";
+                    if (lobby.getPlayer1Ready()) {
+                        readyStatus = "Ready";
+                    }
+                    lobbySetup += lobby.getPlayer1() + ".Player1." + readyStatus + "#";
+                }
+                if (lobby.getPlayer2() != null) {
+                    String readyStatus = "NotReady";
+                    if (lobby.getPlayer2Ready()) {
+                        readyStatus = "Ready";
+                    }
+                    lobbySetup += lobby.getPlayer2() + ".Player2." + readyStatus + "#";
+                }
+                List<String> spectators = lobby.getSpectators();
+                for (int i = 0; i < spectators.size(); ++i) {
+                    lobbySetup += spectators.get(i) + ".Spectator.NotReady#";
+                }
+                usernameSessionMap.get(username).getBasicRemote().sendText(lobbySetup);
             }
         }
     }
