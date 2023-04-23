@@ -21,6 +21,9 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+ * @author Zachary Scurlock
+ */
 public class ChangePassword extends AppCompatActivity {
 
     ImageButton goBack;
@@ -59,17 +62,7 @@ public class ChangePassword extends AppCompatActivity {
                 String currentPass = currentPassword.getText().toString();
                 String user = username.getText().toString();
 
-//                JSONObject newPassword = new JSONObject();
-//                try{
-//                    newPassword.put("username", newPass.getText());
-//                    newPassword.put("password", newPass.getText());
-//                }
-//                catch (JSONException E){
-//                    E.printStackTrace();
-//                }
-
                 RequestQueue queue = Volley.newRequestQueue(ChangePassword.this);
-
 
                 JsonObjectRequest changeUserRequest = new JsonObjectRequest(Request.Method.PUT, Const.URL_SERVER_CHANGEPASSWORD + user + "/" + newPass + "/" + currentPass, null, new Response.Listener<JSONObject>() {
                     @Override

@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+/*
+ * @author Zachary Scurlock
+ */
 public class Profile_Editor extends AppCompatActivity {
 
     ImageButton goBack;
