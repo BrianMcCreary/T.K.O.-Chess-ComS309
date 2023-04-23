@@ -2,6 +2,8 @@ package TotalKnockoutChess.Friends;
 
 import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Api(value = "FriendshipController", description = "Controller used to manage Friendship entities")
 @RestController
 public class FriendshipController {
 
@@ -23,6 +26,7 @@ public class FriendshipController {
     UserRepository userRepository;
 
     //Method that removes a friendship given the users' usernames
+    @ApiOperation(value = "Deletes a friendship given the the users' usernames")
     @PutMapping(path = "/friends/{remover}/{removee}")
     public String removeFriend (@PathVariable String remover, @PathVariable String removee) {
         List<Friendship> friendships = friendshipRepository.findAll();
@@ -43,6 +47,7 @@ public class FriendshipController {
     }
 
     //Method that returns a list of usernames of a user's friends given their username
+    @ApiOperation(value = "Returns a list of a user's friends given their username")
     @GetMapping(path = "/friends/{username}")
     public List<String> getFriends(@PathVariable String username) {
         for (User u : userRepository.findAll()) {
