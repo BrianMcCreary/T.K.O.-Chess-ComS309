@@ -2,12 +2,15 @@ package TotalKnockoutChess.Lobby;
 
 import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(value = "LobbyController", description = "Controller used to manage Lobby entities")
 @RestController
 @RequestMapping("/lobby")
 public class LobbyController {
@@ -21,6 +24,7 @@ public class LobbyController {
     private final String success = "success";
     private final String failure = "failure";
 
+    @ApiOperation(value = "Returns whether any of the lobbies in the repository matches the given lobby code")
     @GetMapping("/find/{lobbyCode}")
     public String findLobby(@PathVariable Long lobbyCode) {
         for (Lobby l : lobbyRepository.findAll()) {
@@ -32,6 +36,7 @@ public class LobbyController {
     }
 
     //Mapping to delete a lobby from the repository.
+    @ApiOperation(value = "Deletes a lobby from the repository from the given lobby id")
     @DeleteMapping("/delete/{lobbyId}")
     public void deleteLobby(@PathVariable int lobbyId){
         Lobby l = lobbyRepository.findById(lobbyId);
@@ -40,11 +45,13 @@ public class LobbyController {
     }
 
     // Mapping to get all current lobbies.
+    @ApiOperation(value = "Returns a list of all lobby entities in the repository")
     @GetMapping("/all")
     public List<Lobby> getLobbies(){
         return lobbyRepository.findAll();
     }
 
+    @ApiOperation(value = "Returns a list of strings representing all spectators in the lobby, specified by the lobby code")
     @GetMapping("/spectators/{lobbyCode}")
     public List<String> getLobbySpectators(@PathVariable Long lobbyCode){
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
@@ -52,6 +59,7 @@ public class LobbyController {
     }
 
     //Method used when a player joins a lobby, gives them all the information they need
+    @ApiOperation(value = "Returns a list of strings containing the username and ready status of each user in the lobby, specified by the lobby code")
     @GetMapping("/justJoined/{lobbyCode}")
     public List<String> getUsersInLobby(@PathVariable Long lobbyCode) {
         Lobby lobby = lobbyRepository.getByCode(lobbyCode);
