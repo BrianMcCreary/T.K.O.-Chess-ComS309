@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:background="@color/very_light_grey">
+
+    <TextView
+        android:id="@+id/MemberNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="0.25"
+        android:background="?attr/editTextBackground"
+        android:hint="Member"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColorHint="@color/black"
+        android:textSize="24sp"
+        android:textColor="@color/black">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/ReadyStatusImageView"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="0.75"
+        app:srcCompat="@drawable/notreadystatus" />
+
+    <Button
+        android:id="@+id/KickMemberBtn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="0.65"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/soft_blue"
+        android:text="Kick"
+        android:textColor="@color/black"
+        android:textSize="20sp">
+    </Button>
+</LinearLayout>
+

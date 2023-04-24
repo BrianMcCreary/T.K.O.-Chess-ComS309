@@ -40,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
-
-
 		//toLogin button that takes user back to login screen.
 		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);
 		RegisterToLogin.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
 				//Create a string holding the username to concatenate to the URL
 				String URLConcatenation = "";
 
+
 				//Text fields for users to enter username/password for their account
 				RegUsername = (EditText) findViewById(R.id.RegUsernameText);
 				RegPassword = (EditText) findViewById(R.id.RegPasswordText);
@@ -70,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
 				URLConcatenation += RegUsername.getText().toString() + "/";
 				URLConcatenation += RegPassword.getText().toString() + "/";
 				URLConcatenation += ConfirmPassword.getText().toString();
+
 
 				//Create a Request Que for the JsonObjectRequest
 				RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
@@ -99,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
 									RegisterError.setText("");
 									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);
 									startActivity(intent);
+
 								}
 								//else, show error message
 								else {

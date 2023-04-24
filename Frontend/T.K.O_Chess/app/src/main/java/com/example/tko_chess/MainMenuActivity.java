@@ -12,15 +12,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author Zachary Scurlock
  * @author Lex Somers
+ * @author Zachary Scurlock
  */
 public class MainMenuActivity extends AppCompatActivity {
 
     Button tkoChess;
     Button chess;
     Button Boxing;
-
     ImageButton MenuToSettings;
     ImageButton MenuToFriends;
     ImageButton MenuToProfiles;
@@ -54,7 +53,8 @@ public class MainMenuActivity extends AppCompatActivity {
         tkoChess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ChessBoxingActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", "ChessBoxing");
                 startActivity(intent);
             }
         });
@@ -64,7 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", "Chess");
                 startActivity(intent);
             }
         });
@@ -73,7 +74,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Boxing.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(MainMenuActivity.this, BoxingActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                intent.putExtra("Gamemode", "Boxing");
                 startActivity(intent);
             }
         });
@@ -103,6 +105,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
+
         MenuToProfiles = findViewById(R.id.MenuToProfileBtn);
 
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +117,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         MenuToFriends = findViewById(R.id.MenuToFriendsBtn);
+
 
 
         MenuToFriends.setOnClickListener(new View.OnClickListener() {

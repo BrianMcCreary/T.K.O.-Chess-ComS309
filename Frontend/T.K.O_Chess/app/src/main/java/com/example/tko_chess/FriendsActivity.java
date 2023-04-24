@@ -54,13 +54,6 @@ public class FriendsActivity extends AppCompatActivity {
 
     Context context = this;
 
-    //LayoutInflater used to populate friends list scrollview
-    //LayoutInflater inflater = getLayoutInflater();
-
-    //Request que used to send JSON requests
-    //RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
-
-
     //Create a string holding the username to concatenate to the URL
     String URLConcatenation = "";
 
@@ -93,18 +86,6 @@ public class FriendsActivity extends AppCompatActivity {
         //LayoutInflater used to populate friends list scrollview
         LayoutInflater inflater = getLayoutInflater();
 
-/*      //////////////////////////////////////////////////////////////////////////////
-        //Delete this or comment out. Only for testing purposes when server is not up.
-        View friendLayout = inflater.inflate(R.layout.friend_layout, FriendsList, true);
-        TextView friendName = (TextView) friendLayout.findViewById(R.id.FriendEditText);
-        try {
-            friendName.setText(currUser.getUsername());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        //Delete this or comment out. Only for testing purposes when server is not up.
-        //////////////////////////////////////////////////////////////////////////////*/
-
         //Display friends on screen upon initial loading of screen
         displayFriendsList(currUser.getListOfFriends());
 
@@ -112,6 +93,8 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //currUser.UpdateUserObject(currUser.getUsername());
+
                 Intent intent = new Intent(FriendsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
@@ -122,7 +105,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                URLConcatenation += currUser.getUsername() + "/";
+                URLConcatenation = currUser.getUsername() + "/";
                 URLConcatenation += FriendReqTo.getText().toString();
                 sendRequest();
             }
@@ -206,15 +189,12 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
 
-        //LayoutInflater used to populate friends list scrollview
-        LayoutInflater inflater = getLayoutInflater();
-
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < PendingFriendReq.length(); i++) {
-            View friendLayout = inflater.inflate(R.layout.pending_friend_request_layout, FriendsListLayout, true);
-            TextView IncomingFriendNameText = (TextView) friendLayout.findViewById(R.id.IncomingFriendNameTextView);
-            Button acceptFriendBtn = (Button) friendLayout.findViewById(R.id.AcceptFriendBtn);
-            Button denyFriendBtn = (Button) friendLayout.findViewById(R.id.DenyFriendBtn);
+            View inflatedLayout = getLayoutInflater().inflate(R.layout.pending_friend_request_layout, null, false);
+            TextView IncomingFriendNameText = (TextView) inflatedLayout.findViewById(R.id.IncomingFriendNameTextView);
+            Button acceptFriendBtn = (Button) inflatedLayout.findViewById(R.id.AcceptFriendBtn);
+            Button denyFriendBtn = (Button) inflatedLayout.findViewById(R.id.DenyFriendBtn);
 
             //Sets the friend's username in the text box next to the remove button
             try {
@@ -223,12 +203,14 @@ public class FriendsActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
+            FriendsListLayout.addView(inflatedLayout);
+
             //Accept friend button
             acceptFriendBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = IncomingFriendNameText.getText().toString() + "/";
                     URLConcatenation += currUser.getUsername();
 
                     acceptFriendReq();
@@ -239,13 +221,15 @@ public class FriendsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //Puts sender's username and acceptor's username in a String to concatenate onto URL path
-                    URLConcatenation += IncomingFriendNameText.getText().toString() + "/";
+                    URLConcatenation = IncomingFriendNameText.getText().toString() + "/";
                     URLConcatenation += currUser.getUsername();
 
                     denyFriendReq();
                 }
             });
         }
+        //Tracks that we are currently on the pending friends requests screen
+        DisplayTracker = 2;
     }
 
 
@@ -323,14 +307,11 @@ public class FriendsActivity extends AppCompatActivity {
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
 
-        //LayoutInflater used to populate friends list scrollview
-        LayoutInflater inflater = getLayoutInflater();
-
         //For each friend the user has, put that friend in the linear layout of activity_friends
         for (int i = 0; i < SentFriendReq.length(); i++) {
-            View friendLayout = inflater.inflate(R.layout.sent_friend_request_layout, FriendsListLayout, true);
-            TextView requestedFriendNameText = (TextView) friendLayout.findViewById(R.id.RequestFriendNameTextView);
-            Button cancelFriendBtn = (Button) friendLayout.findViewById(R.id.CancelFriendBtn);
+            View inflatedLayout = getLayoutInflater().inflate(R.layout.sent_friend_request_layout, null, false);
+            TextView requestedFriendNameText = (TextView) inflatedLayout.findViewById(R.id.RequestFriendNameTextView);
+            Button cancelFriendBtn = (Button) inflatedLayout.findViewById(R.id.CancelFriendBtn);
 
             //Sets the friend's username in the text box next to the remove button
             try {
@@ -338,6 +319,8 @@ public class FriendsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+
+            FriendsListLayout.addView(inflatedLayout);
 
             //Remove friend button
             cancelFriendBtn.setOnClickListener(new View.OnClickListener() {
@@ -351,6 +334,8 @@ public class FriendsActivity extends AppCompatActivity {
                 }
             });
         }
+        //Tracks that we are currently on the sent friends requests screen
+        DisplayTracker = 1;
     }
 
 
@@ -421,6 +406,9 @@ public class FriendsActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //Tracks that we are currently on the view friends screen
+        DisplayTracker = 0;
     }
 
 

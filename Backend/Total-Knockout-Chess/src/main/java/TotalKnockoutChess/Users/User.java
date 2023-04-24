@@ -1,5 +1,6 @@
 package TotalKnockoutChess.Users;
 
+import TotalKnockoutChess.Lobby.Lobby;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;     //User ID
+    private int id;
     private String username;        //User username
     private String password;        //User password
 
@@ -106,6 +107,32 @@ public class User {
 
     public List<String> getFriends() {
         return friends;
+    }
+
+    public String toString(){
+        String str = "";
+        str += "ID: " + id + "\n";
+        str += "Username: " + username + "\n";
+        str += "Password: " + password + "\n";
+        if(incomingFriendRequests != null) {
+            str += "IncomingFriendRequests: \n";
+            for (String s : incomingFriendRequests) {
+                str += "- " + s + "\n";
+            }
+        }
+        if(outgoingFriendRequests != null) {
+            str += "OutgoingFriendRequests: \n";
+            for (String s : outgoingFriendRequests) {
+                str += "- " + s + "\n";
+            }
+        }
+        if(friends != null) {
+            str += "Friends: \n";
+            for (String s : friends) {
+                str += "- " + s + "\n";
+            }
+        }
+        return str;
     }
 }
 
