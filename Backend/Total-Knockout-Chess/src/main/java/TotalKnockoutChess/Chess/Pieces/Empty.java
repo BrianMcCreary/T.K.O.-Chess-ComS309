@@ -1,6 +1,6 @@
 package TotalKnockoutChess.Chess.Pieces;
 
-import java.util.List;
+import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class Empty extends ChessPiece{
 
@@ -8,11 +8,12 @@ public class Empty extends ChessPiece{
         super("");
     }
 
-    List<Coordinate> calculateAvailableMoves() {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         return null;
     }
 
-    boolean move(int fromX, int fromY, int toX, int toY) {
-        return false;
+    @Override
+    public final String toString() {
+        return color + "-";
     }
 }

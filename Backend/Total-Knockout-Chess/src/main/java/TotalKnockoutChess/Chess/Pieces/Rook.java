@@ -1,6 +1,6 @@
 package TotalKnockoutChess.Chess.Pieces;
 
-import java.util.List;
+import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class Rook extends ChessPiece {
 
@@ -8,11 +8,12 @@ public class Rook extends ChessPiece {
         super(color);
     }
 
-    List<Coordinate> calculateAvailableMoves() {
-        return null;
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+        return "B2";
     }
 
-    boolean move(int fromX, int fromY, int toX, int toY) {
-        return false;
+    @Override
+    public final String toString() {
+        return color.charAt(0) + "R";
     }
 }

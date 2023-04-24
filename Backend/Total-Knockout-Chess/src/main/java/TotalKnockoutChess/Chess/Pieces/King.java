@@ -1,24 +1,48 @@
 package TotalKnockoutChess.Chess.Pieces;
 
-import java.util.List;
+import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class King extends ChessPiece {
 
-    boolean checked, checkMated;
+    private boolean checked, checkMated, canCastle;
 
-    public King(String color) {
+    private Coordinate coordinate;
+
+    public King(String color, Coordinate coordinate) {
         super(color);
         checked = false;
         checkMated = false;
+        canCastle = true;
+        this.coordinate = coordinate;
     }
 
-    List<Coordinate> calculateAvailableMoves() {
+    // Getter for the coordinate of the piece
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
 
         return null;
     }
 
-    boolean move(int fromX, int fromY, int toX, int toY){
-        // TODO
-        return true;
+    @Override
+    public final String toString() {
+        return color.charAt(0) + "K";
     }
+
+
+    // Getter/Setter for checked field
+    public boolean isChecked(){ return checked; }
+    public void setChecked(boolean checked) { this.checked = checked; }
+
+
+    // Getter/Setter for checkMated field
+    public boolean isCheckMated(){ return checkMated; }
+    public void setCheckMated(boolean checkMated){ this.checkMated = checkMated; }
+
+
+    // Getter/Setter for canCastle field
+    public boolean canCastle(){ return canCastle; }
+    public void setCanCastle(boolean canCastle){ this.canCastle = canCastle; }
 }
