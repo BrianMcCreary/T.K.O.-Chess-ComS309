@@ -3,6 +3,7 @@ package TotalKnockoutChess.Chess.Pieces;
 import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class King extends ChessPiece {
+    private static final long serialVersionUID = 0L;
 
     private boolean checked, checkMated, canCastle;
 
@@ -22,8 +23,13 @@ public class King extends ChessPiece {
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+        String moves = "";
 
-        return null;
+        for(Coordinate c : Coordinate.values()){
+            moves += c.toString();
+            System.out.println(c);
+        }
+        return moves;
     }
 
     @Override

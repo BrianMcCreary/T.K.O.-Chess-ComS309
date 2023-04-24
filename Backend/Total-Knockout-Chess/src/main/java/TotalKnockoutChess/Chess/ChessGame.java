@@ -153,6 +153,10 @@ public class ChessGame {
         if(movedPiece instanceof King){
             ((King) movedPiece).setCanCastle(false);
         }
+        // If the moved piece was a rook, update its 'canCastle' field accordingly
+        else if(movedPiece instanceof Rook){
+            ((Rook) movedPiece).setCanCastle(false);
+        }
 
         return true;
     }

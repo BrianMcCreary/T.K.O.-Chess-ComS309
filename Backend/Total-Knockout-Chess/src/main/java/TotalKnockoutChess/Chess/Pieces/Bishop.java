@@ -3,6 +3,7 @@ package TotalKnockoutChess.Chess.Pieces;
 import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class Bishop extends ChessPiece {
+    private static final long serialVersionUID = 0L;
 
     public Bishop(String color) {
         super(color);

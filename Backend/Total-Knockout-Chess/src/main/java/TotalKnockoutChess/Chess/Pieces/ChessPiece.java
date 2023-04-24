@@ -3,7 +3,6 @@ package TotalKnockoutChess.Chess.Pieces;
 import TotalKnockoutChess.Chess.ChessGameTile;
 
 import java.io.Serializable;
-import java.util.List;
 
 public abstract class ChessPiece implements Serializable {
 
