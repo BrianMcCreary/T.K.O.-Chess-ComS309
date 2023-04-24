@@ -49,6 +49,10 @@ public class ChessGameController {
 
         boolean success = game.makeMove(fromCoordinate, toCoordinate);
 
+        // Ensure the board is updated in the database
+        chessGameRepository.flush();
+
+        // Backend text output for debugging
         game.displayBoard();
 
         return success + ". Game with id " + game.getId() + " updated";

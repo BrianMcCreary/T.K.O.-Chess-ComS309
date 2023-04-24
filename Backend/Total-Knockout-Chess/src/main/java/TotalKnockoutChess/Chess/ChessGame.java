@@ -117,7 +117,7 @@ public class ChessGame {
      */
     public boolean makeMove(Coordinate startCoordinate, Coordinate endCoordinate){
         // If coordinates are out of bounds, return without updating the board
-        if(startCoordinate.x < 0 || startCoordinate.y < 0 || endCoordinate.x < 0 || endCoordinate.y < 0 || startCoordinate.x >= BOARD_WIDTH - 1 || startCoordinate.y >= BOARD_HEIGHT - 1 || endCoordinate.x >= BOARD_WIDTH - 1 || endCoordinate.y >= BOARD_HEIGHT - 1){
+        if(startCoordinate.x < 0 || startCoordinate.y < 0 || endCoordinate.x < 0 || endCoordinate.y < 0 || startCoordinate.x > BOARD_WIDTH - 1 || startCoordinate.y > BOARD_HEIGHT - 1 || endCoordinate.x > BOARD_WIDTH - 1 || endCoordinate.y > BOARD_HEIGHT - 1){
             return false;
         }
 
@@ -149,9 +149,10 @@ public class ChessGame {
 
         ChessPiece movedPiece = tiles[endCoordinate.x][endCoordinate.y].piece;
 
-        // If the moved piece was a king, update its 'canCastle' field accordingly
+        // If the moved piece was a king, update its fields accordingly
         if(movedPiece instanceof King){
             ((King) movedPiece).setCanCastle(false);
+            ((King) movedPiece).setCoordinate(endCoordinate);
         }
         // If the moved piece was a rook, update its 'canCastle' field accordingly
         else if(movedPiece instanceof Rook){

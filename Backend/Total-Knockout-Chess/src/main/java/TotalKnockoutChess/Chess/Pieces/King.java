@@ -17,18 +17,23 @@ public class King extends ChessPiece {
         this.coordinate = coordinate;
     }
 
-    // Getter for the coordinate of the piece
+    // Getter/Setter for the coordinate of the piece
     public Coordinate getCoordinate() {
         return coordinate;
+    }
+    public void setCoordinate(Coordinate updatedCoordinate) {
+        coordinate = updatedCoordinate;
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
+//        Code to add every move as an available move for testing
+//        for(Coordinate c : Coordinate.values()){
+//            moves += c.toString() + " ";
+//        }
 
-        for(Coordinate c : Coordinate.values()){
-            moves += c.toString();
-            System.out.println(c);
-        }
+
+
         return moves;
     }
 

@@ -48,6 +48,7 @@ public class ChessGameSocket {
         String username = sessionUsernameMap.get(session);
 
         // TODO
+        // Messages to setup - pieceSelected, move, leave,
     }
 
     @OnClose
