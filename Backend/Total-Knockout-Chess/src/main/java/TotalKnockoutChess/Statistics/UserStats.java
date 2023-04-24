@@ -12,7 +12,7 @@ public class UserStats {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "UserStats")
+    @JoinColumn(name = "User")
     User user;
 
     private int chessWins;
