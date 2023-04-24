@@ -13,13 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
-
-<<<<<<< HEAD
-=======
     ListView chessPieceList;
     String[] items;
 
->>>>>>> 96080ae939e775a09e6c667b9910c19a28a95957
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +26,11 @@ public class SecondActivity extends AppCompatActivity {
             String text = getIntent().getExtras().getString("key1");
             tv.setText(text);
         }
-<<<<<<< HEAD
-=======
 
         Resources res = getResources();
         chessPieceList = (ListView) findViewById(R.id.listOfThings);
         items = res.getStringArray(R.array.ChessPieces);
 
         chessPieceList.setAdapter(new ArrayAdapter<String>(this, R.layout.my_listview_detail, items));
->>>>>>> 96080ae939e775a09e6c667b9910c19a28a95957
     }
 }

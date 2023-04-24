@@ -1,9 +1,6 @@
 package TotalKnockoutChess.Users;
 
 import TotalKnockoutChess.Lobby.Lobby;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +13,6 @@ public class User {
     private int id;
     private String username;        //User username
     private String password;        //User password
-
-    @ManyToOne
-    private Lobby lobby;
 
     @ElementCollection
     private List<String> incomingFriendRequests;        //User's incoming friend requests

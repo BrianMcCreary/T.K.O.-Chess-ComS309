@@ -3,16 +3,15 @@ package TotalKnockoutChess.Boxing;
 import TotalKnockoutChess.Users.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class BoxingGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-//    @OneToOne
-//    @JoinColumn(name = "player1")
     @Column(columnDefinition = "TEXT")
     private String player1;
 
@@ -23,8 +22,6 @@ public class BoxingGame {
     @Column(columnDefinition = "TEXT")
     private String p1Move;
 
-//    @OneToOne
-//    @JoinColumn(name = "player2")
     @Column(columnDefinition = "TEXT")
     private String player2;
 
@@ -35,9 +32,14 @@ public class BoxingGame {
     @Column(columnDefinition = "TEXT")
     private String p2Move;
 
-    public BoxingGame(String player1, String player2) {
+    //List of spectators in the game
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> spectators;
+
+    public BoxingGame(String player1, String player2, List<String> spectators) {
         this.player1 = player1;
         this.player2 = player2;
+        this.spectators = spectators;
         p1Lives = 3;
         p2Lives = 3;
         p1Move = "";
@@ -89,11 +91,11 @@ public class BoxingGame {
         this.player2 = player2;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -111,6 +113,22 @@ public class BoxingGame {
 
     public String getP2Move() {
         return p2Move;
+    }
+
+    public void addToSpectators(String username) {
+        spectators.add(username);
+    }
+
+    public void removeFromSpectators(String username) {
+        spectators.remove(username);
+    }
+
+    public List<String> getSpectators() {
+        return spectators;
+    }
+
+    public boolean contains(String username) {
+        return player1.equals(username) || player2.equals(username) || spectators.contains(username);
     }
 
     //Method used to get the username of the round winner

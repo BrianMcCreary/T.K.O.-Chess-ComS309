@@ -19,7 +19,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-@ServerEndpoint(value = "/websocket/{username}")
+@ServerEndpoint(value = "/websocket/boxing/{username}")
 @Component
 public class BoxingGameSocket {
 
@@ -51,7 +51,7 @@ public class BoxingGameSocket {
         //Username of the user in this session
         String username = sessionUsernameMap.get(session);
 
-        //Boxing game that the user in this sesssion is in
+        //Boxing game that the user in this session is in
         BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
 
         //If the received message is a move, update game accordingly
@@ -78,19 +78,18 @@ public class BoxingGameSocket {
                     bg.dockLife(bg.getPlayer2());
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundWin " + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundLoss " + bg.getP1Move());
+                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player1 " + bg.getP1Move() + " Player2 " + bg.getP2Move());
                 }
                 else if (roundWinner.equals(bg.getPlayer2())) {
                     bg.dockLife(bg.getPlayer1());
- //                   usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
-                    Session s = usernameSessionMap.get(bg.getPlayer1());
-                    s.getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
-                    Session s2 = usernameSessionMap.get(bg.getPlayer2());
-                    s2.getBasicRemote().sendText("RoundWin " + bg.getP1Move());
- //                   usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
+                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player2 " + bg.getP2Move() + " Player1 " + bg.getP1Move());
                 }
                 else if (roundWinner.equals("tie")) {
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
+                    sendSpectatorsMessage(bg.getPlayer1(), "RoundTie " + bg.getP1Move());
                 }
                 bg.clearMoves();
             }
@@ -101,17 +100,17 @@ public class BoxingGameSocket {
                 if (gameWinner.equals(bg.getPlayer1())) {
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameWin");
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameLoss");
+                    sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player1");
                 }
                 else if (gameWinner.equals(bg.getPlayer2())) {
                     usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameLoss");
                     usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameWin");
+                    sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player2");
                 }
                 boxingGameRepository.delete(bg);
             }
             else {
-                BoxingGame saver = bg;
-                boxingGameRepository.delete(bg);    //Had to do this because .flush() wasn't working
-                boxingGameRepository.save(saver);
+                boxingGameRepository.save(bg);
             }
         }
         //If the user leaves, send information to their opponent's client and delete the boxing game from the repository
@@ -122,6 +121,7 @@ public class BoxingGameSocket {
             else if (bg.getPlayer2().equals(username)) {
                 usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("OpponentLeft");
             }
+            sendSpectatorsMessage(username, "PlayerLeft");
             boxingGameRepository.delete(bg);
         }
     }
@@ -132,6 +132,16 @@ public class BoxingGameSocket {
 
         //Remove the session and username from the Maps
         String username = sessionUsernameMap.get(session);
+        BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
+        if (bg != null) {
+            if (bg.getSpectators().contains(username)) {
+                bg.removeFromSpectators(username);
+                boxingGameRepository.save(bg);
+            }
+            else if (bg.getPlayer1().equals(username) || bg.getPlayer2().equals(username)) {
+                boxingGameRepository.delete(bg);
+            }
+        }
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
     }
@@ -145,10 +155,19 @@ public class BoxingGameSocket {
     //Helper method used to find the boxing game that the given user is in
     private BoxingGame findBoxingGame(List<BoxingGame> boxingGameList, String username) {
         for (BoxingGame bg : boxingGameList) {
-            if (bg.getPlayer1().equals(username) || bg.getPlayer2().equals(username)) {
+            if (bg.contains(username)) {
                 return bg;
             }
         }
         return null;
+    }
+
+    //Helper method used to send spectators a message
+    private void sendSpectatorsMessage(String username, String message) throws IOException {
+        BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
+        List<String> spectators = bg.getSpectators();
+        for (String spec : spectators) {
+            usernameSessionMap.get(spec).getBasicRemote().sendText(message);
+        }
     }
 }

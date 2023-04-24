@@ -23,7 +23,7 @@
         android:id="@+id/AcceptFriendBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_weight="0.36"
+        android:layout_weight="0.35"
         android:layout_gravity="center"
         android:backgroundTint="@color/soft_blue"
         android:text="Accept"

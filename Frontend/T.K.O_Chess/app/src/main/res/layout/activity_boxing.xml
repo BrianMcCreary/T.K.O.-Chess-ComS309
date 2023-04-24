@@ -134,11 +134,11 @@
         app:srcCompat="@drawable/jab" />
 
     <TextView
-        android:id="@+id/TimeRemainingText"
+        android:id="@+id/GameNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Time Remaining"
+        android:text="Total Knock Out!"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,71 +146,67 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/GameTimeText"
+        android:id="@+id/RoundNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="00:00s"
+        android:text="Round 0"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/TimeRemainingText"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="@+id/GameNameText"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/TimeRemainingText"
-        app:layout_constraintTop_toBottomOf="@+id/TimeRemainingText" />
+        app:layout_constraintStart_toStartOf="@+id/GameNameText"
+        app:layout_constraintTop_toBottomOf="@+id/GameNameText" />
+
 
 
     <ImageView
-        android:id="@+id/Player1FullHeart3"
+        android:id="@+id/Player1Heart6"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart5"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart4"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="@+id/Player1Heart1"
+        app:layout_constraintTop_toBottomOf="@+id/Player1Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart2"
+        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/Player1Heart1"
+        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player1Heart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="@+id/Player1NameText"
         app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
         app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1FullHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1FullHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@+id/Player1FullHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/Player1EmptyHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player1EmptyHeart3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/Player1NameText"
-        app:layout_constraintTop_toBottomOf="@+id/Player1NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-
 
     <TextView
         android:id="@+id/Player1NameText"
@@ -225,56 +221,54 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
+
     <ImageView
-        android:id="@+id/Player2FullHeart1"
+        android:id="@+id/Player2Heart6"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/Player2FullHeart2"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart5"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart4"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Heart1"
+        app:srcCompat="@drawable/heart" />
+
+    <ImageView
+        android:id="@+id/Player2Heart3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart2"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player2FullHeart2"
+        android:id="@+id/Player2Heart2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/Player2FullHeart3"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Heart1"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
 
     <ImageView
-        android:id="@+id/Player2FullHeart3"
+        android:id="@+id/Player2Heart1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
         app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
         app:srcCompat="@drawable/heart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/Player2EmptyHeart2"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/Player2EmptyHeart3"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
-
-    <ImageView
-        android:id="@+id/Player2EmptyHeart3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
-        app:layout_constraintTop_toBottomOf="@+id/Player2NameText"
-        app:srcCompat="@drawable/emptyheart" />
 
     <TextView
         android:id="@+id/Player2NameText"
@@ -282,11 +276,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="30dp"
-        android:text="Player2 Name"
+        android:text="Opponent"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/BoxingRingImgView"
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView" />
+
+
 
     <Button
         android:id="@+id/BlockBtn"
@@ -298,11 +294,10 @@
         android:backgroundTint="#00A0FF"
         android:text="Block"
         android:textColor="#000000"
-
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmMoveTime" />
+        app:layout_constraintTop_toBottomOf="@+id/SelectMoveText" />
 
     <Button
         android:id="@+id/JabBtn"
@@ -339,28 +334,16 @@
         app:layout_constraintTop_toBottomOf="@+id/KickBtn" />
 
     <TextView
-        android:id="@+id/ConfirmMoveText"
+        android:id="@+id/SelectMoveText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Confirm move in: "
+        android:text="Select your move"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/BoxingRingImgView"
         app:layout_constraintStart_toStartOf="@+id/BoxingRingImgView"
         app:layout_constraintTop_toBottomOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/ConfirmMoveTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="00:00s"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/ConfirmMoveText"
-        app:layout_constraintStart_toStartOf="@+id/ConfirmMoveText"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmMoveText" />
 
     <LinearLayout
         android:id="@+id/OptionsLayout"
@@ -370,45 +353,6 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/BoxingMenuBtn"
         app:layout_constraintTop_toTopOf="@+id/BoxingMenuBtn"></LinearLayout>
-
-    <TextView
-        android:id="@+id/MoveCountdown3Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="100dp"
-        android:visibility="invisible"
-        android:text="3"
-        android:textColor="#4CAF50"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/MoveCountdown2Text"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/MoveCountdown2Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:visibility="invisible"
-        android:text="2"
-        android:textColor="#FFEB3B"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
-
-    <TextView
-        android:id="@+id/MoveCountdown1Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="100dp"
-        android:visibility="invisible"
-        android:text="1"
-        android:textColor="#FF5722"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/MoveCountdown2Text"
-        app:layout_constraintTop_toTopOf="@+id/BoxingRingImgView" />
 
     <LinearLayout
         android:id="@+id/GameOverLayout"
