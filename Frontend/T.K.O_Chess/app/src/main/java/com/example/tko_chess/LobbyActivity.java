@@ -33,6 +33,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tko_chess.ultils.Const;
 
+/**
+ * @author Lex Somers
+ */
 public class LobbyActivity extends AppCompatActivity {
 
 	//Text Declarations
