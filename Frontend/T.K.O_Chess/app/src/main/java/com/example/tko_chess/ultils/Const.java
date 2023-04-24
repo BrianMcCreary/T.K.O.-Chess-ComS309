@@ -1,5 +1,8 @@
 package com.example.tko_chess.ultils;
 
+/**
+ * @author Zachary Scurlock,
+ */
 public class Const {
 
     public static final String URL_SERVER_AN5 = "http://coms-309-005.class.las.iastate.edu:8080";
