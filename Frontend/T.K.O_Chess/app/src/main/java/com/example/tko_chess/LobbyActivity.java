@@ -150,6 +150,7 @@ public class LobbyActivity extends AppCompatActivity {
 					LobbyEvent.setText("");
 
 					switch (strings[0]) {
+						//Sent to client upon joining lobby
 						case "JustJoined":
 							String[] temp = message.split(" ");
 							String[] members = temp[1].split("#");
@@ -161,6 +162,7 @@ public class LobbyActivity extends AppCompatActivity {
 							break;
 
 
+						//Sent to host upon connection to websocket
 						case "LobbyCode":
 							//Display lobby code
 							LobbyCode = strings[1];
