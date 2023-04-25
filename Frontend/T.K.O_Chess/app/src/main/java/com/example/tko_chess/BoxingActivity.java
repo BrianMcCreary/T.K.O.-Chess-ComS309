@@ -141,6 +141,10 @@ public class BoxingActivity extends AppCompatActivity {
         WhoPlayer1 = getIntent().getExtras().getString("Player1");
         WhoPlayer2 = getIntent().getExtras().getString("Player2");
 
+        //Hides excess starting hearts according to initial health
+        displayStartingOpponentHealth();
+        displayStartingUserHealth();
+
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
@@ -729,6 +733,56 @@ public class BoxingActivity extends AppCompatActivity {
                 Player1Kick.setVisibility(View.INVISIBLE);
                 Player1Jab.setVisibility(View.INVISIBLE);
                 Player1Block.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+
+    //Displays a number of hearts equal the the players' starting health
+    private void displayStartingUserHealth() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (UserHealth == 5) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 4) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                    UserHeart5.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 3) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                    UserHeart5.setVisibility(View.INVISIBLE);
+                    UserHeart4.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+
+
+    //Displays a number of hearts equal the the players' starting health
+    private void displayStartingOpponentHealth() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (OpponentHealth == 5) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 4) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                    OpponentHeart5.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 3) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                    OpponentHeart5.setVisibility(View.INVISIBLE);
+                    OpponentHeart4.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }
