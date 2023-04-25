@@ -72,8 +72,8 @@ public class BoxingActivity extends AppCompatActivity {
     TextView SelectMoveText;
 
     //Int declarations
-    int UserHealth = 6;
-    int OpponentHealth = 6;
+    int UserHealth = 3;
+    int OpponentHealth = 3;
 
     //LinearLayout declarations
     LinearLayout OptionsLayout;
