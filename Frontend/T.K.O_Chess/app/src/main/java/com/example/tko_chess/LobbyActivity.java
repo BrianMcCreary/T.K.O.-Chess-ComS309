@@ -329,6 +329,7 @@ public class LobbyActivity extends AppCompatActivity {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
 		//Takes user back to host or join screen
 		LobbyToHostJoin.setOnClickListener(new View.OnClickListener() {
 			@Override
