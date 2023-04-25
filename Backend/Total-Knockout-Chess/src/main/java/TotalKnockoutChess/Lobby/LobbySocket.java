@@ -138,15 +138,18 @@ public class LobbySocket {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
                 boolean sendCantStart = l.getPlayer1Ready() && l.getPlayer2Ready();
+                boolean wasNotP1 = true;
                 if (l.getPlayer1() != null) {
                     if (l.getPlayer1().equals(username)) {
+                        wasNotP1 = false;
                         l.setPlayer1Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
                         sendAllUsersMessage(username, "UnReady " + username);
                     }
-                } else if (l.getPlayer2() != null) {
-                    if (l.getPlayer2().equals(username)) {
+                }
+                if (l.getPlayer2() != null) {
+                    if (l.getPlayer2().equals(username) && wasNotP1) {
                         l.setPlayer2Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
