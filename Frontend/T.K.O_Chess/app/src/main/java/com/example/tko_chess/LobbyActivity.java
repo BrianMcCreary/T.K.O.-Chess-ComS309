@@ -225,6 +225,9 @@ public class LobbyActivity extends AppCompatActivity {
 							//If user is ready, disable leaving the lobby.
 							disableLeaveLobby();
 
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
+
 							//Exit switch statement
 							break;
 
@@ -236,6 +239,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 							//If user is not ready, enable leaving the lobby.
 							enableLeaveLobby();
+
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
 
 							//Exit switch statement
 							break;
@@ -249,6 +255,9 @@ public class LobbyActivity extends AppCompatActivity {
 							//Hides or displays ready status buttons
 							hideOrShowViews();
 
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
+
 							//Exit switch statement
 							break;
 
@@ -258,6 +267,9 @@ public class LobbyActivity extends AppCompatActivity {
 							//Updates client side info
 							playerLeftLobby(strings);
 
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
+
 							//Exit switch statement
 							break;
 
@@ -266,6 +278,9 @@ public class LobbyActivity extends AppCompatActivity {
 						case "Spectator":
 							//Tells users spectator joined
 							spectatorJoined(strings);
+
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
 
 							//Exit switch statement
 							break;
@@ -288,8 +303,8 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Enables the start game button
 						case "CanStart":
-							//Tells host they can start the game
-							hostCanStart(strings);
+							//Alerts player of lobby event
+							displayLobbyEvent(strings);
 
 							enableStartGame();
 
@@ -609,10 +624,6 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				//Tell users who switched to what
-				lobbyMessage = strings[3] + " (" + strings[1] + ")" + " switched to " + strings[2] + ".";
-				LobbyEvent.setText(lobbyMessage);
-
 				//If user who changed PlayerType was currUser, store their new PlayerType.
 				if (strings[3].equals(currUser.getUsername())) {
 					PlayerOrSpectator = strings[2];
@@ -671,10 +682,6 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				//Tell users who unreadied
-				lobbyMessage = strings[1] + " has un-readied.";
-				LobbyEvent.setText(lobbyMessage);
-
 				//If user who changed ready status was currUser, store their new ready status.
 				if (strings[1].equals(currUser.getUsername())) {
 					UserReady = false;
@@ -703,10 +710,6 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				//Tell users who readied up
-				lobbyMessage = strings[1] + " has readied-up.";
-				LobbyEvent.setText(lobbyMessage);
-
 				//If user who changed ready status was currUser, store their new ready status.
 				if (strings[1].equals(currUser.getUsername())) {
 					UserReady = true;
@@ -732,88 +735,134 @@ public class LobbyActivity extends AppCompatActivity {
 
 	//Updates client info about players
 	private void playerLeftLobby(String[] strings) {
-		//Tell users who left
-		lobbyMessage = strings[2] + " (" + strings[1] + ")" + " has left.";
-		LobbyEvent.setText(lobbyMessage);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Updates who is player 1
+				if (strings[1].equals("Player1")) {
+					WhoPlayer1 = "";
+				} else
 
-		//Updates who is player 1
-		if (strings[1].equals("Player1")) {
-			WhoPlayer1 = "";
-		} else
+					//Updates who is player 2
+					if (strings[1].equals("Player2")) {
+						WhoPlayer2 = "";
+					}
 
-			//Updates who is player 2
-			if (strings[1].equals("Player2")) {
-				WhoPlayer2 = "";
+				//Remove member visual from lobby
+				int numChildren = LobbyMembersLayout.getChildCount();
+				for (int i = 0; i < numChildren; i++) {
+					LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);
+					TextView memberName = (TextView) member.getChildAt(0);
+
+					//If this member object is the member who left, then...
+					if (memberName.getText().equals(strings[2])) {
+						LobbyMembersLayout.removeViewAt(i);
+					}
+				}
 			}
-
-		//Remove member visual from lobby
-		int numChildren = LobbyMembersLayout.getChildCount();
-		for (int i = 0; i < numChildren; i++) {
-			LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);
-			TextView memberName = (TextView) member.getChildAt(0);
-
-			//If this member object is the member who left, then...
-			if (memberName.getText().equals(strings[2])) {
-				LobbyMembersLayout.removeViewAt(i);
-			}
-		}
+		});
 	}
 
 
 
 	//Updates client that spectator has joined
 	private void spectatorJoined(String[] strings) {
-		//Tell users who joined
-		lobbyMessage = strings[1] + " has joined.";
-		LobbyEvent.setText(lobbyMessage);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				//Add host visual
+				if (HostOrJoin.equals("host")) {
+					//Create member object
+					View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
+					TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);
+					ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);
+					Button KickMemberBtn = (Button) newMember.findViewById(R.id.KickMemberBtn);
 
-		//Add host visual
-		if (HostOrJoin.equals("host")) {
-			//Create member object
-			View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
-			TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);
-			ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);
-			Button KickMemberBtn = (Button) newMember.findViewById(R.id.KickMemberBtn);
+					//Set name and spectator image
+					MemberNameText.setText(strings[1]);
+					MemberReadyStatus.setImageResource(R.drawable.spectator);
 
-			//Set name and spectator image
-			MemberNameText.setText(strings[1]);
-			MemberReadyStatus.setImageResource(R.drawable.spectator);
+					//Kicks user from lobby
+					KickMemberBtn.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							WebSocket.send("Kick " + strings[1]);
+						}
+					});
 
-			//Kicks user from lobby
-			KickMemberBtn.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					WebSocket.send("Kick " + strings[1]);
+					//Add the new member object to the screen.
+					LobbyMembersLayout.addView(newMember);
+				} else
+
+				//Add member visual
+				if (HostOrJoin.equals("join")) {
+					//Create member object
+					View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
+					TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);
+					ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);
+
+					//Set name and spectator image
+					MemberNameText.setText(strings[1]);
+					MemberReadyStatus.setImageResource(R.drawable.spectator);
+
+					//Add the new member object to the screen.
+					LobbyMembersLayout.addView(newMember);
 				}
-			});
-
-			//Add the new member object to the screen.
-			LobbyMembersLayout.addView(newMember);
-		} else
-
-		//Add member visual
-		if (HostOrJoin.equals("join")) {
-			//Create member object
-			View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);
-			TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);
-			ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);
-
-			//Set name and spectator image
-			MemberNameText.setText(strings[1]);
-			MemberReadyStatus.setImageResource(R.drawable.spectator);
-
-			//Add the new member object to the screen.
-			LobbyMembersLayout.addView(newMember);
-		}
+			}
+		});
 	}
 
 
 
-	//Updates host that they can start the game
-	private void hostCanStart(String[] response) {
-		//Tell host both players are ready
-		lobbyMessage = "Both players ready.";
-		LobbyEvent.setText(lobbyMessage);
+	//Displays lobby event at top of screen
+	private void displayLobbyEvent(String[] strings) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				switch (strings[0]) {
+					case "Ready":
+						//Tell users who readied up
+						lobbyMessage = strings[1] + " has readied-up.";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+
+
+					case "UnReady":
+						//Tell users who unreadied
+						lobbyMessage = strings[1] + " has un-readied.";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+
+
+					case "Switch":
+						//Tell users who switched to what
+						lobbyMessage = strings[3] + " (" + strings[1] + ")" + " switched to " + strings[2] + ".";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+
+
+					case "Spectator":
+						//Tell users who joined
+						lobbyMessage = strings[1] + " has joined.";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+
+
+					case "PlayerLeft":
+						//Tell users who left
+						lobbyMessage = strings[2] + " (" + strings[1] + ")" + " has left.";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+
+
+					case "CanStart":
+						//Tell host both players are ready
+						lobbyMessage = "Both players ready.";
+						LobbyEvent.setText(lobbyMessage);
+						break;
+				}
+			}
+		});
 	}
 
 
