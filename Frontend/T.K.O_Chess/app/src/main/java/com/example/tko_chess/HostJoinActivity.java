@@ -21,21 +21,61 @@ import com.example.tko_chess.ultils.Const;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Lex Somers
+ *
+ * Host or join screen where users can choost to host a new game lobby
+ *      or join an existing one, specified by a lobby code.
+ */
 public class HostJoinActivity extends AppCompatActivity {
 
 	//Button Declarations
+	/**
+	 * Takes user back to main menu.
+	 */
 	ImageButton HorJToMenuBtn;
+
+	/**
+	 * Takes user to lobby screen. User is the host of that new lobby.
+	 */
 	Button HostGameBtn;
+
+	/**
+	 * Takes user to lobby screen if the lobby specified by EditText LobbyCode exists.
+	 */
 	Button JoinGameBtn;
 
 	//Text Declarations
+	/**
+	 * Entry field for specifying which lobby the user wishes to join.
+	 */
 	EditText LobbyCode;
+
+	/**
+	 * Displays join lobby errors.
+	 */
 	TextView JoinError;
 
 	//String Declarations
+	/**
+	 * Holds what game mode the user selected to play.
+	 */
 	String GameMode = "";
+
+	/**
+	 * Holds the end of the URL path mapping for any requests made.
+	 */
 	String URLConcatenation = "";
 
+
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+	 *
+	 *     Loads host and join game screen onto device.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +91,9 @@ public class HostJoinActivity extends AppCompatActivity {
 		LobbyCode = findViewById(R.id.LobbyCodeEditText);
 		JoinError = findViewById(R.id.JoinErrorText);
 
+		/**
+		 * Takes user to main menu screen.
+		 */
 		HorJToMenuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -59,6 +102,9 @@ public class HostJoinActivity extends AppCompatActivity {
 			}
 		});
 
+		/**
+		 * Takes user to lobby screen. User is host of that new lobby.
+		 */
 		HostGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -71,6 +117,9 @@ public class HostJoinActivity extends AppCompatActivity {
 			}
 		});
 
+		/**
+		 * Takes user to lobby screen if the lobby specified by EditText LobbyCode exists.
+		 */
 		JoinGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

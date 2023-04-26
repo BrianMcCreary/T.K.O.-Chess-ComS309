@@ -35,10 +35,14 @@ import com.example.tko_chess.ultils.Const;
 
 /**
  * @author Lex Somers
+ *
+ * Lobby that users can join to spectate or play games.
  */
 public class LobbyActivity extends AppCompatActivity {
 
-	//Text Declarations
+	/**
+	 * Text Declarations
+	 */
 	TextView ReadyStatus;
 	TextView HostOptions;
 	TextView LobbyCodeText;
@@ -46,7 +50,9 @@ public class LobbyActivity extends AppCompatActivity {
 	TextView LobbyError;
 	TextView LobbyEvent;
 
-	//Button Declarations
+	/**
+	 * Button Declarations
+	 */
 	ImageButton LobbyToHostJoin;
 	Button Player1Btn;
 	Button Player2Btn;
@@ -56,7 +62,9 @@ public class LobbyActivity extends AppCompatActivity {
 	Button StartGameBtn;
 	Button GameSettingsBtn;
 
-	//String Declarations
+	/**
+	 * String Declarations
+	 */
 	String GameMode = "";
 	String LobbyCode = "";
 	String HostOrJoin = "";
@@ -71,16 +79,34 @@ public class LobbyActivity extends AppCompatActivity {
 	LinearLayout LobbyOverlay;
 	LinearLayout LobbyMembersLayout;
 
-	//User ready tracker
+	/**
+	 * User ready tracker
+	 */
 	boolean UserReady = false;
 	boolean CanStart = false;
 
-	//Currently logged in user.
+	/**
+	 * Stores the currently logged in user.
+	 */
 	SingletonUser currUser = SingletonUser.getInstance();
 
-	//WebSocket declarations
+	/**
+	 * WebSocket used for connecting to the lobby, leaving the lobby,
+	 *      changing from spectator to player, changing user ready
+	 *      status, and kicking other lobby members from the lobby
+	 *      if user is the host.
+	 */
 	private WebSocketClient WebSocket;
 
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+	 *
+	 * Loads lobby screen onto device. Certain views and buttons will be disabled
+	 *     or hidden based on user's player type and role within the lobby.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -349,8 +375,9 @@ public class LobbyActivity extends AppCompatActivity {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-		//Takes user back to host or join screen
+		/**
+		 * Takes user back to host or join screen
+		 */
 		LobbyToHostJoin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -378,8 +405,9 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
-
-		//Changes user's role in the lobby to player 1 if possible.
+		/**
+		 * Changes user's role in the lobby to player 1 if possible.
+		 */
 		Player1Btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -394,8 +422,9 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
-
-		//Changes user's role in the lobby to player 2 if possible.
+		/**
+		 * Changes user's role in the lobby to player 2 if possible.
+		 */
 		Player2Btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -410,8 +439,9 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
-
-		//Changes user's role in the lobby to spectator.
+		/**
+		 * Changes user's role in the lobby to spectator.
+		 */
 		SpectatorBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -426,8 +456,9 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
-
-		//Changes status of user to not ready
+		/**
+		 * Changes status of user to not ready
+		 */
 		NotReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -442,8 +473,9 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
-
-		//Changes status of user to ready
+		/**
+		 * Changes status of user to ready
+		 */
 		ReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -459,7 +491,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 
-		//Starts games for all players and spectators
+		/**
+		 * Starts games for all players and spectators
+		 */
 		StartGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -479,8 +513,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Hides Lobby event text and error texts
+	/**
+	 * Hides Lobby event text and error texts
+	 */
 	private void hideEventErrorTexts() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -494,8 +529,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Hides views on screen depending on the user's role in the lobby
+	/**
+	 * Hides views on screen depending on the user's role in the lobby
+	 */
 	private void hideOrShowViews() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -542,8 +578,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Disables and hides all buttons on screen
+	/**
+	 * Disables and hides all buttons on screen
+	 */
 	private void hideAllButtons() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -570,8 +607,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Displays the host left overlay
+	/**
+	 * Displays the host left overlay
+	 * @param message is a string containing the information of why
+	 *                the user must leave the lobby.
+	 */
 	private void displayExitLobbyOverlay(String message) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -606,8 +646,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Enables start game button
+	/**
+	 * Enables start game button
+	 */
 	private void enableStartGame() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -620,8 +661,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Disables start game button
+	/**
+	 * Disables start game button
+	 */
 	private void disableStartGame() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -634,8 +676,9 @@ public class LobbyActivity extends AppCompatActivity {
 }
 
 
-
-	//Disables leave lobby button
+	/**
+	 * Disables leave lobby button
+	 */
 	private  void disableLeaveLobby() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -646,8 +689,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Disables leave lobby button
+	/**
+	 * Disables leave lobby button
+	 */
 	private void enableLeaveLobby() {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -658,8 +702,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Switches client side data for role that was switched
+	/**
+	 * Switches client side data for role that was switched
+	 * @param strings is a string array containing the information
+	 *                which lobby member switched to what new role.
+	 */
 	private void switchPlayerType(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -717,8 +764,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Updates client info about user ready status
+	/**
+	 * Updates client info about user ready status
+	 * @param strings is a string array containing the information of
+	 *                which user unreadied.
+	 */
 	private void userUnReadied(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -747,8 +797,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Updates client info about user ready status
+	/**
+	 * Updates client info about user ready status
+	 * @param strings is a string array containing the information of
+	 * 	              which user readied.
+	 */
 	private void userReadied(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -777,8 +830,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Updates client info about players
+	/**
+	 * Updates client info about players
+	 * @param strings is a string array containing the information of
+	 *                which lobby member left the lobby.
+	 */
 	private void playerLeftLobby(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -809,8 +865,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Updates client that spectator has joined
+	/**
+	 * Updates client that spectator has joined
+	 * @param strings is a string array containing the information of
+	 *                which user has just joined the lobby.
+	 */
 	private void spectatorJoined(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -858,8 +917,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Displays lobby event at top of screen
+	/**
+	 * Displays lobby event at top of screen
+	 * @param strings is a string array containing the information of
+	 *                what change in the lobby status has just occurred.
+	 */
 	private void displayLobbyEvent(String[] strings) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -911,8 +973,13 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
-
-	//Gets array of all members in the lobby and their information
+	/**
+	 * Displays who is in the lobby and what their corresponding player type
+	 *     and or ready status are.
+	 * @param listMembers is a string array containing the information of
+	 *                    all lobby members, their player type, and their
+	 *                    ready status if applicable.
+	 */
 	private void displayLobbyMembers(String[] listMembers) {
 		runOnUiThread(new Runnable() {
 			@Override

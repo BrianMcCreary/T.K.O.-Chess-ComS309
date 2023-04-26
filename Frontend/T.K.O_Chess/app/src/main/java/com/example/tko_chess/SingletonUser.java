@@ -18,20 +18,30 @@ import org.json.JSONObject;
 
 /**
  * @author Lex Somers
+ *
+ * Singleton class made to store the currently logged in user and relevant information.
  */
 public class SingletonUser extends AppCompatActivity {
 
-    // Static variable reference of CurrUser
-    // of type SingletonUser
+    /**
+     * Static instance of the class that is returned when getInstance() is called.
+     */
     private static SingletonUser UserInstance = null;
 
-    // JSONObject that holds the currently logged in user's username and password
+    /**
+     * JSONObject that holds the currently logged in user's information.
+     */
     private static JSONObject UserObject = null;
 
 
 
     // Static method
     // Returns an instance of this singleton class.
+
+    /**
+     * Gets an instance of the currently logged in user.
+     * @return an instance of this singleton class.
+     */
     public static synchronized SingletonUser getInstance()
     {
         if (UserInstance == null) {
@@ -45,14 +55,21 @@ public class SingletonUser extends AppCompatActivity {
     // Constructor
     // Here we will be creating private constructor
     // restricted to this class itself
+
+    /**
+     * Constructor
+     */
     private SingletonUser() {
         UserObject = null;
         //Instantiate UserObject
     }
 
 
-
-    //Instantiates the UserObejct variable with a JSONObject representation of the user trying to login
+    /**
+     * Instantiates the UserObejct variable with a JSONObject representation of the user trying to login
+     * @param user String containing logged in user's username.
+     * @param context
+     */
     public void updateUserObject(String user, Context context) {
 
         //Get user object from backend
@@ -72,9 +89,9 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-
-    // Static method
-    // Static method to log user out by nulling the static instance of the class and JSONObject variable
+    /**
+     *  Static method to log user out by nulling the static instance of the class and JSONObject variable
+     */
     public static void logout()
     {
         UserInstance = null;
@@ -82,15 +99,10 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-
-    /*//Returns a JSONObject of the currently logged in user.
-    public JSONObject getUserObject() {
-        return UserObject;
-    }*/
-
-
-
-    //Returns a String with the username of the currently logged in user.
+    /**
+     * Gets the username of the currently logged in user.
+     * @return String with the username of the currently logged in user.
+     */
     public String getUsername()  {
         try {
             return (String) UserObject.get("username");
@@ -100,36 +112,20 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-
-    //Returns a String with the password of the currently logged in user.
+    /**
+     * Gets the password of the currently logged in user.
+     * @return String with the password of the currently logged in user.
+     * @throws JSONException if JSONObejct is null.
+     */
     public String getPassword() throws JSONException {
         return (String) UserObject.get("password");
     }
 
 
-
-/*    //Returns a JSONArray with Strings of the username and password of the currently logged in user.
-    public JSONArray getUserArray() {
-        //Instantiate UserArray
-        JSONArray UserArray = new JSONArray();
-        try {
-            UserArray.put(UserObject.get("username"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            UserArray.put(UserObject.get("password"));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        return UserArray;
-    }*/
-
-
-
-    //Returns a JSONArray with Strings of the friends of the currently logged in user.
+    /**
+     * Gets the friends of the currently logged in user.
+     * @return JSONArray with Strings of the friends of the currently logged in user.
+     */
     public JSONArray getListOfFriends() {
         try {
             return (JSONArray) UserObject.get("friends");
@@ -139,6 +135,11 @@ public class SingletonUser extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Unknown method.
+     * @return Unknown
+     */
     public JSONArray getListOfUsers(){
         try{
             return (JSONArray) UserObject.get("users");
@@ -148,8 +149,10 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-
-    //Returns a JSONArray with Strings of the incoming friend requests of the currently logged in user.
+    /**
+     * Gets the pending friend requests of the currently logged in user.
+     * @return JSONArray with Strings of the incoming friend requests of the currently logged in user.
+     */
     public JSONArray getListOfPendingFriendReq() {
         try {
             return (JSONArray) UserObject.get("incomingRequests");
@@ -159,8 +162,10 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-
-    //Returns a JSONArray with Strings of the out going friend requests of the currently logged in user.
+    /**
+     * Gets the sent friend requests of the currently logged in user.
+     * @return JSONArray with Strings of the out going friend requests of the currently logged in user.
+     */
     public JSONArray getListOfSentFriendReq() {
         try {
             return (JSONArray) UserObject.get("outgoingRequests");

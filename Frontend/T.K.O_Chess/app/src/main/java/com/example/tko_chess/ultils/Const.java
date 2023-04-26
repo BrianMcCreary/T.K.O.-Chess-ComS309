@@ -1,7 +1,7 @@
 package com.example.tko_chess.ultils;
 
 /**
- * @author Zachary Scurlock,
+ * @author Zachary Scurlock, Lex Somers
  */
 public class Const {
 
@@ -42,21 +42,8 @@ public class Const {
     //Used to confirm if lobby exists.
     public static final String URL_SERVER_LOBBYFIND = "http://coms-309-005.class.las.iastate.edu:8080/lobby/find/";
 
-    //Used for joining an existing game lobby.
-    public static final String URL_SERVER_LOBBYJOIN = "http://coms-309-005.class.las.iastate.edu:8080/lobby/join/";
-
-    //Used for creating and hosting a new game lobby
-    //TODO Probably not needed. Lobby creation happens automatically by connecting to websocket.
-    public static final String URL_SERVER_LOBBYHOST = "http://coms-309-005.class.las.iastate.edu:8080/lobby/host/";
-
-    //Spectator Address
-    public static final String URL_SERVER_LOBBYSPECTATE = "http://coms-309-005.class.las.iastate.edu:8080/lobby/spectate/";
-
     //Lobby WebSocket Address
     public static final String URL_SERVER_WEBSOCKETLOBBY = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/lobby/";
-
-    //Lobby WebSocket Address
-    public static final String URL_SERVER_GETLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/justJoined/";
 
 
 

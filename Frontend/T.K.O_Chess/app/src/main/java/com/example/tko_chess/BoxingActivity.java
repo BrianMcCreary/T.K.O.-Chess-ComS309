@@ -33,10 +33,15 @@ import com.example.tko_chess.ultils.Const;
 
 /**
  * @author Lex Somers
+ *
+ * Boxing activity where users play against another user in a game of
+ *     rock, papaer, scissors like "boxing".
  */
 public class BoxingActivity extends AppCompatActivity {
 
-    //ImageView declarations
+    /**
+     * ImageView declarations
+     */
     ImageView Player1Block;
     ImageView Player1Kick;
     ImageView Player1Jab;
@@ -58,38 +63,62 @@ public class BoxingActivity extends AppCompatActivity {
     ImageView OpponentHeart2;
     ImageView OpponentHeart1;
 
-    //Button declarations
+    /**
+     * Button declarations
+     */
     Button BlockBtn;
     Button KickBtn;
     Button JabBtn;
     Button ConfirmMoveBtn;
     ImageButton OptionsBtn;
 
-    //TextView declarations
+    /**
+     * TextView declarations
+     */
     TextView GameTimeText;
     TextView Player1Name;
     TextView Player2Name;
     TextView SelectMoveText;
 
-    //Int declarations
+    /**
+     * Int declarations
+     */
     int UserHealth = 3;
     int OpponentHealth = 3;
 
-    //LinearLayout declarations
+    /**
+     * LinearLayout declarations
+     */
     LinearLayout OptionsLayout;
     LinearLayout GameOverLayout;
 
-    //String declarations
+    /**
+     * String declarations
+     */
     String SelectedMove = "";
     String GameMode;
     String UserRole;
 
-    //Get access to currently logged in user info.
+    /**
+     * Stores the currently logged in user.
+     */
     SingletonUser currUser = SingletonUser.getInstance();
 
-    //WebSocket declarations
+    /**
+     * WebSocket used for sending and receiving messages about the user and
+     *      opponent's moves, round results, and when the game ends.
+     */
     private WebSocketClient WebSocket;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Loads boxing screen onto device. Displays starting health, opposing player's username,
+     *     and other information.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,6 +312,9 @@ public class BoxingActivity extends AppCompatActivity {
 
 
 
+        /**
+         * Selects and displays "block" as the user's selected move.
+         */
         BlockBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,6 +331,9 @@ public class BoxingActivity extends AppCompatActivity {
 
 
 
+        /**
+         * Selects and displays "kick" as the user's selected move.
+         */
         KickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -314,7 +349,9 @@ public class BoxingActivity extends AppCompatActivity {
         });
 
 
-
+        /**
+         * Selects and displays "jab" as the user's selected move.
+         */
         JabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -330,7 +367,9 @@ public class BoxingActivity extends AppCompatActivity {
         });
 
 
-
+        /**
+         * Locks in the user's currently selected move and updates backend of the change.
+         */
         ConfirmMoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -346,8 +385,9 @@ public class BoxingActivity extends AppCompatActivity {
         });
 
 
-
-        //Opens the options menu
+        /**
+         * Opens the options menu and displays buttons to leave the game and close the menu.
+         */
         OptionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -411,8 +451,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Makes buttons clickable and lightens their color back
+    /**
+     * Makes buttons clickable and changes their color
+     */
     private void enableButtons() {
         runOnUiThread(new Runnable() {
             @Override
@@ -433,8 +474,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Makes buttons un-clickable and darkens their color
+    /**
+     * Makes buttons un-clickable and changes their color
+     */
     private void disableButtons() {
         runOnUiThread(new Runnable() {
             @Override
@@ -455,8 +497,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Displays opponent's username on the screen
+    /**
+     * Displays opponent's username on the screen
+     */
     private void displayOpponentName() {
         runOnUiThread(new Runnable() {
             @Override
@@ -467,8 +510,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Shows opponent's move on screen.
+    /**
+     * Shows opponent's move on screen.
+     * @param move is a string containing the opponent's selected move.
+     */
     private void showOpponentMove(String move) {
 
         runOnUiThread(new Runnable() {
@@ -497,7 +542,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-    //Hides opponent's move on screen and displays default block stance again
+    /**
+     * Hides opponent's move on screen and displays default block stance again
+     */
     private void hideOpponentMove() {
         runOnUiThread(new Runnable() {
             @Override
@@ -510,8 +557,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Displays user's health on screen
+    /**
+     * Displays user's current health on screen
+     * @param health is an int containing the user's current health.
+     */
     private void lowerUserHealth(int health) {
         runOnUiThread(new Runnable() {
             @Override
@@ -540,8 +589,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Displays opponent's health on screen
+    /**
+     * Displays opponent's current health on screen
+     * @param health is an int containing the opponent's current health
+     */
     private void lowerOpponentHealth(int health) {
         runOnUiThread(new Runnable() {
             @Override
@@ -570,7 +621,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Displays end of game overlay and appropriate game over prompt.
+     * @param result is a string containing the information of why the game ended.
+     */
     private void displayGameResult(String result) {
         runOnUiThread(new Runnable() {
             @Override
@@ -604,7 +658,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Changes user's player icon to the "block" stance.
+     */
     private void showDefaultStance() {
         runOnUiThread(new Runnable() {
             @Override
@@ -617,8 +673,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Wait time seconds
+    /**
+     * Halts program for a specified amount of time.
+     * @param time is a double containing the information of how long to wait in seconds.
+     */
     private void waitTime(double time) {
         time *= 1000;
         try {
