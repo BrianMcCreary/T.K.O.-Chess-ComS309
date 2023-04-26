@@ -49,7 +49,7 @@ public class FriendsActivity extends AppCompatActivity {
     ImageButton FriendsToMenu;
 
     /**
-     * Sends friend request to the user specified in the FriendReqTo EditText
+     * Sends friend request to the user specified in the FriendReqTo EditText.
      */
     Button SendFriendReq;
 
@@ -70,7 +70,7 @@ public class FriendsActivity extends AppCompatActivity {
 
     /**
      * Friends list container that holds all of the user's friends
-     *      represented by smaller linear layout displays
+     *      represented by smaller linear layout displays.
      */
     LinearLayout FriendsListLayout;
 
@@ -144,7 +144,7 @@ public class FriendsActivity extends AppCompatActivity {
         displayFriendsList(currUser.getListOfFriends());
 
         /**
-         * Takes user back to main menu
+         * Takes user back to main menu.
          */
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +157,7 @@ public class FriendsActivity extends AppCompatActivity {
         });
 
         /**
-         * Sends out a friend request
+         * Sends out a friend request.
          */
         SendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +170,7 @@ public class FriendsActivity extends AppCompatActivity {
         });
 
         /**
-         * Displays incoming friend requests
+         * Displays incoming friend requests.
          */
         ViewPendingFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +180,7 @@ public class FriendsActivity extends AppCompatActivity {
         });
 
         /**
-         * Displays pending friend requests
+         * Displays pending friend requests.
          */
         ViewSentFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +203,7 @@ public class FriendsActivity extends AppCompatActivity {
 
     /**
      * Sends a POST request to the backend containing a friend request
-     *      to the user specified in the FriendReqTo EditText
+     *      to the user specified in the FriendReqTo EditText.
      */
     private void sendRequest() {
         //Request que used to send JSON requests

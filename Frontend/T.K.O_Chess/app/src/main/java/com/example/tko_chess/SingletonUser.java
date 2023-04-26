@@ -57,7 +57,7 @@ public class SingletonUser extends AppCompatActivity {
     // restricted to this class itself
 
     /**
-     * Constructor
+     * Constructor.
      */
     private SingletonUser() {
         UserObject = null;
@@ -66,7 +66,7 @@ public class SingletonUser extends AppCompatActivity {
 
 
     /**
-     * Instantiates the UserObejct variable with a JSONObject representation of the user trying to login
+     * Instantiates the UserObejct variable with a JSONObject representation of the user trying to login.
      * @param user String containing logged in user's username.
      * @param context
      */
@@ -90,7 +90,7 @@ public class SingletonUser extends AppCompatActivity {
 
 
     /**
-     *  Static method to log user out by nulling the static instance of the class and JSONObject variable
+     *  Static method to log user out by nulling the static instance of the class and JSONObject variable.
      */
     public static void logout()
     {

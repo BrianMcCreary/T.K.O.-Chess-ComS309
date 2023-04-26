@@ -41,7 +41,7 @@ public class LogInActivity extends AppCompatActivity {
 
     /**
      * Logs user into the account specified by
-     *      Username and Password EditTexts
+     *      Username and Password EditTexts.
      */
     Button Login;
 

@@ -34,7 +34,7 @@ import java.net.URL;
 public class RegisterActivity extends AppCompatActivity {
 
 	/**
-	 * EditTexts for registering a new user account
+	 * EditTexts for registering a new user account.
 	 */
 	EditText RegUsername, RegPassword, ConfirmPassword;
 
@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 		/**
-		 * Register button that creates a new user in remote server
+		 * Register button that creates a new user in remote server.
 		 */
 		Register = (Button) findViewById(R.id.RegisterBtn);
 		Register.setOnClickListener(new View.OnClickListener() {

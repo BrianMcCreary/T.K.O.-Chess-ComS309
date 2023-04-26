@@ -41,7 +41,7 @@ import com.example.tko_chess.ultils.Const;
 public class LobbyActivity extends AppCompatActivity {
 
 	/**
-	 * Text Declarations
+	 * Text Declarations.
 	 */
 	TextView ReadyStatus;
 	TextView HostOptions;
@@ -51,7 +51,7 @@ public class LobbyActivity extends AppCompatActivity {
 	TextView LobbyEvent;
 
 	/**
-	 * Button Declarations
+	 * Button Declarations.
 	 */
 	ImageButton LobbyToHostJoin;
 	Button Player1Btn;
@@ -63,7 +63,7 @@ public class LobbyActivity extends AppCompatActivity {
 	Button GameSettingsBtn;
 
 	/**
-	 * String Declarations
+	 * String Declarations.
 	 */
 	String GameMode = "";
 	String LobbyCode = "";
@@ -80,7 +80,7 @@ public class LobbyActivity extends AppCompatActivity {
 	LinearLayout LobbyMembersLayout;
 
 	/**
-	 * User ready tracker
+	 * User ready tracker.
 	 */
 	boolean UserReady = false;
 	boolean CanStart = false;
@@ -376,7 +376,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 		/**
-		 * Takes user back to host or join screen
+		 * Takes user back to host or join screen.
 		 */
 		LobbyToHostJoin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -457,7 +457,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 		/**
-		 * Changes status of user to not ready
+		 * Changes status of user to not ready.
 		 */
 		NotReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -474,7 +474,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 		/**
-		 * Changes status of user to ready
+		 * Changes status of user to ready.
 		 */
 		ReadyBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -492,7 +492,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 		/**
-		 * Starts games for all players and spectators
+		 * Starts games for all players and spectators.
 		 */
 		StartGameBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -514,7 +514,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Hides Lobby event text and error texts
+	 * Hides Lobby event text and error texts.
 	 */
 	private void hideEventErrorTexts() {
 		runOnUiThread(new Runnable() {
@@ -530,7 +530,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Hides views on screen depending on the user's role in the lobby
+	 * Hides views on screen depending on the user's role in the lobby.
 	 */
 	private void hideOrShowViews() {
 		runOnUiThread(new Runnable() {
@@ -579,7 +579,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Disables and hides all buttons on screen
+	 * Disables and hides all buttons on screen.
 	 */
 	private void hideAllButtons() {
 		runOnUiThread(new Runnable() {
@@ -608,7 +608,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Displays the host left overlay
+	 * Displays the host left overlay.
 	 * @param message is a string containing the information of why
 	 *                the user must leave the lobby.
 	 */
@@ -647,7 +647,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Enables start game button
+	 * Enables start game button.
 	 */
 	private void enableStartGame() {
 		runOnUiThread(new Runnable() {
@@ -662,7 +662,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Disables start game button
+	 * Disables start game button.
 	 */
 	private void disableStartGame() {
 		runOnUiThread(new Runnable() {
@@ -677,7 +677,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Disables leave lobby button
+	 * Disables leave lobby button.
 	 */
 	private  void disableLeaveLobby() {
 		runOnUiThread(new Runnable() {
@@ -690,7 +690,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Disables leave lobby button
+	 * Disables leave lobby button.
 	 */
 	private void enableLeaveLobby() {
 		runOnUiThread(new Runnable() {
@@ -703,7 +703,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Switches client side data for role that was switched
+	 * Switches client side data for role that was switched.
 	 * @param strings is a string array containing the information
 	 *                which lobby member switched to what new role.
 	 */
@@ -765,7 +765,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Updates client info about user ready status
+	 * Updates client info about user ready status.
 	 * @param strings is a string array containing the information of
 	 *                which user unreadied.
 	 */
@@ -798,7 +798,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Updates client info about user ready status
+	 * Updates client info about user ready status.
 	 * @param strings is a string array containing the information of
 	 * 	              which user readied.
 	 */
@@ -831,7 +831,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Updates client info about players
+	 * Updates client info about players.
 	 * @param strings is a string array containing the information of
 	 *                which lobby member left the lobby.
 	 */
@@ -866,7 +866,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Updates client that spectator has joined
+	 * Updates client that spectator has joined.
 	 * @param strings is a string array containing the information of
 	 *                which user has just joined the lobby.
 	 */
@@ -918,7 +918,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 
 	/**
-	 * Displays lobby event at top of screen
+	 * Displays lobby event at top of screen.
 	 * @param strings is a string array containing the information of
 	 *                what change in the lobby status has just occurred.
 	 */

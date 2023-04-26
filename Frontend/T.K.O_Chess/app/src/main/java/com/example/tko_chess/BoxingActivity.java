@@ -40,7 +40,7 @@ import com.example.tko_chess.ultils.Const;
 public class BoxingActivity extends AppCompatActivity {
 
     /**
-     * ImageView declarations
+     * ImageView declarations.
      */
     ImageView Player1Block;
     ImageView Player1Kick;
@@ -64,7 +64,7 @@ public class BoxingActivity extends AppCompatActivity {
     ImageView OpponentHeart1;
 
     /**
-     * Button declarations
+     * Button declarations.
      */
     Button BlockBtn;
     Button KickBtn;
@@ -73,7 +73,7 @@ public class BoxingActivity extends AppCompatActivity {
     ImageButton OptionsBtn;
 
     /**
-     * TextView declarations
+     * TextView declarations.
      */
     TextView GameTimeText;
     TextView Player1Name;
@@ -81,19 +81,19 @@ public class BoxingActivity extends AppCompatActivity {
     TextView SelectMoveText;
 
     /**
-     * Int declarations
+     * Int declarations.
      */
     int UserHealth = 3;
     int OpponentHealth = 3;
 
     /**
-     * LinearLayout declarations
+     * LinearLayout declarations.
      */
     LinearLayout OptionsLayout;
     LinearLayout GameOverLayout;
 
     /**
-     * String declarations
+     * String declarations.
      */
     String SelectedMove = "";
     String GameMode;
@@ -452,7 +452,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Makes buttons clickable and changes their color
+     * Makes buttons clickable and changes their color.
      */
     private void enableButtons() {
         runOnUiThread(new Runnable() {
@@ -475,7 +475,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Makes buttons un-clickable and changes their color
+     * Makes buttons un-clickable and changes their color.
      */
     private void disableButtons() {
         runOnUiThread(new Runnable() {
@@ -498,7 +498,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Displays opponent's username on the screen
+     * Displays opponent's username on the screen.
      */
     private void displayOpponentName() {
         runOnUiThread(new Runnable() {
@@ -543,7 +543,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Hides opponent's move on screen and displays default block stance again
+     * Hides opponent's move on screen and displays default block stance again.
      */
     private void hideOpponentMove() {
         runOnUiThread(new Runnable() {
@@ -558,7 +558,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Displays user's current health on screen
+     * Displays user's current health on screen.
      * @param health is an int containing the user's current health.
      */
     private void lowerUserHealth(int health) {
@@ -590,7 +590,7 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
-     * Displays opponent's current health on screen
+     * Displays opponent's current health on screen.
      * @param health is an int containing the opponent's current health
      */
     private void lowerOpponentHealth(int health) {
