@@ -23,21 +23,54 @@ import org.json.JSONObject;
 
 /**
  * @author Lex Somers
+ *
+ * Login page where users can log into an account or navigate to the register screen.
  */
 public class LogInActivity extends AppCompatActivity {
 
+    /**
+     * Entry field for username and password of the account
+     *      the user is trying to login to.
+     */
     EditText Username, Password;
-    TextView LoginError;
-    Button Login, LoginToRegister;
 
+    /**
+     * Displays login error message.
+     */
+    TextView LoginError;
+
+    /**
+     * Logs user into the account specified by
+     *      Username and Password EditTexts
+     */
+    Button Login;
+
+    /**
+     * Takes user to register screen.
+     */
+    Button LoginToRegister;
+
+    /**
+     * Context for volley requests.
+     */
     Context context = this;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Loads login screen onto device.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Register button that takes user to register page so they can make an account.
+        /**
+         * Register button that takes user to register page so they can make an account.
+         */
         LoginToRegister = (Button) findViewById(R.id.toRegisterBtn);
         LoginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +80,9 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 
-
-        //Login button that takes users to main menu after inputting a username and password
+        /**
+         * Login button that takes users to main menu after inputting a username and password.
+         */
         Login = (Button) findViewById(R.id.LoginButton);
         Login.setOnClickListener(new View.OnClickListener() {
             @Override

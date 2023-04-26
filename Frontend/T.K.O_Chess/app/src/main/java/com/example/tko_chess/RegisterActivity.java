@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,21 +27,48 @@ import java.net.URL;
 
 /**
  * @author Lex Somers
+ *
+ * Register screen where users can register a new account with a specified
+ *      username ana password.
  */
 public class RegisterActivity extends AppCompatActivity {
 
+	/**
+	 * EditTexts for registering a new user account
+	 */
 	EditText RegUsername, RegPassword, ConfirmPassword;
+
+	/**
+	 * Displays register errors.
+	 */
 	TextView RegisterError;
+
+	/**
+	 * Buttons for confirming registration or navigating back to login screen.
+	 */
 	Button Register, RegisterToLogin;
 
+	/**
+	 * Context for volley requests.
+	 */
 	Context context = this;
 
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+	 *
+	 *     Loads register screen onto device.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
-		//toLogin button that takes user back to login screen.
+		/**
+		 * toLogin button that takes user back to login screen.
+		 */
 		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);
 		RegisterToLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -50,8 +78,9 @@ public class RegisterActivity extends AppCompatActivity {
 		});
 
 
-
-		//Register button that creates a new user in remote server
+		/**
+		 * Register button that creates a new user in remote server
+		 */
 		Register = (Button) findViewById(R.id.RegisterBtn);
 		Register.setOnClickListener(new View.OnClickListener() {
 			@Override
