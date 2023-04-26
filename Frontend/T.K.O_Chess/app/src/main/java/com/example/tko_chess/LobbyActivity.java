@@ -41,52 +41,141 @@ import com.example.tko_chess.ultils.Const;
 public class LobbyActivity extends AppCompatActivity {
 
 	/**
-	 * Text Declarations.
+	 * TextView displays ready up/unready prompt.
 	 */
 	TextView ReadyStatus;
+
+	/**
+	 * TextView displays host options prompt.
+	 */
 	TextView HostOptions;
+
+	/**
+	 * TextView displays the lobby code.
+	 */
 	TextView LobbyCodeText;
+
+	/**
+	 * TextView displays error messages caused when leaving the lobby.
+	 */
 	TextView LeaveLobbyError;
+
+	/**
+	 * TextView displays error messages caused by some event within the lobby.
+	 */
 	TextView LobbyError;
+
+	/**
+	 * TextView displays the most recent event that occurred within the lobby.
+	 */
 	TextView LobbyEvent;
 
 	/**
-	 * Button Declarations.
+	 * Button takes user back to the host or join lobby screen.
 	 */
 	ImageButton LobbyToHostJoin;
+
+	/**
+	 * Button changes user's player type to Player1.
+	 */
 	Button Player1Btn;
+
+	/**
+	 * Button changes user's player type to Player2.
+	 */
 	Button Player2Btn;
+
+	/**
+	 * Button changes user's player type to Spectator.
+	 */
 	Button SpectatorBtn;
+
+	/**
+	 * ImageButton changes user's ready status to "NotReady" if user is not a spectator.
+	 */
 	ImageButton NotReadyBtn;
+
+	/**
+	 * ImageButton changes user's ready status to "Ready" if user is not a spectator.
+	 */
 	ImageButton ReadyBtn;
+
+	/**
+	 * Button starts the game for all users in the lobby. Viewable only by the host of the lobby.
+	 */
 	Button StartGameBtn;
+
+	/**
+	 * Button displays game settings menu. Viewable only by the host of the lobby.
+	 */
 	Button GameSettingsBtn;
 
 	/**
-	 * String Declarations.
+	 * String holds what gamemode a user is playing.
+	 * Gamemodes are chess, chessboxing, or boxing.
 	 */
 	String GameMode = "";
+
+	/**
+	 * String stores the of the lobby the user is currently in.
+	 */
 	String LobbyCode = "";
+
+	/**
+	 * String stores if the user is the host of the lobby or if they joined the lobby.
+	 */
 	String HostOrJoin = "";
+
+	/**
+	 * String stores the user's player type.
+	 * Player types are Player1, Player2, or Spectator.
+	 */
 	String PlayerOrSpectator = "Spectator";
+
+	/**
+	 * String stores which lobby member is currently assigned player type "Player1"
+	 */
 	String WhoPlayer1 = "";
+
+	/**
+	 * String stores which lobby member is currently assigned player type "Player2"
+	 */
 	String WhoPlayer2 = "";
+
+	/**
+	 * String stores a message about the most recent change of roles, ready status, etc within the lobby.
+	 */
 	String lobbyMessage = "";
 
+	/**
+	 * String stores the ending of the URL path mapping for the websocket.
+	 */
 	String URLConcatenation = "";
 
 	//LinearLayout Declarations
+	/**
+	 * LinearLayout container for the lobby overlay displayed upon closing of the lobby.
+	 */
 	LinearLayout LobbyOverlay;
+
+	/**
+	 * LinearLayout container displaying all lobby members and relevant information about them.
+	 * The display of the lobby members changes depending on if the user is the host or member of the lobby.
+	 */
 	LinearLayout LobbyMembersLayout;
 
 	/**
-	 * User ready tracker.
+	 * Boolean tracks if the user is currently readied up or not.
 	 */
 	boolean UserReady = false;
+
+	/**
+	 * Boolean tracks if the host can start the game or not.
+	 */
 	boolean CanStart = false;
 
 	/**
-	 * Stores the currently logged in user.
+	 * SingletonUser instance which stores the currently logged in user.
 	 */
 	SingletonUser currUser = SingletonUser.getInstance();
 

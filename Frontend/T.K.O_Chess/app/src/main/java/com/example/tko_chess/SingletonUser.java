@@ -68,7 +68,7 @@ public class SingletonUser extends AppCompatActivity {
     /**
      * Instantiates the UserObejct variable with a JSONObject representation of the user trying to login.
      * @param user String containing logged in user's username.
-     * @param context
+     * @param context Context for volley requests.
      */
     public void updateUserObject(String user, Context context) {
 

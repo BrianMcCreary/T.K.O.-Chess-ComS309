@@ -33,7 +33,7 @@ import org.json.JSONObject;
 public class FriendsActivity extends AppCompatActivity {
 
     /**
-     * Display Tracker. Used to track what method needs to be called to
+     * Int Used to track what method needs to be called to
      *      update the screen after sending a friend request.
      *
      *       1 = displaySentFriendReq()
@@ -44,63 +44,63 @@ public class FriendsActivity extends AppCompatActivity {
 
     //Button declarations
     /**
-     * Takes user back to main menu
+     * ImageButton takes user back to main menu.
      */
     ImageButton FriendsToMenu;
 
     /**
-     * Sends friend request to the user specified in the FriendReqTo EditText.
+     * Button sends friend requests to the user specified in the FriendReqTo EditText.
      */
     Button SendFriendReq;
 
     /**
-     * Displays the user's sent friend requests.
+     * Button displays the user's sent friend requests.
      */
     Button ViewSentFriendReq;
 
     /**
-     * Displays the user's pending friend requests.
+     * Button displays the user's pending friend requests.
      */
     Button ViewPendingFriendReq;
 
     /**
-     * Displays the user's friends.
+     * Button displays the user's friends.
      */
     Button ViewFriendsReq;
 
     /**
-     * Friends list container that holds all of the user's friends
-     *      represented by smaller linear layout displays.
+     * LinearLayout friends list container that holds all of the user's friends.
+     * Friends are displayed in smaller LinearLayouts that populate this LinearLayout.
      */
     LinearLayout FriendsListLayout;
 
     //TextView Declarations
     /**
-     * Displays any error messages.
+     * TextView displays any error messages.
      */
     TextView ErrorMessage;
 
     //EditText Declarations
     /**
-     * Specifies which other user the current user wants to send a friend request to.
+     * EditText specifies which other user the current user wants to send a friend request to.
      */
     EditText FriendReqTo;
 
     /**
-     * Stores the currently logged in user.
+     * SingletonUser instance which stores the currently logged in user.
      */
     SingletonUser currUser = SingletonUser.getInstance();
 
     //Friends list GET request
     //Creating request argument
     /**
-     * Context for the volley requests.
+     * Context for any volley requests made within this activity.
      */
 
     Context context = this;
 
     /**
-     * Holds the end of the URL path mapping for any requests made.
+     * String stores the ending of the URL path mapping for any http requests sent within this activity.
      */
     String URLConcatenation = "";
 

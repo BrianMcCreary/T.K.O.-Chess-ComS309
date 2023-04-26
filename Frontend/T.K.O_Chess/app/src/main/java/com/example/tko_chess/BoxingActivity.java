@@ -40,67 +40,179 @@ import com.example.tko_chess.ultils.Const;
 public class BoxingActivity extends AppCompatActivity {
 
     /**
-     * ImageView declarations.
+     * ImageView showing player 1's "block" pose.
      */
     ImageView Player1Block;
+
+    /**
+     * ImageView showing player 1's "kick" pose.
+     */
     ImageView Player1Kick;
+
+    /**
+     * ImageView showing player 1's "jab".
+     */
     ImageView Player1Jab;
 
+    /**
+     * ImageView showing user's 6th heart.
+     */
     ImageView UserHeart6;
+
+    /**
+     * ImageView showing user's 5th heart.
+     */
     ImageView UserHeart5;
+
+    /**
+     * ImageView showing user's 4th heart.
+     */
     ImageView UserHeart4;
+
+    /**
+     * ImageView showing user's 3rd heart.
+     */
     ImageView UserHeart3;
+
+    /**
+     * ImageView showing user's 2nd heart.
+     */
     ImageView UserHeart2;
+
+    /**
+     * ImageView showing user's 1st heart.
+     */
     ImageView UserHeart1;
 
+    /**
+     * ImageView showing player 2's "block" pose.
+     */
     ImageView Player2Block;
+
+    /**
+     * ImageView showing player 2's "kick" pose.
+     */
     ImageView Player2Kick;
+
+    /**
+     * ImageView showing player 2's "jab".
+     */
     ImageView Player2Jab;
+
+    /**
+     * ImageView showing user's 6th heart.
+     */
     ImageView OpponentHeart6;
+
+    /**
+     * ImageView showing user's 5th heart.
+     */
     ImageView OpponentHeart5;
+
+    /**
+     * ImageView showing user's 4th heart.
+     */
     ImageView OpponentHeart4;
+
+    /**
+     * ImageView showing user's 3rd heart.
+     */
     ImageView OpponentHeart3;
+
+    /**
+     * ImageView showing user's 2nd heart.
+     */
     ImageView OpponentHeart2;
+
+    /**
+     * ImageView showing user's 1st heart.
+     */
     ImageView OpponentHeart1;
 
     /**
-     * Button declarations.
+     * Button changes user's character pose to "block".
      */
     Button BlockBtn;
+
+    /**
+     * Button changes user's character pose to "kick".
+     */
     Button KickBtn;
+
+    /**
+     * Button changes user's character pose to "jab".
+     */
     Button JabBtn;
+
+    /**
+     * Button locks in user's selected move.
+     */
     Button ConfirmMoveBtn;
+
+    /**
+     * Button displays the options menu.
+     */
     ImageButton OptionsBtn;
 
     /**
-     * TextView declarations.
+     * TextView displays boxing header.
      */
     TextView GameTimeText;
+
+    /**
+     * TextView displays player1's username.
+     */
     TextView Player1Name;
+
+    /**
+     * TextView displays player2's username.
+     */
     TextView Player2Name;
+
+    /**
+     * TextView displays select move prompt.
+     */
     TextView SelectMoveText;
 
     /**
-     * Int declarations.
+     * Int holds user's current health.
      */
     int UserHealth = 3;
+
+    /**
+     * Int holds opponent's current health.
+     */
     int OpponentHealth = 3;
 
     /**
-     * LinearLayout declarations.
+     * LinearLayout container for the options menu.
      */
     LinearLayout OptionsLayout;
+
+    /**
+     * LinearLayout container for the "game over" overlay.
+     */
     LinearLayout GameOverLayout;
 
     /**
-     * String declarations.
+     * String holds user's currently selected move.
      */
     String SelectedMove = "";
+
+    /**
+     * String holds what gamemode a user is playing.
+     * Gamemodes are chess, chessboxing, or boxing.
+     */
     String GameMode;
+
+    /**
+     * String holds the user's player type.
+     * Player type Player1, Player2, or Spectator.
+     */
     String UserRole;
 
     /**
-     * Stores the currently logged in user.
+     * SingletonUser instance which stores the currently logged in user.
      */
     SingletonUser currUser = SingletonUser.getInstance();
 

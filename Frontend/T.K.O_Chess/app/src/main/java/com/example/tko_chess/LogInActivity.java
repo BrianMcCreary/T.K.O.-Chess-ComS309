@@ -29,24 +29,27 @@ import org.json.JSONObject;
 public class LogInActivity extends AppCompatActivity {
 
     /**
-     * Entry field for username and password of the account
-     *      the user is trying to login to.
+     * EditText entry field for username of the account the user is trying to login to.
      */
-    EditText Username, Password;
+    EditText Username;
 
     /**
-     * Displays login error message.
+     * EditText entry field for password of the account the user is trying to login to.
+     */
+    EditText Password;
+
+    /**
+     * TextView displays login error message.
      */
     TextView LoginError;
 
     /**
-     * Logs user into the account specified by
-     *      Username and Password EditTexts.
+     * Button logs user into the account specified by Username and Password EditTexts.
      */
     Button Login;
 
     /**
-     * Takes user to register screen.
+     * Button takes user to register screen.
      */
     Button LoginToRegister;
 

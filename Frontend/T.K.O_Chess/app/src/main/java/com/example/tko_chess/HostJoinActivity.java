@@ -52,7 +52,7 @@ public class HostJoinActivity extends AppCompatActivity {
 	EditText LobbyCode;
 
 	/**
-	 * Displays join lobby errors.
+	 * View displaying join lobby errors.
 	 */
 	TextView JoinError;
 
