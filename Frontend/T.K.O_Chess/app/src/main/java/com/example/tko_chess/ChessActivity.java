@@ -295,15 +295,9 @@ public class ChessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 tracker += 1;
                 if((tracker == 1)){
-                    //TODO
-                    // Send something to the backend telling them what button was pressed
-                    // store the name of the piece
-                    // show available moves by setting the background to a shade of green
                     tile = "A3";
                     WebSocket.send(tile);
                 } else if(tracker > 1){
-                    //TODO
-                    // Update tile with piece received from backend
                     setTransparent();
                     tile = "A3";
                     WebSocket.send(tile);
