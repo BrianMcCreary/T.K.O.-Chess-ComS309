@@ -16,24 +16,32 @@ public class ChessGame {
 
     private ChessGameTile[][] tiles;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "lobby")
-    Lobby lobby;
-
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
 
     private final String TOP_COLOR = "black";
     private final String BOTTOM_COLOR = "white";
 
+    private String whoseMove;
+    private String whiteFromSquare, blackFromSquare;
+
+    private String whitePlayer;
+    private String blackPlayer;
+
     //List of spectators in the game
     @ElementCollection
     private List<String> spectators;
 
-    public ChessGame(/*Lobby lobby, List<String> spectators*/) {
-        /**this.lobby = lobby;
-        this.spectators = spectators;
-         */
+    public ChessGame(){
+    }
+
+    public ChessGame(/*List<String> spectators,*/ String whitePlayer, String blackPlayer) {
+        /*this.spectators = spectators;*/
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+        whoseMove = "white";
+        whiteFromSquare = "";
+        blackFromSquare = "";
         initializeGame();
     }
 
@@ -105,10 +113,6 @@ public class ChessGame {
         this.id = id;
     }
 
-    // Getters and setters for lobby field.
-    public Lobby getLobby() { return lobby; }
-    public void setLobby(Lobby lobby) { this.lobby = lobby; }
-
     /**
      * Method to update the ChessGameTiles array
      * @param startCoordinate - original Coordinate of the moving piece
@@ -169,7 +173,8 @@ public class ChessGame {
 
     // Method to display a text version of the current board
     public void displayBoard(){
-        System.out.println("\ta\tb\tc\td\te\tf\tg\th");
+        System.out.println("\t\ta\t\t\tb\t\t\tc\t\t\td\t\t\te\t\t\tf\t\t\tg\t\t\th");
+        System.out.print("------------------------------------------------");
         System.out.println("------------------------------------------------");
 
         for(int row = BOARD_HEIGHT - 1; row >= 0; row--){
@@ -180,7 +185,35 @@ public class ChessGame {
             System.out.println("\t" + (row + 1));
         }
 
+        System.out.print("------------------------------------------------");
         System.out.println("------------------------------------------------");
-        System.out.println("\ta\tb\tc\td\te\tf\tg\th");
+        System.out.println("\t\ta\t\t\tb\t\t\tc\t\t\td\t\t\te\t\t\tf\t\t\tg\t\t\th");
     }
+
+    // Getters/Setters for player moves
+    public String getWhoseMove(){ return whoseMove;}
+    public void setWhoseMove(String whoseMove){ this.whoseMove = whoseMove; }
+
+    public String getWhiteFromSquare(){ return whiteFromSquare;}
+    public void setWhiteFromSquare(String whiteFromSquare){ this.whiteFromSquare = whiteFromSquare;}
+
+    public String getBlackFromSquare(){ return blackFromSquare;}
+    public void setBlackFromSquare(String blackFromSquare){ this.blackFromSquare = blackFromSquare;}
+
+    // Getter for a specific tile on board
+    public ChessGameTile getTile(String coordinate){
+        Coordinate coord = Coordinate.fromString(coordinate);
+
+        return tiles[coord.x][coord.y];
+    }
+
+    // Getters/Setters for players
+    public String getWhitePlayer(){ return whitePlayer; }
+    public void setWhitePlayer(String whitePlayer){ this.whitePlayer = whitePlayer; }
+    public String getBlackPlayer(){ return blackPlayer; }
+    public void setBlackPlayer(String blackPlayer){ this.blackPlayer = blackPlayer; }
+
+    // Getter for spectators
+    public List<String> getSpectators(){ return spectators; }
 }
+

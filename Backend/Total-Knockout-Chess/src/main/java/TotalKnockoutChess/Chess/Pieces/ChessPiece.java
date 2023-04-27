@@ -7,7 +7,7 @@ import java.io.Serializable;
 public abstract class ChessPiece implements Serializable {
 
     private static final long serialVersionUID = 0L;
-    String color;
+    public String color;
 
     public ChessPiece(String color) {
         this.color = color;

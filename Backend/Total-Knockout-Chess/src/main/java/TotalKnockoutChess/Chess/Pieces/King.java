@@ -28,9 +28,9 @@ public class King extends ChessPiece {
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
 //        Code to add every move as an available move for testing
-//        for(Coordinate c : Coordinate.values()){
-//            moves += c.toString() + " ";
-//        }
+        for(Coordinate c : Coordinate.values()){
+            moves += c.toString() + " ";
+        }
 
 
 
@@ -39,7 +39,7 @@ public class King extends ChessPiece {
 
     @Override
     public final String toString() {
-        return color.charAt(0) + "K";
+        return color + "King";
     }
 
 

@@ -13,12 +13,16 @@ public class Rook extends ChessPiece {
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
-        return "B2";
+        String moves = "";
+        for(Coordinate c : Coordinate.values()){
+            moves += c.toString() + " ";
+        }
+        return moves;
     }
 
     @Override
     public final String toString() {
-        return color.charAt(0) + "R";
+        return color + "Rook";
     }
 
     // Getter/Setter for canCastle field

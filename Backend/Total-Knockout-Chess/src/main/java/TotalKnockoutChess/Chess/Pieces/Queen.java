@@ -10,11 +10,15 @@ public class Queen extends ChessPiece {
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
-        return null;
+        String moves = "";
+        for(Coordinate c : Coordinate.values()){
+            moves += c.toString() + " ";
+        }
+        return moves;
     }
 
     @Override
     public final String toString() {
-        return color.charAt(0) + "Q";
+        return color + "Queen";
     }
 }

@@ -10,11 +10,11 @@ public class Empty extends ChessPiece{
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
-        return null;
+        return "";
     }
 
     @Override
     public final String toString() {
-        return color + "-";
+        return color + "--------";
     }
 }
