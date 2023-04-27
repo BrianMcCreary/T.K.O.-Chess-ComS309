@@ -64,7 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
         chess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                //Intent intent = new Intent(MainMenuActivity.this, HostJoinActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, ChessActivity.class); // TODO REMOVE LATER!!!!!
                 intent.putExtra("Gamemode", "Chess");
                 startActivity(intent);
             }
