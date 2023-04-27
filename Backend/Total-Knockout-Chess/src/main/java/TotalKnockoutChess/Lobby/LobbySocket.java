@@ -171,9 +171,9 @@ public class LobbySocket {
                     boxingGameRepository.save(bg);
                     lobbyRepository.delete(l);
                 } else if (messages[1].equals("Chess")) {
-
+                    //TODO
                 } else if (messages[1].equals("ChessBoxing")) {
-
+                    //TODO
                 }
             }
         }
@@ -200,7 +200,6 @@ public class LobbySocket {
                             sendAllUsersMessage(username, "Switch " + prev + "Player1 " + username);
                         }
                     }
-
                     if (l.getSpectators().contains(username)) {
                         prev = "Spectator ";
                         l.removeSpectator(username);
