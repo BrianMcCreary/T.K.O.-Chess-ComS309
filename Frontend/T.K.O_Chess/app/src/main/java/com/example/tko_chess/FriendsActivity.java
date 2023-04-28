@@ -27,38 +27,92 @@ import org.json.JSONObject;
 
 /**
  * @author Lex Somers
+ *
+ * Friends page where users can view, remove, accept, and deny friends/friend requests.
  */
 public class FriendsActivity extends AppCompatActivity {
 
-    //Display Tracker. Used to track what method needs to be called to update the screen after sending a friend request.
-    //1 = displaySentFriendReq(), 2 = displayPendingFriendReq(), others = displayFriendsList()
+    /**
+     * Int Used to track what method needs to be called to
+     *      update the screen after sending a friend request.
+     *
+     *       1 = displaySentFriendReq()
+     *       2 = displayPendingFriendReq()
+     *       others = displayFriendsList()
+     */
     int DisplayTracker = 0;
 
     //Button declarations
+    /**
+     * ImageButton takes user back to main menu.
+     */
     ImageButton FriendsToMenu;
+
+    /**
+     * Button sends friend requests to the user specified in the FriendReqTo EditText.
+     */
     Button SendFriendReq;
+
+    /**
+     * Button displays the user's sent friend requests.
+     */
     Button ViewSentFriendReq;
+
+    /**
+     * Button displays the user's pending friend requests.
+     */
     Button ViewPendingFriendReq;
+
+    /**
+     * Button displays the user's friends.
+     */
     Button ViewFriendsReq;
+
+    /**
+     * LinearLayout friends list container that holds all of the user's friends.
+     * Friends are displayed in smaller LinearLayouts that populate this LinearLayout.
+     */
     LinearLayout FriendsListLayout;
 
     //TextView Declarations
+    /**
+     * TextView displays any error messages.
+     */
     TextView ErrorMessage;
 
     //EditText Declarations
+    /**
+     * EditText specifies which other user the current user wants to send a friend request to.
+     */
     EditText FriendReqTo;
+
+    /**
+     * SingletonUser instance which stores the currently logged in user.
+     */
+    SingletonUser currUser = SingletonUser.getInstance();
 
     //Friends list GET request
     //Creating request argument
-    SingletonUser currUser = SingletonUser.getInstance();
+    /**
+     * Context for any volley requests made within this activity.
+     */
 
     Context context = this;
 
-    //Create a string holding the username to concatenate to the URL
+    /**
+     * String stores the ending of the URL path mapping for any http requests sent within this activity.
+     */
     String URLConcatenation = "";
 
 
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     * Loads friends screen onto device. Displays user's friends list by default.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +143,9 @@ public class FriendsActivity extends AppCompatActivity {
         //Display friends on screen upon initial loading of screen
         displayFriendsList(currUser.getListOfFriends());
 
-        //Take user back to main menu
+        /**
+         * Takes user back to main menu.
+         */
         FriendsToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +156,9 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
-        //Send out a friend request
+        /**
+         * Sends out a friend request.
+         */
         SendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +169,9 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
-        //Display incoming friend requests
+        /**
+         * Displays incoming friend requests.
+         */
         ViewPendingFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +179,9 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
-        //Display pending friend requests
+        /**
+         * Displays pending friend requests.
+         */
         ViewSentFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +189,9 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Displays the user's friends.
+         */
         ViewFriendsReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +201,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Sends a POST request to the backend containing a friend request
+     *      to the user specified in the FriendReqTo EditText.
+     */
     private void sendRequest() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
@@ -183,7 +251,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Displays all others that have sent a friend request to the user.
+     * @param PendingFriendReq List of other users who have sent the user a friend request
+     */
     private void displayPendingFriendReq(JSONArray PendingFriendReq) {
         //Clear scroll view
         FriendsListLayout.removeAllViews();
@@ -233,7 +304,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Sends POST request to backend accepting one of the user's incoming friend requests.
+     */
     private void acceptFriendReq() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
@@ -268,6 +341,9 @@ public class FriendsActivity extends AppCompatActivity {
 
 
 
+    /**
+     * Sends POST request to backend denying one of the user's incoming friend requests.
+     */
     private void denyFriendReq() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
@@ -302,6 +378,10 @@ public class FriendsActivity extends AppCompatActivity {
 
 
 
+    /**
+     * Displays all others that the user has sent a friend request to.
+     * @param SentFriendReq List of others the user has sent a friend request to.
+     */
     private void displaySentFriendReq(JSONArray SentFriendReq) {
         //Clear scroll view
         FriendsListLayout.removeAllViews();
@@ -340,6 +420,9 @@ public class FriendsActivity extends AppCompatActivity {
 
 
 
+    /**
+     * Sends POST request to backend canceling one of the user's outgoing friend requests.
+     */
     private void cancelFriendReq() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);
@@ -373,7 +456,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Displays all others the user is currently friends with.
+     * @param FriendsList List of others the user is friends with.
+     */
     private void displayFriendsList(JSONArray FriendsList) {
         FriendsListLayout.removeAllViews();
         FriendsListLayout = findViewById(R.id.FriendsLinearLayout);
@@ -412,7 +498,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Sends POST request to backend removing the selected friend from the user's friends list.
+     */
     private void removeFriend() {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(FriendsActivity.this);

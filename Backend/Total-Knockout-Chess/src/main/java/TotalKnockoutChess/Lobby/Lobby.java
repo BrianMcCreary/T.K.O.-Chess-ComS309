@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 @Entity
+@Table(name = "lobby")
 public class Lobby {
 
     @Id

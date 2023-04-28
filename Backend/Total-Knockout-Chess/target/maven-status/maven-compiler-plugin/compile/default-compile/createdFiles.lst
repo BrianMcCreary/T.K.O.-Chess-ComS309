@@ -1,5 +1,5 @@
 TotalKnockoutChess\Lobby\LobbySocket.class
-TotalKnockoutChess\Chess\Pieces\ChessPieceController.class
+TotalKnockoutChess\Chess\Pieces\Pawn.class
 TotalKnockoutChess\TotalKnockoutChessApplication.class
 TotalKnockoutChess\Users\UserController.class
 TotalKnockoutChess\Chess\ChessGameTile.class

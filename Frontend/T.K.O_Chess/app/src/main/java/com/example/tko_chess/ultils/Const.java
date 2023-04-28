@@ -1,7 +1,7 @@
 package com.example.tko_chess.ultils;
 
 /**
- * @author Zachary Scurlock,
+ * @author Zachary Scurlock, Lex Somers
  */
 public class Const {
 
@@ -44,9 +44,6 @@ public class Const {
 
     //Lobby WebSocket Address
     public static final String URL_SERVER_WEBSOCKETLOBBY = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/lobby/";
-
-    //Lobby WebSocket Address
-    public static final String URL_SERVER_GETLOBBY = "http://coms-309-005.class.las.iastate.edu:8080/lobby/justJoined/";
 
 
 
