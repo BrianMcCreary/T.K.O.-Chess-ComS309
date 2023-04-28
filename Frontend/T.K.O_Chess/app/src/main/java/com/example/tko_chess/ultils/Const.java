@@ -36,7 +36,7 @@ public class Const {
 
     //Used for accepting a friend request sent to you.
     public static final String URL_SERVER_ACCEPTFRIENDREQUEST = "http://coms-309-005.class.las.iastate.edu:8080/acceptFriendRequest/";
-    
+
     //Used to confirm if lobby exists.
     public static final String URL_SERVER_LOBBYFIND = "http://coms-309-005.class.las.iastate.edu:8080/lobby/find/";
 
