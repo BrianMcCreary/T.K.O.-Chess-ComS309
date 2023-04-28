@@ -285,6 +285,9 @@ public class BoxingActivity extends AppCompatActivity {
         //Hides excess starting hearts according to initial health
         displayStartingOpponentHealth();
         displayStartingUserHealth();
+        if (UserRole.equals("Spectator")) {
+            hideButtons();
+        }
 
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
@@ -463,7 +466,7 @@ public class BoxingActivity extends AppCompatActivity {
 
                                         //Lowers health of opponent
                                         UserHealth -= 1;
-                                        lowerOpponentHealth(UserHealth);
+                                        lowerUserHealth(UserHealth);
 
                                         //Hides both players' moves
                                         showDefaultStance();
@@ -690,6 +693,30 @@ public class BoxingActivity extends AppCompatActivity {
 
 
     /**
+     * Hides all buttons from view of spectator.
+     */
+    private void hideButtons() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Hides buttons from view
+                BlockBtn.setVisibility(View.INVISIBLE);
+                KickBtn.setVisibility(View.INVISIBLE);
+                JabBtn.setVisibility(View.INVISIBLE);
+                ConfirmMoveBtn.setVisibility(View.INVISIBLE);
+
+                //Makes buttons un-clickable.
+                BlockBtn.setClickable(false);
+                KickBtn.setClickable(false);
+                JabBtn.setClickable(false);
+                ConfirmMoveBtn.setClickable(false);
+            }
+        });
+    }
+
+
+
+    /**
      * Makes buttons un-clickable and changes their color.
      */
     private void disableButtons() {
@@ -714,18 +741,6 @@ public class BoxingActivity extends AppCompatActivity {
         });
     }
 
-
-    /**
-     * Displays opponent's username on the screen.
-     */
-    private void displayOpponentName() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //TODO Implement method that requests opponent's name and then displays it in textview?
-            }
-        });
-    }
 
 
     /**
@@ -775,8 +790,10 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Shows player 1's move on screen.
+    /**
+     * Shows player 1's move on screen.
+     * @param move
+     */
     private void showPlayer1Move(String move) {
         runOnUiThread(new Runnable() {
             @Override
@@ -920,8 +937,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Displays a number of hearts equal the the players' starting health
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
     private void displayStartingUserHealth() {
         runOnUiThread(new Runnable() {
             @Override
@@ -945,8 +963,9 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
-
-    //Displays a number of hearts equal the the players' starting health
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
     private void displayStartingOpponentHealth() {
         runOnUiThread(new Runnable() {
             @Override
