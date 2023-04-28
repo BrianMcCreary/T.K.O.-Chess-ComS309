@@ -1,18 +1,31 @@
 package TotalKnockoutChess.Chess.Pieces;
 
-import java.util.List;
+import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class Rook extends ChessPiece {
+    private static final long serialVersionUID = 0L;
+
+    private boolean canCastle;
 
     public Rook(String color) {
         super(color);
+        canCastle = true;
     }
 
-    List<Coordinate> calculateAvailableMoves() {
-        return null;
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+        String moves = "";
+        for(Coordinate c : Coordinate.values()){
+            moves += c.toString() + " ";
+        }
+        return moves;
     }
 
-    boolean move(int fromX, int fromY, int toX, int toY) {
-        return false;
+    @Override
+    public final String toString() {
+        return color + "Rook";
     }
+
+    // Getter/Setter for canCastle field
+    public boolean canCastle() { return canCastle; }
+    public void setCanCastle(boolean canCastle) { this.canCastle = canCastle; }
 }
