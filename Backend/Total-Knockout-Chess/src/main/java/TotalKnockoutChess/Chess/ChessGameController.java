@@ -29,11 +29,11 @@ public class ChessGameController {
     private final String failure = "{\"message\":\"failure\"}";
 
     @ApiOperation(value = "Creates a new ChessGame instance and saves it to the repository")
-    @PostMapping("/{whitePlayer}/{blackPlayer}")
-    public void createChessGame(/*@PathVariable Long lobbyCode,*/ @PathVariable String whitePlayer, @PathVariable String blackPlayer){
-        /*Lobby lobby = lobbyRepository.getByCode(lobbyCode);*/
+    @PostMapping("/{lobbyCode}/{whitePlayer}/{blackPlayer}")
+    public void createChessGame(@PathVariable Long lobbyCode, @PathVariable String whitePlayer, @PathVariable String blackPlayer){
+        Lobby lobby = lobbyRepository.getByCode(lobbyCode);
 
-        ChessGame game = new ChessGame(/*lobby, lobby.getSpectators(),*/ whitePlayer, blackPlayer);
+        ChessGame game = new ChessGame(whitePlayer, blackPlayer, lobby.getSpectators());
         chessGameRepository.save(game);
         chessGameRepository.flush();
 

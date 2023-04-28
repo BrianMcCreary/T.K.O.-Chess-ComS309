@@ -35,8 +35,8 @@ public class ChessGame {
     public ChessGame(){
     }
 
-    public ChessGame(/*List<String> spectators,*/ String whitePlayer, String blackPlayer) {
-        /*this.spectators = spectators;*/
+    public ChessGame(String whitePlayer, String blackPlayer, List<String> spectators) {
+        this.spectators = spectators;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         whoseMove = "white";

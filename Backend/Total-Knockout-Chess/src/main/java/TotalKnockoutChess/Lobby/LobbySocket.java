@@ -2,6 +2,8 @@ package TotalKnockoutChess.Lobby;
 
 import TotalKnockoutChess.Boxing.BoxingGame;
 import TotalKnockoutChess.Boxing.BoxingGameRepository;
+import TotalKnockoutChess.Chess.ChessGame;
+import TotalKnockoutChess.Chess.ChessGameRepository;
 import TotalKnockoutChess.Users.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,8 @@ public class LobbySocket {
     private static LobbyRepository lobbyRepository;
     private static UserRepository userRepository;
 
+    private static ChessGameRepository chessGameRepository;
+
     private static BoxingGameRepository boxingGameRepository;
 
     @Autowired
@@ -43,6 +47,11 @@ public class LobbySocket {
     @Autowired
     public void setBoxingGameRepository(BoxingGameRepository boxingGameRepository) {
         this.boxingGameRepository = boxingGameRepository;
+    }
+
+    @Autowired
+    public void setChessGameRepository(ChessGameRepository chessGameRepository) {
+        this.chessGameRepository = chessGameRepository;
     }
 
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
@@ -168,7 +177,10 @@ public class LobbySocket {
                     boxingGameRepository.save(bg);
                     lobbyRepository.delete(l);
                 } else if (messages[1].equals("Chess")) {
-
+                    sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
+                    ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
+                    chessGameRepository.save(cg);
+                    lobbyRepository.delete(l);
                 } else if (messages[1].equals("ChessBoxing")) {
 
                 }

@@ -59,8 +59,8 @@ public class ChessGameSocket {
 
         boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
         // Update booleans as appropriate
-        if(username.equals(whitePlayer)){ userIsWhitePlayer = true; }
-        if(username.equals(blackPlayer)){ userIsBlackPlayer = true; }
+        if(whitePlayer != null && username.equals(whitePlayer)){ userIsWhitePlayer = true; }
+        if(blackPlayer != null && username.equals(blackPlayer)){ userIsBlackPlayer = true; }
 
         String whoseMove = cg.getWhoseMove();
 
@@ -83,7 +83,7 @@ public class ChessGameSocket {
                     executePlayerTurn(cg, username, message, "black", whitePlayer);
                 }
                 else if(userIsWhitePlayer){
-                    // TODO Return players availables moves
+                    // TODO Return players available moves
                 }
                 break;
         }
@@ -99,7 +99,13 @@ public class ChessGameSocket {
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
-        // TODO
+        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+
+        // If user that left was one of the players, delete the game from the database
+        if( (cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
+                || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username)) ){
+            chessGameRepository.delete(cg);
+        }
     }
 
     @OnError
@@ -113,8 +119,10 @@ public class ChessGameSocket {
         ChessGame game = null;
 
         // Search through repository for chess game with username in it
-        for(ChessGame g : chessGameRepository.findAll()){
-            if(g.getWhitePlayer().equals(username) || g.getBlackPlayer().equals(username) || g.getSpectators().contains(username)){
+        for(ChessGame g : all){
+            if( g.getWhitePlayer()      != null && g.getWhitePlayer().equals(username)
+                || g.getBlackPlayer()   != null && g.getBlackPlayer().equals(username)
+                || g.getSpectators().contains(username)){
                 game = g;
             }
         }
