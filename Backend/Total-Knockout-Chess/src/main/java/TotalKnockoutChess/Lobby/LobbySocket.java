@@ -334,6 +334,7 @@ public class LobbySocket {
                 if (lobby.getPlayer1() != null) {
                     if (lobby.getPlayer1().equals(username)) {
                         who = "Player1 ";
+                        sendOtherUsersMessage(username, "PlayerLeft " + who + username);
                         if (lobby.getPlayer1Ready() && lobby.getPlayer2Ready()) {
                             usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText("CannotStart");
                         }
@@ -349,6 +350,7 @@ public class LobbySocket {
                 if (lobby.getPlayer2() != null) {
                     if (lobby.getPlayer2().equals(username)) {
                         who = "Player2 ";
+                        sendOtherUsersMessage(username, "PlayerLeft " + who + username);
                         if (lobby.getPlayer1Ready() && lobby.getPlayer2Ready()) {
                             usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText("CannotStart");
                         }
@@ -363,12 +365,12 @@ public class LobbySocket {
                 }
                 if (lobby.getSpectators().contains(username)) {
                     who = "Spectator ";
+                    sendOtherUsersMessage(username, "PlayerLeft " + who + username);
                     lobby.removeSpectator(username);
                 }
                 lobby.decrementUserCount();
                 lobbyRepository.save(lobby);
                 lobbyRepository.flush();
-                sendOtherUsersMessage(username, "PlayerLeft " + who + username);
             }
         }
         //Remove the session and username from the Maps
