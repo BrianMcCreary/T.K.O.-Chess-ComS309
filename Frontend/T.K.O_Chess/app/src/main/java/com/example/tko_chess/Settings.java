@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+/*
+ * @author Zachary Scurlock
+ * This is code for the functionality of the settings screen
+ */
 public class Settings extends AppCompatActivity {
 
-    ImageButton goBack;
+    ImageButton goBack; //When pressed the user will be taken back to the main menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,9 @@ public class Settings extends AppCompatActivity {
 
         goBack = findViewById(R.id.backBtn3);
 
+        /*
+         *  When pressed the user is taken back to the main menu
+         */
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

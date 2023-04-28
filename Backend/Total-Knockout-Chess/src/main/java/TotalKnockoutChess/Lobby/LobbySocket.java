@@ -147,15 +147,18 @@ public class LobbySocket {
             Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);
             if (l != null) {
                 boolean sendCantStart = l.getPlayer1Ready() && l.getPlayer2Ready();
+                boolean wasNotP1 = true;
                 if (l.getPlayer1() != null) {
                     if (l.getPlayer1().equals(username)) {
+                        wasNotP1 = false;
                         l.setPlayer1Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
                         sendAllUsersMessage(username, "UnReady " + username);
                     }
-                } else if (l.getPlayer2() != null) {
-                    if (l.getPlayer2().equals(username)) {
+                }
+                if (l.getPlayer2() != null) {
+                    if (l.getPlayer2().equals(username) && wasNotP1) {
                         l.setPlayer2Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
@@ -196,12 +199,16 @@ public class LobbySocket {
                     if (l.getPlayer2() != null) {
                         if (l.getPlayer2().equals(username)) {
                             prev = "Player2 ";
+                            if (l.getPlayer2Ready()) {
+                                l.setPlayer2Ready(false);
+                                lobbyRepository.save(l);
+                                lobbyRepository.flush();
+                                sendAllUsersMessage(username, "UnReady " + username);
+                            }
                             l.setPlayer2(null);
-                            l.setPlayer2Ready(false);
                             l.setPlayer1(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "UnReady " + username);
                             sendAllUsersMessage(username, "Switch " + prev + "Player1 " + username);
                         }
                     }
@@ -227,12 +234,16 @@ public class LobbySocket {
                     if (l.getPlayer1() != null) {
                         if (l.getPlayer1().equals(username)) {
                             prev = "Player1 ";
+                            if (l.getPlayer1Ready()) {
+                                l.setPlayer1Ready(false);
+                                lobbyRepository.save(l);
+                                lobbyRepository.flush();
+                                sendAllUsersMessage(username, "UnReady " + username);
+                            }
                             l.setPlayer1(null);
-                            l.setPlayer1Ready(false);
                             l.setPlayer2(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "UnReady " + username);
                             sendAllUsersMessage(username, "Switch " + prev + "Player2 " + username);
                         }
                     }
@@ -258,15 +269,19 @@ public class LobbySocket {
                     if (l.getPlayer1().equals(username)) {
                         wasNotP1 = false;
                         prev = "Player1 ";
-                        l.setPlayer1(null);
                         if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
                             usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText("CannotStart");
                         }
-                        l.setPlayer1Ready(false);
+                        if (l.getPlayer1Ready()) {
+                            l.setPlayer1Ready(false);
+                            lobbyRepository.save(l);
+                            lobbyRepository.flush();
+                            sendAllUsersMessage(username, "UnReady " + username);
+                        }
+                        l.setPlayer1(null);
                         l.addToSpectators(username);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "UnReady " + username);
                         sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                     }
                 }
@@ -274,15 +289,19 @@ public class LobbySocket {
                     if (l.getPlayer2() != null) {
                         if (l.getPlayer2().equals(username)) {
                             prev = "Player2 ";
-                            l.setPlayer2(null);
                             if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
                                 usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText("CannotStart");
                             }
-                            l.setPlayer2Ready(false);
+                            if (l.getPlayer2Ready()) {
+                                l.setPlayer2Ready(false);
+                                lobbyRepository.save(l);
+                                lobbyRepository.flush();
+                                sendAllUsersMessage(username, "UnReady " + username);
+                            }
+                            l.setPlayer2(null);
                             l.addToSpectators(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "UnReady " + username);
                             sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
                         }
                     }
@@ -316,10 +335,7 @@ public class LobbySocket {
                 if (lobby.getPlayer1() != null) {
                     if (lobby.getPlayer1().equals(username)) {
                         who = "Player1 ";
-                        lobby.setPlayer1(null);
                         if (lobby.getPlayer1Ready() && lobby.getPlayer2Ready()) {
-                            lobbyRepository.save(lobby);
-                            lobbyRepository.flush();
                             usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText("CannotStart");
                         }
                         if (lobby.getPlayer1Ready()) {
@@ -328,15 +344,13 @@ public class LobbySocket {
                             lobbyRepository.flush();
                             sendOtherUsersMessage(username, "Unready " + username);
                         }
+                        lobby.setPlayer1(null);
                     }
                 }
                 if (lobby.getPlayer2() != null) {
                     if (lobby.getPlayer2().equals(username)) {
                         who = "Player2 ";
-                        lobby.setPlayer2(null);
                         if (lobby.getPlayer1Ready() && lobby.getPlayer2Ready()) {
-                            lobbyRepository.save(lobby);
-                            lobbyRepository.flush();
                             usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText("CannotStart");
                         }
                         if (lobby.getPlayer2Ready()) {
@@ -345,6 +359,7 @@ public class LobbySocket {
                             lobbyRepository.flush();
                             sendOtherUsersMessage(username, "Unready " + username);
                         }
+                        lobby.setPlayer2(null);
                     }
                 }
                 if (lobby.getSpectators().contains(username)) {
