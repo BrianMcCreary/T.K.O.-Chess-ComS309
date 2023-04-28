@@ -7,11 +7,19 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
+<<<<<<< HEAD
             <value value="C:\Users\lexso\.android\avd\tester_2.avd" />
+=======
+            <value value="C:\Users\Lex\.android\avd\tester2.avd" />
+>>>>>>> dba2ef48342cf99d7aa9d9a2cdd3844c79d6072d
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
+<<<<<<< HEAD
     <timeTargetWasSelectedWithDropDown value="2023-04-28T03:01:26.208362700Z" />
+=======
+    <timeTargetWasSelectedWithDropDown value="2023-04-28T15:28:20.501931600Z" />
+>>>>>>> dba2ef48342cf99d7aa9d9a2cdd3844c79d6072d
   </component>
 </project>
