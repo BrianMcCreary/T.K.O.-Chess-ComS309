@@ -18,12 +18,11 @@ public class Profile_Editor extends AppCompatActivity {
     Button changePass; // takes user to the change password screen
 
     /**
-     *
      * @param savedInstanceState If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
-     *     loads the profile editor screen for the user
+     *     loads the profile editor screen for the user.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
