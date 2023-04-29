@@ -256,7 +256,7 @@ public class LobbyActivity extends AppCompatActivity {
 				@Override
 				public void onOpen(ServerHandshake serverHandshake) {
 					Log.d("OPEN", "run() returned: " + "is connecting");
-					System.out.println("onOpen returned");
+					System.out.println("Lobby onOpen returned");
 				}
 
 				@Override
@@ -307,6 +307,8 @@ public class LobbyActivity extends AppCompatActivity {
 								//Sending extra info about type of game and user's role in that game (Spectator or player)
 								intent.putExtra("UserRole", PlayerOrSpectator);
 								intent.putExtra("Gamemode", GameMode);
+								intent.putExtra("Player1", WhoPlayer1);
+								intent.putExtra("Player2", WhoPlayer2);
 
 								startActivity(intent);
 							} else
@@ -318,6 +320,8 @@ public class LobbyActivity extends AppCompatActivity {
 								//Sending extra info about type of game and user's role in that game (Spectator or player)
 								intent.putExtra("UserRole", PlayerOrSpectator);
 								intent.putExtra("Gamemode", GameMode);
+								intent.putExtra("Player1", WhoPlayer1);
+								intent.putExtra("Player2", WhoPlayer2);
 
 								startActivity(intent);
 							} else
@@ -329,6 +333,8 @@ public class LobbyActivity extends AppCompatActivity {
 								//Sending extra info about type of game and user's role in that game (Spectator or player)
 								intent.putExtra("UserRole", PlayerOrSpectator);
 								intent.putExtra("Gamemode", GameMode);
+								intent.putExtra("Player1", WhoPlayer1);
+								intent.putExtra("Player2", WhoPlayer2);
 
 								startActivity(intent);
 							}
@@ -444,7 +450,7 @@ public class LobbyActivity extends AppCompatActivity {
 				@Override
 				public void onClose(int code, String reason, boolean remote) {
 					Log.d("CLOSE", "onClose() returned: " + reason);
-					System.out.println("onClose returned");
+					System.out.println("Lobby onClose returned");
 				}
 
 				@Override
@@ -462,6 +468,7 @@ public class LobbyActivity extends AppCompatActivity {
 		WebSocket.connect();
 		//End of WebSocket code
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 		/**
@@ -494,6 +501,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes user's role in the lobby to player 1 if possible.
 		 */
@@ -509,6 +517,7 @@ public class LobbyActivity extends AppCompatActivity {
 				}
 			}
 		});
+
 
 
 		/**
@@ -528,6 +537,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes user's role in the lobby to spectator.
 		 */
@@ -545,6 +555,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes status of user to not ready.
 		 */
@@ -560,6 +571,7 @@ public class LobbyActivity extends AppCompatActivity {
 				}
 			}
 		});
+
 
 
 		/**
@@ -602,6 +614,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Hides Lobby event text and error texts.
 	 */
@@ -616,6 +629,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -667,6 +681,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Disables and hides all buttons on screen.
 	 */
@@ -694,6 +709,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -735,6 +751,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Enables start game button.
 	 */
@@ -748,6 +765,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -778,6 +796,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Disables leave lobby button.
 	 */
@@ -789,6 +808,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -853,6 +873,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Updates client info about user ready status.
 	 * @param strings is a string array containing the information of
@@ -884,6 +905,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -919,6 +941,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Updates client info about players.
 	 * @param strings is a string array containing the information of
@@ -952,6 +975,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -1004,6 +1028,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -1062,6 +1087,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Displays who is in the lobby and what their corresponding player type
 	 *     and or ready status are.
@@ -1092,16 +1118,31 @@ public class LobbyActivity extends AppCompatActivity {
 							MemberReadyStatus.setImageResource(R.drawable.spectator);
 						} else
 
-							//Display ready or not ready image
-							if (member[1].equals("Player1") || member[1].equals("Player2")) {
-								if (member[2].equals("NotReady")) {
-									MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
-								} else
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player1")) {
+							WhoPlayer1 = member[0];
 
-								if (member[2].equals("Ready")) {
-									MemberReadyStatus.setImageResource(R.drawable.readystatus);
-								}
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
 							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player2")) {
+							 WhoPlayer2 = member[0];
+
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
+							}
+						}
 
 						//Kicks user from lobby
 						KickMemberBtn.setOnClickListener(new View.OnClickListener() {
@@ -1130,16 +1171,31 @@ public class LobbyActivity extends AppCompatActivity {
 							MemberReadyStatus.setImageResource(R.drawable.spectator);
 						} else
 
-							//Display ready or not ready image
-							if (member[1].equals("Player1") || member[1].equals("Player2")) {
-								if (member[2].equals("NotReady")) {
-									MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
-								} else
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player1")) {
+							WhoPlayer1 = member[0];
 
-								if (member[2].equals("Ready")) {
-									MemberReadyStatus.setImageResource(R.drawable.readystatus);
-								}
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
 							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player2")) {
+							WhoPlayer2 = member[0];
+
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
+							}
+						}
 
 						//Add the new member object to the screen.
 						LobbyMembersLayout.addView(newMember);

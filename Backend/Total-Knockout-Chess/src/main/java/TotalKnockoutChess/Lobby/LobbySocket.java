@@ -178,12 +178,16 @@ public class LobbySocket {
                     sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     BoxingGame bg = new BoxingGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     boxingGameRepository.save(bg);
+                    boxingGameRepository.flush();
                     lobbyRepository.delete(l);
+                    lobbyRepository.flush();
                 } else if (messages[1].equals("Chess")) {
                     sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     chessGameRepository.save(cg);
+                    chessGameRepository.flush();
                     lobbyRepository.delete(l);
+                    lobbyRepository.flush();
                 } else if (messages[1].equals("ChessBoxing")) {
                     //TODO
                 }
