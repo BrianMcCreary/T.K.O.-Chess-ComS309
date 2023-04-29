@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3076db2-674d-47c1-bfa0-b1e56c016986" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log.2023-04-22.0.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log.2023-04-23.0.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log.2023-04-24.0.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Lobby/LobbySocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/TotalKnockoutChessApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/TotalKnockoutChessApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/BoxingActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LobbyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess/LobbyActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_boxing.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/activity_boxing.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/boxing_menu_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/game_menu_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

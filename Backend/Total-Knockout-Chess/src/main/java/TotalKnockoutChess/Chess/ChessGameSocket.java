@@ -1,6 +1,5 @@
 package TotalKnockoutChess.Chess;
 
-import TotalKnockoutChess.Boxing.BoxingGame;
 import TotalKnockoutChess.Chess.Pieces.ChessPiece;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
 import org.slf4j.Logger;

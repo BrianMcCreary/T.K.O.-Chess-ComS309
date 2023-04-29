@@ -29,7 +29,7 @@ public class ChessGame {
     private String blackPlayer;
 
     //List of spectators in the game
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> spectators;
 
     public ChessGame(){
