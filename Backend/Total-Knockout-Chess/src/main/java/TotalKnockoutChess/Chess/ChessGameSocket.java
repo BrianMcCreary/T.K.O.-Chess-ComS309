@@ -3,6 +3,7 @@ package TotalKnockoutChess.Chess;
 import TotalKnockoutChess.Boxing.BoxingGame;
 import TotalKnockoutChess.Chess.Pieces.ChessPiece;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
+import TotalKnockoutChess.Chess.Pieces.King;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,38 +55,53 @@ public class ChessGameSocket {
         //Chess game that the user in this session is in
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
-        String whitePlayer = cg.getWhitePlayer();
-        String blackPlayer = cg.getBlackPlayer();
+        // While the game is still going
+        if(cg.isRunning()) {
 
-        boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
-        // Update booleans as appropriate
-        if(whitePlayer != null && username.equals(whitePlayer)){ userIsWhitePlayer = true; }
-        if(blackPlayer != null && username.equals(blackPlayer)){ userIsBlackPlayer = true; }
+            String whitePlayer = cg.getWhitePlayer();
+            String blackPlayer = cg.getBlackPlayer();
 
-        String whoseMove = cg.getWhoseMove();
+            boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
+            // Update booleans as appropriate
+            if (whitePlayer != null && username.equals(whitePlayer)) {
+                userIsWhitePlayer = true;
+            }
+            if (blackPlayer != null && username.equals(blackPlayer)) {
+                userIsBlackPlayer = true;
+            }
 
-        // TODO FOR BACKEND TESTING
-        cg.displayBoard();
+            String whoseMove = cg.getWhoseMove();
 
-        switch(whoseMove){
-            // If it is white's turn
-            case "white":
-                if(userIsWhitePlayer){
-                    executePlayerTurn(cg, username, message, "white", blackPlayer);
+            // TODO FOR BACKEND TESTING
+            cg.displayBoard();
+
+            // If message is a coordinate
+            if(message.length() == 2) {
+                Coordinate coord = Coordinate.fromString(message);
+                ChessGameTile[][] board = cg.getBoard();
+                ChessPiece pieceAtCoord = cg.getTile(message).piece;
+                ChessGameTile whiteKingTile = cg.getKingTile("white");
+                ChessGameTile blackKingTile = cg.getKingTile("black");
+
+                switch (whoseMove) {
+                    // If it is white's turn
+                    case "white":
+                        if (userIsWhitePlayer) {
+                            executePlayerTurn(cg, username, message, "white", blackPlayer);
+                        } else if (userIsBlackPlayer) {
+                            sendPlayerMessage(username, pieceAtCoord.calculateAvailableMoves(board, coord, (King) blackKingTile.getPiece()));
+                        }
+                        break;
+                    // If it is black's turn
+                    case "black":
+                        if (userIsBlackPlayer) {
+                            executePlayerTurn(cg, username, message, "black", whitePlayer);
+                        } else if (userIsWhitePlayer) {
+                            sendPlayerMessage(username, pieceAtCoord.calculateAvailableMoves(board, coord, (King) whiteKingTile.getPiece()));
+                        }
+                        break;
                 }
-                else if(userIsBlackPlayer){
-                    // TODO Return players available moves
-                }
-                break;
-            // If it is black's turn
-            case "black":
-                if(userIsBlackPlayer){
-                    executePlayerTurn(cg, username, message, "black", whitePlayer);
-                }
-                else if(userIsWhitePlayer){
-                    // TODO Return players available moves
-                }
-                break;
+            }
         }
     }
 
@@ -186,13 +202,13 @@ public class ChessGameSocket {
                 switch(sideColor){
                     case "white":
                         cg.setWhoseMove("black");
-                        cg.setWhiteFromSquare("");
                         break;
                     case "black":
                         cg.setWhoseMove("white");
-                        cg.setBlackFromSquare("");
                         break;
                 }
+                cg.setWhiteFromSquare("");
+                cg.setBlackFromSquare("");
 
                 // Ensure the database is updated
                 chessGameRepository.save(cg);

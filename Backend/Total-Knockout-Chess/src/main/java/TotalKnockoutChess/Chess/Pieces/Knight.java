@@ -9,7 +9,7 @@ public class Knight extends ChessPiece {
         super(color);
     }
 
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king) {
         String moves = "";
         for(Coordinate c : Coordinate.values()){
             moves += c.toString() + " ";

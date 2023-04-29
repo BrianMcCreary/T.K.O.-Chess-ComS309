@@ -32,3 +32,43 @@
 2023-04-27 21:51:34.545  INFO 31548 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2023-04-27 21:51:34.545  INFO 31548 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-04-27 21:51:34.553  INFO 31548 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-04-29 16:27:11.281  INFO 14828 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-Q9MADKI with PID 14828 (C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by Ironm in C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess)
+2023-04-29 16:27:11.283  INFO 14828 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
+2023-04-29 16:27:11.953  INFO 14828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-04-29 16:27:12.020  INFO 14828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 6 JPA repository interfaces.
+2023-04-29 16:27:12.477  INFO 14828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-04-29 16:27:12.486  INFO 14828 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-04-29 16:27:12.486  INFO 14828 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-04-29 16:27:12.551  INFO 14828 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-04-29 16:27:12.552  INFO 14828 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1229 ms
+2023-04-29 16:27:12.667  INFO 14828 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-04-29 16:27:12.699  INFO 14828 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-29 16:27:12.749  INFO 14828 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.23.Final
+2023-04-29 16:27:12.877  INFO 14828 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-04-29 16:27:12.972  WARN 14828 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-29 16:27:12.976  INFO 14828 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-04-29 16:27:13.324  INFO 14828 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-04-29 16:27:13.332  INFO 14828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-04-29 16:27:13.350  INFO 14828 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2023-04-29 16:27:13.618  INFO 14828 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-04-29 16:27:15.184  INFO 14828 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-29 16:27:15.192  INFO 14828 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-29 16:27:15.499  INFO 14828 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-04-29 16:27:15.505  INFO 14828 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 4.531 seconds (JVM running for 4.826)
+2023-04-29 16:27:41.606  INFO 14828 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-04-29 16:27:41.607  INFO 14828 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-04-29 16:27:41.608  INFO 14828 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-04-29 16:27:41.645  INFO 14828 --- [http-nio-8080-exec-1] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-29 16:27:59.813  INFO 14828 --- [http-nio-8080-exec-3] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-29 16:28:50.915  INFO 14828 --- [http-nio-8080-exec-4] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: SwitchToP2
+2023-04-29 16:28:59.571  INFO 14828 --- [http-nio-8080-exec-5] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: SwitchToP1
+2023-04-29 16:29:04.805  INFO 14828 --- [http-nio-8080-exec-6] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Ready
+2023-04-29 16:29:10.296  INFO 14828 --- [http-nio-8080-exec-7] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Ready
+2023-04-29 16:29:17.319  INFO 14828 --- [http-nio-8080-exec-8] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Start Chess
+2023-04-29 16:30:12.944  INFO 14828 --- [http-nio-8080-exec-9] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: C1
+2023-04-29 16:30:37.703  INFO 14828 --- [http-nio-8080-exec-10] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: E3
+2023-04-29 16:35:14.362  INFO 14828 --- [http-nio-8080-exec-1] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: E2
+2023-04-29 16:37:26.110  INFO 14828 --- [http-nio-8080-exec-2] T.Chess.ChessGameSocket                  : Entered into Open
+2023-04-29 16:37:29.454  INFO 14828 --- [http-nio-8080-exec-3] T.Chess.ChessGameSocket                  : Entered into Open
+2023-04-29 16:37:35.068  INFO 14828 --- [http-nio-8080-exec-4] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:C1
+2023-04-29 16:38:17.593  INFO 14828 --- [http-nio-8080-exec-5] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:E3

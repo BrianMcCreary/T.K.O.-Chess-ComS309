@@ -17,9 +17,10 @@ public abstract class ChessPiece implements Serializable {
      * Method that, when implemented, determines a piece's available moves
      * @param board - the board where this piece resides
      * @param currentPosition - the current position of the piece (as a Coordinate object) relative to the board
+     * @param king - the King object on this piece's side
      * @return String that is space separated for each available move
      */
-    public abstract String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition);
+    public abstract String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king);
 
     /**
      * Method that, when implemented, returns a string of an abbreviated version of the piece's type

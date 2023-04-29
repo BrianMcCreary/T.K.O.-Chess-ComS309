@@ -14,10 +14,12 @@ public enum Coordinate {
     H1(7, 0), H2(7, 1), H3(7, 2), H4(7, 3), H5(7, 4), H6(7, 5), H7(7, 6), H8(7, 7);
 
     private static final Map<String, Coordinate> BY_STRING = new HashMap<>();
+    private static final Map<int[], Coordinate> BY_INTEGER = new HashMap<>();
 
     static{
         for(Coordinate c : values()){
             BY_STRING.put(c.toString(), c);
+            BY_INTEGER.put(new int[]{c.x, c.y}, c);
         }
     }
     public final int x, y;
@@ -28,5 +30,14 @@ public enum Coordinate {
 
     public static Coordinate fromString(String stringCoordinate){
         return BY_STRING.get(stringCoordinate);
+    }
+
+    /**
+     * Method that returns the coordinate from the given integer array
+     * @param intCoordinates - value
+     * @return
+     */
+    public static Coordinate fromInteger(int[] intCoordinates){
+        return BY_INTEGER.get(intCoordinates);
     }
 }

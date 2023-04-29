@@ -12,7 +12,7 @@ public class Rook extends ChessPiece {
         canCastle = true;
     }
 
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king) {
         String moves = "";
         for(Coordinate c : Coordinate.values()){
             moves += c.toString() + " ";
