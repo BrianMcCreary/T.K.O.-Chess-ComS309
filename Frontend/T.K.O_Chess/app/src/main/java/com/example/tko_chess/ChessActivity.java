@@ -332,10 +332,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -348,10 +350,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -364,10 +368,12 @@ public class ChessActivity extends AppCompatActivity {
                 if((tracker == 1)){
                     tile = "A3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -380,10 +386,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -396,10 +404,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -412,10 +422,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -428,10 +440,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -444,10 +458,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "A8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -460,10 +476,13 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B1";
                     WebSocket.send(tile);
+                    unhighlight();
+                    highlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -476,10 +495,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -492,10 +513,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -508,10 +531,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -524,10 +549,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -540,10 +567,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -556,10 +585,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -572,10 +603,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "B8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "B8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -588,10 +621,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -604,10 +639,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -620,10 +657,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -636,10 +675,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -652,10 +693,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -668,10 +711,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -684,10 +729,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -700,10 +747,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "C8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "C8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -716,10 +765,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -732,10 +783,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -748,10 +801,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -764,10 +819,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -780,10 +837,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -796,10 +855,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -812,10 +873,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -828,10 +891,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "D8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "D8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -844,10 +909,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -860,10 +927,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -876,10 +945,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -892,10 +963,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -908,10 +981,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -924,10 +999,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -940,10 +1017,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -956,10 +1035,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "E8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "E8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -972,10 +1053,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -988,10 +1071,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1004,10 +1089,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1020,10 +1107,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1036,10 +1125,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1052,10 +1143,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1068,10 +1161,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1084,10 +1179,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "F8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "F8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1100,10 +1197,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1116,10 +1215,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1132,10 +1233,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1148,10 +1251,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1164,10 +1269,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1180,10 +1287,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1196,10 +1305,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1212,10 +1323,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "G8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "G8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1228,10 +1341,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H1";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H1";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1244,10 +1359,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H2";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H2";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1260,10 +1377,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H3";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H3";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1276,10 +1395,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H4";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H4";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1292,10 +1413,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H5";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H5";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1308,10 +1431,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H6";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H6";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1324,10 +1449,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H7";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H7";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1340,10 +1467,12 @@ public class ChessActivity extends AppCompatActivity {
                 if(tracker == 1){
                     tile = "H8";
                     WebSocket.send(tile);
+                    highlight();
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "H8";
                     WebSocket.send(tile);
+                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
