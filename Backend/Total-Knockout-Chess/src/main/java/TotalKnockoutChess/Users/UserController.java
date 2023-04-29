@@ -68,6 +68,16 @@ public class UserController {
     @ApiOperation(value = "Delete the user with the given username")
     @PutMapping(path = "/users/{username}")
     public String deleteUser(@PathVariable String username) {
+        User user = null;
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                user = u;
+                break;
+            }
+        }
+        if (user == null) {
+            return failure;
+        }
         for (FriendRequest fr : friendRequestRepository.findAll()) {        //Iterate through all friend requests and remove the one's associated with this user
             if (fr.getSender().getUsername().equals(username)) {
                 fr.getReceiver().removeIncomingRequest(username);
@@ -88,13 +98,13 @@ public class UserController {
                 friendshipRepository.delete(f);
             }
         }
-        for (User u : userRepository.findAll()) {           //Delete the user
-            if (u.getUsername().equals(username)) {
-                userRepository.delete(u);
-                return success;
+        for (UserStats us : userStatsRepository.findAll()) {
+            if (us.getUser().getUsername().equals(user.getUsername())) {
+                userStatsRepository.delete(us);
             }
         }
-        return failure;
+        userRepository.delete(user);
+        return success;
     }
 
     //Method that returns a user object given a username
@@ -156,6 +166,7 @@ public class UserController {
             if (u.getUsername().equals(currentUsername)) {      //find current user
                 if (u.getPassword().equals(password)) {
                     u.setUsername(username);            //if given password matches, change username
+                    userRepository.save(u);
                     userRepository.flush();
                     return success;
                 }
@@ -178,6 +189,7 @@ public class UserController {
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly
                     u.setPassword(password);            //change password
+                    userRepository.save(u);
                     userRepository.flush();
                     return success;
                 }

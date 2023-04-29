@@ -23,6 +23,19 @@ public class UserStatsController {
         return null;    //UserStats not found
     }
 
+    @GetMapping(path = "/getUserStats/{username}")
+    public String getUserStatsString(@PathVariable String username) {
+        String message;
+        for (UserStats userStats : userStatsRepository.findAll()) {
+            if (userStats.getUser().getUsername().equals(username)) {
+                message = String.format("ChessBoxing %d %.1f Chess %d %.1f Boxing %d %.1f", userStats.getChessBoxingGames(), userStats.getChessBoxingWinRate(),
+                        userStats.getChessGames(), userStats.getChessWinRate(), userStats.getBoxingGames(), userStats.getBoxingWinRate());
+                return message;
+            }
+        }
+        return "";
+    }
+
     @PutMapping(path = "/userStats/chessWin/{username}")
     public String chessW(@PathVariable String username) {
         UserStats userStats = null;
