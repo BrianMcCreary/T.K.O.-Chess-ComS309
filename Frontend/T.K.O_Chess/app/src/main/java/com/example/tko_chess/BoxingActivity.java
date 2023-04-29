@@ -503,7 +503,7 @@ public class BoxingActivity extends AppCompatActivity {
         OptionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View inflatedLayout = getLayoutInflater().inflate(R.layout.boxing_menu_layout, null, false);
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
                 Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.ConcedeBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
                 Button TestBoxingBtn = (Button) inflatedLayout.findViewById(R.id.TestBoxingBtn);

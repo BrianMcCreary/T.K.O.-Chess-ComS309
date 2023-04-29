@@ -1,9 +1,14 @@
 package com.example.tko_chess;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
@@ -13,6 +18,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tko_chess.ultils.Const;
@@ -90,6 +96,10 @@ public class ChessActivity extends AppCompatActivity {
     ImageButton F8;
     ImageButton G8;
     ImageButton H8;
+    ImageButton OptionsBtn;
+    LinearLayout GameOverLayout;
+    LinearLayout OptionsLayout;
+
 
     private WebSocketClient WebSocket;
 
@@ -212,11 +222,11 @@ public class ChessActivity extends AppCompatActivity {
                             tile = strings[2];
                             piece = strings[3];
                             movePiece(); //updates board accordingly
-                            enableButtons(); //enables buttons after opponent's turn
+                            //enableButtons(); //enables buttons after opponent's turn
                             break;
 
                         case "userMoved":
-                            disableButtons(); //disables buttons after user's turn
+                            //disableButtons(); //disables buttons after user's turn
                             break;
 
                         case "invalidMove":
@@ -1339,6 +1349,36 @@ public class ChessActivity extends AppCompatActivity {
                 }
             }
         });
+
+        OptionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
+                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.ConcedeBtn);
+                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
+
+                //Concedes game and returns user to main menu
+                ConcedeGameBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WebSocket.send("leave");
+                        WebSocket.close();
+
+                        //Returns user to main menu
+                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                //Closes options menu
+                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OptionsLayout.removeAllViews();
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -1353,6 +1393,418 @@ public class ChessActivity extends AppCompatActivity {
      */
     public void isCheck(){
 
+    }
+
+    /**
+     * Highlights selected tile
+     */
+    public void highlight(){
+
+        if(tile.equals("A1")){
+            A1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A2")){
+            A2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A3")){
+            A3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A4")){
+            A4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A5")){
+            A5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A6")){
+            A6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A7")){
+            A7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("A8")){
+            A8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("B1")){
+            B1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B2")){
+            B2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B3")){
+            B3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B4")){
+            B4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B5")){
+            B5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B6")){
+            B6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B7")){
+            B7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("B8")){
+            B8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("C1")){
+            C1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C2")){
+            C2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C3")){
+            C3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C4")){
+            C4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C5")){
+            C5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C6")){
+            C6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C7")){
+            C7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("C8")){
+            C8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("D1")){
+            D1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D2")){
+            D2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D3")){
+            D3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D4")){
+            D4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D5")){
+            D5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D6")){
+            D6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D7")){
+            D7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("D8")){
+            D8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("E1")){
+            E1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E2")){
+            E2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E3")){
+            E3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E4")){
+            E4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E5")){
+            E5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E6")){
+            E6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E7")){
+            E7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("E8")){
+            E8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("F1")){
+            F1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F2")){
+            F2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F3")){
+            F3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F4")){
+            F4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F5")){
+            F5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F6")){
+            F6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F7")){
+            F7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("F8")){
+            F8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("G1")){
+            G1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G2")){
+            G2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G3")){
+            G3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G4")){
+            G4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G5")){
+            G5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G6")){
+            G6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G7")){
+            G7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("G8")){
+            G8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+
+        if(tile.equals("H1")){
+            H1.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H2")){
+            H2.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H3")){
+            H3.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H4")){
+            H4.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H5")){
+            H5.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H6")){
+            H6.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H7")){
+            H7.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+        if(tile.equals("H8")){
+            H8.setBackgroundColor(Color.parseColor("#66ff66"));
+        }
+    }
+
+    /**
+     * Removes highlight
+     */
+    public void unhighlight(){
+
+        if(tile.equals("A1")){
+            A1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A2")){
+            A2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A3")){
+            A3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A4")){
+            A4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A5")){
+            A5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A6")){
+            A6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A7")){
+            A7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("A8")){
+            A8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("B1")){
+            B1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B2")){
+            B2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B3")){
+            B3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B4")){
+            B4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B5")){
+            B5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B6")){
+            B6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B7")){
+            B7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("B8")){
+            B8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("C1")){
+            C1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C2")){
+            C2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C3")){
+            C3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C4")){
+            C4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C5")){
+            C5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C6")){
+            C6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C7")){
+            C7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("C8")){
+            C8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("D1")){
+            D1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D2")){
+            D2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D3")){
+            D3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D4")){
+            D4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D5")){
+            D5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D6")){
+            D6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D7")){
+            D7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("D8")){
+            D8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("E1")){
+            E1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E2")){
+            E2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E3")){
+            E3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E4")){
+            E4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E5")){
+            E5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E6")){
+            E6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E7")){
+            E7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("E8")){
+            E8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("F1")){
+            F1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F2")){
+            F2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F3")){
+            F3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F4")){
+            F4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F5")){
+            F5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F6")){
+            F6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F7")){
+            F7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("F8")){
+            F8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("G1")){
+            G1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G2")){
+            G2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G3")){
+            G3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G4")){
+            G4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G5")){
+            G5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G6")){
+            G6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G7")){
+            G7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("G8")){
+            G8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        if(tile.equals("H1")){
+            H1.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H2")){
+            H2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H3")){
+            H3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H4")){
+            H4.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H5")){
+            H5.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H6")){
+            H6.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H7")){
+            H7.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        if(tile.equals("H8")){
+            H8.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     /**
