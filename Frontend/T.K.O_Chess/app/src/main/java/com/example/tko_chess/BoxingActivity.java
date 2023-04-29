@@ -7,18 +7,11 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -165,6 +158,21 @@ public class BoxingActivity extends AppCompatActivity {
     TextView Player1Name;
 
     /**
+     * Textview displays current round of boxing.
+     */
+    TextView CurrRound;
+
+    /**
+     * Textview displays Player1 total rounds won.
+     */
+    TextView Player1Wins;
+
+    /**
+     * Textview displays Player2 total rounds won.
+     */
+    TextView Player2Wins;
+
+    /**
      * TextView displays player2's username.
      */
     TextView Player2Name;
@@ -178,6 +186,21 @@ public class BoxingActivity extends AppCompatActivity {
      * Int holds user's current health.
      */
     int UserHealth = 3;
+
+    /**
+     * Int stores the current round of boxing.
+     */
+    int RoundNum;
+
+    /**
+     * Int stores how many rounds of boxing Player1 has won.
+     */
+    int Player1GamesWon = 0;
+
+    /**
+     * Int stores how many rounds of boxing Player2 has won.
+     */
+    int Player2GamesWon = 0;
 
     /**
      * Int holds opponent's current health.
@@ -210,6 +233,8 @@ public class BoxingActivity extends AppCompatActivity {
      * Player type Player1, Player2, or Spectator.
      */
     String UserRole;
+    String WhoPlayer1;
+    String WhoPlayer2;
 
     /**
      * SingletonUser instance which stores the currently logged in user.
@@ -235,8 +260,6 @@ public class BoxingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boxing);
-
-
 
         //ImageView initializations
         Player1Block = findViewById(R.id.Player1BlockImg);
@@ -267,9 +290,12 @@ public class BoxingActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.BoxingMenuBtn);
 
         //TextView initializations
+        CurrRound = findViewById(R.id.RoundNumberText);
         GameTimeText = findViewById(R.id.RoundNumberText);
         Player1Name = findViewById(R.id.Player1NameText);
+        Player1Wins = findViewById(R.id.Player1Wins);
         Player2Name = findViewById(R.id.Player2NameText);
+        Player2Wins = findViewById(R.id.Player2Wins);
         SelectMoveText = findViewById(R.id.SelectMoveText);
 
         //LinearLayout initializations
@@ -279,12 +305,53 @@ public class BoxingActivity extends AppCompatActivity {
         //String initializations
         GameMode = getIntent().getExtras().getString("Gamemode");
         UserRole = getIntent().getExtras().getString("UserRole");
+        WhoPlayer1 = getIntent().getExtras().getString("Player1");
+        WhoPlayer2 = getIntent().getExtras().getString("Player2");
+
+        //Int initializations
+        Player1GamesWon = getIntent().getExtras().getInt("Player1Wins");
+        Player2GamesWon = getIntent().getExtras().getInt("Player2Wins");
+        RoundNum = getIntent().getExtras().getInt("RoundNumber");
+        //Increments round number to current.
+        RoundNum += 1;
+
+        //Display round number
+        CurrRound.setText("Round " + RoundNum);
+
+        //Hides excess starting hearts according to initial health
+        displayStartingOpponentHealth();
+        displayStartingUserHealth();
+
+        //Hides buttons for spectators
+        if (UserRole.equals("Spectator")) {
+            hideButtons();
+        }
 
         String URLConcatenation = "";
         URLConcatenation += currUser.getUsername();
 
-        Player1Name.setText(currUser.getUsername());
-        //TODO Display opponent's name on screen as well using displayOpponentName();
+        //Display player names on screen for spectators and for the case of user being Player 1
+        if (UserRole.equals("Spectator") || WhoPlayer1.equals(currUser.getUsername())) {
+            Player1Name.setText(WhoPlayer1);
+
+            Player1Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+            Player2Name.setText(WhoPlayer2);
+            Player2Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+        }
+
+        //Display player names on screen for the case of user being Player 2
+        if (WhoPlayer2.equals(currUser.getUsername())) {
+            Player1Name.setText(currUser.getUsername());
+            Player1Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+            Player2Name.setText(WhoPlayer1);
+            Player2Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+        }
+
+        if (!GameMode.equals("ChessBoxing")) {
+            Player1Wins.setVisibility(View.INVISIBLE);
+            Player2Wins.setVisibility(View.INVISIBLE);
+            CurrRound.setVisibility(View.INVISIBLE);
+        }
 
         Draft[] drafts = {
                 new Draft_6455()
@@ -296,7 +363,7 @@ public class BoxingActivity extends AppCompatActivity {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.d("OPEN", "run() returned: " + "is connecting");
-                    System.out.println("onOpen returned");
+                    System.out.println("Boxing onOpen returned");
                 }
 
                 @Override
@@ -305,6 +372,8 @@ public class BoxingActivity extends AppCompatActivity {
                     String[] strings = message.split(" ");
 
                     switch (strings[0]) {
+                        //Player Switch Cases
+                        ////////////////////////////////////////////////////////////////////
                         case "RoundWin":
                             //Show opponent's move
                             showOpponentMove(strings[1]);
@@ -384,28 +453,230 @@ public class BoxingActivity extends AppCompatActivity {
 
 
                         case "GameWin":
-                            //Displays game over popup
-                            displayGameResult("You win!");
+                            //Closes websocket
+                            WebSocket.close();
+
+                            //Increments number of user game wins.
+                            if (UserRole.equals("Player1")) {
+                                Player1GamesWon += 1;
+
+                                if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You win!");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            } else
+
+                            if (UserRole.equals("Player2")) {
+                                Player2GamesWon += 1;
+
+                                if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult(WhoPlayer2 + " won!");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            }
+
+                            //Exit switch statement
                             break;
 
 
                         case "GameLoss":
-                            //Displays game over popup
-                            displayGameResult("You lose.");
+                            //Closes websocket
+                            WebSocket.close();
+
+                            //Increments number of opponent game wins.
+                            if (UserRole.equals("Player1")) {
+                                Player2GamesWon += 1;
+
+                                if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You lose. :(");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            } else
+
+                            if (UserRole.equals("Player2")) {
+                                Player1GamesWon += 1;
+
+                                if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You lose. :(");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    //intent.putExtra("WebSocket", WebSocket);
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            }
+
+                            //Exit switch statement
                             break;
 
 
                         case "OpponentLeft":
+                            //Closes websocket
+                            WebSocket.close();
+
                             //Displays game over popup
                             displayGameResult("Opponent conceded.");
+
+                            //Exit switch statement
                             break;
+                        ////////////////////////////////////////////////////////////////////
+
+
+
+                        //Spectator Switch Cases
+                        ////////////////////////////////////////////////////////////////////
+                        case "RoundOver":
+                            if (UserRole.equals("Spectator")) {
+                                //If player 1 won the round
+                                if (strings[1].equals("Player1")) {
+                                    //Shows both players' moves
+                                    showPlayer1Move(strings[2]);
+                                    showOpponentMove(strings[4]);
+
+                                    //Waits 3 seconds
+                                    waitTime(3.0);
+
+                                    //Lowers health of opponent
+                                    OpponentHealth -= 1;
+                                    lowerOpponentHealth(OpponentHealth);
+
+                                    //Hides both players' moves
+                                    showDefaultStance();
+                                    hideOpponentMove();
+
+                                } else
+
+                                    //If player 2 won the round
+                                    if (strings[1].equals("Player2")) {
+                                        //Shows both players' moves
+                                        showPlayer1Move(strings[4]);
+                                        showOpponentMove(strings[2]);
+
+                                        //Waits 3 seconds
+                                        waitTime(3.0);
+
+                                        //Lowers health of opponent
+                                        UserHealth -= 1;
+                                        lowerUserHealth(UserHealth);
+
+                                        //Hides both players' moves
+                                        showDefaultStance();
+                                        hideOpponentMove();
+                                    }
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case "RoundTie":
+                            if (UserRole.equals("Spectator")) {
+                                //Shows both players' moves
+                                showPlayer1Move(strings[1]);
+                                showOpponentMove(strings[1]);
+
+                                //Waits 3 seconds
+                                waitTime(3.0);
+
+                                //Hides both players' moves
+                                showDefaultStance();
+                                hideOpponentMove();
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case "GameOver":
+                            if (UserRole.equals("Spectator")) {
+                                WebSocket.close();
+
+                                //Displays game result layout and which player won.
+                                if (strings[1].equals("Player1")) {
+                                    Player1GamesWon += 1;
+
+                                    if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                        displayGameResult(WhoPlayer1 + " won!");
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra("Gamemode", "ChessBoxing");
+                                        intent.putExtra("RoundNumber", RoundNum);
+                                        intent.putExtra("Player1Wins", Player1GamesWon);
+                                        intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                        startActivity(intent);
+                                    }
+                                } else
+
+                                if (strings[1].equals("Player2")) {
+                                    Player2GamesWon += 1;
+
+                                    if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                        displayGameResult(WhoPlayer2 + " won!");
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra("Gamemode", "ChessBoxing");
+                                        intent.putExtra("RoundNumber", RoundNum);
+                                        intent.putExtra("Player1Wins", Player1GamesWon);
+                                        intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case "PlayerLeft":
+                            if (UserRole.equals("Spectator")) {
+                                WebSocket.close();
+
+                                displayGameResult("A player has left the game.");
+                            }
+
+                            //Exit switch statement
+                            break;
+                        ////////////////////////////////////////////////////////////////////
                     }
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     Log.d("CLOSE", "onClose() returned: " + reason);
-                    System.out.println("onClose returned");
+                    System.out.println("Boxing onClose returned");
                 }
 
                 @Override
@@ -504,16 +775,28 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.ConcedeBtn);
+                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBoxingBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-                Button TestBoxingBtn = (Button) inflatedLayout.findViewById(R.id.TestBoxingBtn);
-                EditText BoxingTestText = (EditText) inflatedLayout.findViewById(R.id.BoxingTestText);
+                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);
 
-                //Concedes game and returns user to main menu
-                ConcedeGameBtn.setOnClickListener(new View.OnClickListener() {
+                //Set leave game prompt depending on UserRole
+                if (UserRole.equals("Spectator")) {
+                    LeaveGameText.setText("Stop watching?");
+                } else
+
+                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+                    LeaveGameText.setText("Concede?");
+                }
+
+                //Leaves game and returns user to main menu
+                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WebSocket.send("leave");
+                        //Send leave message if user was a player
+                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+                            WebSocket.send("leave");
+                        }
+
                         WebSocket.close();
 
                         //Returns user to main menu
@@ -530,32 +813,6 @@ public class BoxingActivity extends AppCompatActivity {
                     }
                 });
 
-                //TODO ////////////////////////////////////DELETE WHEN DONE TESTING //////////////////////////////////////////
-                //Temporary button meant for hosting a test game
-                TestBoxingBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RequestQueue queue = Volley.newRequestQueue(BoxingActivity.this);
-
-                        String temp = currUser.getUsername() + "/" + BoxingTestText.getText().toString();
-                        StringRequest HostGameReq = new StringRequest(Request.Method.POST, Const.URL_SERVER_BOXINGTEST + temp, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
-
-                        //Send the request we created
-                        queue.add(HostGameReq);
-                    }
-                });
-                //TODO ////////////////////////////////////DELETE WHEN DONE TESTING //////////////////////////////////////////
-
                 OptionsLayout.addView(inflatedLayout);
             }
         });
@@ -570,36 +827,40 @@ public class BoxingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //Changes appearance of buttons
-                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
-                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                //Enables buttons if user is a player.
+                if (UserRole.equals("Player1") || (UserRole.equals("Player2"))) {
+                    //Changes appearance of buttons
+                    BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                    KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                    JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
+                    ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));
 
-                //Enables buttons again
-                BlockBtn.setClickable(true);
-                KickBtn.setClickable(true);
-                JabBtn.setClickable(true);
-                ConfirmMoveBtn.setClickable(true);
+                    //Enables buttons again
+                    BlockBtn.setClickable(true);
+                    KickBtn.setClickable(true);
+                    JabBtn.setClickable(true);
+                    ConfirmMoveBtn.setClickable(true);
+                }
             }
         });
     }
 
 
     /**
-     * Makes buttons un-clickable and changes their color.
+     * Hides all buttons from view of spectator.
      */
-    private void disableButtons() {
+    private void hideButtons() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //Changes appearance of buttons
-                BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-                KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-                JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
-                ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                //Hides buttons from view
+                BlockBtn.setVisibility(View.INVISIBLE);
+                KickBtn.setVisibility(View.INVISIBLE);
+                JabBtn.setVisibility(View.INVISIBLE);
+                ConfirmMoveBtn.setVisibility(View.INVISIBLE);
+                SelectMoveText.setVisibility(View.INVISIBLE);
 
-                //Disables buttons until opponent confirms their move
+                //Makes buttons un-clickable.
                 BlockBtn.setClickable(false);
                 KickBtn.setClickable(false);
                 JabBtn.setClickable(false);
@@ -609,17 +870,32 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
+
     /**
-     * Displays opponent's username on the screen.
+     * Makes buttons un-clickable and changes their color.
      */
-    private void displayOpponentName() {
+    private void disableButtons() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //TODO Implement method that requests opponent's name and then displays it in textview?
+                //disables buttons if user is a player.
+                if (UserRole.equals("Player1") || (UserRole.equals("Player2"))) {
+                    //Changes appearance of buttons
+                    BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                    KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                    JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+                    ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));
+
+                    //Disables buttons until opponent confirms their move
+                    BlockBtn.setClickable(false);
+                    KickBtn.setClickable(false);
+                    JabBtn.setClickable(false);
+                    ConfirmMoveBtn.setClickable(false);
+                }
             }
         });
     }
+
 
 
     /**
@@ -669,6 +945,39 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Shows player 1's move on screen.
+     * @param move
+     */
+    private void showPlayer1Move(String move) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Show opponent's move
+                switch (move) {
+                    case "kick":
+                        //Hides block and shows kick
+                        Player1Block.setVisibility(View.INVISIBLE);
+                        Player1Kick.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "jab":
+                        //Hides block and shows jab
+                        Player1Block.setVisibility(View.INVISIBLE);
+                        Player1Jab.setVisibility(View.VISIBLE);
+                        break;
+
+                    default:
+                        //Do nothing because default stance is block
+                        break;
+                }
+            }
+        });
+    }
+
+
+
+    //Displays user's health on screen
     /**
      * Displays user's current health on screen.
      * @param health is an int containing the user's current health.
@@ -758,8 +1067,6 @@ public class BoxingActivity extends AppCompatActivity {
                 BoxingToMenuBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WebSocket.close();
-
                         //Returns user to main menu
                         Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);
                         startActivity(intent);
@@ -785,6 +1092,60 @@ public class BoxingActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
+    private void displayStartingUserHealth() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (UserHealth == 5) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 4) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                    UserHeart5.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 3) {
+                    UserHeart6.setVisibility(View.INVISIBLE);
+                    UserHeart5.setVisibility(View.INVISIBLE);
+                    UserHeart4.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
+    private void displayStartingOpponentHealth() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (OpponentHealth == 5) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 4) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                    OpponentHeart5.setVisibility(View.INVISIBLE);
+                } else
+
+                if (UserHealth == 3) {
+                    OpponentHeart6.setVisibility(View.INVISIBLE);
+                    OpponentHeart5.setVisibility(View.INVISIBLE);
+                    OpponentHeart4.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+
+
+    //Wait time seconds
     /**
      * Halts program for a specified amount of time.
      * @param time is a double containing the information of how long to wait in seconds.

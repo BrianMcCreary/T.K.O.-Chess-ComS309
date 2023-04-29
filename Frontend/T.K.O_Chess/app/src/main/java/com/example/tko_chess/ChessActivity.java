@@ -1483,7 +1483,7 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.ConcedeBtn);
+                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
 
                 //Concedes game and returns user to main menu
