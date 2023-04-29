@@ -165,6 +165,21 @@ public class BoxingActivity extends AppCompatActivity {
     TextView Player1Name;
 
     /**
+     * Textview displays current round of boxing.
+     */
+    TextView CurrRound;
+
+    /**
+     * Textview displays Player1 total rounds won.
+     */
+    TextView Player1Wins;
+
+    /**
+     * Textview displays Player2 total rounds won.
+     */
+    TextView Player2Wins;
+
+    /**
      * TextView displays player2's username.
      */
     TextView Player2Name;
@@ -178,6 +193,21 @@ public class BoxingActivity extends AppCompatActivity {
      * Int holds user's current health.
      */
     int UserHealth = 3;
+
+    /**
+     * Int stores the current round of boxing.
+     */
+    int RoundNum;
+
+    /**
+     * Int stores how many rounds of boxing Player1 has won.
+     */
+    int Player1GamesWon = 0;
+
+    /**
+     * Int stores how many rounds of boxing Player2 has won.
+     */
+    int Player2GamesWon = 0;
 
     /**
      * Int holds opponent's current health.
@@ -269,7 +299,9 @@ public class BoxingActivity extends AppCompatActivity {
         //TextView initializations
         GameTimeText = findViewById(R.id.RoundNumberText);
         Player1Name = findViewById(R.id.Player1NameText);
+        Player1Wins = findViewById(R.id.Player1Wins);
         Player2Name = findViewById(R.id.Player2NameText);
+        Player2Wins = findViewById(R.id.Player2Wins);
         SelectMoveText = findViewById(R.id.SelectMoveText);
 
         //LinearLayout initializations
@@ -282,9 +314,21 @@ public class BoxingActivity extends AppCompatActivity {
         WhoPlayer1 = getIntent().getExtras().getString("Player1");
         WhoPlayer2 = getIntent().getExtras().getString("Player2");
 
+        //Int initializations
+        Player1GamesWon = getIntent().getExtras().getInt("Player1Wins");
+        Player2GamesWon = getIntent().getExtras().getInt("Player2Wins");
+        RoundNum = getIntent().getExtras().getInt("RoundNumber");
+        //Increments round number to current.
+        RoundNum += 1;
+
+        //Display round number
+        CurrRound.setText("Round" + Integer.toString(RoundNum));
+
         //Hides excess starting hearts according to initial health
         displayStartingOpponentHealth();
         displayStartingUserHealth();
+
+        //Hides buttons for spectators
         if (UserRole.equals("Spectator")) {
             hideButtons();
         }
@@ -295,13 +339,24 @@ public class BoxingActivity extends AppCompatActivity {
         //Display player names on screen for spectators and for the case of user being Player 1
         if (UserRole.equals("Spectator") || WhoPlayer1.equals(currUser.getUsername())) {
             Player1Name.setText(WhoPlayer1);
+
+            Player1Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
             Player2Name.setText(WhoPlayer2);
+            Player2Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
         }
 
         //Display player names on screen for the case of user being Player 2
         if (WhoPlayer2.equals(currUser.getUsername())) {
             Player1Name.setText(currUser.getUsername());
+            Player1Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
             Player2Name.setText(WhoPlayer1);
+            Player2Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+        }
+
+        if (!GameMode.equals("ChessBoxing")) {
+            Player1Wins.setVisibility(View.INVISIBLE);
+            Player2Wins.setVisibility(View.INVISIBLE);
+            CurrRound.setVisibility(View.INVISIBLE);
         }
 
         Draft[] drafts = {
@@ -407,8 +462,42 @@ public class BoxingActivity extends AppCompatActivity {
                             //Closes websocket
                             WebSocket.close();
 
-                            //Displays game over popup
-                            displayGameResult("You win!");
+                            //Increments number of user game wins.
+                            if (UserRole.equals("Player1")) {
+                                Player1GamesWon += 1;
+
+                                if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You win!");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            } else
+
+                            if (UserRole.equals("Player2")) {
+                                Player2GamesWon += 1;
+
+                                if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult(WhoPlayer2 + " won!");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            }
+
+                            //Exit switch statement
                             break;
 
 
@@ -416,8 +505,43 @@ public class BoxingActivity extends AppCompatActivity {
                             //Closes websocket
                             WebSocket.close();
 
-                            //Displays game over popup
-                            displayGameResult("You lose.");
+                            //Increments number of opponent game wins.
+                            if (UserRole.equals("Player1")) {
+                                Player2GamesWon += 1;
+
+                                if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You lose. :(");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            } else
+
+                            if (UserRole.equals("Player2")) {
+                                Player1GamesWon += 1;
+
+                                if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                    displayGameResult("You lose. :(");
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    //intent.putExtra("WebSocket", WebSocket);
+                                    intent.putExtra("RoundNumber", RoundNum);
+                                    intent.putExtra("Player1Wins", Player1GamesWon);
+                                    intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                    startActivity(intent);
+                                }
+                            }
+
+                            //Exit switch statement
                             break;
 
 
@@ -427,6 +551,8 @@ public class BoxingActivity extends AppCompatActivity {
 
                             //Displays game over popup
                             displayGameResult("Opponent conceded.");
+
+                            //Exit switch statement
                             break;
                         ////////////////////////////////////////////////////////////////////
 
@@ -473,6 +599,8 @@ public class BoxingActivity extends AppCompatActivity {
                                         hideOpponentMove();
                                     }
                             }
+
+                            //Exit switch statement
                             break;
 
 
@@ -489,6 +617,8 @@ public class BoxingActivity extends AppCompatActivity {
                                 showDefaultStance();
                                 hideOpponentMove();
                             }
+
+                            //Exit switch statement
                             break;
 
 
@@ -498,13 +628,41 @@ public class BoxingActivity extends AppCompatActivity {
 
                                 //Displays game result layout and which player won.
                                 if (strings[1].equals("Player1")) {
-                                    displayGameResult(WhoPlayer1 + " won!");
+                                    Player1GamesWon += 1;
+
+                                    if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                        displayGameResult(WhoPlayer1 + " won!");
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra("Gamemode", "ChessBoxing");
+                                        intent.putExtra("RoundNumber", RoundNum);
+                                        intent.putExtra("Player1Wins", Player1GamesWon);
+                                        intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                        startActivity(intent);
+                                    }
                                 } else
 
                                 if (strings[1].equals("Player2")) {
-                                    displayGameResult(WhoPlayer2 + " won!");
+                                    Player2GamesWon += 1;
+
+                                    if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
+                                        displayGameResult(WhoPlayer2 + " won!");
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra("Gamemode", "ChessBoxing");
+                                        intent.putExtra("RoundNumber", RoundNum);
+                                        intent.putExtra("Player1Wins", Player1GamesWon);
+                                        intent.putExtra("Player2Wins", Player2GamesWon);
+
+                                        startActivity(intent);
+                                    }
                                 }
                             }
+
+                            //Exit switch statement
                             break;
 
 
@@ -514,6 +672,8 @@ public class BoxingActivity extends AppCompatActivity {
 
                                 displayGameResult("A player has left the game.");
                             }
+
+                            //Exit switch statement
                             break;
                         ////////////////////////////////////////////////////////////////////
                     }
