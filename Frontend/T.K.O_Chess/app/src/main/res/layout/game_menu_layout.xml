@@ -13,7 +13,7 @@
         tools:layout_editor_absoluteY="1dp">
 
         <TextView
-            android:id="@+id/ConcedeText"
+            android:id="@+id/LeaveBoxingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,7 +22,7 @@
             android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/ConcedeBtn"
+            android:id="@+id/LeaveBoxingBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/soft_blue"

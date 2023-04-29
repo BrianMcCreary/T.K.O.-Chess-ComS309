@@ -368,4 +368,26 @@
         app:layout_constraintTop_toTopOf="parent">
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/Player1Wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:text="Wins: 0"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/Player1NameText"
+        app:layout_constraintTop_toBottomOf="@+id/RoundNumberText" />
+
+    <TextView
+        android:id="@+id/Player2Wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:text="Wins: 0"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/Player2NameText"
+        app:layout_constraintTop_toBottomOf="@+id/RoundNumberText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

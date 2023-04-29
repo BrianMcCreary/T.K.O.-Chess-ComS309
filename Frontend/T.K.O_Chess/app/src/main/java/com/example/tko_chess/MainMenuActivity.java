@@ -14,39 +14,61 @@ import org.json.JSONObject;
 /**
  * @author Lex Somers
  * @author Zachary Scurlock
+ *
+ * Main menu screen where users can navigate to the different features of the app.
  */
 public class MainMenuActivity extends AppCompatActivity {
 
+    /**
+     * Takes user to the host or join lobby screen.
+     *      Specifies tko chess as the selected game mode.
+     */
     Button tkoChess;
+
+    /**
+     * Takes user to the host or join lobby screen.
+     *      Specifies chess as the selected game mode.
+     */
     Button chess;
+
+    /**
+     * Takes user to the host or join lobby screen.
+     *      Specifies boxing as the selected game mode.
+     */
     Button Boxing;
+
+    /**
+     * Takes user to the settings screen.
+     */
     ImageButton MenuToSettings;
+
+    /**
+     * Takes user to the friends screen.
+     */
     ImageButton MenuToFriends;
+
+    /**
+     * Takes user to the profiles screen.
+     */
     ImageButton MenuToProfiles;
+
+    /**
+     * Logs user out and returns them to the login screen.
+     */
     ImageButton LogoutBtn;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     *     Loads main menus screen onto device.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-
-/*      //Delete this or comment out. Only for testing purposes when server is not up.
-        JSONObject user = new JSONObject();
-        try {
-            user.put("username", "testUsername");
-            user.put("password", "testPassword");
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            SingletonUser.login(user);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        //Delete this or comment out. Only for testing purposes when server is not up.*/
 
         tkoChess = findViewById(R.id.MenuToTKOChessBtn);
 
