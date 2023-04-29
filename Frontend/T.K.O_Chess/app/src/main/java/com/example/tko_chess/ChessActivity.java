@@ -208,7 +208,7 @@ public class ChessActivity extends AppCompatActivity {
                     Log.d("OPEN", "run() returned: " + "is connecting");
                     System.out.println("onOpen returned");
                 }
-
+//
                 @Override
                 public void onMessage(String message) {
                     Log.d("", "run() returned: " + message);
