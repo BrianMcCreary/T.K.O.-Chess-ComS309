@@ -256,7 +256,7 @@ public class LobbyActivity extends AppCompatActivity {
 				@Override
 				public void onOpen(ServerHandshake serverHandshake) {
 					Log.d("OPEN", "run() returned: " + "is connecting");
-					System.out.println("onOpen returned");
+					System.out.println("Lobby onOpen returned");
 				}
 
 				@Override
@@ -450,7 +450,7 @@ public class LobbyActivity extends AppCompatActivity {
 				@Override
 				public void onClose(int code, String reason, boolean remote) {
 					Log.d("CLOSE", "onClose() returned: " + reason);
-					System.out.println("onClose returned");
+					System.out.println("Lobby onClose returned");
 				}
 
 				@Override
@@ -1118,16 +1118,31 @@ public class LobbyActivity extends AppCompatActivity {
 							MemberReadyStatus.setImageResource(R.drawable.spectator);
 						} else
 
-							//Display ready or not ready image
-							if (member[1].equals("Player1") || member[1].equals("Player2")) {
-								if (member[2].equals("NotReady")) {
-									MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
-								} else
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player1")) {
+							WhoPlayer1 = member[0];
 
-								if (member[2].equals("Ready")) {
-									MemberReadyStatus.setImageResource(R.drawable.readystatus);
-								}
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
 							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player2")) {
+							 WhoPlayer2 = member[0];
+
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
+							}
+						}
 
 						//Kicks user from lobby
 						KickMemberBtn.setOnClickListener(new View.OnClickListener() {
@@ -1156,16 +1171,31 @@ public class LobbyActivity extends AppCompatActivity {
 							MemberReadyStatus.setImageResource(R.drawable.spectator);
 						} else
 
-							//Display ready or not ready image
-							if (member[1].equals("Player1") || member[1].equals("Player2")) {
-								if (member[2].equals("NotReady")) {
-									MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
-								} else
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player1")) {
+							WhoPlayer1 = member[0];
 
-								if (member[2].equals("Ready")) {
-									MemberReadyStatus.setImageResource(R.drawable.readystatus);
-								}
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
 							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+						if (member[1].equals("Player2")) {
+							WhoPlayer2 = member[0];
+
+							if (member[2].equals("NotReady")) {
+								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);
+							} else
+
+							if (member[2].equals("Ready")) {
+								MemberReadyStatus.setImageResource(R.drawable.readystatus);
+							}
+						}
 
 						//Add the new member object to the screen.
 						LobbyMembersLayout.addView(newMember);

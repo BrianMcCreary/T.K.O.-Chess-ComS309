@@ -7,18 +7,11 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -297,6 +290,7 @@ public class BoxingActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.BoxingMenuBtn);
 
         //TextView initializations
+        CurrRound = findViewById(R.id.RoundNumberText);
         GameTimeText = findViewById(R.id.RoundNumberText);
         Player1Name = findViewById(R.id.Player1NameText);
         Player1Wins = findViewById(R.id.Player1Wins);
@@ -322,7 +316,7 @@ public class BoxingActivity extends AppCompatActivity {
         RoundNum += 1;
 
         //Display round number
-        CurrRound.setText("Round" + Integer.toString(RoundNum));
+        CurrRound.setText("Round " + RoundNum);
 
         //Hides excess starting hearts according to initial health
         displayStartingOpponentHealth();
@@ -369,7 +363,7 @@ public class BoxingActivity extends AppCompatActivity {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.d("OPEN", "run() returned: " + "is connecting");
-                    System.out.println("onOpen returned");
+                    System.out.println("Boxing onOpen returned");
                 }
 
                 @Override
@@ -682,7 +676,7 @@ public class BoxingActivity extends AppCompatActivity {
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     Log.d("CLOSE", "onClose() returned: " + reason);
-                    System.out.println("onClose returned");
+                    System.out.println("Boxing onClose returned");
                 }
 
                 @Override
@@ -780,7 +774,7 @@ public class BoxingActivity extends AppCompatActivity {
         OptionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View inflatedLayout = getLayoutInflater().inflate(R.layout.boxing_menu_layout, null, false);
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
                 Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBoxingBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
                 TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);
@@ -864,6 +858,7 @@ public class BoxingActivity extends AppCompatActivity {
                 KickBtn.setVisibility(View.INVISIBLE);
                 JabBtn.setVisibility(View.INVISIBLE);
                 ConfirmMoveBtn.setVisibility(View.INVISIBLE);
+                SelectMoveText.setVisibility(View.INVISIBLE);
 
                 //Makes buttons un-clickable.
                 BlockBtn.setClickable(false);
