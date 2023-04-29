@@ -470,6 +470,7 @@ public class LobbyActivity extends AppCompatActivity {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
 		/**
 		 * Takes user back to host or join screen.
 		 */
@@ -500,6 +501,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes user's role in the lobby to player 1 if possible.
 		 */
@@ -515,6 +517,7 @@ public class LobbyActivity extends AppCompatActivity {
 				}
 			}
 		});
+
 
 
 		/**
@@ -534,6 +537,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes user's role in the lobby to spectator.
 		 */
@@ -551,6 +555,7 @@ public class LobbyActivity extends AppCompatActivity {
 		});
 
 
+
 		/**
 		 * Changes status of user to not ready.
 		 */
@@ -566,6 +571,7 @@ public class LobbyActivity extends AppCompatActivity {
 				}
 			}
 		});
+
 
 
 		/**
@@ -608,6 +614,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Hides Lobby event text and error texts.
 	 */
@@ -622,6 +629,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -673,6 +681,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Disables and hides all buttons on screen.
 	 */
@@ -700,6 +709,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -741,6 +751,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Enables start game button.
 	 */
@@ -754,6 +765,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -784,6 +796,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Disables leave lobby button.
 	 */
@@ -795,6 +808,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -859,6 +873,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Updates client info about user ready status.
 	 * @param strings is a string array containing the information of
@@ -890,6 +905,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -925,6 +941,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 
+
 	/**
 	 * Updates client info about players.
 	 * @param strings is a string array containing the information of
@@ -958,6 +975,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -1010,6 +1028,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
@@ -1066,6 +1085,7 @@ public class LobbyActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 
 	/**
