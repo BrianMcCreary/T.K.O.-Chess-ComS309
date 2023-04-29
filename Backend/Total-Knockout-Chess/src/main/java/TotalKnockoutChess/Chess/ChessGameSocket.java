@@ -104,6 +104,7 @@ public class ChessGameSocket {
         if( (cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
                 || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username)) ){
             chessGameRepository.delete(cg);
+            chessGameRepository.flush();
         }
     }
 
