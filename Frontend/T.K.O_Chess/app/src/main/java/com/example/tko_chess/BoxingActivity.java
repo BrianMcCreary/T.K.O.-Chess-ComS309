@@ -775,7 +775,7 @@ public class BoxingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBoxingBtn);
+                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
                 TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);
 
