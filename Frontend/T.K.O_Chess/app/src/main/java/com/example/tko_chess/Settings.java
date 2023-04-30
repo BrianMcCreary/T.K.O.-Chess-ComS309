@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
-/*
+/**
  * @author Zachary Scurlock
  * This is code for the functionality of the settings screen
  */

@@ -264,9 +264,11 @@ public class ChessActivity extends AppCompatActivity {
                 tracker += 1;
                 if(tracker == 1){
                     tile = "A1";
+                    WebSocket.send("select " + tile);
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A1";
+                    WebSocket.send("move " + tile);
                     movePiece();
                     tracker = 0;
                 }
@@ -278,9 +280,11 @@ public class ChessActivity extends AppCompatActivity {
                 tracker += 1;
                 if(tracker == 1){
                     tile = "A2";
+                    WebSocket.send(tile);
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A2";
+                    WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
                 }
@@ -296,11 +300,13 @@ public class ChessActivity extends AppCompatActivity {
                     // store the name of the piece
                     // show available moves by setting the background to a shade of green
                     tile = "A3";
+                    WebSocket.send(tile);
                 } else if(tracker > 1){
                     //TODO
                     // Update tile with piece received from backend
                     setTransparent();
                     tile = "A3";
+                    WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
                 }
@@ -312,9 +318,11 @@ public class ChessActivity extends AppCompatActivity {
                 tracker += 1;
                 if(tracker == 1){
                     tile = "A4";
+                    WebSocket.send(tile);
                 } else if(tracker > 1){
                     setTransparent();
                     tile = "A4";
+                    WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
                 }
