@@ -1,9 +1,11 @@
 package TotalKnockoutChess.Users;
 
+import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Friends.FriendRequest;
 import TotalKnockoutChess.Friends.FriendRequestRepository;
 import TotalKnockoutChess.Friends.Friendship;
 import TotalKnockoutChess.Friends.FriendshipRepository;
+import TotalKnockoutChess.Statistics.UserStatsRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     FriendshipRepository friendshipRepository;
+
+    @Autowired
+    UserStatsRepository userStatsRepository;
 
     private final String success = "{\"message\":\"success\"}";     //Messages to return to frontend
     private final String failure = "{\"message\":\"failure\"}";
@@ -54,6 +59,13 @@ public class UserController {
         }
         User u = new User(username, password);
         userRepository.save(u);
+        userRepository.flush();
+        UserStats us = new UserStats(u);
+        userStatsRepository.save(us);
+        userStatsRepository.flush();
+        u.initUserStats(us);
+        userRepository.save(u);
+        userRepository.flush();
         return success;
     }
 
@@ -61,6 +73,16 @@ public class UserController {
     @ApiOperation(value = "Delete the user with the given username")
     @PutMapping(path = "/users/{username}")
     public String deleteUser(@PathVariable String username) {
+        User user = null;
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                user = u;
+                break;
+            }
+        }
+        if (user == null) {
+            return failure;
+        }
         for (FriendRequest fr : friendRequestRepository.findAll()) {        //Iterate through all friend requests and remove the one's associated with this user
             if (fr.getSender().getUsername().equals(username)) {
                 fr.getReceiver().removeIncomingRequest(username);
@@ -81,13 +103,8 @@ public class UserController {
                 friendshipRepository.delete(f);
             }
         }
-        for (User u : userRepository.findAll()) {           //Delete the user
-            if (u.getUsername().equals(username)) {
-                userRepository.delete(u);
-                return success;
-            }
-        }
-        return failure;
+        userRepository.delete(user);
+        return success;
     }
 
     //Method that returns a user object given a username
@@ -149,6 +166,7 @@ public class UserController {
             if (u.getUsername().equals(currentUsername)) {      //find current user
                 if (u.getPassword().equals(password)) {
                     u.setUsername(username);            //if given password matches, change username
+                    userRepository.save(u);
                     userRepository.flush();
                     return "success";
                 }
@@ -171,6 +189,7 @@ public class UserController {
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly
                     u.setPassword(password);            //change password
+                    userRepository.save(u);
                     userRepository.flush();
                     return "success";
                 }
