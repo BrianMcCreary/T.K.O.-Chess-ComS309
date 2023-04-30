@@ -138,11 +138,11 @@ public class UserController {
 
     //Method that changes a user's username given their current username, new username, and password
     @ApiOperation(value = "Allows the user to change their username as long as they know their password")
-    @PutMapping(path = "/users/name/{currentUsername}/{username}/{password}")
-    public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @PathVariable String password) {
+    @PutMapping(path = "/users/username/{currentUsername}/{password}/{username}")
+    public String changeUserName(@PathVariable String currentUsername, @PathVariable String password, @PathVariable String username) {
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(username)) {
-                return failure;                         //username is taken
+                return "failure";                         //username is taken
             }
         }
         for (User u : userRepository.findAll()) {
@@ -150,35 +150,35 @@ public class UserController {
                 if (u.getPassword().equals(password)) {
                     u.setUsername(username);            //if given password matches, change username
                     userRepository.flush();
-                    return success;
+                    return "success";
                 }
                 else {
-                    return failure;     //if given password does not match, return failure
+                    return "failure";     //if given password does not match, return failure
                 }
             }
         }
-        return failure;     //return failure if user isn't found
+        return "failure";     //return failure if user isn't found
     }
 
     //Method that changes a user's password given their username, current password, and new password
     @ApiOperation(value = "Allows the user to change their password as long as they know their old password")
-    @PutMapping(path = "/users/password/{username}/{password}/{currentPassword}")
-    public @ResponseBody String changeUserPassword(@PathVariable String username, @PathVariable String password, @PathVariable String currentPassword) {
+    @PutMapping(path = "/users/password/{username}/{currentPassword}/{password}")
+    public String changeUserPassword(@PathVariable String username, @PathVariable String currentPassword, @PathVariable String password) {
         if (password.length() < 8) {
-            return failure;     //if password is too short return failure
+            return "failure";     //if password is too short return failure
         }
         for (User u : userRepository.findAll()) {       //find user
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly
                     u.setPassword(password);            //change password
                     userRepository.flush();
-                    return success;
+                    return "success";
                 }
                 else {
-                    return failure;     //if they entered their old password incorrectly, return failure
+                    return "failure";     //if they entered their old password incorrectly, return failure
                 }
             }
         }
-        return failure;     //return failure if user isn't found
+        return "failure";     //return failure if user isn't found
     }
 }
