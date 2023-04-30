@@ -59,8 +59,13 @@ public class UserController {
         }
         User u = new User(username, password);
         userRepository.save(u);
+        userRepository.flush();
         UserStats us = new UserStats(u);
         userStatsRepository.save(us);
+        userStatsRepository.flush();
+        u.initUserStats(us);
+        userRepository.save(u);
+        userRepository.flush();
         return success;
     }
 
@@ -96,11 +101,6 @@ public class UserController {
             else if (f.getUser2().getUsername().equals(username)) {
                 f.getUser1().removeFriend(username);
                 friendshipRepository.delete(f);
-            }
-        }
-        for (UserStats us : userStatsRepository.findAll()) {
-            if (us.getUser().getUsername().equals(user.getUsername())) {
-                userStatsRepository.delete(us);
             }
         }
         userRepository.delete(user);

@@ -14,7 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "UserStats")
     UserStats userStats;
 
@@ -40,7 +40,10 @@ public class User {
         incomingFriendRequests = new ArrayList<String>();
         outgoingFriendRequests = new ArrayList<String>();
         friends = new ArrayList<String>();
-        userStats = new UserStats(this);
+    }
+
+    public void initUserStats(UserStats userStats) {
+        this.userStats = userStats;
     }
 
     public User() {

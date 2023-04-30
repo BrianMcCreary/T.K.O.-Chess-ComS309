@@ -11,9 +11,11 @@ public class UserStats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "User")
     User user;
+
+    private String username;
 
     private int chessWins;
 
@@ -41,6 +43,7 @@ public class UserStats {
 
     public UserStats(User user) {
         this.user = user;
+        username = user.getUsername();
         chessWins = 0;
         chessLosses = 0;
         chessGames = 0;
@@ -58,6 +61,10 @@ public class UserStats {
     public UserStats() {
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public User getUser() {
         return user;
     }
@@ -65,52 +72,38 @@ public class UserStats {
     public void chessWin() {
         chessWins++;
         chessGames++;
-        chessWinRate = (((double) chessWins) / ( (double) (chessWins + chessLosses))) * 100.0;
+        chessWinRate = (((double) chessWins) / ( (double) (chessGames))) * 100.0;
     }
 
     public void chessLoss() {
         chessLosses++;
         chessGames++;
-        if (chessWins > 0) {
-            chessWinRate = (((double) chessWins) / ( (double) (chessWins + chessLosses))) * 100.0;
-        }
-        else {
-            chessWinRate = 0.0;
-        }
+        chessWinRate = (((double) chessWins) / ( (double) (chessGames))) * 100.0;
     }
 
     public void boxingWin() {
         boxingWins++;
         boxingGames++;
-        boxingWinRate = (((double) boxingWins) / ( (double) (boxingWins + boxingLosses))) * 100.0;
+        boxingWinRate = (((double) boxingWins) / ( (double) (boxingGames))) * 100.0;
     }
 
     public void boxingLoss() {
         boxingLosses++;
         boxingGames++;
-        if (boxingWins > 0) {
-            boxingWinRate = (((double) boxingWins) / ( (double) (boxingWins + boxingLosses))) * 100.0;
-        }
-        else {
-            boxingWinRate = 0.0;
-        }
+        boxingWinRate = (((double) boxingWins) / ( (double) (boxingGames))) * 100.0;
     }
 
     public void chessBoxingWin() {
         chessBoxingWins++;
         chessBoxingGames++;
-        chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingWins + chessBoxingLosses))) * 100.0;
+        chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingGames))) * 100.0;
     }
 
     public void chessBoxingLoss() {
         chessBoxingLosses++;
         chessBoxingGames++;
-        if (chessBoxingWins > 0) {
-            chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingWins + chessBoxingLosses))) * 100.0;
-        }
-        else {
-            chessBoxingWinRate = 0.0;
-        }
+        chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingGames))) * 100.0;
+
     }
 
     public int getChessWins() {
