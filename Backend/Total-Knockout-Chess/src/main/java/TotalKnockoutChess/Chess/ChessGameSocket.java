@@ -2,6 +2,10 @@ package TotalKnockoutChess.Chess;
 
 import TotalKnockoutChess.Chess.Pieces.ChessPiece;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
+import TotalKnockoutChess.Statistics.UserStats;
+import TotalKnockoutChess.Statistics.UserStatsRepository;
+import TotalKnockoutChess.Users.User;
+import TotalKnockoutChess.Users.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +24,22 @@ import java.util.Map;
 public class ChessGameSocket {
 
     private static ChessGameRepository chessGameRepository;
+    private static UserRepository userRepository;
+    private static UserStatsRepository userStatsRepository;
 
     @Autowired
     public void setChessGameRepository(ChessGameRepository chessGameRepository) {
         this.chessGameRepository = chessGameRepository;
+    }
+
+    @Autowired
+    public void setUserStatsRepository(UserStatsRepository userStatsRepository) {
+        this.userStatsRepository = userStatsRepository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     // Store all socket session and their corresponding username.
@@ -53,70 +69,63 @@ public class ChessGameSocket {
         //Chess game that the user in this session is in
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
+        String whitePlayer = cg.getWhitePlayer();
+        String blackPlayer = cg.getBlackPlayer();
+
+        boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
+        // Update booleans as appropriate
+        if (whitePlayer != null && username.equals(whitePlayer)) {
+            userIsWhitePlayer = true;
+        }
+        if (blackPlayer != null && username.equals(blackPlayer)) {
+            userIsBlackPlayer = true;
+        }
+
 
         // If message is a coordinate
-        if(message.length() == 2){
-
-            String whitePlayer = cg.getWhitePlayer();
-            String blackPlayer = cg.getBlackPlayer();
-
-            boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
-            // Update booleans as appropriate
-            if(whitePlayer != null && username.equals(whitePlayer)){ userIsWhitePlayer = true; }
-            if(blackPlayer != null && username.equals(blackPlayer)){ userIsBlackPlayer = true; }
+        if (message.length() == 2) {
 
             String whoseMove = cg.getWhoseMove();
 
             // TODO FOR BACKEND TESTING
             cg.displayBoard();
 
-            switch(whoseMove){
+            switch (whoseMove) {
                 // If it is white's turn
                 case "white":
-                    if(userIsWhitePlayer){
+                    if (userIsWhitePlayer) {
                         executePlayerTurn(cg, username, message, "white", blackPlayer);
-                    }
-                    else if(userIsBlackPlayer){
+                    } else if (userIsBlackPlayer) {
                         // TODO Return players available moves
                     }
                     break;
                 // If it is black's turn
                 case "black":
-                    if(userIsBlackPlayer){
+                    if (userIsBlackPlayer) {
                         executePlayerTurn(cg, username, message, "black", whitePlayer);
-                    }
-                    else if(userIsWhitePlayer){
+                    } else if (userIsWhitePlayer) {
                         // TODO Return players available moves
                     }
                     break;
             }
-        }
-        else if(message.equals("GetBoard")){
+        } else if (message.equals("GetBoard")) {
             sendPlayerMessage(username, getBoard(cg));
-        }
-    }
+        } else if (message.equals("WinGame")) {
 
-    private String getBoard(ChessGame cg) {
-        String encodedBoard = "GameBoard ";
-        ChessGameTile[][] board = cg.getBoard();
 
-        for(int row = 0; row < board.length; row++){
-            for(int col = 0; col < board[row].length; col++){
-                // Add current piece to the encodedBoard
-                ChessPiece piece = board[col][row].piece;
-
-                // '.' represents end of a column
-                encodedBoard += piece.toString() + ".";
+            // Update player stats and send losing player lost game message
+            if (userIsWhitePlayer) {
+                winGame(cg, username, blackPlayer);
+                sendPlayerMessage(blackPlayer, "You lost");
+            } else if (userIsBlackPlayer) {
+                winGame(cg, username, whitePlayer);
+                sendPlayerMessage(whitePlayer, "You lost");
             }
 
-            // Add # to signify end of row.
-            encodedBoard += "#";
+            // Send winner confirmation of game win
+            sendPlayerMessage(username, "You won");
         }
-
-        // Returns the chess board with the format "ChessBoard A1Piece.B1Piece...H1Piece#A2Piece.B2Piece.......H8Piece"
-        return encodedBoard;
     }
-
 
     @OnClose
     public void onClose(Session session) throws IOException {
@@ -130,8 +139,8 @@ public class ChessGameSocket {
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
         // If user that left was one of the players, delete the game from the database
-        if( (cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
-                || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username)) ){
+        if ((cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
+                || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username))) {
             chessGameRepository.delete(cg);
             chessGameRepository.flush();
         }
@@ -148,10 +157,10 @@ public class ChessGameSocket {
         ChessGame game = null;
 
         // Search through repository for chess game with username in it
-        for(ChessGame g : all){
-            if( g.getWhitePlayer()      != null && g.getWhitePlayer().equals(username)
-                || g.getBlackPlayer()   != null && g.getBlackPlayer().equals(username)
-                || g.getSpectators().contains(username)){
+        for (ChessGame g : all) {
+            if (g.getWhitePlayer() != null && g.getWhitePlayer().equals(username)
+                    || g.getBlackPlayer() != null && g.getBlackPlayer().equals(username)
+                    || g.getSpectators().contains(username)) {
                 game = g;
             }
         }
@@ -167,10 +176,9 @@ public class ChessGameSocket {
 
         // Coordinate of the piece to move
         Coordinate fromCoord = null;
-        if(sideColor.equals("white")){
+        if (sideColor.equals("white")) {
             fromCoord = Coordinate.fromString(cg.getWhiteFromSquare());
-        }
-        else if(sideColor.equals("black")){
+        } else if (sideColor.equals("black")) {
             fromCoord = Coordinate.fromString(cg.getBlackFromSquare());
         }
         chessGameRepository.save(cg);
@@ -181,14 +189,16 @@ public class ChessGameSocket {
 
 
         // If the user has not selected one of their pieces and do not select one this time, return
-        if(fromCoord == null && !pieceOnSentTile.color.equals(sideColor)){ return; }
+        if (fromCoord == null && !pieceOnSentTile.color.equals(sideColor)) {
+            return;
+        }
 
 
         // If this side's player clicked on one of their piece's
-        if(pieceOnSentTile.color.equals(sideColor)){
+        if (pieceOnSentTile.color.equals(sideColor)) {
 
             // Update this side's player's from square
-            switch(sideColor) {
+            switch (sideColor) {
                 case "white":
                     cg.setWhiteFromSquare(message);
                     break;
@@ -208,11 +218,11 @@ public class ChessGameSocket {
             sendPlayerMessage(username, pieceOnSentTile.toString());
         }
         // If this side's player has clicked on a one of their piece's previously and clicked on either an empty tile or an opponent's piece
-        else{
+        else {
             boolean success = cg.makeMove(fromCoord, Coordinate.fromString(message));
-            if(success){
+            if (success) {
                 // Update whose move it is
-                switch(sideColor){
+                switch (sideColor) {
                     case "white":
                         cg.setWhoseMove("black");
                         cg.setWhiteFromSquare("");
@@ -234,10 +244,58 @@ public class ChessGameSocket {
                 sendPlayerMessage(username, "userMoved");
                 sendPlayerMessage(oppositePlayer, "opponentMoved " + fromCoord.toString() + " "
                         + message + " " + cg.getTile(message).piece.toString());
-            }
-            else{
+            } else {
                 sendPlayerMessage(username, "invalidMove");
             }
+        }
+    }
+
+    private String getBoard(ChessGame game) {
+        String encodedBoard = "GameBoard ";
+        ChessGameTile[][] board = game.getBoard();
+
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
+                // Add current piece to the encodedBoard
+                ChessPiece piece = board[col][row].piece;
+
+                // '.' represents end of a column
+                encodedBoard += piece.toString() + ".";
+            }
+
+            // Add # to signify end of row.
+            encodedBoard += "#";
+        }
+
+        // Returns the chess board with the format "ChessBoard A1Piece.B1Piece...H1Piece#A2Piece.B2Piece.......H8Piece"
+        return encodedBoard;
+    }
+
+    private void winGame(ChessGame game, String winnerUsername, String loserUsername) {
+        User winner = null;
+        User loser = null;
+
+        // Find user from database
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(winner)) {
+                winner = u;
+            } else if (u.getUsername().equals(loser)) {
+                loser = u;
+            }
+        }
+
+        if (winner != null && loser != null) {
+            UserStats winnerStats = userStatsRepository.findById(winner.getId());
+            UserStats loserStats = userStatsRepository.findById(loser.getId());
+
+            // Update stats for players
+            winnerStats.chessWin();
+            loserStats.chessLoss();
+
+            // Ensure the stats update
+            userStatsRepository.save(winnerStats);
+            userStatsRepository.save(loserStats);
+            userStatsRepository.flush();
         }
     }
 }
