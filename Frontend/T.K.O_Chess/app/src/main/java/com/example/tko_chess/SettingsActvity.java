@@ -11,7 +11,7 @@ import android.widget.ImageButton;
  * @author Zachary Scurlock
  * This is code for the functionality of the settings screen
  */
-public class Settings extends AppCompatActivity {
+public class SettingsActvity extends AppCompatActivity {
 
     ImageButton goBack; //When pressed the user will be taken back to the main menu
 
@@ -28,7 +28,7 @@ public class Settings extends AppCompatActivity {
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Settings.this, MainMenuActivity.class);
+                Intent intent = new Intent(SettingsActvity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });

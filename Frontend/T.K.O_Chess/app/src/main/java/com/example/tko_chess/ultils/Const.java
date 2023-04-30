@@ -13,7 +13,9 @@ public class Const {
 
 
 
-    public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/name/";
+    public static final String URL_SERVER_GETUSERSTATS = "http://coms-309-005.class.las.iastate.edu:8080/getUserStats/";
+
+    public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/username/";
 
     public static final String URL_SERVER_CHANGEPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/users/password/";
 

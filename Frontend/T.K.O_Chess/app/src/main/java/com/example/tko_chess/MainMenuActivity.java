@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * @author Lex Somers
  * @author Zachary Scurlock
@@ -121,7 +118,7 @@ public class MainMenuActivity extends AppCompatActivity {
         MenuToSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, Settings.class);
+                Intent intent = new Intent(MainMenuActivity.this, SettingsActvity.class);
                 startActivity(intent);
             }
         });
@@ -133,7 +130,7 @@ public class MainMenuActivity extends AppCompatActivity {
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, Profiles.class);
+                Intent intent = new Intent(MainMenuActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
