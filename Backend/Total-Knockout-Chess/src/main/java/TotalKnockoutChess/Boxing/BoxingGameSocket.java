@@ -1,10 +1,11 @@
 package TotalKnockoutChess.Boxing;
 
+import TotalKnockoutChess.Statistics.UserStats;
+import TotalKnockoutChess.Statistics.UserStatsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
@@ -25,9 +26,16 @@ public class BoxingGameSocket {
 
     private static BoxingGameRepository boxingGameRepository;
 
+    private static UserStatsRepository userStatsRepository;
+
     @Autowired
     public void setBoxingGameRepository(BoxingGameRepository boxingGameRepository) {
         this.boxingGameRepository = boxingGameRepository;
+    }
+
+    @Autowired
+    public void setUserStatsRepository(UserStatsRepository userStatsRepository) {
+        this.userStatsRepository = userStatsRepository;
     }
 
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
@@ -53,6 +61,8 @@ public class BoxingGameSocket {
 
         //Boxing game that the user in this session is in
         BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);
+
+        String messages[] = message.split(" ");
 
         //If the received message is a move, update game accordingly
         if (message.equals("kick") || message.equals("block") || message.equals("jab")) {
@@ -124,6 +134,27 @@ public class BoxingGameSocket {
             sendSpectatorsMessage(username, "PlayerLeft");
             boxingGameRepository.delete(bg);
         }
+        //If a user has won, update their statistics
+        else if (messages[0].equals("GameType")) {
+            UserStats us = getUserStats(username);
+            if (us != null) {
+                if (messages[1].equals("Boxing")) {
+                    if (messages[2].equals("win")) {
+                        us.boxingWin();
+                    } else if (messages[2].equals("loss")) {
+                        us.boxingLoss();
+                    }
+                } else if (messages[1].equals("ChessBoxing")) {
+                    if (messages[2].equals("win")) {
+                        us.chessBoxingWin();
+                    } else if (messages[2].equals("loss")) {
+                        us.chessBoxingLoss();
+                    }
+                }
+                userStatsRepository.save(us);
+                userStatsRepository.flush();
+            }
+        }
     }
 
     @OnClose
@@ -169,5 +200,15 @@ public class BoxingGameSocket {
         for (String spec : spectators) {
             usernameSessionMap.get(spec).getBasicRemote().sendText(message);
         }
+    }
+
+    //Helper method used to get a UserStats object from their username
+    private UserStats getUserStats(String username) {
+        for (UserStats us : userStatsRepository.findAll()) {
+            if (us.getUsername().equals(username)) {
+                return us;
+            }
+        }
+        return null;
     }
 }
