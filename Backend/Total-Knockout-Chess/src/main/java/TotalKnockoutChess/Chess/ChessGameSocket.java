@@ -53,39 +53,68 @@ public class ChessGameSocket {
         //Chess game that the user in this session is in
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
-        String whitePlayer = cg.getWhitePlayer();
-        String blackPlayer = cg.getBlackPlayer();
 
-        boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
-        // Update booleans as appropriate
-        if(whitePlayer != null && username.equals(whitePlayer)){ userIsWhitePlayer = true; }
-        if(blackPlayer != null && username.equals(blackPlayer)){ userIsBlackPlayer = true; }
+        // If message is a coordinate
+        if(message.length() == 2){
 
-        String whoseMove = cg.getWhoseMove();
+            String whitePlayer = cg.getWhitePlayer();
+            String blackPlayer = cg.getBlackPlayer();
 
-        // TODO FOR BACKEND TESTING
-        cg.displayBoard();
+            boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
+            // Update booleans as appropriate
+            if(whitePlayer != null && username.equals(whitePlayer)){ userIsWhitePlayer = true; }
+            if(blackPlayer != null && username.equals(blackPlayer)){ userIsBlackPlayer = true; }
 
-        switch(whoseMove){
-            // If it is white's turn
-            case "white":
-                if(userIsWhitePlayer){
-                    executePlayerTurn(cg, username, message, "white", blackPlayer);
-                }
-                else if(userIsBlackPlayer){
-                    // TODO Return players available moves
-                }
-                break;
-            // If it is black's turn
-            case "black":
-                if(userIsBlackPlayer){
-                    executePlayerTurn(cg, username, message, "black", whitePlayer);
-                }
-                else if(userIsWhitePlayer){
-                    // TODO Return players available moves
-                }
-                break;
+            String whoseMove = cg.getWhoseMove();
+
+            // TODO FOR BACKEND TESTING
+            cg.displayBoard();
+
+            switch(whoseMove){
+                // If it is white's turn
+                case "white":
+                    if(userIsWhitePlayer){
+                        executePlayerTurn(cg, username, message, "white", blackPlayer);
+                    }
+                    else if(userIsBlackPlayer){
+                        // TODO Return players available moves
+                    }
+                    break;
+                // If it is black's turn
+                case "black":
+                    if(userIsBlackPlayer){
+                        executePlayerTurn(cg, username, message, "black", whitePlayer);
+                    }
+                    else if(userIsWhitePlayer){
+                        // TODO Return players available moves
+                    }
+                    break;
+            }
         }
+        else if(message.equals("GetBoard")){
+            sendPlayerMessage(username, getBoard(cg));
+        }
+    }
+
+    private String getBoard(ChessGame cg) {
+        String encodedBoard = "GameBoard ";
+        ChessGameTile[][] board = cg.getBoard();
+
+        for(int row = 0; row < board.length; row++){
+            for(int col = 0; col < board[row].length; col++){
+                // Add current piece to the encodedBoard
+                ChessPiece piece = board[col][row].piece;
+
+                // '.' represents end of a column
+                encodedBoard += piece.toString() + ".";
+            }
+
+            // Add # to signify end of row.
+            encodedBoard += "#";
+        }
+
+        // Returns the chess board with the format "ChessBoard A1Piece.B1Piece...H1Piece#A2Piece.B2Piece.......H8Piece"
+        return encodedBoard;
     }
 
 
