@@ -646,3 +646,88 @@ java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a par
 2023-04-30 17:25:06.742  INFO 26584 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2023-04-30 17:25:06.742  INFO 26584 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-04-30 17:25:06.746  INFO 26584 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-04-30 18:50:34.150  INFO 32744 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-7SFDHRU with PID 32744 (E:\COMS309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by conno in E:\COMS309\1_an_5\Backend\Total-Knockout-Chess)
+2023-04-30 18:50:34.152  INFO 32744 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
+2023-04-30 18:50:34.782  INFO 32744 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-04-30 18:50:34.835  INFO 32744 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 7 JPA repository interfaces.
+2023-04-30 18:50:35.295  INFO 32744 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-04-30 18:50:35.302  INFO 32744 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-04-30 18:50:35.303  INFO 32744 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-04-30 18:50:35.379  INFO 32744 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-04-30 18:50:35.379  INFO 32744 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1192 ms
+2023-04-30 18:50:35.502  INFO 32744 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-04-30 18:50:35.534  INFO 32744 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-30 18:50:35.580  INFO 32744 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.23.Final
+2023-04-30 18:50:35.717  INFO 32744 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-04-30 18:50:35.855  WARN 32744 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-30 18:50:35.868  INFO 32744 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-04-30 18:50:36.252  INFO 32744 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-04-30 18:50:36.286  INFO 32744 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2023-04-30 18:50:36.362  INFO 32744 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-04-30 18:50:36.773  INFO 32744 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-04-30 18:50:38.081  INFO 32744 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-30 18:50:38.086  INFO 32744 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-30 18:50:38.304  INFO 32744 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-04-30 18:50:38.311  INFO 32744 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 4.444 seconds (JVM running for 4.736)
+2023-04-30 18:50:43.499  INFO 32744 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-04-30 18:50:43.499  INFO 32744 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-04-30 18:50:43.500  INFO 32744 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-04-30 18:50:43.528  INFO 32744 --- [http-nio-8080-exec-1] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-30 18:50:50.166  INFO 32744 --- [http-nio-8080-exec-2] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-30 18:50:54.297  INFO 32744 --- [http-nio-8080-exec-3] TotalKnockoutChess.Lobby.LobbySocket     : Entered into close
+2023-04-30 18:50:55.524  INFO 32744 --- [http-nio-8080-exec-4] TotalKnockoutChess.Lobby.LobbySocket     : Entered into close
+2023-04-30 18:50:57.595  INFO 32744 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-30 18:50:57.597  INFO 32744 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2023-04-30 18:50:57.597  INFO 32744 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-04-30 18:50:57.602  INFO 32744 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-04-30 18:51:12.514  INFO 27256 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-7SFDHRU with PID 27256 (E:\COMS309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by conno in E:\COMS309\1_an_5\Backend\Total-Knockout-Chess)
+2023-04-30 18:51:12.516  INFO 27256 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
+2023-04-30 18:51:13.193  INFO 27256 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-04-30 18:51:13.262  INFO 27256 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 7 JPA repository interfaces.
+2023-04-30 18:51:13.788  INFO 27256 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-04-30 18:51:13.798  INFO 27256 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-04-30 18:51:13.798  INFO 27256 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-04-30 18:51:13.886  INFO 27256 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-04-30 18:51:13.887  INFO 27256 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1332 ms
+2023-04-30 18:51:14.023  INFO 27256 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-04-30 18:51:14.073  INFO 27256 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-30 18:51:14.127  INFO 27256 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.23.Final
+2023-04-30 18:51:14.279  INFO 27256 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-04-30 18:51:14.420  INFO 27256 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-04-30 18:51:14.422  WARN 27256 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-30 18:51:14.782  INFO 27256 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-04-30 18:51:14.821  INFO 27256 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2023-04-30 18:51:14.893  INFO 27256 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-04-30 18:51:15.340  INFO 27256 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-04-30 18:51:16.583  INFO 27256 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-30 18:51:16.589  INFO 27256 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-30 18:51:16.830  INFO 27256 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-04-30 18:51:16.838  INFO 27256 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 4.663 seconds (JVM running for 5.023)
+2023-04-30 18:51:49.921  INFO 27256 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-04-30 18:51:49.921  INFO 27256 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-04-30 18:51:49.922  INFO 27256 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-04-30 18:51:49.952  INFO 27256 --- [http-nio-8080-exec-1] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-30 18:51:57.985  INFO 27256 --- [http-nio-8080-exec-2] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Open
+2023-04-30 18:52:04.134  INFO 27256 --- [http-nio-8080-exec-3] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: SwitchToP1
+2023-04-30 18:52:10.826  INFO 27256 --- [http-nio-8080-exec-4] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: SwitchToP2
+2023-04-30 18:52:13.774  INFO 27256 --- [http-nio-8080-exec-5] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Ready
+2023-04-30 18:52:17.634  INFO 27256 --- [http-nio-8080-exec-6] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Ready
+2023-04-30 18:52:23.684  INFO 27256 --- [http-nio-8080-exec-7] TotalKnockoutChess.Lobby.LobbySocket     : Entered into Message. Got Message: Start Boxing
+2023-04-30 18:52:27.064  INFO 27256 --- [http-nio-8080-exec-8] TotalKnockoutChess.Lobby.LobbySocket     : Entered into close
+2023-04-30 18:52:28.208  INFO 27256 --- [http-nio-8080-exec-9] TotalKnockoutChess.Lobby.LobbySocket     : Entered into close
+2023-04-30 18:52:29.424  INFO 27256 --- [http-nio-8080-exec-10] T.Boxing.BoxingGameSocket                : Entered into Open
+2023-04-30 18:52:30.830  INFO 27256 --- [http-nio-8080-exec-1] T.Boxing.BoxingGameSocket                : Entered into Open
+2023-04-30 18:52:51.361  INFO 27256 --- [http-nio-8080-exec-2] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: jab
+2023-04-30 18:52:52.974  INFO 27256 --- [http-nio-8080-exec-3] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: kick
+2023-04-30 18:52:55.153  INFO 27256 --- [http-nio-8080-exec-4] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: jab
+2023-04-30 18:52:56.601  INFO 27256 --- [http-nio-8080-exec-5] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: kick
+2023-04-30 18:53:00.811  INFO 27256 --- [http-nio-8080-exec-6] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: jab
+2023-04-30 18:53:06.166  INFO 27256 --- [http-nio-8080-exec-7] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: kick
+2023-04-30 18:53:35.297  INFO 27256 --- [http-nio-8080-exec-8] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: GameType Boxing win
+2023-04-30 18:54:51.487  INFO 27256 --- [http-nio-8080-exec-9] T.Boxing.BoxingGameSocket                : Entered into Message. Got Message: GameType Boxing loss
+2023-04-30 18:55:57.562  INFO 27256 --- [http-nio-8080-exec-10] T.Boxing.BoxingGameSocket                : Entered into close
+2023-04-30 18:55:58.819  INFO 27256 --- [http-nio-8080-exec-1] T.Boxing.BoxingGameSocket                : Entered into close
+2023-04-30 18:57:03.069  INFO 27256 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-04-30 18:57:03.070  INFO 27256 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2023-04-30 18:57:03.070  INFO 27256 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-04-30 18:57:03.074  INFO 27256 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
