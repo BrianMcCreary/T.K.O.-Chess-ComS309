@@ -181,6 +181,7 @@ public class LobbySocket {
                     sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     lobbyRepository.delete(l);
                     lobbyRepository.flush();
+
                 } else if (messages[1].equals("Chess")) {
                     ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     chessGameRepository.save(cg);
