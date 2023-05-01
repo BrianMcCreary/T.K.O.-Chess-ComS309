@@ -182,15 +182,14 @@ public class LobbySocket {
                     lobbyRepository.delete(l);
                     lobbyRepository.flush();
 
-                } else if (messages[1].equals("Chess")) {
+                } // When frontend wants to start either a chess game or chess-boxing match, a chess game will be created
+                else if (messages[1].equals("Chess") || messages[1].equals("ChessBoxing")) {
                     ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     chessGameRepository.save(cg);
                     chessGameRepository.flush();
                     sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     lobbyRepository.delete(l);
                     lobbyRepository.flush();
-                } else if (messages[1].equals("ChessBoxing")) {
-                    //TODO
                 }
             }
         }
