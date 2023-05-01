@@ -6,6 +6,8 @@ C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockou
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Chess\Pieces\ChessPiece.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Users\User.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Chess\Pieces\Knight.java
+C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Statistics\UserStatsController.java
+C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Statistics\UserStats.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Users\UserController.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Friends\FriendRequestController.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Chess\ChessGameController.java
@@ -32,3 +34,4 @@ C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockou
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\SpringFoxConfig.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Users\UserRepository.java
 C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Boxing\BoxingGameSocketConfig.java
+C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\src\main\java\TotalKnockoutChess\Statistics\UserStatsRepository.java

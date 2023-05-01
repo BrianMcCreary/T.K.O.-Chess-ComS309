@@ -32,7 +32,7 @@ public class ChessGame {
     private boolean running;
 
     //List of spectators in the game
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> spectators;
 
     public ChessGame() {
@@ -271,9 +271,9 @@ public class ChessGame {
         }
     }
 
-    // Getter for game state
-    public boolean isRunning() {
-        return running;
-    }
+
+    // Getter/Setter for game state
+    public boolean isRunning(){ return running; }
+    public void setRunning(boolean running){ this.running = running; }
 }
 
