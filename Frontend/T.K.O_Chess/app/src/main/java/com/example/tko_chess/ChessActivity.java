@@ -234,8 +234,8 @@ public class ChessActivity extends AppCompatActivity {
         G8 = findViewById(R.id.G8);
         H8 = findViewById(R.id.H8);
 
-        OptionsBtn.findViewById(R.id.ChessMenuBtn);
-        OptionsLayout = findViewById(R.id.OptionsLayout2);
+        //OptionsBtn.findViewById(R.id.ChessMenuBtn);
+        //OptionsLayout = findViewById(R.id.OptionsLayout2);
 
         //TextView initializations
 //        Player1Name = findViewById(R.id.Player1NameText);
@@ -300,11 +300,11 @@ public class ChessActivity extends AppCompatActivity {
                             tile = strings[2];
                             piece = strings[3];
                             movePiece(); //updates board accordingly
-                            //enableButtons(); //enables buttons after opponent's turn
+                            enableButtons(); //enables buttons after opponent's turn
                             break;
 
                         case "userMoved":
-                            //disableButtons(); //disables buttons after user's turn
+                            disableButtons(); //disables buttons after user's turn
                             break;
 
                         case "invalidMove":
