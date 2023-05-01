@@ -1,14 +1,15 @@
 package com.example.tko_chess;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
@@ -18,7 +19,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tko_chess.ultils.Const;
@@ -99,6 +99,43 @@ public class ChessActivity extends AppCompatActivity {
     ImageButton OptionsBtn;
     LinearLayout GameOverLayout;
     LinearLayout OptionsLayout;
+    String UserRole;
+    String WhoPlayer1;
+    String WhoPlayer2;
+    String GameMode;
+    TextView GameTimeText;
+    /**
+     * TextView displays player1's username.
+     */
+    TextView Player1Name;
+    /**
+     * Textview displays current round of boxing.
+     */
+    TextView CurrRound;
+    /**
+     * Textview displays Player1 total rounds won.
+     */
+    TextView Player1Wins;
+    /**
+     * Textview displays Player2 total rounds won.
+     */
+    TextView Player2Wins;
+    /**
+     * TextView displays player2's username.
+     */
+    TextView Player2Name;
+    /**
+     * TextView displays select move prompt.
+     */
+    TextView SelectMoveText;
+    /**
+     * Int stores how many rounds of boxing Player1 has won.
+     */
+    int Player1GamesWon = 0;
+    /**
+     * Int stores how many rounds of boxing Player2 has won.
+     */
+    int Player2GamesWon = 0;
 
 
     private WebSocketClient WebSocket;
@@ -197,9 +234,51 @@ public class ChessActivity extends AppCompatActivity {
         G8 = findViewById(R.id.G8);
         H8 = findViewById(R.id.H8);
 
+        OptionsBtn.findViewById(R.id.ChessMenuBtn);
+        OptionsLayout = findViewById(R.id.OptionsLayout2);
+
+        //TextView initializations
+//        Player1Name = findViewById(R.id.Player1NameText);
+//        Player1Wins = findViewById(R.id.Player1Wins);
+//        Player2Name = findViewById(R.id.Player2NameText);
+//        Player2Wins = findViewById(R.id.Player2Wins);
+
+        //String initializations
+//        GameMode = getIntent().getExtras().getString("Gamemode");
+//        UserRole = getIntent().getExtras().getString("UserRole");
+//        WhoPlayer1 = getIntent().getExtras().getString("Player1");
+//        WhoPlayer2 = getIntent().getExtras().getString("Player2");
+//
+//        //Int initializations
+//        Player1GamesWon = getIntent().getExtras().getInt("Player1Wins");
+//        Player2GamesWon = getIntent().getExtras().getInt("Player2Wins");
+
         Draft[] drafts = {new Draft_6455()};
 
         URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
+
+        //Display player names on screen for spectators and for the case of user being Player 1
+//        if (UserRole.equals("Spectator") || WhoPlayer1.equals(currUser.getUsername())) {
+//            Player1Name.setText(WhoPlayer1);
+//
+//            Player1Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+//            Player2Name.setText(WhoPlayer2);
+//            Player2Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+//        }
+//
+//        //Display player names on screen for the case of user being Player 2
+//        if (WhoPlayer2.equals(currUser.getUsername())) {
+//            Player1Name.setText(currUser.getUsername());
+//            Player1Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+//            Player2Name.setText(WhoPlayer1);
+//            Player2Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+//        }
+//
+//        if (!GameMode.equals("ChessBoxing")) {
+//            Player1Wins.setVisibility(View.INVISIBLE);
+//            Player2Wins.setVisibility(View.INVISIBLE);
+//            CurrRound.setVisibility(View.INVISIBLE);
+//        }
 
         try{
             WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
@@ -318,6 +397,52 @@ public class ChessActivity extends AppCompatActivity {
 
         WebSocket.connect(); // Connects to websocket
 
+//        OptionsBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
+//                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
+//                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
+//                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
+//
+//                //Set leave game prompt depending on UserRole
+//                if (UserRole.equals("Spectator")) {
+//                    LeaveGameText.setText("Stop watching?");
+//                } else
+//
+//                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+//                    LeaveGameText.setText("Concede?");
+//                }
+//
+//                //Leaves game and returns user to main menu
+//                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        //Send leave message if user was a player
+//                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+//                            WebSocket.send("leave");
+//                        }
+//
+//                        WebSocket.close();
+//
+//                        //Returns user to main menu
+//                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//
+//                //Closes options menu
+//                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        OptionsLayout.removeAllViews();
+//                    }
+//                });
+//
+//                OptionsLayout.addView(inflatedLayout);
+//            }
+//        });
+
         /*
          * A1 through H8 all have nearly identical internals with the only difference being tile
          * If it is the first time the user has selected a tile, the tile string is set to the name of the tile.
@@ -334,9 +459,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -352,9 +477,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -370,9 +495,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -388,9 +513,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -406,9 +531,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -424,9 +549,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -442,9 +567,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -460,9 +585,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "A8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -478,9 +603,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B1";
                     WebSocket.send(tile);
-                    unhighlight();
                     highlight();
                     movePiece();
                     tracker = 0;
@@ -497,9 +622,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -515,9 +640,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -533,9 +658,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -551,9 +676,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -569,9 +694,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -587,9 +712,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -605,9 +730,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "B8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -623,9 +748,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -641,9 +766,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -659,9 +784,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -677,9 +802,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -695,9 +820,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -713,9 +838,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -731,9 +856,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -749,9 +874,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "C8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -767,9 +892,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -785,9 +910,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -803,9 +928,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -821,9 +946,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -839,9 +964,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -857,9 +982,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -875,9 +1000,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -893,9 +1018,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "D8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -911,9 +1036,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -929,9 +1054,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -947,9 +1072,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -965,9 +1090,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -983,9 +1108,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1001,9 +1126,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1019,9 +1144,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1037,9 +1162,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "E8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1055,9 +1180,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1073,9 +1198,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1091,9 +1216,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1109,9 +1234,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1127,9 +1252,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1145,9 +1270,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1163,9 +1288,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1181,9 +1306,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "F8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1199,9 +1324,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1217,9 +1342,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1235,9 +1360,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1253,9 +1378,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1271,9 +1396,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1289,9 +1414,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1307,9 +1432,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1325,9 +1450,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "G8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1343,9 +1468,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H1";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1361,9 +1486,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H2";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1379,9 +1504,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H3";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1397,9 +1522,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H4";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1415,9 +1540,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H5";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1433,9 +1558,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H6";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1451,9 +1576,9 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H7";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
@@ -1469,42 +1594,12 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                 } else if(tracker > 1){
                     setTransparent();
+                    unhighlight();
                     tile = "H8";
                     WebSocket.send(tile);
-                    unhighlight();
                     movePiece();
                     tracker = 0;
                 }
-            }
-        });
-
-        OptionsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-                Button ConcedeGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
-                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-
-                //Concedes game and returns user to main menu
-                ConcedeGameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        WebSocket.send("leave");
-                        WebSocket.close();
-
-                        //Returns user to main menu
-                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                //Closes options menu
-                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        OptionsLayout.removeAllViews();
-                    }
-                });
             }
         });
     }
@@ -1529,203 +1624,203 @@ public class ChessActivity extends AppCompatActivity {
     public void highlight(){
 
         if(tile.equals("A1")){
-            A1.setBackgroundColor(Color.parseColor("#66ff66"));
+            A1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A2")){
-            A2.setBackgroundColor(Color.parseColor("#66ff66"));
+            A2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A3")){
-            A3.setBackgroundColor(Color.parseColor("#66ff66"));
+            A3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A4")){
-            A4.setBackgroundColor(Color.parseColor("#66ff66"));
+            A4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A5")){
-            A5.setBackgroundColor(Color.parseColor("#66ff66"));
+            A5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A6")){
-            A6.setBackgroundColor(Color.parseColor("#66ff66"));
+            A6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A7")){
-            A7.setBackgroundColor(Color.parseColor("#66ff66"));
+            A7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("A8")){
-            A8.setBackgroundColor(Color.parseColor("#66ff66"));
+            A8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("B1")){
-            B1.setBackgroundColor(Color.parseColor("#66ff66"));
+            B1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B2")){
-            B2.setBackgroundColor(Color.parseColor("#66ff66"));
+            B2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B3")){
-            B3.setBackgroundColor(Color.parseColor("#66ff66"));
+            B3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B4")){
-            B4.setBackgroundColor(Color.parseColor("#66ff66"));
+            B4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B5")){
-            B5.setBackgroundColor(Color.parseColor("#66ff66"));
+            B5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B6")){
-            B6.setBackgroundColor(Color.parseColor("#66ff66"));
+            B6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B7")){
-            B7.setBackgroundColor(Color.parseColor("#66ff66"));
+            B7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("B8")){
-            B8.setBackgroundColor(Color.parseColor("#66ff66"));
+            B8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("C1")){
-            C1.setBackgroundColor(Color.parseColor("#66ff66"));
+            C1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C2")){
-            C2.setBackgroundColor(Color.parseColor("#66ff66"));
+            C2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C3")){
-            C3.setBackgroundColor(Color.parseColor("#66ff66"));
+            C3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C4")){
-            C4.setBackgroundColor(Color.parseColor("#66ff66"));
+            C4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C5")){
-            C5.setBackgroundColor(Color.parseColor("#66ff66"));
+            C5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C6")){
-            C6.setBackgroundColor(Color.parseColor("#66ff66"));
+            C6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C7")){
-            C7.setBackgroundColor(Color.parseColor("#66ff66"));
+            C7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("C8")){
-            C8.setBackgroundColor(Color.parseColor("#66ff66"));
+            C8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("D1")){
-            D1.setBackgroundColor(Color.parseColor("#66ff66"));
+            D1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D2")){
-            D2.setBackgroundColor(Color.parseColor("#66ff66"));
+            D2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D3")){
-            D3.setBackgroundColor(Color.parseColor("#66ff66"));
+            D3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D4")){
-            D4.setBackgroundColor(Color.parseColor("#66ff66"));
+            D4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D5")){
-            D5.setBackgroundColor(Color.parseColor("#66ff66"));
+            D5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D6")){
-            D6.setBackgroundColor(Color.parseColor("#66ff66"));
+            D6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D7")){
-            D7.setBackgroundColor(Color.parseColor("#66ff66"));
+            D7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("D8")){
-            D8.setBackgroundColor(Color.parseColor("#66ff66"));
+            D8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("E1")){
-            E1.setBackgroundColor(Color.parseColor("#66ff66"));
+            E1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E2")){
-            E2.setBackgroundColor(Color.parseColor("#66ff66"));
+            E2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E3")){
-            E3.setBackgroundColor(Color.parseColor("#66ff66"));
+            E3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E4")){
-            E4.setBackgroundColor(Color.parseColor("#66ff66"));
+            E4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E5")){
-            E5.setBackgroundColor(Color.parseColor("#66ff66"));
+            E5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E6")){
-            E6.setBackgroundColor(Color.parseColor("#66ff66"));
+            E6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E7")){
-            E7.setBackgroundColor(Color.parseColor("#66ff66"));
+            E7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("E8")){
-            E8.setBackgroundColor(Color.parseColor("#66ff66"));
+            E8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("F1")){
-            F1.setBackgroundColor(Color.parseColor("#66ff66"));
+            F1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F2")){
-            F2.setBackgroundColor(Color.parseColor("#66ff66"));
+            F2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F3")){
-            F3.setBackgroundColor(Color.parseColor("#66ff66"));
+            F3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F4")){
-            F4.setBackgroundColor(Color.parseColor("#66ff66"));
+            F4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F5")){
-            F5.setBackgroundColor(Color.parseColor("#66ff66"));
+            F5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F6")){
-            F6.setBackgroundColor(Color.parseColor("#66ff66"));
+            F6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F7")){
-            F7.setBackgroundColor(Color.parseColor("#66ff66"));
+            F7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("F8")){
-            F8.setBackgroundColor(Color.parseColor("#66ff66"));
+            F8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("G1")){
-            G1.setBackgroundColor(Color.parseColor("#66ff66"));
+            G1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G2")){
-            G2.setBackgroundColor(Color.parseColor("#66ff66"));
+            G2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G3")){
-            G3.setBackgroundColor(Color.parseColor("#66ff66"));
+            G3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G4")){
-            G4.setBackgroundColor(Color.parseColor("#66ff66"));
+            G4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G5")){
-            G5.setBackgroundColor(Color.parseColor("#66ff66"));
+            G5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G6")){
-            G6.setBackgroundColor(Color.parseColor("#66ff66"));
+            G6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G7")){
-            G7.setBackgroundColor(Color.parseColor("#66ff66"));
+            G7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("G8")){
-            G8.setBackgroundColor(Color.parseColor("#66ff66"));
+            G8.setBackgroundColor(Color.GREEN);
         }
 
         if(tile.equals("H1")){
-            H1.setBackgroundColor(Color.parseColor("#66ff66"));
+            H1.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H2")){
-            H2.setBackgroundColor(Color.parseColor("#66ff66"));
+            H2.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H3")){
-            H3.setBackgroundColor(Color.parseColor("#66ff66"));
+            H3.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H4")){
-            H4.setBackgroundColor(Color.parseColor("#66ff66"));
+            H4.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H5")){
-            H5.setBackgroundColor(Color.parseColor("#66ff66"));
+            H5.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H6")){
-            H6.setBackgroundColor(Color.parseColor("#66ff66"));
+            H6.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H7")){
-            H7.setBackgroundColor(Color.parseColor("#66ff66"));
+            H7.setBackgroundColor(Color.GREEN);
         }
         if(tile.equals("H8")){
-            H8.setBackgroundColor(Color.parseColor("#66ff66"));
+            H8.setBackgroundColor(Color.GREEN);
         }
     }
 
@@ -1735,203 +1830,203 @@ public class ChessActivity extends AppCompatActivity {
     public void unhighlight(){
 
         if(tile.equals("A1")){
-            A1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A2")){
-            A2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A3")){
-            A3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A4")){
-            A4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A5")){
-            A5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A6")){
-            A6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A7")){
-            A7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("A8")){
-            A8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            A8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("B1")){
-            B1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B2")){
-            B2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B3")){
-            B3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B4")){
-            B4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B5")){
-            B5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B6")){
-            B6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B7")){
-            B7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("B8")){
-            B8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            B8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("C1")){
-            C1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C2")){
-            C2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C3")){
-            C3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C4")){
-            C4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C5")){
-            C5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C6")){
-            C6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C7")){
-            C7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("C8")){
-            C8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            C8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("D1")){
-            D1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D2")){
-            D2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D3")){
-            D3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D4")){
-            D4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D5")){
-            D5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D6")){
-            D6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D7")){
-            D7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("D8")){
-            D8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            D8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("E1")){
-            E1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E2")){
-            E2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E3")){
-            E3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E4")){
-            E4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E5")){
-            E5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E6")){
-            E6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E7")){
-            E7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("E8")){
-            E8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            E8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("F1")){
-            F1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F2")){
-            F2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F3")){
-            F3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F4")){
-            F4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F5")){
-            F5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F6")){
-            F6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F7")){
-            F7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("F8")){
-            F8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            F8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("G1")){
-            G1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G2")){
-            G2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G3")){
-            G3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G4")){
-            G4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G5")){
-            G5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G6")){
-            G6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G7")){
-            G7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("G8")){
-            G8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            G8.setBackgroundColor(Color.TRANSPARENT);
         }
 
         if(tile.equals("H1")){
-            H1.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H1.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H2")){
-            H2.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H2.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H3")){
-            H3.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H3.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H4")){
-            H4.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H4.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H5")){
-            H5.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H5.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H6")){
-            H6.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H6.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H7")){
-            H7.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H7.setBackgroundColor(Color.TRANSPARENT);
         }
         if(tile.equals("H8")){
-            H8.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            H8.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 

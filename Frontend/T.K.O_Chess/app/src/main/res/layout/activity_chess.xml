@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey">
 
+    <LinearLayout
+        android:id="@+id/OptionsLayout2"
+        android:layout_width="125dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/ChessMenuBtn"
+        app:layout_constraintTop_toTopOf="@+id/ChessMenuBtn"></LinearLayout>
+
     <ImageButton
         android:id="@+id/ChessMenuBtn"
         android:layout_width="48dp"
@@ -19,15 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/menu" />
-
-    <LinearLayout
-        android:id="@+id/OptionsLayout"
-        android:layout_width="125dp"
-        android:layout_height="300dp"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/ChessMenuBtn"
-        app:layout_constraintTop_toTopOf="@+id/ChessMenuBtn"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/GameOverLayout2"

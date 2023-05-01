@@ -777,7 +777,7 @@ public class BoxingActivity extends AppCompatActivity {
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
                 Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
                 Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);
+                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
 
                 //Set leave game prompt depending on UserRole
                 if (UserRole.equals("Spectator")) {
