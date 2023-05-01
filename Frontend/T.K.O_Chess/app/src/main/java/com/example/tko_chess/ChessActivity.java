@@ -238,48 +238,22 @@ public class ChessActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.ChessMenuBtn);
         OptionsLayout = findViewById(R.id.OptionsLayout2);
 
-        //TextView initializations
 //        Player1Name = findViewById(R.id.Player1NameText);
 //        Player1Wins = findViewById(R.id.Player1Wins);
 //        Player2Name = findViewById(R.id.Player2NameText);
 //        Player2Wins = findViewById(R.id.Player2Wins);
 
-        //String initializations
-//        GameMode = getIntent().getExtras().getString("Gamemode");
-//        UserRole = getIntent().getExtras().getString("UserRole");
-//        WhoPlayer1 = getIntent().getExtras().getString("Player1");
-//        WhoPlayer2 = getIntent().getExtras().getString("Player2");
-//
-//        //Int initializations
-//        Player1GamesWon = getIntent().getExtras().getInt("Player1Wins");
-//        Player2GamesWon = getIntent().getExtras().getInt("Player2Wins");
+        GameMode = getIntent().getExtras().getString("Gamemode");
+        UserRole = getIntent().getExtras().getString("UserRole");
+        WhoPlayer1 = getIntent().getExtras().getString("Player1");
+        WhoPlayer2 = getIntent().getExtras().getString("Player2");
+
+        Player1GamesWon = getIntent().getExtras().getInt("Player1Wins");
+        Player2GamesWon = getIntent().getExtras().getInt("Player2Wins");
 
         Draft[] drafts = {new Draft_6455()};
 
         URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
-
-        //Display player names on screen for spectators and for the case of user being Player 1
-//        if (UserRole.equals("Spectator") || WhoPlayer1.equals(currUser.getUsername())) {
-//            Player1Name.setText(WhoPlayer1);
-//
-//            Player1Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
-//            Player2Name.setText(WhoPlayer2);
-//            Player2Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
-//        }
-//
-//        //Display player names on screen for the case of user being Player 2
-//        if (WhoPlayer2.equals(currUser.getUsername())) {
-//            Player1Name.setText(currUser.getUsername());
-//            Player1Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
-//            Player2Name.setText(WhoPlayer1);
-//            Player2Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
-//        }
-//
-//        if (!GameMode.equals("ChessBoxing")) {
-//            Player1Wins.setVisibility(View.INVISIBLE);
-//            Player2Wins.setVisibility(View.INVISIBLE);
-//            CurrRound.setVisibility(View.INVISIBLE);
-//        }
 
         try{
             WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
@@ -399,51 +373,74 @@ public class ChessActivity extends AppCompatActivity {
 
         WebSocket.connect(); // Connects to websocket
 
-        OptionsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
-                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
+        //Display player names on screen for spectators and for the case of user being Player 1
+//        if (UserRole.equals("Spectator") || WhoPlayer1.equals(currUser.getUsername())) {
+//            Player1Name.setText(WhoPlayer1);
+//
+//            Player1Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+//            Player2Name.setText(WhoPlayer2);
+//            Player2Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+//        }
+//
+//        //Display player names on screen for the case of user being Player 2
+//        if (WhoPlayer2.equals(currUser.getUsername())) {
+//            Player1Name.setText(currUser.getUsername());
+//            Player1Wins.setText("Wins: " + Integer.toString(Player2GamesWon));
+//            Player2Name.setText(WhoPlayer1);
+//            Player2Wins.setText("Wins: " + Integer.toString(Player1GamesWon));
+//        }
+//
+//        if (!GameMode.equals("ChessBoxing")) {
+//            Player1Wins.setVisibility(View.INVISIBLE);
+//            Player2Wins.setVisibility(View.INVISIBLE);
+//            CurrRound.setVisibility(View.INVISIBLE);
+//        }
 
-                //Set leave game prompt depending on UserRole
-                if (UserRole.equals("Spectator")) {
-                    LeaveGameText.setText("Stop watching?");
-                } else
-
-                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
-                    LeaveGameText.setText("Concede?");
-                }
-
-                //Leaves game and returns user to main menu
-                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Send leave message if user was a player
-                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
-                            WebSocket.send("leave");
-                        }
-
-                        WebSocket.close();
-
-                        //Returns user to main menu
-                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                //Closes options menu
-                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        OptionsLayout.removeAllViews();
-                    }
-                });
-
-                OptionsLayout.addView(inflatedLayout);
-            }
-        });
+//        OptionsBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
+//                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
+//                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
+//                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
+//
+//                //Set leave game prompt depending on UserRole
+//                if (UserRole.equals("Spectator")) {
+//                    LeaveGameText.setText("Stop watching?");
+//                } else
+//
+//                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+//                    LeaveGameText.setText("Concede?");
+//                }
+//
+//                //Leaves game and returns user to main menu
+//                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        //Send leave message if user was a player
+//                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+//                            WebSocket.send("leave");
+//                        }
+//
+//                        WebSocket.close();
+//
+//                        //Returns user to main menu
+//                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//
+//                //Closes options menu
+//                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        OptionsLayout.removeAllViews();
+//                    }
+//                });
+//
+//                OptionsLayout.addView(inflatedLayout);
+//            }
+//        });
 
         /*
          * A1 through H8 all have nearly identical internals with the only difference being tile
