@@ -144,7 +144,8 @@ public class ChessActivity extends AppCompatActivity {
     SingletonUser currUser = SingletonUser.getInstance(); // used to get the user's name
     String tile = ""; // Stores the name of the pressed tile
     String piece = ""; // stores the name of the selected piece
-    int tracker = 0; // tracks if whether or not the user has previously pressed a tile
+    int tracker = 0;
+    int moves = 0;// tracks if whether or not the user has previously pressed a tile
 
     /**
      *
@@ -234,8 +235,8 @@ public class ChessActivity extends AppCompatActivity {
         G8 = findViewById(R.id.G8);
         H8 = findViewById(R.id.H8);
 
-        //OptionsBtn.findViewById(R.id.ChessMenuBtn);
-        //OptionsLayout = findViewById(R.id.OptionsLayout2);
+        OptionsBtn = findViewById(R.id.ChessMenuBtn);
+        OptionsLayout = findViewById(R.id.OptionsLayout2);
 
         //TextView initializations
 //        Player1Name = findViewById(R.id.Player1NameText);
@@ -300,11 +301,11 @@ public class ChessActivity extends AppCompatActivity {
                             tile = strings[2];
                             piece = strings[3];
                             movePiece(); //updates board accordingly
-                            enableButtons(); //enables buttons after opponent's turn
+                            //enableButtons(); //enables buttons after opponent's turn
                             break;
 
                         case "userMoved":
-                            disableButtons(); //disables buttons after user's turn
+                            //disableButtons(); //disables buttons after user's turn
                             break;
 
                         case "invalidMove":
@@ -388,6 +389,7 @@ public class ChessActivity extends AppCompatActivity {
                 @Override
                 public void onError(Exception ex) {
                     Log.d("Exception:", ex.getMessage().toString());
+                    System.out.println(ex);
                 }
             };
         } catch (URISyntaxException e){
@@ -397,51 +399,51 @@ public class ChessActivity extends AppCompatActivity {
 
         WebSocket.connect(); // Connects to websocket
 
-//        OptionsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
-//                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
-//                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
-//                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
-//
-//                //Set leave game prompt depending on UserRole
-//                if (UserRole.equals("Spectator")) {
-//                    LeaveGameText.setText("Stop watching?");
-//                } else
-//
-//                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
-//                    LeaveGameText.setText("Concede?");
-//                }
-//
-//                //Leaves game and returns user to main menu
-//                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        //Send leave message if user was a player
-//                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
-//                            WebSocket.send("leave");
-//                        }
-//
-//                        WebSocket.close();
-//
-//                        //Returns user to main menu
-//                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
-//                        startActivity(intent);
-//                    }
-//                });
-//
-//                //Closes options menu
-//                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        OptionsLayout.removeAllViews();
-//                    }
-//                });
-//
-//                OptionsLayout.addView(inflatedLayout);
-//            }
-//        });
+        OptionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);
+                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBtn);
+                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);
+                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveText);
+
+                //Set leave game prompt depending on UserRole
+                if (UserRole.equals("Spectator")) {
+                    LeaveGameText.setText("Stop watching?");
+                } else
+
+                if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+                    LeaveGameText.setText("Concede?");
+                }
+
+                //Leaves game and returns user to main menu
+                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Send leave message if user was a player
+                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
+                            WebSocket.send("leave");
+                        }
+
+                        WebSocket.close();
+
+                        //Returns user to main menu
+                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                //Closes options menu
+                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OptionsLayout.removeAllViews();
+                    }
+                });
+
+                OptionsLayout.addView(inflatedLayout);
+            }
+        });
 
         /*
          * A1 through H8 all have nearly identical internals with the only difference being tile
@@ -464,6 +466,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -482,6 +485,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -500,6 +504,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -518,6 +523,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -536,6 +542,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -554,6 +561,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -572,6 +580,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -590,6 +599,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -609,6 +619,7 @@ public class ChessActivity extends AppCompatActivity {
                     highlight();
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -627,6 +638,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -645,6 +657,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -663,6 +676,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -681,6 +695,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -699,6 +714,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -717,6 +733,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -735,6 +752,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -753,6 +771,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -771,6 +790,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -789,6 +809,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -807,6 +828,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -825,6 +847,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -843,6 +866,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -861,6 +885,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -879,6 +904,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -897,6 +923,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -915,6 +942,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -933,6 +961,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -951,6 +980,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -969,6 +999,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -987,6 +1018,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1005,6 +1037,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1023,6 +1056,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1041,6 +1075,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1059,6 +1094,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1077,6 +1113,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1095,6 +1132,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1113,6 +1151,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1131,6 +1170,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1149,6 +1189,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1167,6 +1208,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1185,6 +1227,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1203,6 +1246,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1221,6 +1265,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1239,6 +1284,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1257,6 +1303,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1275,6 +1322,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1293,6 +1341,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1311,6 +1360,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1329,6 +1379,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1347,6 +1398,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1365,6 +1417,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1383,6 +1436,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1401,6 +1455,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1419,6 +1474,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1437,6 +1493,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1455,6 +1512,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1473,6 +1531,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1491,6 +1550,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1509,6 +1569,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1527,6 +1588,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1545,6 +1607,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1563,6 +1626,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1581,6 +1645,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1599,6 +1664,7 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     movePiece();
                     tracker = 0;
+                    moves += 1;
                 }
             }
         });
@@ -1623,205 +1689,210 @@ public class ChessActivity extends AppCompatActivity {
      */
     public void highlight(){
 
-        if(tile.equals("A1")){
-            A1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A2")){
-            A2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A3")){
-            A3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A4")){
-            A4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A5")){
-            A5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A6")){
-            A6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A7")){
-            A7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("A8")){
-            A8.setBackgroundColor(Color.GREEN);
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(tile.equals("A1")){
+                    A1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A2")){
+                    A2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A3")){
+                    A3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A4")){
+                    A4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A5")){
+                    A5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A6")){
+                    A6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A7")){
+                    A7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("A8")){
+                    A8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("B1")){
-            B1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B2")){
-            B2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B3")){
-            B3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B4")){
-            B4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B5")){
-            B5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B6")){
-            B6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B7")){
-            B7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("B8")){
-            B8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("B1")){
+                    B1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B2")){
+                    B2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B3")){
+                    B3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B4")){
+                    B4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B5")){
+                    B5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B6")){
+                    B6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B7")){
+                    B7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("B8")){
+                    B8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("C1")){
-            C1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C2")){
-            C2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C3")){
-            C3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C4")){
-            C4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C5")){
-            C5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C6")){
-            C6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C7")){
-            C7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("C8")){
-            C8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("C1")){
+                    C1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C2")){
+                    C2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C3")){
+                    C3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C4")){
+                    C4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C5")){
+                    C5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C6")){
+                    C6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C7")){
+                    C7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("C8")){
+                    C8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("D1")){
-            D1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D2")){
-            D2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D3")){
-            D3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D4")){
-            D4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D5")){
-            D5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D6")){
-            D6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D7")){
-            D7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("D8")){
-            D8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("D1")){
+                    D1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D2")){
+                    D2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D3")){
+                    D3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D4")){
+                    D4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D5")){
+                    D5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D6")){
+                    D6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D7")){
+                    D7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("D8")){
+                    D8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("E1")){
-            E1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E2")){
-            E2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E3")){
-            E3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E4")){
-            E4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E5")){
-            E5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E6")){
-            E6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E7")){
-            E7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("E8")){
-            E8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("E1")){
+                    E1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E2")){
+                    E2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E3")){
+                    E3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E4")){
+                    E4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E5")){
+                    E5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E6")){
+                    E6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E7")){
+                    E7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("E8")){
+                    E8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("F1")){
-            F1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F2")){
-            F2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F3")){
-            F3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F4")){
-            F4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F5")){
-            F5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F6")){
-            F6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F7")){
-            F7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("F8")){
-            F8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("F1")){
+                    F1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F2")){
+                    F2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F3")){
+                    F3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F4")){
+                    F4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F5")){
+                    F5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F6")){
+                    F6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F7")){
+                    F7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("F8")){
+                    F8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("G1")){
-            G1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G2")){
-            G2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G3")){
-            G3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G4")){
-            G4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G5")){
-            G5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G6")){
-            G6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G7")){
-            G7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("G8")){
-            G8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("G1")){
+                    G1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G2")){
+                    G2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G3")){
+                    G3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G4")){
+                    G4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G5")){
+                    G5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G6")){
+                    G6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G7")){
+                    G7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("G8")){
+                    G8.setBackgroundColor(Color.GREEN);
+                }
 
-        if(tile.equals("H1")){
-            H1.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H2")){
-            H2.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H3")){
-            H3.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H4")){
-            H4.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H5")){
-            H5.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H6")){
-            H6.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H7")){
-            H7.setBackgroundColor(Color.GREEN);
-        }
-        if(tile.equals("H8")){
-            H8.setBackgroundColor(Color.GREEN);
-        }
+                if(tile.equals("H1")){
+                    H1.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H2")){
+                    H2.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H3")){
+                    H3.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H4")){
+                    H4.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H5")){
+                    H5.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H6")){
+                    H6.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H7")){
+                    H7.setBackgroundColor(Color.GREEN);
+                }
+                if(tile.equals("H8")){
+                    H8.setBackgroundColor(Color.GREEN);
+                }
+            }
+        });
     }
 
     /**
@@ -1829,205 +1900,210 @@ public class ChessActivity extends AppCompatActivity {
      */
     public void unhighlight(){
 
-        if(tile.equals("A1")){
-            A1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A2")){
-            A2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A3")){
-            A3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A4")){
-            A4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A5")){
-            A5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A6")){
-            A6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A7")){
-            A7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("A8")){
-            A8.setBackgroundColor(Color.TRANSPARENT);
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(tile.equals("A1")){
+                    A1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A2")){
+                    A2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A3")){
+                    A3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A4")){
+                    A4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A5")){
+                    A5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A6")){
+                    A6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A7")){
+                    A7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("A8")){
+                    A8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("B1")){
-            B1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B2")){
-            B2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B3")){
-            B3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B4")){
-            B4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B5")){
-            B5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B6")){
-            B6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B7")){
-            B7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("B8")){
-            B8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("B1")){
+                    B1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B2")){
+                    B2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B3")){
+                    B3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B4")){
+                    B4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B5")){
+                    B5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B6")){
+                    B6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B7")){
+                    B7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("B8")){
+                    B8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("C1")){
-            C1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C2")){
-            C2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C3")){
-            C3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C4")){
-            C4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C5")){
-            C5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C6")){
-            C6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C7")){
-            C7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("C8")){
-            C8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("C1")){
+                    C1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C2")){
+                    C2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C3")){
+                    C3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C4")){
+                    C4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C5")){
+                    C5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C6")){
+                    C6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C7")){
+                    C7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("C8")){
+                    C8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("D1")){
-            D1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D2")){
-            D2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D3")){
-            D3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D4")){
-            D4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D5")){
-            D5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D6")){
-            D6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D7")){
-            D7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("D8")){
-            D8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("D1")){
+                    D1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D2")){
+                    D2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D3")){
+                    D3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D4")){
+                    D4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D5")){
+                    D5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D6")){
+                    D6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D7")){
+                    D7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("D8")){
+                    D8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("E1")){
-            E1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E2")){
-            E2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E3")){
-            E3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E4")){
-            E4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E5")){
-            E5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E6")){
-            E6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E7")){
-            E7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("E8")){
-            E8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("E1")){
+                    E1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E2")){
+                    E2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E3")){
+                    E3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E4")){
+                    E4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E5")){
+                    E5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E6")){
+                    E6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E7")){
+                    E7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("E8")){
+                    E8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("F1")){
-            F1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F2")){
-            F2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F3")){
-            F3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F4")){
-            F4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F5")){
-            F5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F6")){
-            F6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F7")){
-            F7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("F8")){
-            F8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("F1")){
+                    F1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F2")){
+                    F2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F3")){
+                    F3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F4")){
+                    F4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F5")){
+                    F5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F6")){
+                    F6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F7")){
+                    F7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("F8")){
+                    F8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("G1")){
-            G1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G2")){
-            G2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G3")){
-            G3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G4")){
-            G4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G5")){
-            G5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G6")){
-            G6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G7")){
-            G7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("G8")){
-            G8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("G1")){
+                    G1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G2")){
+                    G2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G3")){
+                    G3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G4")){
+                    G4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G5")){
+                    G5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G6")){
+                    G6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G7")){
+                    G7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("G8")){
+                    G8.setBackgroundColor(Color.TRANSPARENT);
+                }
 
-        if(tile.equals("H1")){
-            H1.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H2")){
-            H2.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H3")){
-            H3.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H4")){
-            H4.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H5")){
-            H5.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H6")){
-            H6.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H7")){
-            H7.setBackgroundColor(Color.TRANSPARENT);
-        }
-        if(tile.equals("H8")){
-            H8.setBackgroundColor(Color.TRANSPARENT);
-        }
+                if(tile.equals("H1")){
+                    H1.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H2")){
+                    H2.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H3")){
+                    H3.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H4")){
+                    H4.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H5")){
+                    H5.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H6")){
+                    H6.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H7")){
+                    H7.setBackgroundColor(Color.TRANSPARENT);
+                }
+                if(tile.equals("H8")){
+                    H8.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+        });
     }
 
     /**
@@ -2200,2624 +2276,2635 @@ public class ChessActivity extends AppCompatActivity {
      * This method sets the previous tile clicked become transparent
      */
     public void setTransparent(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run(){
 
-        if(tile.equals("A1")){
-            A1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A2")){
-            A2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A3")){
-            A3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A4")){
-            A4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A5")){
-            A5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A6")){
-            A6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A7")){
-            A7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("A8")){
-            A8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("A1")){
+                    A1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A2")){
+                    A2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A3")){
+                    A3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A4")){
+                    A4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A5")){
+                    A5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A6")){
+                    A6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A7")){
+                    A7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("A8")){
+                    A8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("B1")){
-            B1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B2")){
-            B2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B3")){
-            B3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B4")){
-            B4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B5")){
-            B5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B6")){
-            B6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B7")){
-            B7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("B8")){
-            B8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("B1")){
+                    B1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B2")){
+                    B2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B3")){
+                    B3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B4")){
+                    B4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B5")){
+                    B5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B6")){
+                    B6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B7")){
+                    B7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("B8")){
+                    B8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("C1")){
-            C1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C2")){
-            C2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C3")){
-            C3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C4")){
-            C4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C5")){
-            C5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C6")){
-            C6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C7")){
-            C7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("C8")){
-            C8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("C1")){
+                    C1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C2")){
+                    C2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C3")){
+                    C3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C4")){
+                    C4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C5")){
+                    C5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C6")){
+                    C6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C7")){
+                    C7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("C8")){
+                    C8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("D1")){
-            D1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D2")){
-            D2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D3")){
-            D3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D4")){
-            D4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D5")){
-            D5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D6")){
-            D6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D7")){
-            D7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("D8")){
-            D8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("D1")){
+                    D1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D2")){
+                    D2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D3")){
+                    D3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D4")){
+                    D4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D5")){
+                    D5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D6")){
+                    D6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D7")){
+                    D7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("D8")){
+                    D8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("E1")){
-            E1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E2")){
-            E2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E3")){
-            E3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E4")){
-            E4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E5")){
-            E5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E6")){
-            E6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E7")){
-            E7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("E8")){
-            E8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("E1")){
+                    E1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E2")){
+                    E2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E3")){
+                    E3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E4")){
+                    E4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E5")){
+                    E5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E6")){
+                    E6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E7")){
+                    E7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("E8")){
+                    E8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("F1")){
-            F1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F2")){
-            F2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F3")){
-            F3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F4")){
-            F4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F5")){
-            F5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F6")){
-            F6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F7")){
-            F7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("F8")){
-            F8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("F1")){
+                    F1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F2")){
+                    F2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F3")){
+                    F3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F4")){
+                    F4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F5")){
+                    F5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F6")){
+                    F6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F7")){
+                    F7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("F8")){
+                    F8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("G1")){
-            G1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G2")){
-            G2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G3")){
-            G3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G4")){
-            G4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G5")){
-            G5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G6")){
-            G6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G7")){
-            G7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("G8")){
-            G8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("G1")){
+                    G1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G2")){
+                    G2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G3")){
+                    G3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G4")){
+                    G4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G5")){
+                    G5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G6")){
+                    G6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G7")){
+                    G7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("G8")){
+                    G8.setImageResource(R.drawable.transparent);
+                }
 
-        if(tile.equals("H1")){
-            H1.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H2")){
-            H2.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H3")){
-            H3.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H4")){
-            H4.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H5")){
-            H5.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H6")){
-            H6.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H7")){
-            H7.setImageResource(R.drawable.transparent);
-        }
-        if(tile.equals("H8")){
-            H8.setImageResource(R.drawable.transparent);
-        }
+                if(tile.equals("H1")){
+                    H1.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H2")){
+                    H2.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H3")){
+                    H3.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H4")){
+                    H4.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H5")){
+                    H5.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H6")){
+                    H6.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H7")){
+                    H7.setImageResource(R.drawable.transparent);
+                }
+                if(tile.equals("H8")){
+                    H8.setImageResource(R.drawable.transparent);
+                }
+            }
+        });
     }
 
     /**
      * This method updates the second tile pressed with the piece from the previously selected tile
      */
-    public void movePiece(){
-        if(piece.equals("blackPawn")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_pawn);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_pawn);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_pawn);
-            }
-        }
-        if(piece.equals("blackRook")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_bishop);
-            }
-        }
-        if(piece.equals("blackBishop")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_bishop);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_bishop);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_bishop);
-            }
-        }
-        if(piece.equals("blackKnight")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_knight);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_knight);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_knight);
-            }
-        }
-        if(piece.equals("blackQueen")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_queen);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_queen);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_queen);
-            }
-        }
-        if(piece.equals("blackKing")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.black_king);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.black_king);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.black_king);
-            }
-        }
-
-        if(piece.equals("whitePawn")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_pawn);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_pawn);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_pawn);
-            }
-        }
-        if(piece.equals("whiteRook")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_rook);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_rook);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_rook);
-            }
-        }
-        if(piece.equals("whiteBishop")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_bishop);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_bishop);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_bishop);
-            }
-        }
-        if(piece.equals("whiteKnight")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_knight);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_knight);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_knight);
-            }
-        }
-        if(piece.equals("whiteQueen")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_queen);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_queen);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_queen);
-            }
-        }
-        if(piece.equals("whiteKing")){
-            if(tile.equals("A1")){
-                A1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A2")){
-                A2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A3")){
-                A3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A4")){
-                A4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A5")){
-                A5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A6")){
-                A6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A7")){
-                A7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("A8")){
-                A8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("B1")){
-                B1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B2")){
-                B2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B3")){
-                B3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B4")){
-                B4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B5")){
-                B5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B6")){
-                B6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B7")){
-                B7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("B8")){
-                B8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("C1")){
-                C1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C2")){
-                C2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C3")){
-                C3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C4")){
-                C4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C5")){
-                C5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C6")){
-                C6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C7")){
-                C7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("C8")){
-                C8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("D1")){
-                D1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D2")){
-                D2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D3")){
-                D3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D4")){
-                D4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D5")){
-                D5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D6")){
-                D6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D7")){
-                D7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("D8")){
-                D8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("E1")){
-                E1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E2")){
-                E2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E3")){
-                E3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E4")){
-                E4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E5")){
-                E5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E6")){
-                E6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E7")){
-                E7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("E8")){
-                E8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("F1")){
-                F1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F2")){
-                F2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F3")){
-                F3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F4")){
-                F4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F5")){
-                F5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F6")){
-                F6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F7")){
-                F7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("F8")){
-                F8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("G1")){
-                G1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G2")){
-                G2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G3")){
-                G3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G4")){
-                G4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G5")){
-                G5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G6")){
-                G6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G7")){
-                G7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("G8")){
-                G8.setImageResource(R.drawable.white_king);
-            }
-
-            if(tile.equals("H1")){
-                H1.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H2")){
-                H2.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H3")){
-                H3.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H4")){
-                H4.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H5")){
-                H5.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H6")){
-                H6.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H7")){
-                H7.setImageResource(R.drawable.white_king);
-            }
-            if(tile.equals("H8")){
-                H8.setImageResource(R.drawable.white_king);
-            }
-        }
+    public void movePiece() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(piece.equals("blackPawn")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_pawn);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_pawn);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_pawn);
+                    }
+                }
+                if(piece.equals("blackRook")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_bishop);
+                    }
+                }
+                if(piece.equals("blackBishop")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_bishop);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_bishop);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_bishop);
+                    }
+                }
+                if(piece.equals("blackKnight")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_knight);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_knight);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_knight);
+                    }
+                }
+                if(piece.equals("blackQueen")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_queen);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_queen);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_queen);
+                    }
+                }
+                if(piece.equals("blackKing")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.black_king);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.black_king);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.black_king);
+                    }
+                }
+
+                if(piece.equals("whitePawn")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_pawn);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_pawn);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_pawn);
+                    }
+                }
+                if(piece.equals("whiteRook")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_rook);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_rook);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_rook);
+                    }
+                }
+                if(piece.equals("whiteBishop")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_bishop);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_bishop);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_bishop);
+                    }
+                }
+                if(piece.equals("whiteKnight")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_knight);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_knight);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_knight);
+                    }
+                }
+                if(piece.equals("whiteQueen")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_queen);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_queen);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_queen);
+                    }
+                }
+                if(piece.equals("whiteKing")){
+                    if(tile.equals("A1")){
+                        A1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A2")){
+                        A2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A3")){
+                        A3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A4")){
+                        A4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A5")){
+                        A5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A6")){
+                        A6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A7")){
+                        A7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("A8")){
+                        A8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("B1")){
+                        B1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B2")){
+                        B2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B3")){
+                        B3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B4")){
+                        B4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B5")){
+                        B5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B6")){
+                        B6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B7")){
+                        B7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("B8")){
+                        B8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("C1")){
+                        C1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C2")){
+                        C2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C3")){
+                        C3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C4")){
+                        C4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C5")){
+                        C5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C6")){
+                        C6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C7")){
+                        C7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("C8")){
+                        C8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("D1")){
+                        D1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D2")){
+                        D2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D3")){
+                        D3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D4")){
+                        D4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D5")){
+                        D5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D6")){
+                        D6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D7")){
+                        D7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("D8")){
+                        D8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("E1")){
+                        E1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E2")){
+                        E2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E3")){
+                        E3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E4")){
+                        E4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E5")){
+                        E5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E6")){
+                        E6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E7")){
+                        E7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("E8")){
+                        E8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("F1")){
+                        F1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F2")){
+                        F2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F3")){
+                        F3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F4")){
+                        F4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F5")){
+                        F5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F6")){
+                        F6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F7")){
+                        F7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("F8")){
+                        F8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("G1")){
+                        G1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G2")){
+                        G2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G3")){
+                        G3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G4")){
+                        G4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G5")){
+                        G5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G6")){
+                        G6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G7")){
+                        G7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("G8")){
+                        G8.setImageResource(R.drawable.white_king);
+                    }
+
+                    if(tile.equals("H1")){
+                        H1.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H2")){
+                        H2.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H3")){
+                        H3.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H4")){
+                        H4.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H5")){
+                        H5.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H6")){
+                        H6.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H7")){
+                        H7.setImageResource(R.drawable.white_king);
+                    }
+                    if(tile.equals("H8")){
+                        H8.setImageResource(R.drawable.white_king);
+                    }
+                }
+            }
+        });
     }
 }
