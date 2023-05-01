@@ -290,7 +290,7 @@ public class ChessGameSocket {
         String encodedBoard = "GameBoard ";
         ChessGameTile[][] board = game.getBoard();
 
-        for (int row = 0; row < board.length; row++) {
+        for (int row = board.length - 1; row >= 0; row--) {
             for (int col = 0; col < board[row].length; col++) {
                 // Add current piece to the encodedBoard
                 ChessPiece piece = board[col][row].piece;
