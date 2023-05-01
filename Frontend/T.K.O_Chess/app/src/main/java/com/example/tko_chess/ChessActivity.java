@@ -137,7 +137,7 @@ public class ChessActivity extends AppCompatActivity {
      */
     int Player2GamesWon = 0;
 
-
+    //Websocket connection
     private WebSocketClient WebSocket;
 
     String URLConcatenation = ""; // Used to append changes to the end of the URL
