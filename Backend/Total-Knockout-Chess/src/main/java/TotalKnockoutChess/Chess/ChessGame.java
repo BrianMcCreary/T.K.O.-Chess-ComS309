@@ -28,6 +28,8 @@ public class ChessGame {
     private String whitePlayer;
     private String blackPlayer;
 
+    boolean running;
+
     //List of spectators in the game
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> spectators;
@@ -75,6 +77,7 @@ public class ChessGame {
 
         // Fill top row of the board (row 8)
         createDefaultTopOrBottomRow(7, TOP_COLOR);
+        running = true;
     }
 
     // Helper method to generate default pawn rows
@@ -215,5 +218,9 @@ public class ChessGame {
 
     // Getter for spectators
     public List<String> getSpectators(){ return spectators; }
+
+    // Getter/Setter for game state
+    public boolean isRunning(){ return running; }
+    public void setRunning(boolean running){ this.running = running; }
 }
 

@@ -27,6 +27,9 @@ public class ChessGameSocket {
     private static UserRepository userRepository;
     private static UserStatsRepository userStatsRepository;
 
+    // Variable to toggle backend output of the board. Used for testing
+    private final boolean BACKEND_BOARD = false;
+
     @Autowired
     public void setChessGameRepository(ChessGameRepository chessGameRepository) {
         this.chessGameRepository = chessGameRepository;
@@ -66,8 +69,13 @@ public class ChessGameSocket {
         logger.info("Entered into Message: Got Message:" + message);
         String username = sessionUsernameMap.get(session);
 
+        String[] messages = message.split(" ");
+
         //Chess game that the user in this session is in
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+
+        // Chess game status
+        boolean running = cg.isRunning();
 
         String whitePlayer = cg.getWhitePlayer();
         String blackPlayer = cg.getBlackPlayer();
@@ -82,14 +90,15 @@ public class ChessGameSocket {
         }
 
 
-        // If message is a coordinate
-        if (message.length() == 2) {
+        // If message is a coordinate && and game is running
+        if (message.length() == 2 && running) {
 
             String whoseMove = cg.getWhoseMove();
 
             // TODO FOR BACKEND TESTING
-            cg.displayBoard();
-
+            if(BACKEND_BOARD){
+                cg.displayBoard();
+            }
             switch (whoseMove) {
                 // If it is white's turn
                 case "white":
@@ -108,22 +117,45 @@ public class ChessGameSocket {
                     }
                     break;
             }
-        } else if (message.equals("GetBoard")) {
+        }
+        // If message requests the board
+        else if (message.equals("GetBoard")) {
             sendPlayerMessage(username, getBoard(cg));
-        } else if (message.equals("WinGame")) {
+        }
+        //If a user has won, update their statistics
+        else if (messages[0].equals("GameType") && running) {
+            UserStats us = getUserStats(username);
 
-
-            // Update player stats and send losing player lost game message
-            if (userIsWhitePlayer) {
-                winGame(cg, username, blackPlayer);
-                sendPlayerMessage(blackPlayer, "You lost");
-            } else if (userIsBlackPlayer) {
-                winGame(cg, username, whitePlayer);
-                sendPlayerMessage(whitePlayer, "You lost");
+            if (us != null) {
+                switch(messages[1]){
+                    case "Chess":
+                        // If user won Chess
+                        if (messages[2].equals("win")) {
+                            us.chessWin();
+                            cg.setRunning(false);
+                        }
+                        // If user lost Chess
+                        else if (messages[2].equals("loss")) {
+                            us.chessLoss();
+                            cg.setRunning(false);
+                        }
+                        break;
+                    case "ChessBoxing":
+                        // If user won ChessBoxing
+                        if (messages[2].equals("win")) {
+                            us.chessBoxingWin();
+                            cg.setRunning(false);
+                        }
+                        // If user lost ChessBoxing
+                        else if (messages[2].equals("loss")) {
+                            us.chessBoxingLoss();
+                            cg.setRunning(false);
+                        }
+                        break;
+                }
+                userStatsRepository.save(us);
+                userStatsRepository.flush();
             }
-
-            // Send winner confirmation of game win
-            sendPlayerMessage(username, "You won");
         }
     }
 
@@ -212,7 +244,9 @@ public class ChessGameSocket {
             chessGameRepository.flush();
 
             // TODO FOR BACKEND TESTING
-            cg.displayBoard();
+            if(BACKEND_BOARD){
+                cg.displayBoard();
+            }
 
             // Sends this side's player the piece type on sent tile
             sendPlayerMessage(username, pieceOnSentTile.toString());
@@ -238,7 +272,9 @@ public class ChessGameSocket {
                 chessGameRepository.flush();
 
                 // TODO FOR BACKEND TESTING
-                cg.displayBoard();
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
 
                 // Tell players that a move has been made
                 sendPlayerMessage(username, "userMoved");
@@ -271,31 +307,13 @@ public class ChessGameSocket {
         return encodedBoard;
     }
 
-    private void winGame(ChessGame game, String winnerUsername, String loserUsername) {
-        User winner = null;
-        User loser = null;
-
-        // Find user from database
-        for (User u : userRepository.findAll()) {
-            if (u.getUsername().equals(winner)) {
-                winner = u;
-            } else if (u.getUsername().equals(loser)) {
-                loser = u;
+    //Helper method used to get a UserStats object from their username
+    private UserStats getUserStats(String username) {
+        for (UserStats us : userStatsRepository.findAll()) {
+            if (us.getUsername().equals(username)) {
+                return us;
             }
         }
-
-        if (winner != null && loser != null) {
-            UserStats winnerStats = userStatsRepository.findById(winner.getId());
-            UserStats loserStats = userStatsRepository.findById(loser.getId());
-
-            // Update stats for players
-            winnerStats.chessWin();
-            loserStats.chessLoss();
-
-            // Ensure the stats update
-            userStatsRepository.save(winnerStats);
-            userStatsRepository.save(loserStats);
-            userStatsRepository.flush();
-        }
+        return null;
     }
 }
