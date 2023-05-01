@@ -7,20 +7,51 @@
     android:background="@color/dark_grey">
 
     <ImageButton
-        android:id="@+id/menuBtn"
+        android:id="@+id/ChessOptionsBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="takes user to menu "
+        android:contentDescription="Opens the boxing options menu."
         android:padding="0dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/menu" />
+
+    <LinearLayout
+        android:id="@+id/ChessOptionsLayout"
+        android:layout_width="125dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/ChessOptionsBtn"
+        app:layout_constraintTop_toTopOf="@+id/ChessOptionsBtn"></LinearLayout>
+
+    <TextView
+        android:id="@+id/WhoseMoveText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/chessboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TurnsLeftText" />
+
+    <TextView
+        android:id="@+id/TurnsLeftText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Turns remaining: "
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/secondaryColor"
@@ -1133,5 +1164,4 @@
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
         app:layout_constraintTop_toTopOf="@id/chessboard" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

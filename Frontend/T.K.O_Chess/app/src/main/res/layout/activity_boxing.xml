@@ -348,7 +348,7 @@
     <LinearLayout
         android:id="@+id/OptionsLayout"
         android:layout_width="125dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/BoxingMenuBtn"
