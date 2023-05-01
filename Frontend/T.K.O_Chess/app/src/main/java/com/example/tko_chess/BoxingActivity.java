@@ -453,6 +453,9 @@ public class BoxingActivity extends AppCompatActivity {
 
 
                         case "GameWin":
+                            //Updates user's stats
+                            WebSocket.send("GameType " + GameMode + " win");
+
                             //Closes websocket
                             WebSocket.close();
 
@@ -496,6 +499,9 @@ public class BoxingActivity extends AppCompatActivity {
 
 
                         case "GameLoss":
+                            //Updates user's stats
+                            WebSocket.send("GameType " + GameMode + " loss");
+
                             //Closes websocket
                             WebSocket.close();
 
