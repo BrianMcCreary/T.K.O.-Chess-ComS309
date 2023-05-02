@@ -97,6 +97,7 @@ public class ChessActivity extends AppCompatActivity {
     ImageButton G8;
     ImageButton H8;
     ImageButton OptionsBtn;
+    Button iLostBtn;
     LinearLayout GameOverLayout;
     LinearLayout OptionsLayout;
     String UserRole;
@@ -140,7 +141,7 @@ public class ChessActivity extends AppCompatActivity {
     //Websocket connection
     private WebSocketClient WebSocket;
 
-    String URLConcatenation = ""; // Used to append changes to the end of the URL
+    String Username = ""; // Used to append changes to the end of the URL
     SingletonUser currUser = SingletonUser.getInstance(); // used to get the user's name
     String tile = ""; // Stores the name of the pressed tile
     String piece = ""; // stores the name of the selected piece
@@ -235,6 +236,8 @@ public class ChessActivity extends AppCompatActivity {
         G8 = findViewById(R.id.G8);
         H8 = findViewById(R.id.H8);
 
+        iLostBtn = findViewById(R.id.iLostBtn);
+
         OptionsBtn = findViewById(R.id.ChessMenuBtn);
         OptionsLayout = findViewById(R.id.OptionsLayout2);
 
@@ -253,10 +256,10 @@ public class ChessActivity extends AppCompatActivity {
 
         Draft[] drafts = {new Draft_6455()};
 
-        URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
+        Username = currUser.getUsername(); // Sets Username equal to the current user's name
 
         try{
-            WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
+            WebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + Username), (Draft)drafts[0] ) {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     Log.d("OPEN", "run() returned: " + "is connecting");
@@ -275,11 +278,11 @@ public class ChessActivity extends AppCompatActivity {
                             tile = strings[2];
                             piece = strings[3];
                             movePiece(); //updates board accordingly
-                            //enableButtons(); //enables buttons after opponent's turn
+                            enableButtons(); //enables buttons after opponent's turn
                             break;
 
                         case "userMoved":
-                            //disableButtons(); //disables buttons after user's turn
+                            disableButtons(); //disables buttons after user's turn
                             break;
 
                         case "invalidMove":
@@ -1665,6 +1668,13 @@ public class ChessActivity extends AppCompatActivity {
                 }
             }
         });
+
+        iLostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebSocket.send(Username + " Lost");
+            }
+        });
     }
 
     /**
@@ -1685,7 +1695,6 @@ public class ChessActivity extends AppCompatActivity {
      * Highlights selected tile
      */
     public void highlight(){
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -1896,7 +1905,6 @@ public class ChessActivity extends AppCompatActivity {
      * Removes highlight
      */
     public void unhighlight(){
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -2484,7 +2492,6 @@ public class ChessActivity extends AppCompatActivity {
      * This method updates the second tile pressed with the piece from the previously selected tile
      */
     public void movePiece() {
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
