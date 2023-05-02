@@ -1,4 +1,4 @@
-package ConnorsTests;
+package TotalKnockoutChess;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -64,8 +64,8 @@ public class BoxingTest {
         try {
             JSONArray returnArr = new JSONArray(returnString);
             JSONObject returnObj = returnArr.getJSONObject(returnArr.length()-1);
-            assertEquals("tester1", returnObj.get("Player1"));
-            assertEquals("tester2", returnObj.get("Player2"));
+            assertEquals("tester1", returnObj.get("player1"));
+            assertEquals("tester2", returnObj.get("player2"));
         }
         catch (JSONException e) {
             e.printStackTrace();
