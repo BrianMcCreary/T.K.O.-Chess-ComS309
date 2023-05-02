@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "BoxingGameController", description = "Controller used to manage BoxingGame entities")
@@ -30,6 +31,17 @@ public class BoxingGameController {
                 boxingGameRepository.delete(bg);
                 return success;
             }
+        }
+        return failure;
+    }
+
+    @ApiOperation(value = "Creates a boxing game and saves it to the repository given the two players' usernames")
+    @PostMapping(path = "/boxingGame/{player1}/{player2}")
+    public String createBoxingGame(@PathVariable String player1, @PathVariable String player2) {
+        BoxingGame bg = new BoxingGame(player1, player2, new ArrayList<String>());
+        if (bg != null) {
+            boxingGameRepository.save(bg);
+            return success;
         }
         return failure;
     }
