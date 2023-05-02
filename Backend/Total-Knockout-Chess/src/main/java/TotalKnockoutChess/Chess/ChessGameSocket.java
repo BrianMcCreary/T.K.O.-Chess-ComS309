@@ -159,23 +159,48 @@ public class ChessGameSocket {
                 userStatsRepository.flush();
             }
         }
+        // If user hit the "I Lost" button
+        else if(message.equals("Lost")){
+            sendUserMessage(username, "GameLoss");
+
+            if(userIsWhitePlayer && blackPlayer != null){
+                sendUserMessage(blackPlayer, "GameWon");
+            }
+            else if(userIsBlackPlayer && whitePlayer != null){
+                sendUserMessage(whitePlayer, "GameWon");
+            }
+        }
     }
 
     @OnClose
     public void onClose(Session session) throws IOException {
         logger.info("Entered into Close");
 
-        // remove the user connection information
+        // Find username and related chess game
         String username = sessionUsernameMap.get(session);
+        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+
+        // remove the user connection information
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
-
-        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
         // If user that left was one of the players, delete the game from the database
         if ((cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
                 || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username))) {
+
+            // Send opponent that this player left the game
+            if(cg.getWhitePlayer().equals(username)) {
+                cg.setWhitePlayer(null);
+                sendUserMessage(cg.getBlackPlayer(), "OpponentLeft");
+            }
+            else if(cg.getBlackPlayer().equals(username)) {
+                cg.setBlackPlayer(null);
+                sendUserMessage(cg.getWhitePlayer(), "OpponentLeft");
+            }
+
             sendAllMessage(cg, "PlayerLeft " + username);
+
+
             chessGameRepository.delete(cg);
             chessGameRepository.flush();
         }
@@ -204,7 +229,13 @@ public class ChessGameSocket {
     }
 
     private void sendUserMessage(String username, String message) throws IOException {
-        usernameSessionMap.get(username).getBasicRemote().sendText(message);
+        System.out.println("Attempt to send " + username + ": " + message);
+        Session s = usernameSessionMap.get(username);
+
+        // Ensure the user is in the session
+        if(s != null){
+            usernameSessionMap.get(username).getBasicRemote().sendText(message);
+        }
     }
 
     private void sendAllPlayersMessage(ChessGame game, String message) throws IOException {
