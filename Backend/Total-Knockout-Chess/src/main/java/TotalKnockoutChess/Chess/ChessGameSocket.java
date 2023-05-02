@@ -284,7 +284,7 @@ public class ChessGameSocket {
             sendUserMessage(username, pieceOnSentTile.toString());
 
             // Sends this side's player the tile that is selected
-//            sendUserMessage(username, "TileSelected " + Coordinate.fromString(message));
+            sendUserMessage(username, "TileSelected " + Coordinate.fromString(message));
         }
         // If this side's player has clicked on a one of their piece's previously and clicked on either an empty tile or an opponent's piece
         else {
@@ -319,12 +319,12 @@ public class ChessGameSocket {
                 // Alternative way to tell players that a move has been made
                 switch(sideColor){
                     case "white":
-//                        sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
-//                            + fromCoord + " " + Coordinate.fromString(message));
+                        sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
+                            + fromCoord + " " + Coordinate.fromString(message));
                         break;
                     case "black":
-//                        sendAllMessage(cg, "Player2Moved " + cg.getTile(message).piece + " "
-//                                + fromCoord + " " + Coordinate.fromString(message));
+                        sendAllMessage(cg, "Player2Moved " + cg.getTile(message).piece + " "
+                                + fromCoord + " " + Coordinate.fromString(message));
                         break;
                 }
             } else {
