@@ -184,16 +184,20 @@ public class ChessGameSocket {
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
+        // If game with username was not found
+        if(cg == null){
+            return;
+        }
+
         // If user that left was one of the players, delete the game from the database
         if ((cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
                 || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username))) {
 
             // Send opponent that this player left the game
-            if(cg.getWhitePlayer().equals(username)) {
+            if (cg.getWhitePlayer().equals(username)) {
                 cg.setWhitePlayer(null);
                 sendUserMessage(cg.getBlackPlayer(), "OpponentLeft");
-            }
-            else if(cg.getBlackPlayer().equals(username)) {
+            } else if (cg.getBlackPlayer().equals(username)) {
                 cg.setBlackPlayer(null);
                 sendUserMessage(cg.getWhitePlayer(), "OpponentLeft");
             }
