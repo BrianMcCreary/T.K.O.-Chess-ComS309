@@ -468,10 +468,12 @@ public class BoxingActivity extends AppCompatActivity {
                                 } else {
                                     //Returns user to Chess
                                     Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
-                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("Gamemode", GameMode);
                                     intent.putExtra("RoundNumber", RoundNum);
                                     intent.putExtra("Player1Wins", Player1GamesWon);
                                     intent.putExtra("Player2Wins", Player2GamesWon);
+                                    intent.putExtra("Player1", WhoPlayer1);
+                                    intent.putExtra("Player2", WhoPlayer2);
 
                                     startActivity(intent);
                                 }
@@ -485,7 +487,7 @@ public class BoxingActivity extends AppCompatActivity {
                                 } else {
                                     //Returns user to Chess
                                     Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
-                                    intent.putExtra("Gamemode", "ChessBoxing");
+                                    intent.putExtra("Gamemode", GameMode);
                                     intent.putExtra("RoundNumber", RoundNum);
                                     intent.putExtra("Player1Wins", Player1GamesWon);
                                     intent.putExtra("Player2Wins", Player2GamesWon);
@@ -510,7 +512,7 @@ public class BoxingActivity extends AppCompatActivity {
                                 Player2GamesWon += 1;
 
                                 if ((Player2GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
-                                    displayGameResult("You lose. :(");
+                                    displayGameResult("You lost. :(");
                                 } else {
                                     //Returns user to Chess
                                     Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
@@ -527,7 +529,7 @@ public class BoxingActivity extends AppCompatActivity {
                                 Player1GamesWon += 1;
 
                                 if ((Player1GamesWon >= 3) || (!GameMode.equals("ChessBoxing"))) {
-                                    displayGameResult("You lose. :(");
+                                    displayGameResult("You lost. :(");
                                 } else {
                                     //Returns user to Chess
                                     Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
@@ -1063,7 +1065,7 @@ public class BoxingActivity extends AppCompatActivity {
                 //Populates overlay with win text.
                 View inflatedLayout = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
                 TextView resultText = (TextView) inflatedLayout.findViewById(R.id.ResultText);
-                Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.BoxingToMenuBtn);
+                Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.ReturnToMenuBtn);
 
                 //Displays win message on screen
                 resultText.setText(result);

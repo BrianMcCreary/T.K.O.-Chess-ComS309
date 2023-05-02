@@ -1,7 +1,7 @@
 package com.example.tko_chess;
 
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -90,12 +90,7 @@ public class ChessActivity extends AppCompatActivity {
     /**
      * int stores what round of boxing the Chess Boxing game is currently on.
      */
-    int BoxingRound;
-
-    /**
-     * boolean stores if the player has selected a piece and is ready to move it.
-     */
-    boolean pieceSelected = false;
+    int BoxingRoundNum;
 
     /**
      * LinearLayout holding the frontend display of the board.
@@ -103,6 +98,7 @@ public class ChessActivity extends AppCompatActivity {
     LinearLayout ChessBoard;
 
     LinearLayout OptionsLayout;
+    LinearLayout GameOverLayout;
 
     /**
      * SingletonUser instance which stores the currently logged in user.
@@ -145,6 +141,7 @@ public class ChessActivity extends AppCompatActivity {
 
         ChessBoard = findViewById(R.id.ChessBoardLinearLayout);
         OptionsLayout = findViewById(R.id.ChessOptionsLayout);
+        GameOverLayout = findViewById(R.id.GameOverLayout);
 
         TurnsRemaining = findViewById(R.id.TurnsLeftText);
         WhoseMove = findViewById(R.id.WhoseMoveText);
@@ -156,7 +153,7 @@ public class ChessActivity extends AppCompatActivity {
         WhoPlayer2 = getIntent().getExtras().getString("Player2");
         Player1Wins = getIntent().getExtras().getInt("Player1Wins");
         Player2Wins = getIntent().getExtras().getInt("Player2Wins");
-        BoxingRound = getIntent().getExtras().getInt("RoundNumber");
+        BoxingRoundNum = getIntent().getExtras().getInt("RoundNumber");
         /////////////////////////////////////////////////////////////////
 
         if(!GameMode.equals("ChessBoxing")) {
@@ -170,106 +167,175 @@ public class ChessActivity extends AppCompatActivity {
 
         URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
 
-        try{
-            ChessWebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
-                @Override
-                public void onOpen(ServerHandshake serverHandshake) {
-                    Log.d("OPEN", "run() returned: " + "is connecting");
-                    System.out.println("onOpen returned");
-                    //Gets state of the board to display it on screen (mainly for ChessBoxing, not Chess)
-                    ChessWebSocket.send("GetBoard");
-                    if (UserRole.equals("Spectator")) {
-                        disableButtons();
-                    }
-                }
-
-                @Override
-                public void onMessage(String message) {
-                    Log.d("", "run() returned: " + message);
-                    String[] strings = message.split(" ");
-
-                    switch (strings[0]){
-                        case "GameBoard":
-
-//                            //Display board for spectators and player 1
-//                            if (UserRole.equals("Player1") || UserRole.equals("Spectator")) {
-//                                displayBoard(strings[1]);
-//                            } else
-//
-//                            //Display board for player 2
-//                            if (UserRole.equals("Player2")) {
-//                                displayBoardForBlack(strings[1]);
-//                            }
-                            displayBoard(strings[1]);
-                            setClickListeners();
-                            break;
-
-                        case "PieceSelected":
-                            selectedPiece = strings[1];
-                            if (!selectedPiece.equals("--------")) {
-                                pieceSelected = true;
-                            }
-                            break;
-
-                        case "Player1Moved":
-                            if (UserRole.equals("Spectator")) {
-
-                            }
-                            break;
-
-
-
-
-                        case "UserMoved":
-                            tile = strings[1];
-                            selectedPiece = strings[2];
-
-                            //Sets specified tile to specifed piece.
-                            setSquareImageTo();
-
-                            //Clears tile and selectedPiece for future use.
-                            tile = "";
-                            selectedPiece = "";
-
-                            disableButtons(); //disables buttons after user's turn
-                            break;
-
-                        case "OpponentMoved":
-                            if (WhoPlayer1.equals(currUser.getUsername())) {
-
-                            }
-
-                            enableButtons(); //enables buttons after opponent's turn
-                            break;
-
-                        case "UserWin":
-                            System.out.println("You Won!");
-                            break;
-
-                        case "UserLoss":
-                            System.out.println("You Lost!");
-                            break;
-                    }
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    Log.d("CLOSE", "onClose() returned: " + reason);
-                    System.out.println("onClose returned");
-                }
-
-                @Override
-                public void onError(Exception ex) {
-                    Log.d("Exception:", ex.getMessage().toString());
-                }
-            };
-        } catch (URISyntaxException e){
-            e.printStackTrace();
-            return;
-        }
-
         if (ChessWebSocket == null) {
-            ChessWebSocket.connect(); // Connects to websocket
+            try{
+                ChessWebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
+                    @Override
+                    public void onOpen(ServerHandshake serverHandshake) {
+                        Log.d("OPEN", "run() returned: " + "is connecting");
+                        System.out.println("onOpen returned");
+                        //Gets state of the board to display it on screen (mainly for ChessBoxing, not Chess)
+                        ChessWebSocket.send("GetBoard");
+                        if (UserRole.equals("Spectator")) {
+                            disableButtons();
+                        }
+                    }
+
+                    @Override
+                    public void onMessage(String message) {
+                        Log.d("", "run() returned: " + message);
+                        String[] strings = message.split(" ");
+
+                        switch (strings[0]){
+                            case "GameBoard":
+                                displayBoard(strings[1]);
+                                setClickListeners();
+                                break;
+
+
+                            //TileSelected <tile>
+                            case "TileSelected":
+                                highlightTile(strings[1]);
+                                break;
+
+
+                            //Player1Moved <pieceType> <from> <to>
+                            case "Player1Moved":
+                                //Moves piece for Player 1 and spectators, reset variables, and disables buttons until next move.
+                                if (UserRole.equals("Spectator") || UserRole.equals("Player1")) {
+                                    //Sets new square to correct piece image.
+                                    setSquareImageTo(strings[3], strings[1]);
+
+                                    //Clears old square of piece image.
+                                    setSquareImageTo(strings[2], "--------");
+
+                                    //Disables buttons until other user moves.
+                                    disableButtons();
+                                } else
+
+                                //Moves piece for Player2 resets variables, and enables buttons.
+                                if (UserRole.equals("Player2")) {
+                                    //Sets new square to correct piece image.
+                                    setSquareImageTo(strings[3], strings[1]);
+
+                                    //Clears old square of piece image.
+                                    setSquareImageTo(strings[2], "--------");
+
+                                    //Disables buttons until other user moves.
+                                    enableButtons();
+                                }
+
+                                unhighlightAll();
+                                break;
+
+
+                            //Player2Moved <pieceType> <from> <to>
+                            case "Player2Moved":
+                                //Increments number of total turns so far.
+                                TurnTracker++;
+
+                                //Moves piece for Player 1 and spectators, reset variables, and disables buttons until next move.
+                                if (UserRole.equals("Player1")) {
+                                    //Sets new square to correct piece image.
+                                    setSquareImageTo(strings[3], strings[1]);
+
+                                    //Clears old square of piece image.
+                                    setSquareImageTo(strings[2], "--------");
+
+                                    //Disables buttons until other user moves.
+                                    enableButtons();
+                                } else
+
+                                //Moves piece for spectators
+                                if (UserRole.equals("Spectator")) {
+                                    //Sets new square to correct piece image.
+                                    setSquareImageTo(strings[3], strings[1]);
+
+                                    //Clears old square of piece image.
+                                    setSquareImageTo(strings[2], "--------");
+
+                                } else
+
+                                //Moves piece for Player2 resets variables, and disables buttons.
+                                if (UserRole.equals("Player2")) {
+                                    //Sets new square to correct piece image.
+                                    setSquareImageTo(strings[3], strings[1]);
+
+                                    //Clears old square of piece image.
+                                    setSquareImageTo(strings[2], "--------");
+
+                                    disableButtons();
+                                }
+
+                                //Unhighlights all the tiles on the board
+                                unhighlightAll();
+
+                                //If playing ChessBoxing and 8 moves have occurred, go to boxing.
+                                if (((TurnTracker % 8) == 0) && GameMode.equals("ChessBoxing")) {
+                                    Intent intent = new Intent(ChessActivity.this, ChessActivity.class);
+                                    intent.putExtra("Gamemode", GameMode);
+                                    intent.putExtra("RoundNumber", BoxingRoundNum);
+                                    intent.putExtra("Player1Wins", Player1Wins);
+                                    intent.putExtra("Player2Wins", Player2Wins);
+                                    intent.putExtra("Player1", WhoPlayer1);
+                                    intent.putExtra("Player2", WhoPlayer2);
+
+                                    startActivity(intent);
+                                    TurnTracker = 0;
+                                }
+                                break;
+
+
+                            //GameWonBy <winnerUsername>
+                            case "GameWonBy":
+                                //If user is the player who won the game
+                                if (strings[1].equals(currUser.getUsername())) {
+                                    ChessWebSocket.close();
+                                    displayGameResult("You won!");
+                                } else
+
+                                //If user is a player and they lost the game
+                                if (!strings[1].equals(currUser.getUsername()) && (UserRole.equals("Player1") || UserRole.equals("Player2"))) {
+                                    ChessWebSocket.send("GameType " + GameMode + " loss");
+                                    ChessWebSocket.close();
+
+                                    displayGameResult("You lost. :(");
+                                } else
+
+                                //If user is a spectator
+                                if (UserRole.equals("Spectator")) {
+                                    ChessWebSocket.close();
+                                    displayGameResult(strings[1] + " won!");
+                                }
+                                break;
+
+
+                            //PlayerLeft <username>
+                            case "PlayerLeft":
+                                displayGameResult(strings[1] + " left.");
+                                break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onClose(int code, String reason, boolean remote) {
+                        Log.d("CLOSE", "onClose() returned: " + reason);
+                        System.out.println("onClose returned");
+                    }
+
+                    @Override
+                    public void onError(Exception ex) {
+                        Log.d("Exception:", ex.getMessage().toString());
+                    }
+                };
+            } catch (URISyntaxException e){
+                e.printStackTrace();
+                return;
+            }
+
+            //Connects to the websocket
+            ChessWebSocket.connect();
         }
 
         //Opens leave game menu
@@ -308,11 +374,6 @@ public class ChessActivity extends AppCompatActivity {
                 LeaveGameBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //Send leave message if user was a player
-                        if (UserRole.equals("Player1") || UserRole.equals("Player2")) {
-                            ChessWebSocket.send("leave");
-                        }
-
                         ChessWebSocket.close();
 
                         //Returns user to main menu
@@ -337,13 +398,7 @@ public class ChessActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             //Alerts backend of player winning game.
-                            ChessWebSocket.send("EndGame");
-
-                            ChessWebSocket.close();
-
-                            //Returns user to main menu
-                            Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
-                            startActivity(intent);
+                            ChessWebSocket.send("GameType " + GameMode + " win");
                         }
                     });
                 }
@@ -356,13 +411,29 @@ public class ChessActivity extends AppCompatActivity {
 
 
     /**
-     * This method sets the previous tile clicked become transparent
+     * Highlights the specified tile with a light green background.
      */
-    public void setTransparent(){
+    public void highlightTile(String whichTile) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                board.get(tile).setImageResource(chessPieces.get("--------"));
+                board.get(whichTile).setBackgroundColor(Color.GREEN);
+            }
+        });
+    }
+
+
+
+    /**
+     * Unhighlights all tiles on the chess board.
+     */
+    public void unhighlightAll() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (ImageButton button : board.values()) {
+                    button.setBackgroundColor(R.drawable.transparent);
+                }
             }
         });
     }
@@ -388,7 +459,7 @@ public class ChessActivity extends AppCompatActivity {
     /**
      Disables buttons for the user
      */
-    public void disableButtons(){
+    public void disableButtons() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -401,21 +472,6 @@ public class ChessActivity extends AppCompatActivity {
 
 
 
-    /**
-     * Sends either a move select piece message or move piece message to backend.
-     */
-    private void moveOrSelect(String tile, String selectedPiece) {
-        //If a piece is not selected, select the piece on that tile, if there is one
-        if (!pieceSelected) {
-            ChessWebSocket.send("select " + tile);
-        } else
-
-        //If a piece is selected, move the piece if possible.
-        if (pieceSelected) {
-            ChessWebSocket.send("move " + tile + " " + selectedPiece);
-        }
-    }
-
 
 
     /**
@@ -426,19 +482,34 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String[] rows = boardSetup.split("#");
-                int row = 8;
 
-                for (int i = 0; i < rows.length; i ++) {
-                    LinearLayout NewRank = (LinearLayout) getLayoutInflater().inflate(R.layout.chess_board_row, null, false);
+                for (int row = 0; row < rows.length; row++) {
+                    View NewRank = getLayoutInflater().inflate(R.layout.chess_board_row, null, false);
 
-                    String[] col = rows[i].split("[.]");
+                    ImageButton[] tiles = {
+                            (ImageButton) NewRank.findViewById(R.id.colA),
+                            (ImageButton) NewRank.findViewById(R.id.colB),
+                            (ImageButton) NewRank.findViewById(R.id.colC),
+                            (ImageButton) NewRank.findViewById(R.id.colD),
+                            (ImageButton) NewRank.findViewById(R.id.colE),
+                            (ImageButton) NewRank.findViewById(R.id.colF),
+                            (ImageButton) NewRank.findViewById(R.id.colG),
+                            (ImageButton) NewRank.findViewById(R.id.colH)
+                    };
 
-                    for (int j = 0; j < col.length; j++) {
-                        ImageButton newTile = (ImageButton) NewRank.getChildAt(j);
-                        newTile.setImageResource(chessPieces.get(col[j]));
+                    String[] columns = rows[row].split("[.]");
+
+                    for (int col = 0; col < columns.length; col++) {
+
+                        //Sets column "j" of rank "row" to the correct image.
+                        tiles[col].setImageResource(chessPieces.get(columns[col]));
+
+                        if (UserRole.equals("Player2")) {
+                            tiles[col].setRotation(180);
+                        }
 
                         String file = "A";
-                        switch (j) {
+                        switch (col) {
                             case 1:
                                 file = "B";
                                 break;
@@ -462,12 +533,14 @@ public class ChessActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        tile = file + row;
-                        board.put(tile, newTile);
+                        tile = file + (row + 1);
+                        board.put(tile, tiles[col]);
                     }
-
-                    row--;
                     ChessBoard.addView(NewRank);
+                }
+
+                if (UserRole.equals("Player2")) {
+                    ChessBoard.setRotation(180);
                 }
             }
         });
@@ -478,12 +551,12 @@ public class ChessActivity extends AppCompatActivity {
     /**
      * Sets each button on board to correct piece image
      */
-    private void setSquareImageTo() {
+    private void setSquareImageTo(String square, String piece) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //Sets the current square to the correct image.
-                board.get(tile).setImageResource(chessPieces.get(selectedPiece));
+                board.get(square).setImageResource(chessPieces.get(piece));
             }
         });
     }
@@ -500,7 +573,7 @@ public class ChessActivity extends AppCompatActivity {
                 //Sets click functionality for all buttons on the board using buttons hashmap.
                 int row = 8;
                 for (int i = 0; i < 8; i++) {
-                    for (int col = 0; col < 8; col++) {
+                    for (int col = 7; col >= 0; col--) {
                         String file = "A";
                         switch (col) {
                             case 1:
@@ -530,13 +603,50 @@ public class ChessActivity extends AppCompatActivity {
                         board.get(tile).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                moveOrSelect(tile, selectedPiece);
+                                ChessWebSocket.send(tile);
+                                System.out.println("Sent move or select.");
                             }
                         });
 
                     }
                     row--;
                 }
+            }
+        });
+    }
+
+
+
+    /**
+     * Displays end of game overlay and appropriate game over prompt.
+     * @param result is a string containing the information of why the game ended.
+     */
+    private void displayGameResult(String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Clears and displays game over overlay
+                GameOverLayout.removeAllViews();
+                GameOverLayout.setVisibility(View.VISIBLE);
+
+                //Populates overlay with win text.
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);
+                TextView resultText = (TextView) inflatedLayout.findViewById(R.id.ResultText);
+                Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.ReturnToMenuBtn);
+
+                //Displays win message on screen
+                resultText.setText(result);
+
+                GameOverLayout.addView(inflatedLayout);
+
+                BoxingToMenuBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Returns user to main menu
+                        Intent intent = new Intent(ChessActivity.this, MainMenuActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }
