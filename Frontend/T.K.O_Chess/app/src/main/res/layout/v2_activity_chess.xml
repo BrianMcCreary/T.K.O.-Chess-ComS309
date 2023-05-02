@@ -44,19 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/GameOverLayout"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:background="@color/very_light_grey"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/ChessBoardBackground"
         android:layout_width="384dp"
@@ -86,5 +73,18 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/ChessOptionsBtn"
         app:layout_constraintTop_toTopOf="@+id/ChessOptionsBtn"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/GameOverLayout"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
+        android:background="@color/very_light_grey"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

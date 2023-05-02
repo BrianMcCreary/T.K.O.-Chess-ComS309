@@ -93,6 +93,12 @@ public class ChessActivity extends AppCompatActivity {
     int BoxingRoundNum;
 
     /**
+     * boolean tracks if its player 1's turn or player 2's turn
+     * true is player 1. false is player 2.
+     */
+    boolean Player1Turn = true;
+
+    /**
      * LinearLayout holding the frontend display of the board.
      */
     LinearLayout ChessBoard;
@@ -160,6 +166,10 @@ public class ChessActivity extends AppCompatActivity {
             TurnsRemaining.setVisibility(View.INVISIBLE);
         }
 
+        if(UserRole.equals("Player2")) {
+            disableButtons();
+        }
+
         //Initiates the hashmap with all the chess piece images.
         initiatePiecesHashMap();
 
@@ -189,7 +199,10 @@ public class ChessActivity extends AppCompatActivity {
                         switch (strings[0]){
                             case "GameBoard":
                                 displayBoard(strings[1]);
-                                setClickListeners();
+
+                                if (UserRole.equals("Player2")) {
+                                    disableButtons();
+                                }
                                 break;
 
 
@@ -224,6 +237,9 @@ public class ChessActivity extends AppCompatActivity {
                                     //Disables buttons until other user moves.
                                     enableButtons();
                                 }
+
+                                //Sets it to player 2's turn.
+                                Player1Turn = false;
 
                                 unhighlightAll();
                                 break;
@@ -267,6 +283,9 @@ public class ChessActivity extends AppCompatActivity {
                                     disableButtons();
                                 }
 
+                                //Sets it to player 1's turn
+                                Player1Turn = true;
+
                                 //Unhighlights all the tiles on the board
                                 unhighlightAll();
 
@@ -288,6 +307,15 @@ public class ChessActivity extends AppCompatActivity {
 
                             //GameWonBy <winnerUsername>
                             case "GameWonBy":
+                                //Disables all other buttons outside of return to main menu button.
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ChessOptions.setClickable(false);
+                                        disableButtons();
+                                    }
+                                });
+
                                 //If user is the player who won the game
                                 if (strings[1].equals(currUser.getUsername())) {
                                     ChessWebSocket.close();
@@ -312,6 +340,16 @@ public class ChessActivity extends AppCompatActivity {
 
                             //PlayerLeft <username>
                             case "PlayerLeft":
+                                //Disables all other buttons outside of return to main menu button.
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ChessOptions.setClickable(false);
+                                        disableButtons();
+                                    }
+                                });
+
+                                //Displays who left the game
                                 displayGameResult(strings[1] + " left.");
                                 break;
 
@@ -533,8 +571,18 @@ public class ChessActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        tile = file + (row + 1);
-                        board.put(tile, tiles[col]);
+                        String whichTile = file + (row + 1);
+                        board.put(whichTile, tiles[col]);
+                        board.get(whichTile).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if ((UserRole.equals("Player1") && Player1Turn) || (UserRole.equals("Player2") && !Player1Turn)) {
+                                    ChessWebSocket.send(whichTile);
+                                    System.out.println("Sent move or select: " + whichTile);
+                                }
+
+                            }
+                        });
                     }
                     ChessBoard.addView(NewRank);
                 }
@@ -557,60 +605,6 @@ public class ChessActivity extends AppCompatActivity {
             public void run() {
                 //Sets the current square to the correct image.
                 board.get(square).setImageResource(chessPieces.get(piece));
-            }
-        });
-    }
-
-
-
-    /**
-     * Sets the click functionality for all the buttons.
-     */
-    private void setClickListeners() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //Sets click functionality for all buttons on the board using buttons hashmap.
-                int row = 8;
-                for (int i = 0; i < 8; i++) {
-                    for (int col = 7; col >= 0; col--) {
-                        String file = "A";
-                        switch (col) {
-                            case 1:
-                                file = "B";
-                                break;
-                            case 2:
-                                file = "C";
-                                break;
-                            case 3:
-                                file = "D";
-                                break;
-                            case 4:
-                                file = "E";
-                                break;
-                            case 5:
-                                file = "F";
-                                break;
-                            case 6:
-                                file = "G";
-                                break;
-                            case 7:
-                                file = "H";
-                                break;
-                        }
-
-                        tile = file + row;
-                        board.get(tile).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ChessWebSocket.send(tile);
-                                System.out.println("Sent move or select.");
-                            }
-                        });
-
-                    }
-                    row--;
-                }
             }
         });
     }
