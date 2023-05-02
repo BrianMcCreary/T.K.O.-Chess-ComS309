@@ -21,6 +21,7 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.cert.PKIXRevocationChecker;
 
 import com.example.tko_chess.ultils.Const;
 
@@ -507,6 +508,13 @@ public class BoxingActivity extends AppCompatActivity {
                             //Closes websocket
                             WebSocket.close();
 
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    OptionsBtn.setClickable(false);
+                                }
+                            });
+
                             //Increments number of opponent game wins.
                             if (UserRole.equals("Player1")) {
                                 Player2GamesWon += 1;
@@ -550,6 +558,13 @@ public class BoxingActivity extends AppCompatActivity {
                         case "OpponentLeft":
                             //Closes websocket
                             WebSocket.close();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    OptionsBtn.setClickable(false);
+                                }
+                            });
 
                             //Displays game over popup
                             displayGameResult("Opponent conceded.");
@@ -628,6 +643,13 @@ public class BoxingActivity extends AppCompatActivity {
                             if (UserRole.equals("Spectator")) {
                                 WebSocket.close();
 
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        OptionsBtn.setClickable(false);
+                                    }
+                                });
+
                                 //Displays game result layout and which player won.
                                 if (strings[1].equals("Player1")) {
                                     Player1GamesWon += 1;
@@ -671,6 +693,13 @@ public class BoxingActivity extends AppCompatActivity {
                         case "PlayerLeft":
                             if (UserRole.equals("Spectator")) {
                                 WebSocket.close();
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        OptionsBtn.setClickable(false);
+                                    }
+                                });
 
                                 displayGameResult("A player has left the game.");
                             }
