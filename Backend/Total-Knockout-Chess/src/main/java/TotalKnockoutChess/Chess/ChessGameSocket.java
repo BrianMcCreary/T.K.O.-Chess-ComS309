@@ -218,8 +218,8 @@ public class ChessGameSocket {
 
         // Search through repository for chess game with username in it
         for (ChessGame g : all) {
-            if (g.getWhitePlayer() != null && g.getWhitePlayer().equals(username)
-                    || g.getBlackPlayer() != null && g.getBlackPlayer().equals(username)
+            if ((g.getWhitePlayer() != null && g.getWhitePlayer().equals(username))
+                    || (g.getBlackPlayer() != null && g.getBlackPlayer().equals(username))
                     || g.getSpectators().contains(username)) {
                 game = g;
             }
