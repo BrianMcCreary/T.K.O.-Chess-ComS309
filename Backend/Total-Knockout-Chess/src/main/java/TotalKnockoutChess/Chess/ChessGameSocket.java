@@ -210,8 +210,16 @@ public class ChessGameSocket {
     private void sendAllPlayersMessage(ChessGame game, String message) throws IOException {
         String whitePlayer = game.getWhitePlayer();
         String blackPlayer = game.getBlackPlayer();
-        sendUserMessage(whitePlayer, message);
-        sendUserMessage(blackPlayer, message);
+
+        // If whitePlayer is in lobby
+        if(whitePlayer != null) {
+            sendUserMessage(whitePlayer, message);
+        }
+
+        // If blackPlayer is in lobby
+        if(blackPlayer != null) {
+            sendUserMessage(blackPlayer, message);
+        }
     }
 
     private void sendAllSpectators(ChessGame game, String message) throws IOException {
