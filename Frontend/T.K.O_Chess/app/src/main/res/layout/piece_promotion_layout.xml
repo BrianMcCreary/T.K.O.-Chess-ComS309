@@ -21,22 +21,16 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
             android:contentDescription="Bishop"
             app:srcCompat="@drawable/black_bishop" />
-
-        <ImageButton
-            android:id="@+id/King"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:contentDescription="King"
-            app:srcCompat="@drawable/black_king" />
 
         <ImageButton
             android:id="@+id/Knight"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
             android:contentDescription="Knight"
             app:srcCompat="@drawable/black_knight" />
 
@@ -45,6 +39,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
             android:contentDescription="Queen"
             app:srcCompat="@drawable/black_queen" />
 
@@ -53,6 +48,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
             android:contentDescription="Rook"
             app:srcCompat="@drawable/black_rook" />
 
