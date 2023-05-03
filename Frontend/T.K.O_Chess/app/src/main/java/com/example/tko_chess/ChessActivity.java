@@ -95,7 +95,7 @@ public class ChessActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.ChessMenuBtn);
         OptionsLayout = findViewById(R.id.OptionsLayout2);
         GameOverLayout = findViewById(R.id.GameOverLayout2);
-        PromotionLayout = findViewById(R.id.linearLayout);
+        //PromotionLayout = findViewById(R.id.linearLayout);
 
         movesLeftText = findViewById(R.id.MovesLeftText);
         WhoseMove = findViewById(R.id.whoseMoveText);
@@ -4796,94 +4796,94 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
-    private void displayPiecePromotion(String tile){
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                PromotionLayout.removeAllViews();
-                PromotionLayout.setVisibility(View.VISIBLE);
-
-                View inflatedLayout = getLayoutInflater().inflate(R.layout.piece_promotion_layout, null, false);
-                ImageButton Queen = (ImageButton) inflatedLayout.findViewById(R.id.Queen);
-                ImageButton Knight = (ImageButton) inflatedLayout.findViewById(R.id.Knight);
-                ImageButton Rook = (ImageButton) inflatedLayout.findViewById(R.id.Rook);
-                ImageButton Bishop = (ImageButton) inflatedLayout.findViewById(R.id.Bishop);
-
-               if(UserRole.equals("Player1")){
-                   Queen.setImageResource(R.drawable.white_queen);
-                   Knight.setImageResource(R.drawable.white_knight);
-                   Rook.setImageResource(R.drawable.white_rook);
-                   Bishop.setImageResource(R.drawable.white_bishop);
-
-                   Queen.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "whiteQueen";
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Knight.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "whiteKnight";
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Rook.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "whiteRook";
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Bishop.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "whiteBishop";
-                           movePiece(tile, piece);
-                       }
-                   });
-               }
-               if(UserRole.equals("Player2")){
-                   Queen.setImageResource(R.drawable.black_queen);
-                   Knight.setImageResource(R.drawable.black_knight);
-                   Rook.setImageResource(R.drawable.black_rook);
-                   Bishop.setImageResource(R.drawable.black_bishop);
-
-                   Queen.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "blackQueen";
-
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Knight.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "blackKnight";
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Rook.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "blackRook";
-                           movePiece(tile, piece);
-                       }
-                   });
-                   Bishop.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           piece = "blackBishop";
-                           movePiece(tile, piece);
-                       }
-                   });
-               }
-
-            }
-        });
-    }
+//    private void displayPiecePromotion(String tile){
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                PromotionLayout.removeAllViews();
+//                PromotionLayout.setVisibility(View.VISIBLE);
+//
+//                View inflatedLayout = getLayoutInflater().inflate(R.layout.piece_promotion_layout, null, false);
+//                ImageButton Queen = (ImageButton) inflatedLayout.findViewById(R.id.Queen);
+//                ImageButton Knight = (ImageButton) inflatedLayout.findViewById(R.id.Knight);
+//                ImageButton Rook = (ImageButton) inflatedLayout.findViewById(R.id.Rook);
+//                ImageButton Bishop = (ImageButton) inflatedLayout.findViewById(R.id.Bishop);
+//
+//               if(UserRole.equals("Player1")){
+//                   Queen.setImageResource(R.drawable.white_queen);
+//                   Knight.setImageResource(R.drawable.white_knight);
+//                   Rook.setImageResource(R.drawable.white_rook);
+//                   Bishop.setImageResource(R.drawable.white_bishop);
+//
+//                   Queen.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "whiteQueen";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Knight.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "whiteKnight";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Rook.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "whiteRook";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Bishop.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "whiteBishop";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//               }
+//               if(UserRole.equals("Player2")){
+//                   Queen.setImageResource(R.drawable.black_queen);
+//                   Knight.setImageResource(R.drawable.black_knight);
+//                   Rook.setImageResource(R.drawable.black_rook);
+//                   Bishop.setImageResource(R.drawable.black_bishop);
+//
+//                   Queen.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "blackQueen";
+//
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Knight.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "blackKnight";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Rook.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "blackRook";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//                   Bishop.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View v) {
+//                           piece = "blackBishop";
+//                           movePiece(tile, piece);
+//                       }
+//                   });
+//               }
+//
+//            }
+//        });
+//    }
 
 }
