@@ -71,11 +71,6 @@
         </activity>
 
         <activity
-            android:name=".Settings"
-            android:exported="false">
-        </activity>
-
-        <activity
             android:name=".Profiles"
             android:exported="false">
         </activity>

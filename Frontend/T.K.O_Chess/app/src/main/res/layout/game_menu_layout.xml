@@ -47,22 +47,6 @@
             android:text="Back to Game"
             android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/BoxingTestText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text=""
-            android:textSize="16sp"
-            android:hint="Opponent name"/>
-
-        <Button
-            android:id="@+id/TestBoxingBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Host Test" />
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

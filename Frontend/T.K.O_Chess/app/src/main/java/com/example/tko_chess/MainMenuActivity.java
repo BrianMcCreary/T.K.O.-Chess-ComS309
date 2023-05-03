@@ -116,18 +116,6 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        MenuToSettings = findViewById(R.id.MenuToSettingsBtn);
-
-        MenuToSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainMenuActivity.this, Settings.class);
-                startActivity(intent);
-            }
-        });
-
-
-
         MenuToProfiles = findViewById(R.id.MenuToProfileBtn);
 
         MenuToProfiles.setOnClickListener(new View.OnClickListener() {
