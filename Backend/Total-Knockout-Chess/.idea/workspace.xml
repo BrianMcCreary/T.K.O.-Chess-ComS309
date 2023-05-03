@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04fd7108-9da3-4942-b2d1-b53d2410d650" name="Changes" comment="">
+    <list default="true" id="af80c371-28f1-4e9a-9b01-ee9032b3bb04" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/BoxingTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/BoxingTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/FriendsTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/FriendsTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +48,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.FriendsTest">
+  <component name="RunManager" selected="JUnit.java in Total-Knockout-Chess">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
       <module name="Total-Knockout-Chess" />
@@ -90,8 +92,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StatisticsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Total-Knockout-Chess" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TotalKnockoutChess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TotalKnockoutChess" />
+      <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.StatisticsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in Total-Knockout-Chess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Total-Knockout-Chess" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in Total-Knockout-Chess" />
+        <item itemvalue="JUnit.StatisticsTest" />
         <item itemvalue="JUnit.FriendsTest" />
         <item itemvalue="JUnit.BoxingTest" />
         <item itemvalue="Application.TotalKnockoutChessApplication" />

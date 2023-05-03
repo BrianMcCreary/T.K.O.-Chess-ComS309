@@ -21,7 +21,7 @@ import org.springframework.boot.web.server.LocalServerPort;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class FriendsTest {
+public class StatisticsTest {
     @LocalServerPort
     int port;
 
@@ -32,13 +32,13 @@ public class FriendsTest {
     }
 
     @Test
-    public void sendAndDeleteRequest() {
+    public void testStatistics() {
         Response response = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                post("/friendRequest/tester8/tester9");
+                post("/users/testStatisticsPal/password/password");
 
         int statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
@@ -51,51 +51,13 @@ public class FriendsTest {
         catch (JSONException e) {
             e.printStackTrace();
         }
-//----------------------------------------------------------------
+//----------------------------------------------------------------------
         response = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                get("/friendRequests/outgoing/tester8");
-
-        statusCode = response.getStatusCode();
-        assertEquals(200, statusCode);
-
-        returnString = response.getBody().asString();
-        try {
-            JSONArray returnArr = new JSONArray(returnString);
-            assertEquals("tester9", returnArr.get(returnArr.length()-1));
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-//----------------------------------------------------------------
-        response = RestAssured.given().
-                header("Content-Type", "text/plain").
-                header("charset","utf-8").
-                body("").
-                when().
-                get("/friendRequests/incoming/tester9");
-
-        statusCode = response.getStatusCode();
-        assertEquals(200, statusCode);
-
-        returnString = response.getBody().asString();
-        try {
-            JSONArray returnArr = new JSONArray(returnString);
-            assertEquals("tester8", returnArr.get(returnArr.length()-1));
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-//----------------------------------------------------------------
-        response = RestAssured.given().
-                header("Content-Type", "text/plain").
-                header("charset","utf-8").
-                body("").
-                when().
-                put("/deleteFriendRequest/tester8/tester9");
+                put("/userStats/chessWin/testStatisticsPal");
 
         statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
@@ -108,31 +70,18 @@ public class FriendsTest {
         catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void sendAndAcceptRequestAndDeleteFriend() {
-        Response response = RestAssured.given().
-                header("Content-Type", "text/plain").
-                header("charset","utf-8").
-                body("").
-                when().
-                post("/friendRequest/tester8/tester9");
-
-        int statusCode = response.getStatusCode();
-        assertEquals(200, statusCode);
-
+//----------------------------------------------------------------------
         response = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                post("/acceptFriendRequest/tester8/tester9");
+                put("/userStats/chessLoss/testStatisticsPal");
 
         statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
 
-        String returnString = response.getBody().asString();
+        returnString = response.getBody().asString();
         try {
             JSONObject returnObj = new JSONObject(returnString);
             assertEquals("success", returnObj.get("message"));
@@ -140,32 +89,130 @@ public class FriendsTest {
         catch (JSONException e) {
             e.printStackTrace();
         }
-//----------------------------------------------------------------
+//----------------------------------------------------------------------
         response = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                get("/friends/tester8");
+                put("/userStats/boxingWin/testStatisticsPal");
 
         statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
 
         returnString = response.getBody().asString();
         try {
-            JSONArray returnArr = new JSONArray(returnString);
-            assertEquals("tester9", returnArr.get(returnArr.length()-1));
+            JSONObject returnObj = new JSONObject(returnString);
+            assertEquals("success", returnObj.get("message"));
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-//----------------------------------------------------------------
+//----------------------------------------------------------------------
         response = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                put("/friends/tester8/tester9");
+                put("/userStats/boxingLoss/testStatisticsPal");
+
+        statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        returnString = response.getBody().asString();
+        try {
+            JSONObject returnObj = new JSONObject(returnString);
+            assertEquals("success", returnObj.get("message"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+//----------------------------------------------------------------------
+        response = RestAssured.given().
+                header("Content-Type", "text/plain").
+                header("charset","utf-8").
+                body("").
+                when().
+                put("/userStats/chessBoxingWin/testStatisticsPal");
+
+        statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        returnString = response.getBody().asString();
+        try {
+            JSONObject returnObj = new JSONObject(returnString);
+            assertEquals("success", returnObj.get("message"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+//----------------------------------------------------------------------
+        response = RestAssured.given().
+                header("Content-Type", "text/plain").
+                header("charset","utf-8").
+                body("").
+                when().
+                put("/userStats/chessBoxingLoss/testStatisticsPal");
+
+        statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        returnString = response.getBody().asString();
+        try {
+            JSONObject returnObj = new JSONObject(returnString);
+            assertEquals("success", returnObj.get("message"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+//----------------------------------------------------------------------
+        response = RestAssured.given().
+                header("Content-Type", "text/plain").
+                header("charset","utf-8").
+                body("").
+                when().
+                get("/userStats/testStatisticsPal");
+
+        statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        returnString = response.getBody().asString();
+        try {
+            JSONObject returnObj = new JSONObject(returnString);
+            assertEquals("testStatisticsPal", returnObj.get("username"));
+            assertEquals(1, returnObj.get("chessWins"));
+            assertEquals(1, returnObj.get("chessLosses"));
+            assertEquals(2, returnObj.get("chessGames"));
+            assertEquals(1, returnObj.get("boxingWins"));
+            assertEquals(1, returnObj.get("boxingLosses"));
+            assertEquals(2, returnObj.get("boxingGames"));
+            assertEquals(1, returnObj.get("chessBoxingWins"));
+            assertEquals(1, returnObj.get("chessBoxingLosses"));
+            assertEquals(2, returnObj.get("chessBoxingGames"));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+//----------------------------------------------------------------------
+        response = RestAssured.given().
+                header("Content-Type", "text/plain").
+                header("charset","utf-8").
+                body("").
+                when().
+                get("/getUserStats/testStatisticsPal");
+
+        statusCode = response.getStatusCode();
+        assertEquals(200, statusCode);
+
+        returnString = response.getBody().asString();
+        assertEquals("ChessBoxing 2 50.0 Chess 2 50.0 Boxing 2 50.0", returnString);
+//----------------------------------------------------------------------
+        response = RestAssured.given().
+                header("Content-Type", "text/plain").
+                header("charset","utf-8").
+                body("").
+                when().
+                put("/users/testStatisticsPal");
 
         statusCode = response.getStatusCode();
         assertEquals(200, statusCode);
