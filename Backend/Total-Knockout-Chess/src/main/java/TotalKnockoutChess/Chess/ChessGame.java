@@ -27,8 +27,6 @@ public class ChessGame {
 
     private String whitePlayer, blackPlayer;
 
-    private Coordinate whiteKingPosition, blackKingPosition;
-
     private boolean running;
 
     //List of spectators in the game
@@ -61,7 +59,6 @@ public class ChessGame {
 
         // Fill bottom row of the board (row 1)
         createDefaultTopOrBottomRow(0, BOTTOM_COLOR);
-        whiteKingPosition = Coordinate.E1;
 
         // Fill second bottommost row of the board (row 2)
         createPawnRow(1, BOTTOM_COLOR);
@@ -79,7 +76,6 @@ public class ChessGame {
 
         // Fill top row of the board (row 8)
         createDefaultTopOrBottomRow(7, TOP_COLOR);
-        blackKingPosition = Coordinate.E8;
 
         running = true;
     }
@@ -135,11 +131,9 @@ public class ChessGame {
         // Find what tile contains the piece to move
         ChessGameTile moving = tiles[startCoordinate.x][startCoordinate.y];
 
-        // Tile with King on same side as the moving piece
-        ChessGameTile king = getKingTile(moving.piece.color);
 
         // Get the available moves for the piece attempting to move
-        String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate, (King) king.piece);
+        String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate);
 
         // Check if the move matches any of the available moves for the piece
         boolean validMove = false;
@@ -170,12 +164,6 @@ public class ChessGame {
             ((King) movedPiece).setCanCastle(false);
             ((King) movedPiece).setCoordinate(endCoordinate);
 
-            // Update the board's king location data
-            if (movedPiece.color.equals("white")) {
-                whiteKingPosition = endCoordinate;
-            } else if (movedPiece.color.equals("black")) {
-                blackKingPosition = endCoordinate;
-            }
         }
         // If the moved piece was a rook, update its 'canCastle' field accordingly
         else if (movedPiece instanceof Rook) {
@@ -241,42 +229,23 @@ public class ChessGame {
         return tiles[coord.x][coord.y];
     }
 
-    // Getters for players
+    // Getters/Setters for players
     public String getWhitePlayer() {
         return whitePlayer;
     }
-
     public String getBlackPlayer() {
         return blackPlayer;
     }
+    public void setWhitePlayer(String whitePlayer){ this.whitePlayer = whitePlayer; }
+    public void setBlackPlayer(String blackPlayer){ this.blackPlayer = blackPlayer; }
 
     // Getter for spectators
     public List<String> getSpectators() {
         return spectators;
     }
 
-    // Getter for king's tile on the board
-    public ChessGameTile getKingTile(String color) {
-        // If prompted for white king's tile
-        if (color.equals("white")) {
-            return tiles[whiteKingPosition.x][whiteKingPosition.y];
-        }
-        // If prompted for black king's tile
-        else if (color.equals("black")) {
-            return tiles[blackKingPosition.x][blackKingPosition.y];
-        }
-        // If color is not white or black
-        else {
-            return null;
-        }
-    }
-
-
     // Getter/Setter for game state
     public boolean isRunning(){ return running; }
     public void setRunning(boolean running){ this.running = running; }
-
-    public void setWhitePlayer(Object o) {
-    }
 }
 

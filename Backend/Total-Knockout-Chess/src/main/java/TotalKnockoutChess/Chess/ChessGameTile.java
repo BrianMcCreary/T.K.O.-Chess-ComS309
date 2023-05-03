@@ -5,6 +5,8 @@ import TotalKnockoutChess.Chess.Pieces.ChessPiece;
 import java.io.Serializable;
 
 public class ChessGameTile implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     // boolean hasWhite, hasBlack; ChessPiece has a string "color" variable for this.
     ChessPiece piece;
 

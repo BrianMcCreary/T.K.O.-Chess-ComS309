@@ -9,7 +9,7 @@ public class Empty extends ChessPiece{
         super("");
     }
 
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         return "";
     }
 

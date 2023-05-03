@@ -9,7 +9,7 @@ public class Pawn extends ChessPiece{
         super(color);
     }
 
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
         for(Coordinate c : Coordinate.values()){
             moves += c.toString() + " ";
