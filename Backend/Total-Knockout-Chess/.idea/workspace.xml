@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af80c371-28f1-4e9a-9b01-ee9032b3bb04" name="Changes" comment="">
+    <list default="true" id="163e2b45-04eb-40e0-9bee-fde40f85048c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/BoxingTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/BoxingTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/FriendsTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/TotalKnockoutChess/FriendsTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
