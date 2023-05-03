@@ -1,5 +1,6 @@
 package com.example.tko_chess;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.tko_chess.ultils.Const;
 
@@ -50,7 +52,7 @@ public class ChessActivity extends AppCompatActivity {
     /**
      * int tracks how many moves have been played so far. Used for knowing when to switch to boxing in "ChessBoxing" game mode.
      */
-    int TurnTracker = 0;
+    int TurnTracker = 2;
 
     /**
      * String tracks who is player 1
@@ -80,17 +82,17 @@ public class ChessActivity extends AppCompatActivity {
     /**
      * int stores how many boxing game wins player 1 has
      */
-    int Player1Wins;
+    //int Player1Wins;
 
     /**
      * int stores how many boxing game wins player 2 has
      */
-    int Player2Wins;
+    //int Player2Wins;
 
     /**
      * int stores what round of boxing the Chess Boxing game is currently on.
      */
-    int BoxingRoundNum;
+    //int BoxingRoundNum;
 
     /**
      * boolean tracks if its player 1's turn or player 2's turn
@@ -102,7 +104,6 @@ public class ChessActivity extends AppCompatActivity {
      * LinearLayout holding the frontend display of the board.
      */
     LinearLayout ChessBoard;
-
     LinearLayout OptionsLayout;
     LinearLayout GameOverLayout;
 
@@ -126,6 +127,8 @@ public class ChessActivity extends AppCompatActivity {
      * Hashmap storing all the chess piece drawables.
      */
     Map<String, Integer> chessPieces = new HashMap<String, Integer>();
+
+    Context context = this;
     //////////////////////////////////////////////////////////////////////////
 
 
@@ -140,6 +143,7 @@ public class ChessActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("OPEN",  "Entered onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chess);
 
@@ -152,15 +156,19 @@ public class ChessActivity extends AppCompatActivity {
         TurnsRemaining = findViewById(R.id.TurnsLeftText);
         WhoseMove = findViewById(R.id.WhoseMoveText);
 
-        /////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////
         UserRole = getIntent().getExtras().getString("UserRole");
         GameMode = getIntent().getExtras().getString("Gamemode");
         WhoPlayer1 = getIntent().getExtras().getString("Player1");
         WhoPlayer2 = getIntent().getExtras().getString("Player2");
-        Player1Wins = getIntent().getExtras().getInt("Player1Wins");
+        /*Player1Wins = getIntent().getExtras().getInt("Player1Wins");
         Player2Wins = getIntent().getExtras().getInt("Player2Wins");
-        BoxingRoundNum = getIntent().getExtras().getInt("RoundNumber");
-        /////////////////////////////////////////////////////////////////
+        BoxingRoundNum = getIntent().getExtras().getInt("RoundNumber");*/
+        ////////////////////////////////////////////////////////////////////
+
+        if (GameMode.equals("ChessBoxing")) {
+            TurnsRemaining.setText("Turns Remaining: " + TurnTracker);
+        }
 
         if(!GameMode.equals("ChessBoxing")) {
             TurnsRemaining.setVisibility(View.INVISIBLE);
@@ -177,15 +185,23 @@ public class ChessActivity extends AppCompatActivity {
 
         URLConcatenation = currUser.getUsername(); // Sets URLConcatenation equal to the current user's name
 
+        /*if (!(ChessWebSocket == null)) {
+            Log.d("OPEN", "run() returned: " + "GetBoard() Sent");
+            ChessWebSocket.send("GetBoard");
+            ChessBoard.removeAllViews();
+        }*/
+
         if (ChessWebSocket == null) {
             try{
                 ChessWebSocket = new WebSocketClient(new URI(Const.URL_CHESS_WEBSOCKET + URLConcatenation), (Draft)drafts[0] ) {
                     @Override
                     public void onOpen(ServerHandshake serverHandshake) {
                         Log.d("OPEN", "run() returned: " + "is connecting");
-                        System.out.println("onOpen returned");
+                        System.out.println("Chess onOpen returned");
                         //Gets state of the board to display it on screen (mainly for ChessBoxing, not Chess)
                         ChessWebSocket.send("GetBoard");
+                        Log.d("OPEN", "run() returned: " + "GetBoard() Sent");
+                        System.out.println("Sent GetBoard");
                         if (UserRole.equals("Spectator")) {
                             disableButtons();
                         }
@@ -198,6 +214,7 @@ public class ChessActivity extends AppCompatActivity {
 
                         switch (strings[0]){
                             case "GameBoard":
+                                Log.d("OPEN", "Entered GameBoard case.");
                                 displayBoard(strings[1]);
 
                                 if (UserRole.equals("Player2")) {
@@ -241,6 +258,9 @@ public class ChessActivity extends AppCompatActivity {
                                 //Sets it to player 2's turn.
                                 Player1Turn = false;
 
+                                //Displays whose move it is on screen.
+                                displayWhoseMove(strings[0]);
+
                                 unhighlightAll();
                                 break;
 
@@ -248,7 +268,16 @@ public class ChessActivity extends AppCompatActivity {
                             //Player2Moved <pieceType> <from> <to>
                             case "Player2Moved":
                                 //Increments number of total turns so far.
-                                TurnTracker++;
+                                TurnTracker--;
+
+                                if (GameMode.equals("ChessBoxing")) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TurnsRemaining.setText("Turns remaining: " + TurnTracker);
+                                        }
+                                    });
+                                }
 
                                 //Moves piece for Player 1 and spectators, reset variables, and disables buttons until next move.
                                 if (UserRole.equals("Player1")) {
@@ -286,21 +315,26 @@ public class ChessActivity extends AppCompatActivity {
                                 //Sets it to player 1's turn
                                 Player1Turn = true;
 
+                                //Displays whose move it is on screen.
+                                displayWhoseMove(strings[0]);
+
                                 //Unhighlights all the tiles on the board
                                 unhighlightAll();
 
                                 //If playing ChessBoxing and 8 moves have occurred, go to boxing.
-                                if (((TurnTracker % 8) == 0) && GameMode.equals("ChessBoxing")) {
-                                    Intent intent = new Intent(ChessActivity.this, ChessActivity.class);
+                                if ((TurnTracker == 0) && GameMode.equals("ChessBoxing")) {
+                                    Intent intent = new Intent(ChessActivity.this, BoxingActivity.class);
                                     intent.putExtra("Gamemode", GameMode);
-                                    intent.putExtra("RoundNumber", BoxingRoundNum);
-                                    intent.putExtra("Player1Wins", Player1Wins);
-                                    intent.putExtra("Player2Wins", Player2Wins);
+                                    intent.putExtra("UserRole", UserRole);
                                     intent.putExtra("Player1", WhoPlayer1);
                                     intent.putExtra("Player2", WhoPlayer2);
+                                    /*intent.putExtra("RoundNumber", BoxingRoundNum);
+                                    intent.putExtra("Player1Wins", Player1Wins);
+                                    intent.putExtra("Player2Wins", Player2Wins);*/
 
+                                    TurnTracker = 8;
                                     startActivity(intent);
-                                    TurnTracker = 0;
+                                    //finish();
                                 }
                                 break;
 
@@ -353,7 +387,6 @@ public class ChessActivity extends AppCompatActivity {
                                 //Displays who left the game
                                 displayGameResult(strings[1] + " left.");
                                 break;
-
                         }
                     }
 
@@ -449,6 +482,23 @@ public class ChessActivity extends AppCompatActivity {
 
 
 
+    private void displayWhoseMove(String playerWhoJustMoved) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (playerWhoJustMoved.equals("Player1Moved")) {
+                    WhoseMove.setText("Player 2's move.");
+                } else
+
+                if (playerWhoJustMoved.equals("Player2Moved")) {
+                    WhoseMove.setText("Player 1's move.");
+                }
+            }
+        });
+    }
+
+
+
     /**
      * Highlights the specified tile with a light green background.
      */
@@ -520,6 +570,8 @@ public class ChessActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.d("OPEN", "Entered displayBoard()");
+
                 String[] rows = boardSetup.split("#");
                 //int wherePiece = 0;
                 for (int row = rows.length - 1; row >= 0; row--) {
@@ -541,7 +593,9 @@ public class ChessActivity extends AppCompatActivity {
 
                     for (int col = 0; col < columns.length; col++) {
 
+                        //System.out.println(chessPieces.get(columns[col]));
                         //Sets column "j" of rank "row" to the correct image.
+                        //tiles[col].setImageDrawable(ContextCompat.getDrawable(context,chessPieces.get(columns[col])));
                         tiles[col].setImageResource(chessPieces.get(columns[col]));
 
                         if (UserRole.equals("Player2")) {
@@ -583,7 +637,6 @@ public class ChessActivity extends AppCompatActivity {
                                     ChessWebSocket.send(whichTile);
                                     System.out.println("Sent move or select: " + whichTile);
                                 }
-
                             }
                         });
                     }
@@ -593,6 +646,8 @@ public class ChessActivity extends AppCompatActivity {
                 if (UserRole.equals("Player2")) {
                     ChessBoard.setRotation(180);
                 }
+
+                Log.d("OPEN", "Exit displayBoard()");
             }
         });
     }

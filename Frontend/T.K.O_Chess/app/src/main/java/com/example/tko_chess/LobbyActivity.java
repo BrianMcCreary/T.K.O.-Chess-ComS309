@@ -322,9 +322,9 @@ public class LobbyActivity extends AppCompatActivity {
 								intent.putExtra("Gamemode", GameMode);
 								intent.putExtra("Player1", WhoPlayer1);
 								intent.putExtra("Player2", WhoPlayer2);
-								intent.putExtra("Player1Wins", 0);
+								/*ntent.putExtra("Player1Wins", 0);
 								intent.putExtra("Player2Wins", 0);
-								intent.putExtra("RoundNumber", 0);
+								intent.putExtra("RoundNumber", 0);*/
 
 								startActivity(intent);
 							} else

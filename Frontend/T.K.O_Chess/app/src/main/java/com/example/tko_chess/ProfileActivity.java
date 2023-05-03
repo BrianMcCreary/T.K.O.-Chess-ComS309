@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
         ChessStats = findViewById(R.id.ChessStatsText);
         BoxingStats = findViewById(R.id.BoxingStatsText);
 
-        //getUserStats();
+        getUserStats();
 
         ProfileToMenu.setOnClickListener(new View.OnClickListener() {
             /**
@@ -95,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Request que used to send JSON requests
         RequestQueue queue = Volley.newRequestQueue(ProfileActivity.this);
 
-        StringRequest GetUserStatsReq = new StringRequest(Request.Method.PUT, Const.URL_SERVER_GETUSERSTATS + URLConcatenation, new Response.Listener<String>() {
+        StringRequest GetUserStatsReq = new StringRequest(Request.Method.GET, Const.URL_SERVER_GETUSERSTATS + URLConcatenation, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String[] strings = response.split(" ");

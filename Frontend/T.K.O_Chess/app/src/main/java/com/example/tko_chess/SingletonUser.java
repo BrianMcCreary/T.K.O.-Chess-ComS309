@@ -123,6 +123,19 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
+    /**
+     * Gets if the user is an admin or not.
+     * @return Boolean true if user is an admin.
+     */
+    public boolean isAdmin() {
+        try {
+            return (boolean) UserObject.get("isAdmin");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     /**
      * Gets the friends of the currently logged in user.

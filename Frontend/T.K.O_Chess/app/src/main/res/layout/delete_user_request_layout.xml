@@ -6,41 +6,31 @@
     android:background="@color/very_light_grey">
 
     <TextView
-        android:id="@+id/IncomingFriendNameTextView"
+        android:id="@+id/UserNameTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_weight="0.3"
         android:background="?attr/editTextBackground"
         android:hint="User"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColorHint="@color/black"
         android:textSize="24sp"
-        android:textColor="@color/black"
-        android:layout_weight="0.22">
+        android:textColor="@color/black">
     </TextView>
 
     <Button
-        android:id="@+id/AcceptFriendBtn"
+        android:id="@+id/DeleteUserBtn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_weight="0.35"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/soft_blue"
-        android:text="Accept"
-        android:textColor="@color/black"
-        android:textSize="20sp">
-    </Button>
-
-    <Button
-        android:id="@+id/DenyFriendBtn"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.7"
         android:layout_gravity="center"
         android:backgroundTint="@color/soft_blue"
         android:paddingHorizontal="7dp"
-        android:text="Deny"
+        android:text="Delete"
         android:textColor="@color/black"
         android:textSize="20sp">
     </Button>
 </LinearLayout>
+
+
