@@ -16,6 +16,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.server.PathParam;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +151,21 @@ public class BoxingGameSocket {
                 }
                 userStatsRepository.save(us);
                 userStatsRepository.flush();
+            }
+        }
+        //When creating a game for a ChessBoxing game
+        else if (messages[0].equals("Start")) {
+            BoxingGame newGame = new BoxingGame(messages[1], messages[2], new ArrayList<String>());
+            boxingGameRepository.save(newGame);
+            boxingGameRepository.flush();
+        }
+        //When a spectator needs to get into the Boxing game for a ChessBoxing game
+        else if (messages[0].equals("Join")) {
+            BoxingGame newGame = findBoxingGame(boxingGameRepository.findAll(), messages[1]);
+            if (newGame != null) {
+                newGame.addToSpectators(messages[2]);
+                boxingGameRepository.save(newGame);
+                boxingGameRepository.flush();
             }
         }
     }
