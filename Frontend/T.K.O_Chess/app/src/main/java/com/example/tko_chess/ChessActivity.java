@@ -213,6 +213,9 @@ public class ChessActivity extends AppCompatActivity {
                         String[] strings = message.split(" ");
 
                         switch (strings[0]){
+                            case "CheckMate":
+                                break;
+
                             case "GameBoard":
                                 Log.d("OPEN", "Entered GameBoard case.");
                                 displayBoard(strings[1]);
