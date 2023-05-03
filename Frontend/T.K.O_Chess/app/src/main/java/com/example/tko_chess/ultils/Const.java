@@ -9,9 +9,7 @@ public class Const {
 
 
 
-    public static final String URL_SERVER_GETUSERS = "http://coms-309-005.class.las.iastate.edu:8080/users";
-
-    public static final String URL_SERVER_DELETEUSER = "http://coms-309-005.class.las.iastate.edu:8080/admin/delete/";
+    public static final String URL_SERVER_GETUSERS = "http://coms-309-005.class.las.iastate.edu:8080/getusers";
 
 
 

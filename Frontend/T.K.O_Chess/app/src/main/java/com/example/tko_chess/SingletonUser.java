@@ -129,7 +129,7 @@ public class SingletonUser extends AppCompatActivity {
      */
     public boolean isAdmin() {
         try {
-            return (boolean) UserObject.get("isAdmin");
+            return (boolean) UserObject.get("admin");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

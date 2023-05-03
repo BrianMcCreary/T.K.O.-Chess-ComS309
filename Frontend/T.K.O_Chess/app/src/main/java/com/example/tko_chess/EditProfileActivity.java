@@ -108,7 +108,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             } else { //Display error message from backend
                                 ErrorMessage.setText("Could not change username.");
                             }
-                        }
+						}
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -146,7 +146,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             } else { //Display error message from backend
                                 ErrorMessage.setText("Could not change password.");
                             }
-                        }
+						}
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {

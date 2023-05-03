@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +25,8 @@ import com.example.tko_chess.ultils.Const;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @Author Lex Somers
@@ -50,7 +54,7 @@ public class SettingsActvity extends AppCompatActivity {
     /**
      * String stores the list of users who are registered.
      */
-    String ListOfUsers;
+    String ListOfUsers = "";
 
     /**
      * LinearLayout holding all the users currently registered.
@@ -79,9 +83,9 @@ public class SettingsActvity extends AppCompatActivity {
         ErrorMessage = findViewById(R.id.DeleteErrorText);
 
         if (currUser.isAdmin()) {
-            SettingsAvailable.setVisibility(View.INVISIBLE);
-            getUsers();
-            displayUsers(ListOfUsers);
+            //SettingsAvailable.setVisibility(View.INVISIBLE);
+            //getUsers();
+            //displayUsers(ListOfUsers);
         }
 
         SettingsToMenu.setOnClickListener(new View.OnClickListener() {
@@ -93,97 +97,102 @@ public class SettingsActvity extends AppCompatActivity {
         });
     }
 
+
+
+    private void getUsers() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(SettingsActvity.this);
+        StringRequest GetUsersReq = new StringRequest(Request.Method.PUT, Const.URL_SERVER_GETUSERS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("", "getUsers() responded.");
+                ListOfUsers = response;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("", "getUsers() error.");
+                ErrorMessage.setText("An error occurred");
+            }
+        });
+        queue.add(GetUsersReq);
+        URLConcatenation = "";
+    }
+
+
+
     /**
      * Displays all others the user is currently friends with.
      * @param message List of others the user is friends with.
      */
     private void displayUsers(String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String[] Users = message.split(" ");
+        String[] Users = message.split(" ");
 
-                UserList.removeAllViews();
-                UserList = findViewById(R.id.AdminSettingsLinearLayout);
+        UserList.removeAllViews();
+        UserList = findViewById(R.id.AdminSettingsLinearLayout);
 
-                //For User, put that User in the UserList
-                for (int i = 0; i < Users.length; i++) {
+        //For User, put that User in the UserList
+        for (int i = 0; i < Users.length; i++) {
 
-                    View inflatedLayout = getLayoutInflater().inflate(R.layout.delete_user_request_layout, null, false);
-                    TextView User = (TextView) inflatedLayout.findViewById(R.id.UserNameTextView);
-                    Button DeleteUserBtn = (Button) inflatedLayout.findViewById(R.id.DeleteUserBtn);
+            View inflatedLayout = getLayoutInflater().inflate(R.layout.delete_user_request_layout, null, false);
+            TextView User = (TextView) inflatedLayout.findViewById(R.id.UserNameTextView);
+            Button DeleteUserBtn = (Button) inflatedLayout.findViewById(R.id.DeleteUserBtn);
 
-                    //Displays the user's name
-                    User.setText(Users[i]);
+            //Displays the user's name
+            User.setText(Users[i]);
 
-                    DeleteUserBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            URLConcatenation = User.getText().toString();
-                            deleteUser();
-                        }
-                    });
-
-                    UserList.addView(inflatedLayout);
+            DeleteUserBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    URLConcatenation = User.getText().toString();
+                    deleteUser();
                 }
-            }
-        });
+            });
+
+            UserList.addView(inflatedLayout);
+        }
     }
 
     /**
      * Sends POST request to backend removing the selected friend from the user's friends list.
      */
     private void deleteUser() {
-        runOnUiThread(new Runnable() {
+        //Request que used to send JSON requests
+        RequestQueue queue = Volley.newRequestQueue(SettingsActvity.this);
+        StringRequest DeleteUserReq = new StringRequest(Request.Method.DELETE, Const.URL_SERVER_USERS + URLConcatenation, new Response.Listener<String>() {
             @Override
-            public void run() {
-                //Request que used to send JSON requests
-                RequestQueue queue = Volley.newRequestQueue(SettingsActvity.this);
-                StringRequest DeleteUserReq = new StringRequest(Request.Method.DELETE, Const.URL_SERVER_GETUSERS + URLConcatenation, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //If removal succeeded, update UserList
-                        if (response.equals("success")) {
-                            getUsers();
-                            displayUsers(ListOfUsers);
-                        } else {
-                            ErrorMessage.setText("Could not delete user.");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        ErrorMessage.setText("An error occurred");
-                    }
-                });
-                queue.add(DeleteUserReq);
-
-                URLConcatenation = "";
+            public void onResponse(String response) {
+                //If removal succeeded, update UserList
+                if (response.equals("success")) {
+                    getUsers();
+                    displayUsers(ListOfUsers);
+                } else {
+                    ErrorMessage.setText("Could not delete user.");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ErrorMessage.setText("An error occurred");
             }
         });
+        queue.add(DeleteUserReq);
+
+        URLConcatenation = "";
     }
 
-    private void getUsers() {
-       runOnUiThread(new Runnable() {
-           @Override
-           public void run() {
-               //Request que used to send JSON requests
-               RequestQueue queue = Volley.newRequestQueue(SettingsActvity.this);
-               StringRequest GetUsersReq = new StringRequest(Request.Method.GET, Const.URL_SERVER_GETUSERS, new Response.Listener<String>() {
-                   @Override
-                   public void onResponse(String response) {
-                       ListOfUsers = response;
-                   }
-               }, new Response.ErrorListener() {
-                   @Override
-                   public void onErrorResponse(VolleyError error) {
-                       ErrorMessage.setText("An error occurred");
-                   }
-               });
-               queue.add(GetUsersReq);
 
-               URLConcatenation = "";
-           }
-       });
+
+    /**
+     * Halts program for a specified amount of time.
+     * @param time is a double containing the information of how long to wait in seconds.
+     */
+    private void waitTime(double time) {
+        time *= 1000;
+        try {
+            Thread.sleep((int) time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

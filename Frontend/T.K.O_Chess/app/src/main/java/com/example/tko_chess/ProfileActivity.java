@@ -117,7 +117,7 @@ public class ProfileActivity extends AppCompatActivity {
                             break;
                     }
                 }
-            }
+			}
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
