@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tko_chess.ultils.Const;
 
 /**
- * @author Zachary Scurlock
+ * @author Zachary Scurlock, Lex Somers
  * This is where the real meat and potatoes of chess can be found
  */
 public class ChessActivity extends AppCompatActivity {
@@ -57,7 +57,7 @@ public class ChessActivity extends AppCompatActivity {
     String tile = ""; // Stores the name of the pressed tile
     String piece = ""; // stores the name of the selected piece
     int tracker = 0; // Keeps track of how many times a user has clicked a tile
-    int movesLeft = 20; // tracks if how many moves the player has left
+    int movesLeft = 8; // tracks if how many moves the player has left
 
     /**
      *
