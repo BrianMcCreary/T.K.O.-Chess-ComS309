@@ -159,23 +159,52 @@ public class ChessGameSocket {
                 userStatsRepository.flush();
             }
         }
+        // If user hit the "I Lost" button
+        else if(message.equals("Lost")){
+            sendUserMessage(username, "GameLoss");
+
+            if(userIsWhitePlayer && blackPlayer != null){
+                sendUserMessage(blackPlayer, "GameWon");
+            }
+            else if(userIsBlackPlayer && whitePlayer != null){
+                sendUserMessage(whitePlayer, "GameWon");
+            }
+        }
     }
 
     @OnClose
     public void onClose(Session session) throws IOException {
         logger.info("Entered into Close");
 
-        // remove the user connection information
+        // Find username and related chess game
         String username = sessionUsernameMap.get(session);
+        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+
+        // remove the user connection information
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
-        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+        // If game with username was not found
+        if(cg == null){
+            return;
+        }
 
         // If user that left was one of the players, delete the game from the database
         if ((cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
                 || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username))) {
+
+            // Send opponent that this player left the game
+            if (cg.getWhitePlayer().equals(username)) {
+                cg.setWhitePlayer(null);
+                sendUserMessage(cg.getBlackPlayer(), "OpponentLeft");
+            } else if (cg.getBlackPlayer().equals(username)) {
+                cg.setBlackPlayer(null);
+                sendUserMessage(cg.getWhitePlayer(), "OpponentLeft");
+            }
+
             sendAllMessage(cg, "PlayerLeft " + username);
+
+
             chessGameRepository.delete(cg);
             chessGameRepository.flush();
         }
@@ -193,8 +222,8 @@ public class ChessGameSocket {
 
         // Search through repository for chess game with username in it
         for (ChessGame g : all) {
-            if (g.getWhitePlayer() != null && g.getWhitePlayer().equals(username)
-                    || g.getBlackPlayer() != null && g.getBlackPlayer().equals(username)
+            if ((g.getWhitePlayer() != null && g.getWhitePlayer().equals(username))
+                    || (g.getBlackPlayer() != null && g.getBlackPlayer().equals(username))
                     || g.getSpectators().contains(username)) {
                 game = g;
             }
@@ -204,7 +233,13 @@ public class ChessGameSocket {
     }
 
     private void sendUserMessage(String username, String message) throws IOException {
-        usernameSessionMap.get(username).getBasicRemote().sendText(message);
+        System.out.println("Attempt to send " + username + ": " + message);
+        Session s = usernameSessionMap.get(username);
+
+        // Ensure the user is in the session
+        if(s != null){
+            usernameSessionMap.get(username).getBasicRemote().sendText(message);
+        }
     }
 
     private void sendAllPlayersMessage(ChessGame game, String message) throws IOException {
@@ -337,7 +372,7 @@ public class ChessGameSocket {
         String encodedBoard = "GameBoard ";
         ChessGameTile[][] board = game.getBoard();
 
-        for (int row = board.length - 1; row >= 0; row--) {
+        for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
                 // Add current piece to the encodedBoard
                 ChessPiece piece = board[col][row].piece;

@@ -143,6 +143,14 @@
           <properties class="org.hibernate.TransientPropertyValueException" package="org.hibernate" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+<<<<<<< HEAD
+=======
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+>>>>>>> main
       </breakpoints>
     </breakpoint-manager>
   </component>
