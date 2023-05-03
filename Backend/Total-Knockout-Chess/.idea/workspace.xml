@@ -48,7 +48,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in Total-Knockout-Chess">
+  <component name="RunManager" selected="Application.TotalKnockoutChessApplication">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
       <module name="Total-Knockout-Chess" />
@@ -117,11 +117,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TotalKnockoutChessApplication" />
         <item itemvalue="JUnit.java in Total-Knockout-Chess" />
         <item itemvalue="JUnit.StatisticsTest" />
         <item itemvalue="JUnit.FriendsTest" />
         <item itemvalue="JUnit.BoxingTest" />
-        <item itemvalue="Application.TotalKnockoutChessApplication" />
       </list>
     </recent_temporary>
   </component>
