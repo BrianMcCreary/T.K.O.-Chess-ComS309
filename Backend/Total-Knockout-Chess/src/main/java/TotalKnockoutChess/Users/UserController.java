@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Returns list of all users in a space separated string")
-    @GetMapping(path = "/getusers")
+    @PutMapping(path = "/getusers")
     public String getUsersAsString(){
         String usernames = "";
 
@@ -226,28 +226,6 @@ public class UserController {
                 return "success";
             }
         }
-        return "failure";
-    }
-
-    @ApiOperation(value = "Method that admins can use to delete a user")
-    @DeleteMapping(path = "/admin/delete/{username}")
-    public String adminDelete(@PathVariable String username){
-        User user = null;
-
-        // Search for user in database
-        for(User u : userRepository.findAll()) {
-            if (u.getUsername().equals(username)){
-                user = u;
-            }
-        }
-
-        // If user was found, delete from database
-        if(user != null){
-            userRepository.delete(user);
-            userRepository.flush();
-            return "success";
-        }
-
         return "failure";
     }
 }
