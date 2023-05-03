@@ -228,26 +228,4 @@ public class UserController {
         }
         return "failure";
     }
-
-    @ApiOperation(value = "Method that admins can use to delete a user")
-    @DeleteMapping(path = "/admin/delete/{username}")
-    public String adminDelete(@PathVariable String username){
-        User user = null;
-
-        // Search for user in database
-        for(User u : userRepository.findAll()) {
-            if (u.getUsername().equals(username)){
-                user = u;
-            }
-        }
-
-        // If user was found, delete from database
-        if(user != null){
-            userRepository.delete(user);
-            userRepository.flush();
-            return "success";
-        }
-
-        return "failure";
-    }
 }
