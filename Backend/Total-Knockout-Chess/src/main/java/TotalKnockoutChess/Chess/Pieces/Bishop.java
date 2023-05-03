@@ -23,7 +23,6 @@ public class Bishop extends ChessPiece {
         // Initialize for up to the left
         int col = currentPosition.x - 1;
         int row = currentPosition.y + 1;
-        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally up and to the left of the current position
         // until the edge of the board or a piece is hit
@@ -47,13 +46,11 @@ public class Bishop extends ChessPiece {
             // Shift tile coordinate up one and left one
             col--;
             row++;
-            System.out.println("Col: " + col + ". Row: " + row);
         }
 
         // Initialize for up to the right
         col = currentPosition.x + 1;
         row = currentPosition.y + 1;
-        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally up and to the right of the current position
         // until the edge of the board or a piece is hit
@@ -77,13 +74,11 @@ public class Bishop extends ChessPiece {
             // Shift tile coordinate up one and right one
             col++;
             row++;
-            System.out.println("Col: " + col + ". Row: " + row);
         }
 
         // Initialize for down to the left
         col = currentPosition.x - 1;
         row = currentPosition.y - 1;
-        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally down and to the left of the current position
         // until the edge of the board or a piece is hit
@@ -107,13 +102,11 @@ public class Bishop extends ChessPiece {
             // Shift tile coordinate down one and left one
             col--;
             row--;
-            System.out.println("Col: " + col + ". Row: " + row);
         }
 
         // Initialize for down to the right
         col = currentPosition.x + 1;
         row = currentPosition.y - 1;
-        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally down and to the right of the current position
         // until the edge of the board or a piece is hit
@@ -137,7 +130,6 @@ public class Bishop extends ChessPiece {
             // Shift tile coordinate down one and right one
             col++;
             row--;
-            System.out.println("Col: " + col + ". Row: " + row);
         }
         System.out.println("Piece " + this + " at " + currentPosition + " has the following available moves.\n" + moves);
         return moves;

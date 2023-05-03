@@ -131,7 +131,6 @@ public class ChessGame {
         // Find what tile contains the piece to move
         ChessGameTile moving = tiles[startCoordinate.x][startCoordinate.y];
 
-
         // Get the available moves for the piece attempting to move
         String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate);
 
@@ -162,11 +161,74 @@ public class ChessGame {
             ((King) movedPiece).setCanCastle(false);
             ((King) movedPiece).setCoordinate(endCoordinate);
 
+            // If move was a castle, update the rook's position
+            switch(startCoordinate.toString()){
+                // White King
+                case "E1":
+                    // This piece went on C1 (white queen's side castle)
+                    if(endCoordinate.equals(Coordinate.C1)) {
+                        tiles[Coordinate.D1.x][Coordinate.D1.y].piece = tiles[Coordinate.A1.x][Coordinate.A1.y].piece; // Move rook with castle
+                        tiles[Coordinate.A1.x][Coordinate.A1.y].piece = new Empty(); // Set where the castled rook was to empty
+                    }
+                    // This piece went on G1 (white king's side castle)
+                    else if(endCoordinate.equals(Coordinate.G1)){
+                        tiles[Coordinate.F1.x][Coordinate.F1.y].piece = tiles[Coordinate.H1.x][Coordinate.H1.y].piece; // Move rook with castle
+                        tiles[Coordinate.H1.x][Coordinate.H1.y].piece = new Empty(); // Set where the castled rook was to empty
+                    }
+                    break;
+                // Black King
+                case "E8":
+                    // This piece went on C8 (black queen's side castle)
+                    if(endCoordinate.equals(Coordinate.C8)) {
+                        tiles[Coordinate.D8.x][Coordinate.D8.y].piece = tiles[Coordinate.A8.x][Coordinate.A8.y].piece; // Move rook with castle
+                        tiles[Coordinate.A8.x][Coordinate.A8.y].piece = new Empty(); // Set where the castled rook was to empty
+                    }
+                    // This piece went on G8 (black king's side castle)
+                    else if(endCoordinate.equals(Coordinate.G8)){
+                        tiles[Coordinate.F8.x][Coordinate.F8.y].piece = tiles[Coordinate.H8.x][Coordinate.H8.y].piece; // Move rook with castle
+                        tiles[Coordinate.H8.x][Coordinate.H8.y].piece = new Empty(); // Set where the castled rook was to empty
+                    }
+                    break;
+            }
+
         }
         // If the moved piece was a rook, update its 'canCastle' field accordingly
         else if (movedPiece instanceof Rook) {
             ((Rook) movedPiece).setCanCastle(false);
-        }
+
+            // If move was a castle, update the king's position
+            switch(startCoordinate.toString()){
+                // White Rook
+                case "A1":
+                    // This piece went on D1 (white queen's side castle)
+                    if(endCoordinate.equals(Coordinate.D1)) {
+                        tiles[Coordinate.C1.x][Coordinate.C1.y].piece = tiles[Coordinate.E1.x][Coordinate.E1.y].piece; // Move king with castle
+                        tiles[Coordinate.E1.x][Coordinate.E1.y].piece = new Empty(); // Set where the castled king was to empty
+                    }
+                case "H1":
+                    // This piece went on G1 (white king's side castle)
+                    if(endCoordinate.equals(Coordinate.F1)){
+                        tiles[Coordinate.G1.x][Coordinate.G1.y].piece = tiles[Coordinate.E1.x][Coordinate.E1.y].piece; // Move king with castle
+                        tiles[Coordinate.E1.x][Coordinate.E1.y].piece = new Empty(); // Set where the castled king was to empty
+                    }
+                    break;
+                // Black Rook
+                case "A8":
+                    // This piece went on D8 (black queen's side castle)
+                    if(endCoordinate.equals(Coordinate.D8)) {
+                        tiles[Coordinate.C8.x][Coordinate.C8.y].piece = tiles[Coordinate.C8.x][Coordinate.C8.y].piece; // Move king with castle
+                        tiles[Coordinate.C8.x][Coordinate.C8.y].piece = new Empty(); // Set where the castled king was to empty
+                    }
+                    break;
+                case "H8":
+                    // This piece went on F8 (black king's side castle)
+                    if(endCoordinate.equals(Coordinate.F8)) {
+                        tiles[Coordinate.G8.x][Coordinate.G8.y].piece = tiles[Coordinate.E8.x][Coordinate.E8.y].piece; // Move king with castle
+                        tiles[Coordinate.E8.x][Coordinate.E8.y].piece = new Empty(); // Set where the castled king was to empty
+                    }
+                    break;
+                }
+            }
 
         return true;
     }
