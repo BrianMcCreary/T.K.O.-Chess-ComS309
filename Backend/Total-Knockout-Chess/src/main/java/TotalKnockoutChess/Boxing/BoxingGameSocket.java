@@ -66,73 +66,70 @@ public class BoxingGameSocket {
 
         //If the received message is a move, update game accordingly
         if (message.equals("kick") || message.equals("block") || message.equals("jab")) {
-
-            //If this session is with player 1 or player 2, update their move accordingly
-            if (bg.getPlayer1().equals(username)) {
-                bg.setP1Move(message);
-            }
-            else if (bg.getPlayer2().equals(username)) {
-                bg.setP2Move(message);
-            }
-
-            String roundWinner = "";
-
-            //If both of the users have a confirmed move
-            if (!bg.getP1Move().equals("") && !bg.getP2Move().equals("")) {
-
-                //roundWinner is username of the round winner (possibly tie)
-                roundWinner = bg.getRoundWinner();
-
-                //Find the round winner, send information to the client, and update the boxing game accordingly
-                if (roundWinner.equals(bg.getPlayer1())) {
-                    bg.dockLife(bg.getPlayer2());
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundWin " + bg.getP2Move());
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundLoss " + bg.getP1Move());
-                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player1 " + bg.getP1Move() + " Player2 " + bg.getP2Move());
+            if (bg != null) {
+                //If this session is with player 1 or player 2, update their move accordingly
+                if (bg.getPlayer1().equals(username)) {
+                    bg.setP1Move(message);
+                } else if (bg.getPlayer2().equals(username)) {
+                    bg.setP2Move(message);
                 }
-                else if (roundWinner.equals(bg.getPlayer2())) {
-                    bg.dockLife(bg.getPlayer1());
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
-                    sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player2 " + bg.getP2Move() + " Player1 " + bg.getP1Move());
-                }
-                else if (roundWinner.equals("tie")) {
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
-                    sendSpectatorsMessage(bg.getPlayer1(), "RoundTie " + bg.getP1Move());
-                }
-                bg.clearMoves();
-            }
 
-            //If one of the players is out of lives, send information to the client and delete the boxing game from the repository
-            if (bg.isGameOver()) {
-                String gameWinner = bg.getGameWinner();
-                if (gameWinner.equals(bg.getPlayer1())) {
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameWin");
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameLoss");
-                    sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player1");
+                String roundWinner = "";
+
+                //If both of the users have a confirmed move
+                if (!bg.getP1Move().equals("") && !bg.getP2Move().equals("")) {
+
+                    //roundWinner is username of the round winner (possibly tie)
+                    roundWinner = bg.getRoundWinner();
+
+                    //Find the round winner, send information to the client, and update the boxing game accordingly
+                    if (roundWinner.equals(bg.getPlayer1())) {
+                        bg.dockLife(bg.getPlayer2());
+                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundWin " + bg.getP2Move());
+                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundLoss " + bg.getP1Move());
+                        sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player1 " + bg.getP1Move() + " Player2 " + bg.getP2Move());
+                    } else if (roundWinner.equals(bg.getPlayer2())) {
+                        bg.dockLife(bg.getPlayer1());
+                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("RoundLoss " + bg.getP2Move());
+                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("RoundWin " + bg.getP1Move());
+                        sendSpectatorsMessage(bg.getPlayer1(), "RoundOver Player2 " + bg.getP2Move() + " Player1 " + bg.getP1Move());
+                    } else if (roundWinner.equals("tie")) {
+                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("Tie " + bg.getP2Move());
+                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("Tie " + bg.getP1Move());
+                        sendSpectatorsMessage(bg.getPlayer1(), "RoundTie " + bg.getP1Move());
+                    }
+                    bg.clearMoves();
                 }
-                else if (gameWinner.equals(bg.getPlayer2())) {
-                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameLoss");
-                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameWin");
-                    sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player2");
+
+                //If one of the players is out of lives, send information to the client and delete the boxing game from the repository
+                if (bg.isGameOver()) {
+                    String gameWinner = bg.getGameWinner();
+                    if (gameWinner.equals(bg.getPlayer1())) {
+                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameWin");
+                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameLoss");
+                        sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player1");
+                    } else if (gameWinner.equals(bg.getPlayer2())) {
+                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("GameLoss");
+                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("GameWin");
+                        sendSpectatorsMessage(bg.getPlayer1(), "GameOver Player2");
+                    }
+                    boxingGameRepository.delete(bg);
+                } else {
+                    boxingGameRepository.save(bg);
                 }
-                boxingGameRepository.delete(bg);
-            }
-            else {
-                boxingGameRepository.save(bg);
             }
         }
         //If the user leaves, send information to their opponent's client and delete the boxing game from the repository
         else if (message.equals("leave")) {
-            if (bg.getPlayer1().equals(username)) {
-                usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("OpponentLeft");
+            if (bg != null) {
+                if (bg.getPlayer1().equals(username)) {
+                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText("OpponentLeft");
+                } else if (bg.getPlayer2().equals(username)) {
+                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("OpponentLeft");
+                }
+                sendSpectatorsMessage(username, "PlayerLeft");
+                boxingGameRepository.delete(bg);
             }
-            else if (bg.getPlayer2().equals(username)) {
-                usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText("OpponentLeft");
-            }
-            sendSpectatorsMessage(username, "PlayerLeft");
-            boxingGameRepository.delete(bg);
         }
         //If a user has won, update their statistics
         else if (messages[0].equals("GameType")) {

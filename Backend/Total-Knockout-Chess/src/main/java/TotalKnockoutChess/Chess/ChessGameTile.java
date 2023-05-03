@@ -7,7 +7,6 @@ import java.io.Serializable;
 public class ChessGameTile implements Serializable {
     private static final long serialVersionUID = 0L;
 
-    // boolean hasWhite, hasBlack; ChessPiece has a string "color" variable for this.
     ChessPiece piece;
 
     public ChessGameTile(){
@@ -20,11 +19,4 @@ public class ChessGameTile implements Serializable {
     public ChessPiece getPiece() {
         return piece;
     }
-
-//    /**
-//     * Setter method that updates the ChessPiece object on the tile
-//     */
-//    public void setPiece(ChessPiece piece) {
-//        this.piece = piece;
-//    }
 }
