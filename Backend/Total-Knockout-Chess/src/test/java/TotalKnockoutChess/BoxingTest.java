@@ -19,7 +19,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class BoxingTest {
-
     @LocalServerPort
     int port;
 
@@ -49,7 +48,7 @@ public class BoxingTest {
         catch (JSONException e) {
             e.printStackTrace();
         }
-
+//----------------------------------------------------------------
         Response response2 = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
@@ -70,7 +69,7 @@ public class BoxingTest {
         catch (JSONException e) {
             e.printStackTrace();
         }
-
+//----------------------------------------------------------------
         Response response3 = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
