@@ -2,9 +2,6 @@ package TotalKnockoutChess.Chess.Pieces;
 
 import TotalKnockoutChess.Chess.ChessGameTile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Bishop extends ChessPiece {
     private static final long serialVersionUID = 0L;
 
@@ -13,60 +10,36 @@ public class Bishop extends ChessPiece {
     }
 
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, King king) {
-        List<String> moves = new ArrayList<>();
+        String moves = "";
+        String sideColor = board[currentPosition.x][currentPosition.y].getPiece().color;
 
         // TODO Replace with bishop movements
-        int row = currentPosition.y + 1, col = currentPosition.x + 1;
 
-        // Movements up and to the right
-        while(row < board.length && col < board.length){
-            ChessPiece piece = board[col][row].getPiece();
-            if(piece.color.equals(this.color)){
+        Coordinate  upLeft      = currentPosition,
+                    upRight     = currentPosition,
+                    downLeft    = currentPosition,
+                    downRight   = currentPosition;
+
+        // Checks squares diagonally up and to the left of the current position
+        // until the edge of the board or a piece is hit
+        while(upLeft.x < board.length && upLeft.y < board.length){
+            ChessPiece piece = board[upLeft.y][upLeft.x].getPiece();
+
+            // If the coordinate holds another piece off the same color, break out of the loop
+            if( !(piece instanceof Empty) && sideColor.equals(piece.color) ){
                 break;
             }
-            moves.add(Coordinate.fromInteger(new int[]{row, col}).toString());
-            row++;
-            col++;
+
+            // Add the coordinate as an available move
+            moves += upLeft + " ";
+
+            // Shift tile coordinate up one and left one
+            upLeft = Coordinate.shiftCoordinate(upLeft, 1, 1);
         }
 
-        // Movements up and to the left
-        while(row < board.length && col < board.length){
-            ChessPiece piece = board[col][row].getPiece();
-            if(piece.color.equals(this.color)){
-                break;
-            }
-            moves.add(Coordinate.fromInteger(new int[]{row, col}).toString());
-            row++;
-            col++;
-        }
-//        for(Coordinate c : Coordinate.values()){
-//            moves.add(c.toString());
-//        }
-
-        for(String move : moves) {
-            Coordinate coord = Coordinate.fromString(move);
-            ChessGameTile tile = board[coord.x][coord.y];
-            ChessPiece originalPiece = tile.getPiece();
-
-            // Look ahead and see if the move has our king in check
-            tile.setPiece(this);
-            king.scan();
-            if(king.isChecked()){
-                moves.remove(move);
-            }
-
-            tile.setPiece(originalPiece);
-        }
-
-        // Parse List into single string of space separated items
-        String stringMoves = "";
-        for(String move: moves){
-            stringMoves += move + " ";
-        }
-
-        return stringMoves;
+        return moves;
     }
-
+    
     @Override
     public final String toString() {
         return color + "Bishop";

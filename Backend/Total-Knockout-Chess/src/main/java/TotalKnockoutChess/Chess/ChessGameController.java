@@ -3,20 +3,16 @@ package TotalKnockoutChess.Chess;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
 import TotalKnockoutChess.Lobby.Lobby;
 import TotalKnockoutChess.Lobby.LobbyRepository;
-import TotalKnockoutChess.Users.User;
-import TotalKnockoutChess.Users.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "ChessGameController", description = "Controller used to manage ChessGame entities")
 @RestController
 @RequestMapping("/chess")
 public class ChessGameController {
-
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
     LobbyRepository lobbyRepository;
@@ -59,8 +55,11 @@ public class ChessGameController {
     }
 
     @ApiOperation(value = "Deletes a ChessGame entity by the given id")
+    @Transactional
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable int id){
+
         chessGameRepository.deleteById(id);
+        chessGameRepository.flush();
     }
 }

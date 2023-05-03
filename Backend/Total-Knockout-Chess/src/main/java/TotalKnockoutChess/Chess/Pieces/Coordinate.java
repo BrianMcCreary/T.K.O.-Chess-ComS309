@@ -28,16 +28,32 @@ public enum Coordinate {
         this.y = y;
     }
 
+    /**
+     * Method that returns the coordinate from the given integer array
+     * @param stringCoordinate - value
+     * @return - Coordinate object
+     */
     public static Coordinate fromString(String stringCoordinate){
         return BY_STRING.get(stringCoordinate);
     }
 
     /**
      * Method that returns the coordinate from the given integer array
-     * @param intCoordinates - value
-     * @return
+     * @param intCoordinates - Array of two integers, an x and y coordinate
+     * @return - Coordinate object
      */
     public static Coordinate fromInteger(int[] intCoordinates){
         return BY_INTEGER.get(intCoordinates);
+    }
+
+    /**
+     * Method that returns the shifted coordinate from a starting coordinate and shift amounts
+     * @param coord  - Starting coordinate
+     * @param shiftX - amount to shift horizontally
+     * @param shiftY - amount to shift vertically
+     * @return - Coordinate object
+     */
+    public static Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+        return fromInteger(new int[]{coord.x + shiftX, coord.y + shiftY});
     }
 }

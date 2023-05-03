@@ -5,7 +5,6 @@ import TotalKnockoutChess.Chess.Pieces.Coordinate;
 import TotalKnockoutChess.Chess.Pieces.King;
 import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Statistics.UserStatsRepository;
-import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,10 +82,10 @@ public class ChessGameSocket {
 
         boolean userIsBlackPlayer = false, userIsWhitePlayer = false;
         // Update booleans as appropriate
-        if (whitePlayer != null && username.equals(whitePlayer)) {
+        if (username.equals(whitePlayer)) {
             userIsWhitePlayer = true;
         }
-        if (blackPlayer != null && username.equals(blackPlayer)) {
+        if (username.equals(blackPlayer)) {
             userIsBlackPlayer = true;
         }
 
@@ -96,10 +95,11 @@ public class ChessGameSocket {
 
             String whoseMove = cg.getWhoseMove();
 
-            // TODO FOR BACKEND TESTING
+            // FOR BACKEND TESTING
             if(BACKEND_BOARD){
                 cg.displayBoard();
             }
+
             switch (whoseMove) {
                 // If it is white's turn
                 case "white":
@@ -121,10 +121,10 @@ public class ChessGameSocket {
         }
         // If message requests the board
         else if (message.equals("GetBoard")) {
-            sendPlayerMessage(username, getBoard(cg));
+            sendUserMessage(username, getBoard(cg));
         }
         //If a user has won, update their statistics
-        else if (messages[0].equals("GameType") && running) {
+        else if (messages[0].equals("GameType")) {
             UserStats us = getUserStats(username);
 
             if (us != null) {
@@ -134,6 +134,7 @@ public class ChessGameSocket {
                         if (messages[2].equals("win")) {
                             us.chessWin();
                             cg.setRunning(false);
+                            sendAllMessage(cg, "GameWonBy " + username);
                         }
                         // If user lost Chess
                         else if (messages[2].equals("loss")) {
@@ -146,6 +147,7 @@ public class ChessGameSocket {
                         if (messages[2].equals("win")) {
                             us.chessBoxingWin();
                             cg.setRunning(false);
+                            sendAllMessage(cg, "GameWonBy " + username);
                         }
                         // If user lost ChessBoxing
                         else if (messages[2].equals("loss")) {
@@ -158,22 +160,52 @@ public class ChessGameSocket {
                 userStatsRepository.flush();
             }
         }
+        // If user hit the "I Lost" button
+        else if(message.equals("Lost")){
+            sendUserMessage(username, "GameLoss");
+
+            if(userIsWhitePlayer && blackPlayer != null){
+                sendUserMessage(blackPlayer, "GameWon");
+            }
+            else if(userIsBlackPlayer && whitePlayer != null){
+                sendUserMessage(whitePlayer, "GameWon");
+            }
+        }
     }
 
     @OnClose
     public void onClose(Session session) throws IOException {
         logger.info("Entered into Close");
 
-        // remove the user connection information
+        // Find username and related chess game
         String username = sessionUsernameMap.get(session);
+        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+
+        // remove the user connection information
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
-        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
+        // If game with username was not found
+        if(cg == null){
+            return;
+        }
 
         // If user that left was one of the players, delete the game from the database
         if ((cg.getWhitePlayer() != null && cg.getWhitePlayer().equals(username))
                 || (cg.getBlackPlayer() != null && cg.getBlackPlayer().equals(username))) {
+
+            // Send opponent that this player left the game
+            if (cg.getWhitePlayer().equals(username)) {
+                cg.setWhitePlayer(null);
+                sendUserMessage(cg.getBlackPlayer(), "OpponentLeft");
+            } else if (cg.getBlackPlayer().equals(username)) {
+                cg.setBlackPlayer(null);
+                sendUserMessage(cg.getWhitePlayer(), "OpponentLeft");
+            }
+
+            sendAllMessage(cg, "PlayerLeft " + username);
+
+
             chessGameRepository.delete(cg);
             chessGameRepository.flush();
         }
@@ -191,8 +223,8 @@ public class ChessGameSocket {
 
         // Search through repository for chess game with username in it
         for (ChessGame g : all) {
-            if (g.getWhitePlayer() != null && g.getWhitePlayer().equals(username)
-                    || g.getBlackPlayer() != null && g.getBlackPlayer().equals(username)
+            if ((g.getWhitePlayer() != null && g.getWhitePlayer().equals(username))
+                    || (g.getBlackPlayer() != null && g.getBlackPlayer().equals(username))
                     || g.getSpectators().contains(username)) {
                 game = g;
             }
@@ -201,8 +233,43 @@ public class ChessGameSocket {
         return game;
     }
 
-    private void sendPlayerMessage(String username, String message) throws IOException {
-        usernameSessionMap.get(username).getBasicRemote().sendText(message);
+    private void sendUserMessage(String username, String message) throws IOException {
+        System.out.println("Attempt to send " + username + ": " + message);
+        Session s = usernameSessionMap.get(username);
+
+        // Ensure the user is in the session
+        if(s != null){
+            usernameSessionMap.get(username).getBasicRemote().sendText(message);
+        }
+    }
+
+    private void sendAllPlayersMessage(ChessGame game, String message) throws IOException {
+        String whitePlayer = game.getWhitePlayer();
+        String blackPlayer = game.getBlackPlayer();
+
+        // If whitePlayer is in lobby
+        if(whitePlayer != null) {
+            sendUserMessage(whitePlayer, message);
+        }
+
+        // If blackPlayer is in lobby
+        if(blackPlayer != null) {
+            sendUserMessage(blackPlayer, message);
+        }
+    }
+
+    private void sendAllSpectators(ChessGame game, String message) throws IOException {
+        List<String> spectators = game.getSpectators();
+
+        // Iterate over all spectators in the game and send them the message
+        for(String spectator : spectators){
+            sendUserMessage(spectator, message);
+        }
+    }
+
+    private void sendAllMessage(ChessGame game, String message) throws IOException{
+        sendAllPlayersMessage(game, message);
+        sendAllSpectators(game, message);
     }
 
     private void executePlayerTurn(ChessGame cg, String username, String message, String sideColor, String oppositePlayer) throws IOException {
@@ -244,13 +311,16 @@ public class ChessGameSocket {
             chessGameRepository.save(cg);
             chessGameRepository.flush();
 
-            // TODO FOR BACKEND TESTING
+            // FOR BACKEND TESTING
             if(BACKEND_BOARD){
                 cg.displayBoard();
             }
 
             // Sends this side's player the piece type on sent tile
-            sendPlayerMessage(username, pieceOnSentTile.toString());
+            sendUserMessage(username, pieceOnSentTile.toString());
+
+            // Sends this side's player the tile that is selected
+            sendUserMessage(username, "TileSelected " + Coordinate.fromString(message));
         }
         // If this side's player has clicked on a one of their piece's previously and clicked on either an empty tile or an opponent's piece
         else {
@@ -272,17 +342,29 @@ public class ChessGameSocket {
                 chessGameRepository.save(cg);
                 chessGameRepository.flush();
 
-                // TODO FOR BACKEND TESTING
+                // FOR BACKEND TESTING
                 if(BACKEND_BOARD){
                     cg.displayBoard();
                 }
 
                 // Tell players that a move has been made
-                sendPlayerMessage(username, "userMoved");
-                sendPlayerMessage(oppositePlayer, "opponentMoved " + fromCoord.toString() + " "
-                        + message + " " + cg.getTile(message).piece.toString());
+                sendUserMessage(username, "userMoved");
+                sendUserMessage(oppositePlayer, "opponentMoved " + fromCoord + " "
+                        + message + " " + cg.getTile(message).piece);
+
+                // Alternative way to tell players that a move has been made
+                switch(sideColor){
+                    case "white":
+                        sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
+                            + fromCoord + " " + Coordinate.fromString(message));
+                        break;
+                    case "black":
+                        sendAllMessage(cg, "Player2Moved " + cg.getTile(message).piece + " "
+                                + fromCoord + " " + Coordinate.fromString(message));
+                        break;
+                }
             } else {
-                sendPlayerMessage(username, "invalidMove");
+                sendUserMessage(username, "invalidMove");
             }
         }
     }

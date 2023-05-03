@@ -19,10 +19,10 @@ public class ChessGameTile implements Serializable {
         return piece;
     }
 
-    /**
-     * Setter method that updates the ChessPiece object on the tile
-     */
-    public void setPiece(ChessPiece piece) {
-        this.piece = piece;
-    }
+//    /**
+//     * Setter method that updates the ChessPiece object on the tile
+//     */
+//    public void setPiece(ChessPiece piece) {
+//        this.piece = piece;
+//    }
 }

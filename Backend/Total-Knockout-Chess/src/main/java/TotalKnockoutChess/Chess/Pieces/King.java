@@ -5,13 +5,12 @@ import TotalKnockoutChess.Chess.ChessGameTile;
 public class King extends ChessPiece {
     private static final long serialVersionUID = 0L;
 
-    private boolean checked, checkMated, canCastle;
+    private boolean checkMated, canCastle;
 
     private Coordinate coordinate;
 
     public King(String color, Coordinate coordinate) {
         super(color);
-        checked = false;
         checkMated = false;
         canCastle = true;
         this.coordinate = coordinate;
@@ -32,42 +31,14 @@ public class King extends ChessPiece {
             moves += c.toString() + " ";
         }
 
-        // If checkmated
-        if(checkMated) { return moves; }
-        // If checked
-        else if(checked){
-
-        }
 
         return moves;
-    }
-
-    /**
-     * Method that checks for attacks on this piece. Looks for available moves for the attacks and updates this piece's fields.
-     */
-    public void scan(){
-        String attackedFrom = "";
-
-        // TODO Survey all possible attack points and add to attackedFrom variable, if needed update checked field
-
-        // TODO if (checked)
-        // TODO For each attack, calculate if king can move out of check "calculateAvailableMoves" OR
-        //  if any friendly piece can take or block the attacker piece. Update checkMated field accordingly
-
-
-
     }
 
     @Override
     public final String toString() {
         return color + "King";
     }
-
-
-    // Getter/Setter for checked field
-    public boolean isChecked(){ return checked; }
-    public void setChecked(boolean checked) { this.checked = checked; }
-
 
     // Getter/Setter for checkMated field
     public boolean isCheckMated(){ return checkMated; }
