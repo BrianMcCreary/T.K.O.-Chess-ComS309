@@ -21,15 +21,6 @@
         app:srcCompat="@drawable/menu" />
 
     <LinearLayout
-        android:id="@+id/OptionsLayout2"
-        android:layout_width="125dp"
-        android:layout_height="300dp"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/ChessMenuBtn"
-        app:layout_constraintTop_toTopOf="@+id/ChessMenuBtn"></LinearLayout>
-
-    <LinearLayout
         android:id="@+id/GameOverLayout2"
         android:layout_width="300dp"
         android:layout_height="500dp"
@@ -1171,6 +1162,37 @@
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
         app:layout_constraintTop_toTopOf="@id/chessboard" />
+
+    <LinearLayout
+        android:id="@+id/OptionsLayout2"
+        android:layout_width="125dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/ChessMenuBtn"
+        app:layout_constraintTop_toTopOf="@+id/ChessMenuBtn"></LinearLayout>
+
+    <TextView
+        android:id="@+id/MovesLeftText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/secondaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/whoseMoveText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/secondaryColor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
