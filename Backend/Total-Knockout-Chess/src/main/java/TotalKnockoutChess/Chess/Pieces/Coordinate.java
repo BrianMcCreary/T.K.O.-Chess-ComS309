@@ -14,12 +14,10 @@ public enum Coordinate {
     H1(7, 0), H2(7, 1), H3(7, 2), H4(7, 3), H5(7, 4), H6(7, 5), H7(7, 6), H8(7, 7);
 
     private static final Map<String, Coordinate> BY_STRING = new HashMap<>();
-    private static final Map<int[], Coordinate> BY_INTEGER = new HashMap<>();
 
     static{
         for(Coordinate c : values()){
             BY_STRING.put(c.toString(), c);
-            BY_INTEGER.put(new int[]{c.x, c.y}, c);
         }
     }
     public final int x, y;
@@ -35,25 +33,5 @@ public enum Coordinate {
      */
     public static Coordinate fromString(String stringCoordinate){
         return BY_STRING.get(stringCoordinate);
-    }
-
-    /**
-     * Method that returns the coordinate from the given integer array
-     * @param intCoordinates - Array of two integers, an x and y coordinate
-     * @return - Coordinate object
-     */
-    public static Coordinate fromInteger(int[] intCoordinates){
-        return BY_INTEGER.get(intCoordinates);
-    }
-
-    /**
-     * Method that returns the shifted coordinate from a starting coordinate and shift amounts
-     * @param coord  - Starting coordinate
-     * @param shiftX - amount to shift horizontally
-     * @param shiftY - amount to shift vertically
-     * @return - Coordinate object
-     */
-    public static Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
-        return fromInteger(new int[]{coord.x + shiftX, coord.y + shiftY});
     }
 }

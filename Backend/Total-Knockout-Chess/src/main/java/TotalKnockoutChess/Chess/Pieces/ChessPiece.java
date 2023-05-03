@@ -4,6 +4,8 @@ import TotalKnockoutChess.Chess.ChessGameTile;
 
 import java.io.Serializable;
 
+import static java.lang.Integer.parseInt;
+
 public abstract class ChessPiece implements Serializable {
 
     private static final long serialVersionUID = 0L;
@@ -26,4 +28,23 @@ public abstract class ChessPiece implements Serializable {
      * @return String - abbreviated piece type in the format "W/B{firstLetterOrTwoOfPieceType}". For empty piece, "-". For black king, "BK". For white knight, "WKn", etc.
      */
     public abstract String toString();
+
+    public Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+        String coordinate = coord.toString();
+
+        char letter = coordinate.charAt(0);
+        int number = parseInt(coordinate.substring(1));
+
+        if(shiftX != 0) {
+            letter += shiftX;
+        }
+
+        if(shiftY != 0) {
+           number += shiftY;
+         }
+
+        System.out.println(letter + "" + number);
+
+        return Coordinate.fromString(letter + "" + number);
+    }
 }

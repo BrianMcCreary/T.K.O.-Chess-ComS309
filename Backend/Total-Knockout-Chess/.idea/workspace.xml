@@ -5,26 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78856750-ac2e-4583-b645-260c778b6b36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Bishop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/ChessPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Coordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Coordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Empty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Knight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Pawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Queen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/Pieces/Rook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Statistics/UserStats.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Statistics/UserStatsController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Statistics/UserStatsRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameSocket.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Bishop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Bishop.class" afterDir="false" />
@@ -36,8 +35,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Pawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Pawn.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/TotalKnockoutChessApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/TotalKnockoutChessApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Frontend/T.K.O_Chess/app/src/main/res/layout/game_menu_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,11 +86,6 @@
           <properties class="org.hibernate.TransientPropertyValueException" package="org.hibernate" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

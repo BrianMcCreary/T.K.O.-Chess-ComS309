@@ -9,6 +9,7 @@ public class Pawn extends ChessPiece{
         super(color);
     }
 
+    @Override
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
         for(Coordinate c : Coordinate.values()){

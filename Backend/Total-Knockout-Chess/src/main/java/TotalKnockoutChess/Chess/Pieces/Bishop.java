@@ -9,89 +9,141 @@ public class Bishop extends ChessPiece {
         super(color);
     }
 
+    @Override
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
         String sideColor = board[currentPosition.x][currentPosition.y].getPiece().color;
 
-        // TODO Replace with bishop movements
+        Coordinate  upLeft    = Coordinate.fromString(currentPosition.toString()),
+                    upRight   = Coordinate.fromString(currentPosition.toString()),
+                    downLeft  = Coordinate.fromString(currentPosition.toString()),
+                    downRight = Coordinate.fromString(currentPosition.toString());
 
-        Coordinate  upLeft      = currentPosition,
-                    upRight     = currentPosition,
-                    downLeft    = currentPosition,
-                    downRight   = currentPosition;
+
+        // Initialize for up to the left
+        int col = currentPosition.x - 1;
+        int row = currentPosition.y + 1;
+        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally up and to the left of the current position
         // until the edge of the board or a piece is hit
-        while(upLeft.x >= 0 && upLeft.y < board.length){
-            ChessPiece piece = board[upLeft.y][upLeft.x].getPiece();
+        while (col >= 0 && row < board.length) {
+            upLeft = shiftCoordinate(upLeft, -1, 1);
+            ChessPiece piece = board[upLeft.x][upLeft.y].getPiece();
 
-            // If the coordinate holds another piece off the same color, break out of the loop
-            if( !(piece instanceof Empty) && sideColor.equals(piece.color) ){
+            // If the coordinate holds another piece of the same color, break out of the loop
+            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
                 break;
             }
 
             // Add the coordinate as an available move
             moves += upLeft + " ";
 
+            // If the coordinate has an opponent's piece, break after adding to available moves
+            if (!(piece instanceof Empty)) {
+                break;
+            }
+
             // Shift tile coordinate up one and left one
-            upLeft = Coordinate.shiftCoordinate(upLeft, -1, 1);
+            col--;
+            row++;
+            System.out.println("Col: " + col + ". Row: " + row);
         }
 
+        // Initialize for up to the right
+        col = currentPosition.x + 1;
+        row = currentPosition.y + 1;
+        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally up and to the right of the current position
         // until the edge of the board or a piece is hit
-        while(upLeft.x < board.length && upLeft.y < board.length){
-            ChessPiece piece = board[upLeft.y][upLeft.x].getPiece();
+        while (col < board.length && row < board.length) {
+            upRight = shiftCoordinate(upRight, 1, 1);
+            ChessPiece piece = board[upRight.x][upRight.y].getPiece();
 
-            // If the coordinate holds another piece off the same color, break out of the loop
-            if( !(piece instanceof Empty) && sideColor.equals(piece.color) ){
+            // If the coordinate holds another piece of the same color, break out of the loop
+            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
                 break;
             }
 
             // Add the coordinate as an available move
-            moves += upLeft + " ";
+            moves += upRight + " ";
 
-            // Shift tile coordinate up one and left one
-            upLeft = Coordinate.shiftCoordinate(upLeft, 1, 1);
+            // If the coordinate has an opponent's piece, break after adding to available moves
+            if (!(piece instanceof Empty)) {
+                break;
+            }
+
+            // Shift tile coordinate up one and right one
+            col++;
+            row++;
+            System.out.println("Col: " + col + ". Row: " + row);
         }
+
+        // Initialize for down to the left
+        col = currentPosition.x - 1;
+        row = currentPosition.y - 1;
+        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally down and to the left of the current position
         // until the edge of the board or a piece is hit
-        while(upLeft.x >= 0 && upLeft.y >= 0){
-            ChessPiece piece = board[upLeft.y][upLeft.x].getPiece();
+        while (col >= 0 && row >= 0) {
+            downLeft = shiftCoordinate(downLeft, -1, -1);
+            ChessPiece piece = board[downLeft.x][downLeft.y].getPiece();
 
-            // If the coordinate holds another piece off the same color, break out of the loop
-            if( !(piece instanceof Empty) && sideColor.equals(piece.color) ){
+            // If the coordinate holds another piece of the same color, break out of the loop
+            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
                 break;
             }
 
             // Add the coordinate as an available move
-            moves += upLeft + " ";
+            moves += downLeft + " ";
 
-            // Shift tile coordinate up one and left one
-            upLeft = Coordinate.shiftCoordinate(upLeft, -1, -1);
+            // If the coordinate has an opponent's piece, break after adding to available moves
+            if (!(piece instanceof Empty)) {
+                break;
+            }
+
+            // Shift tile coordinate down one and left one
+            col--;
+            row--;
+            System.out.println("Col: " + col + ". Row: " + row);
         }
+
+        // Initialize for down to the right
+        col = currentPosition.x + 1;
+        row = currentPosition.y - 1;
+        System.out.println("--Setting-- Col: " + col + ". Row: " + row);
 
         // Checks squares diagonally down and to the right of the current position
         // until the edge of the board or a piece is hit
-        while(upLeft.x < board.length && upLeft.y >= 0){
-            ChessPiece piece = board[upLeft.y][upLeft.x].getPiece();
+        while (col < board.length && row >= 0) {
+            downRight = shiftCoordinate(downRight, 1, -1);
+            ChessPiece piece = board[downRight.x][downRight.y].getPiece();
 
-            // If the coordinate holds another piece off the same color, break out of the loop
-            if( !(piece instanceof Empty) && sideColor.equals(piece.color) ){
+            // If the coordinate holds another piece of the same color, break out of the loop
+            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
                 break;
             }
 
             // Add the coordinate as an available move
-            moves += upLeft + " ";
+            moves += downRight + " ";
 
-            // Shift tile coordinate up one and left one
-            upLeft = Coordinate.shiftCoordinate(upLeft, 1, -1);
+            // If the coordinate has an opponent's piece, break after adding to available moves
+            if (!(piece instanceof Empty)) {
+                break;
+            }
+
+            // Shift tile coordinate down one and right one
+            col++;
+            row--;
+            System.out.println("Col: " + col + ". Row: " + row);
         }
-        System.out.println(moves);
+        System.out.println("Piece " + this + " at " + currentPosition + " has the following available moves.\n" + moves);
         return moves;
     }
-    
+
+
     @Override
     public final String toString() {
         return color + "Bishop";

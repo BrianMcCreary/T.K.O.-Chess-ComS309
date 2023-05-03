@@ -24,6 +24,7 @@ public class King extends ChessPiece {
         coordinate = updatedCoordinate;
     }
 
+    @Override
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
         String moves = "";
 //        Code to add every move as an available move for testing

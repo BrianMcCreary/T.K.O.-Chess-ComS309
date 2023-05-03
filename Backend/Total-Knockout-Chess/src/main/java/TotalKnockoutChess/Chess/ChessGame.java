@@ -149,8 +149,6 @@ public class ChessGame {
             return false;
         }
 
-//        String checkOrCheckmate = previewMoveForCheckOrCheckMate(moving, endCoordinate);
-
         // Update the destination tile with the moved piece
         tiles[endCoordinate.x][endCoordinate.y].piece = moving.piece;
 

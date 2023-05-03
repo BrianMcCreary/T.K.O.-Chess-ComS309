@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+
 @Api(value = "ChessGameController", description = "Controller used to manage ChessGame entities")
 @RestController
 @RequestMapping("/chess")
@@ -25,11 +26,10 @@ public class ChessGameController {
     private final String failure = "{\"message\":\"failure\"}";
 
     @ApiOperation(value = "Creates a new ChessGame instance and saves it to the repository")
-    @PostMapping("/{lobbyCode}/{whitePlayer}/{blackPlayer}")
-    public void createChessGame(@PathVariable Long lobbyCode, @PathVariable String whitePlayer, @PathVariable String blackPlayer){
-        Lobby lobby = lobbyRepository.getByCode(lobbyCode);
+    @PostMapping("/{whitePlayer}/{blackPlayer}")
+    public void createChessGame(@PathVariable String whitePlayer, @PathVariable String blackPlayer){
 
-        ChessGame game = new ChessGame(whitePlayer, blackPlayer, lobby.getSpectators());
+        ChessGame game = new ChessGame(whitePlayer, blackPlayer, null);
         chessGameRepository.save(game);
         chessGameRepository.flush();
 

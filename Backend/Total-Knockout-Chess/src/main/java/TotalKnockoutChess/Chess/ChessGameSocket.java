@@ -28,7 +28,7 @@ public class ChessGameSocket {
     private static UserStatsRepository userStatsRepository;
 
     // Variable to toggle backend output of the board. Used for testing
-    private final boolean BACKEND_BOARD = false;
+    private final boolean BACKEND_BOARD = true;
 
     @Autowired
     public void setChessGameRepository(ChessGameRepository chessGameRepository) {
@@ -324,6 +324,10 @@ public class ChessGameSocket {
         }
         // If this side's player has clicked on a one of their piece's previously and clicked on either an empty tile or an opponent's piece
         else {
+            // Make sure game is updated
+            chessGameRepository.save(cg);
+            chessGameRepository.flush();
+
             boolean success = cg.makeMove(fromCoord, Coordinate.fromString(message));
             if (success) {
                 // Update whose move it is
