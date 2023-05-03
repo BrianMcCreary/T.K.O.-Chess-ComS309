@@ -126,7 +126,7 @@ public class LobbySocket {
                         wasNotP1 = false;
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "Ready " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "Ready " + username);
                     }
                 }
                 if (l.getPlayer2() != null && wasNotP1) {
@@ -134,7 +134,7 @@ public class LobbySocket {
                         l.setPlayer2Ready(true);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "Ready " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "Ready " + username);
                     }
                 }
                 if (l.getPlayer1Ready() && l.getPlayer2Ready()) {
@@ -154,7 +154,7 @@ public class LobbySocket {
                         l.setPlayer1Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "UnReady " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                     }
                 }
                 if (l.getPlayer2() != null) {
@@ -162,7 +162,7 @@ public class LobbySocket {
                         l.setPlayer2Ready(false);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "UnReady " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                     }
                 }
                 if (sendCantStart) {
@@ -178,7 +178,7 @@ public class LobbySocket {
                     BoxingGame bg = new BoxingGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     boxingGameRepository.save(bg);
                     boxingGameRepository.flush();
-                    sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
+                    sendAllUsersMessage(username, l.getSpectators(), "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     lobbyRepository.delete(l);
                     lobbyRepository.flush();
 
@@ -187,7 +187,7 @@ public class LobbySocket {
                     ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());
                     chessGameRepository.save(cg);
                     chessGameRepository.flush();
-                    sendAllUsersMessage(username, "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
+                    sendAllUsersMessage(username, l.getSpectators(), "StartGame Player1 " + l.getPlayer1() + " Player2 " + l.getPlayer2());
                     lobbyRepository.delete(l);
                     lobbyRepository.flush();
                 }
@@ -207,13 +207,13 @@ public class LobbySocket {
                                 l.setPlayer2Ready(false);
                                 lobbyRepository.save(l);
                                 lobbyRepository.flush();
-                                sendAllUsersMessage(username, "UnReady " + username);
+                                sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                             }
                             l.setPlayer2(null);
                             l.setPlayer1(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "Switch " + prev + "Player1 " + username);
+                            sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Player1 " + username);
                         }
                     }
                     if (l.getSpectators().contains(username)) {
@@ -222,7 +222,7 @@ public class LobbySocket {
                         l.setPlayer1(username);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "Switch " + prev + "Player1 " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Player1 " + username);
                     }
                 }
             }
@@ -241,13 +241,13 @@ public class LobbySocket {
                                 l.setPlayer1Ready(false);
                                 lobbyRepository.save(l);
                                 lobbyRepository.flush();
-                                sendAllUsersMessage(username, "UnReady " + username);
+                                sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                             }
                             l.setPlayer1(null);
                             l.setPlayer2(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "Switch " + prev + "Player2 " + username);
+                            sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Player2 " + username);
                         }
                     }
                     if (l.getSpectators().contains(username)) {
@@ -256,7 +256,7 @@ public class LobbySocket {
                         l.setPlayer2(username);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "Switch " + prev + "Player2 " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Player2 " + username);
                     }
                 }
             }
@@ -279,13 +279,13 @@ public class LobbySocket {
                             l.setPlayer1Ready(false);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "UnReady " + username);
+                            sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                         }
                         l.setPlayer1(null);
                         l.addToSpectators(username);
                         lobbyRepository.save(l);
                         lobbyRepository.flush();
-                        sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
+                        sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Spectator " + username);
                     }
                 }
                 if (wasNotP1) {
@@ -299,13 +299,13 @@ public class LobbySocket {
                                 l.setPlayer2Ready(false);
                                 lobbyRepository.save(l);
                                 lobbyRepository.flush();
-                                sendAllUsersMessage(username, "UnReady " + username);
+                                sendAllUsersMessage(username, l.getSpectators(), "UnReady " + username);
                             }
                             l.setPlayer2(null);
                             l.addToSpectators(username);
                             lobbyRepository.save(l);
                             lobbyRepository.flush();
-                            sendAllUsersMessage(username, "Switch " + prev + "Spectator " + username);
+                            sendAllUsersMessage(username, l.getSpectators(), "Switch " + prev + "Spectator " + username);
                         }
                     }
                 }
@@ -432,7 +432,7 @@ public class LobbySocket {
     }
 
     //Helper method to send all users in the lobby a message
-    private void sendAllUsersMessage(String username, String message) throws IOException {
+    private void sendAllUsersMessage(String username, List<String> spectators, String message) throws IOException {
         Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);
         if (lobby != null) {
             if (lobby.getPlayer1() != null) {
@@ -441,7 +441,6 @@ public class LobbySocket {
             if (lobby.getPlayer2() != null) {
                 usernameSessionMap.get(lobby.getPlayer2()).getBasicRemote().sendText(message);
             }
-            List<String> spectators = lobby.getSpectators();
             for (String u : spectators) {
                 usernameSessionMap.get(u).getBasicRemote().sendText(message);
             }
