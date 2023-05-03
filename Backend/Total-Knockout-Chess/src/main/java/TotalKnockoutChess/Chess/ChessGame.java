@@ -27,7 +27,7 @@ public class ChessGame {
 
     private String whitePlayer, blackPlayer;
 
-    private boolean running;
+    private boolean whiteCheckMated, blackCheckMated;
 
     //List of spectators in the game
     @ElementCollection(fetch = FetchType.EAGER)
@@ -77,7 +77,8 @@ public class ChessGame {
         // Fill top row of the board (row 8)
         createDefaultTopOrBottomRow(7, TOP_COLOR);
 
-        running = true;
+        whiteCheckMated = false;
+        blackCheckMated = false;
     }
 
     // Helper method to generate default pawn rows
@@ -131,6 +132,9 @@ public class ChessGame {
         // Find what tile contains the piece to move
         ChessGameTile moving = tiles[startCoordinate.x][startCoordinate.y];
 
+        // Find the tile the piece wants to move to
+        ChessGameTile destinationTile = tiles[endCoordinate.x][endCoordinate.y];
+
         // Get the available moves for the piece attempting to move
         String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate);
 
@@ -148,13 +152,29 @@ public class ChessGame {
             return false;
         }
 
+        // If move results in King being taken, update checkMated variables
+        if(destinationTile.piece instanceof King){
+            King king = (King)destinationTile.piece;
+            king.setCheckMated(true);
+
+            // Update game checkMated variable for appropriate king
+            switch(king.color){
+                case "white":
+                    whiteCheckMated = true;
+                    break;
+                case "black":
+                    blackCheckMated = true;
+                    break;
+            }
+        }
+
         // Update the destination tile with the moved piece
-        tiles[endCoordinate.x][endCoordinate.y].piece = moving.piece;
+        destinationTile.piece = moving.piece;
 
         // Update the starting tile with an empty piece
         tiles[startCoordinate.x][startCoordinate.y].piece = new Empty();
 
-        ChessPiece movedPiece = tiles[endCoordinate.x][endCoordinate.y].piece;
+        ChessPiece movedPiece = destinationTile.piece;
 
         // If the moved piece was a king, update its fields accordingly
         if (movedPiece instanceof King) {
@@ -304,8 +324,10 @@ public class ChessGame {
         return spectators;
     }
 
-    // Getter/Setter for game state
-    public boolean isRunning(){ return running; }
-    public void setRunning(boolean running){ this.running = running; }
+    // Getters/Setters for game state
+    public boolean isWhiteCheckMated(){ return whiteCheckMated; }
+    public void setWhiteCheckMated(boolean whiteCheckMated){ this.whiteCheckMated = whiteCheckMated; }
+    public boolean isBlackCheckMated(){ return blackCheckMated; }
+    public void setBlackCheckMated(boolean blackCheckMated){ this.blackCheckMated = blackCheckMated; }
 }
 

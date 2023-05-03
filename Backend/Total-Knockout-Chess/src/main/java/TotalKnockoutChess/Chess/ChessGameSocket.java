@@ -75,7 +75,8 @@ public class ChessGameSocket {
         ChessGame cg = findChessGame(chessGameRepository.findAll(), username);
 
         // Chess game status
-        boolean running = cg.isRunning();
+        boolean whiteCheckMated = cg.isWhiteCheckMated();
+        boolean blackCheckMated = cg.isBlackCheckMated();
 
         String whitePlayer = cg.getWhitePlayer();
         String blackPlayer = cg.getBlackPlayer();
@@ -89,9 +90,8 @@ public class ChessGameSocket {
             userIsBlackPlayer = true;
         }
 
-
-        // If message is a coordinate && and game is running
-        if (message.length() == 2 && running) {
+        // If message is a coordinate and the game is running
+        if (message.length() == 2 && (!whiteCheckMated && !blackCheckMated)) {
 
             String whoseMove = cg.getWhoseMove();
 
@@ -133,26 +133,22 @@ public class ChessGameSocket {
                         // If user won Chess
                         if (messages[2].equals("win")) {
                             us.chessWin();
-                            cg.setRunning(false);
                             sendAllMessage(cg, "GameWonBy " + username);
                         }
                         // If user lost Chess
                         else if (messages[2].equals("loss")) {
                             us.chessLoss();
-                            cg.setRunning(false);
                         }
                         break;
                     case "ChessBoxing":
                         // If user won ChessBoxing
                         if (messages[2].equals("win")) {
                             us.chessBoxingWin();
-                            cg.setRunning(false);
                             sendAllMessage(cg, "GameWonBy " + username);
                         }
                         // If user lost ChessBoxing
                         else if (messages[2].equals("loss")) {
                             us.chessBoxingLoss();
-                            cg.setRunning(false);
                         }
                         break;
                 }
@@ -341,6 +337,27 @@ public class ChessGameSocket {
                 }
                 cg.setWhiteFromSquare("");
                 cg.setBlackFromSquare("");
+
+                // Get chess game status
+                boolean whiteCheckMated = cg.isWhiteCheckMated();
+                boolean blackCheckMated = cg.isBlackCheckMated();
+
+                // If white was checkMated
+                if(whiteCheckMated){
+                    sendAllMessage(cg, "GameWonBy " + cg.getBlackPlayer()); // Black won
+                    // Ensure the database is updated
+                    chessGameRepository.save(cg);
+                    chessGameRepository.flush();
+                    return;
+                }
+                // If black was checkMated
+                else if(blackCheckMated){
+                    sendAllMessage(cg, "GameWonBy " + cg.getWhitePlayer()); // White won
+                    // Ensure the database is updated
+                    chessGameRepository.save(cg);
+                    chessGameRepository.flush();
+                    return;
+                }
 
                 // Ensure the database is updated
                 chessGameRepository.save(cg);
