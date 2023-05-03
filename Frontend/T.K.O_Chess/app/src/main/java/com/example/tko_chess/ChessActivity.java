@@ -41,6 +41,7 @@ public class ChessActivity extends AppCompatActivity {
     ImageButton OptionsBtn;
     LinearLayout GameOverLayout;
     LinearLayout OptionsLayout;
+    LinearLayout PromotionLayout;
     String UserRole;
     String WhoPlayer1;
     String WhoPlayer2;
@@ -94,6 +95,7 @@ public class ChessActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.ChessMenuBtn);
         OptionsLayout = findViewById(R.id.OptionsLayout2);
         GameOverLayout = findViewById(R.id.GameOverLayout2);
+//        PromotionLayout = findViewById(R.id.linearLayout);
 
         movesLeftText = findViewById(R.id.MovesLeftText);
         WhoseMove = findViewById(R.id.whoseMoveText);
@@ -278,6 +280,10 @@ public class ChessActivity extends AppCompatActivity {
                             WebSocket.close();
                             displayGameResult("Opponent Conceded.");
                             disableButtons();
+                            break;
+
+                        case "Promotion":
+
                             break;
                     }
                 }
@@ -4789,5 +4795,89 @@ public class ChessActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void displayPiecePromotion(String tile){
+//
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                PromotionLayout.removeAllViews();
+//                PromotionLayout.setVisibility(View.VISIBLE);
+//
+//                View inflatedLayout = getLayoutInflater().inflate(R.layout.piece_promotion_layout, null, false);
+//                ImageButton King = (ImageButton) inflatedLayout.findViewById(R.id.King);
+//                ImageButton Queen = (ImageButton) inflatedLayout.findViewById(R.id.Queen);
+//                ImageButton Knight = (ImageButton) inflatedLayout.findViewById(R.id.Knight);
+//                ImageButton Rook = (ImageButton) inflatedLayout.findViewById(R.id.Rook);
+//                ImageButton Bishop = (ImageButton) inflatedLayout.findViewById(R.id.Bishop);
+//
+//                King.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if(UserRole.equals("Player1")){
+//                            piece = "whiteKnight";
+//                            movePiece(tile, piece);
+//                        }
+//                        if(UserRole.equals("Player2")){
+//                            piece = "whiteKnight";
+//                            movePiece(tile, piece);
+//                        }
+//                    }
+//                });
+//                Queen.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if(UserRole.equals("Player1")){
+//                            piece = "whiteQueen";
+//                            movePiece(tile, piece);
+//                        }
+//                        if(UserRole.equals("Player2")){
+//                            piece = "whiteQueen";
+//                            movePiece(tile, piece);
+//                        }
+//                    }
+//                });
+//                Knight.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if(UserRole.equals("Player1")){
+//                            piece = "whiteKnight";
+//                            movePiece(tile, piece);
+//                        }
+//                        if(UserRole.equals("Player2")){
+//                            piece = "whiteKnight";
+//                            movePiece(tile, piece);
+//                        }
+//                    }
+//                });
+//                Rook.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if(UserRole.equals("Player1")){
+//                            piece = "whiteRook";
+//                            movePiece(tile, piece);
+//                        }
+//                        if(UserRole.equals("Player2")){
+//                            piece = "whiteRook";
+//                            movePiece(tile, piece);
+//                        }
+//                    }
+//                });
+//                Bishop.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if(UserRole.equals("Player1")){
+//                            piece = "whiteBishop";
+//                            movePiece(tile, piece);
+//                        }
+//                        if(UserRole.equals("Player2")){
+//                            piece = "whiteBishop";
+//                            movePiece(tile, piece);
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//    }
 
 }
