@@ -27,9 +27,22 @@ public class King extends ChessPiece {
     @Override
     public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         String moves = "";
-//        Code to add every move as an available move for testing
-        for(Coordinate c : Coordinate.values()){
-            moves += c.toString() + " ";
+        Coordinate  up        = shiftCoordinate(currentPosition,  0,  1),
+                    down      = shiftCoordinate(currentPosition,  0, -1),
+                    left      = shiftCoordinate(currentPosition, -1,  0),
+                    right     = shiftCoordinate(currentPosition,  1,  0),
+                    upLeft    = shiftCoordinate(currentPosition, -1,  1),
+                    upRight   = shiftCoordinate(currentPosition,  1,  1),
+                    downLeft  = shiftCoordinate(currentPosition, -1, -1),
+                    downRight = shiftCoordinate(currentPosition,  1, -1);
+
+        Coordinate[] nearby = {up, down, left, right, upLeft, upRight, downLeft, downRight};
+
+        for(Coordinate c : nearby){
+            // If the coordinate is on the board and the tile at the coordinates has no piece on it, or it has an opponent's piece on it.
+            if(c != null && !board[c.x][c.y].getPiece().color.equals(color)){
+                moves += c + " ";
+            }
         }
 
         System.out.println("Piece " + this + " at " + currentPosition + " has the following available moves.\n" + moves);

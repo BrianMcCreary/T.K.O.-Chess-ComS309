@@ -1940,3 +1940,55 @@ Caused by: org.springframework.orm.jpa.JpaSystemException: could not deserialize
 2023-05-03 16:36:21.313  INFO 24792 --- [http-nio-8080-exec-6] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:C5
 2023-05-03 16:36:25.171  INFO 24792 --- [http-nio-8080-exec-7] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D5
 2023-05-03 16:36:28.252  INFO 24792 --- [http-nio-8080-exec-8] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:C6
+2023-05-03 16:48:21.512  INFO 12588 --- [main] T.TotalKnockoutChessApplication          : Starting TotalKnockoutChessApplication using Java 19.0.2 on DESKTOP-Q9MADKI with PID 12588 (C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess\target\classes started by Ironm in C:\Code\Com S 309\1_an_5\Backend\Total-Knockout-Chess)
+2023-05-03 16:48:21.514  INFO 12588 --- [main] T.TotalKnockoutChessApplication          : No active profile set, falling back to default profiles: default
+2023-05-03 16:48:22.245  INFO 12588 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2023-05-03 16:48:22.305  INFO 12588 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 7 JPA repository interfaces.
+2023-05-03 16:48:22.746  INFO 12588 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-05-03 16:48:22.755  INFO 12588 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-05-03 16:48:22.755  INFO 12588 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-05-03 16:48:22.834  INFO 12588 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-05-03 16:48:22.834  INFO 12588 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1276 ms
+2023-05-03 16:48:22.961  INFO 12588 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-05-03 16:48:22.998  INFO 12588 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-03 16:48:23.052  INFO 12588 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.23.Final
+2023-05-03 16:48:23.180  INFO 12588 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-03 16:48:23.288  INFO 12588 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-05-03 16:48:23.298  WARN 12588 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-03 16:48:23.652  INFO 12588 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-03 16:48:23.669  INFO 12588 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-05-03 16:48:23.701  INFO 12588 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL55Dialect
+2023-05-03 16:48:24.020  INFO 12588 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2023-05-03 16:48:25.775  INFO 12588 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-03 16:48:25.784  INFO 12588 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-03 16:48:26.041  INFO 12588 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2023-05-03 16:48:26.047  INFO 12588 --- [main] T.TotalKnockoutChessApplication          : Started TotalKnockoutChessApplication in 4.869 seconds (JVM running for 5.214)
+2023-05-03 16:48:42.554  INFO 12588 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-03 16:48:42.555  INFO 12588 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-05-03 16:48:42.556  INFO 12588 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-05-03 16:48:42.587  INFO 12588 --- [http-nio-8080-exec-1] T.Chess.ChessGameSocket                  : Entered into Open
+2023-05-03 16:48:45.012  INFO 12588 --- [http-nio-8080-exec-2] T.Chess.ChessGameSocket                  : Entered into Open
+2023-05-03 16:48:50.570  INFO 12588 --- [http-nio-8080-exec-3] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:C6
+2023-05-03 16:49:11.195  INFO 12588 --- [http-nio-8080-exec-7] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H7
+2023-05-03 16:49:15.393  INFO 12588 --- [http-nio-8080-exec-5] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H5
+2023-05-03 16:49:28.765  INFO 12588 --- [http-nio-8080-exec-6] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:F2
+2023-05-03 16:49:31.428  INFO 12588 --- [http-nio-8080-exec-4] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:F3
+2023-05-03 16:49:36.250  INFO 12588 --- [http-nio-8080-exec-8] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H5
+2023-05-03 16:49:38.509  INFO 12588 --- [http-nio-8080-exec-9] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H6
+2023-05-03 16:49:44.188  INFO 12588 --- [http-nio-8080-exec-10] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H4
+2023-05-03 16:49:55.825  INFO 12588 --- [http-nio-8080-exec-1] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:G2
+2023-05-03 16:49:58.173  INFO 12588 --- [http-nio-8080-exec-2] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:G4
+2023-05-03 16:50:01.995  INFO 12588 --- [http-nio-8080-exec-3] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:H4
+2023-05-03 16:50:05.339  INFO 12588 --- [http-nio-8080-exec-7] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:G3
+2023-05-03 16:50:28.644  INFO 12588 --- [http-nio-8080-exec-5] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:E1
+2023-05-03 16:50:48.987  INFO 12588 --- [http-nio-8080-exec-6] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D1
+2023-05-03 16:50:54.814  INFO 12588 --- [http-nio-8080-exec-4] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:E1
+2023-05-03 16:50:58.754  INFO 12588 --- [http-nio-8080-exec-8] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D2
+2023-05-03 16:51:30.043  INFO 12588 --- [http-nio-8080-exec-9] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D6
+2023-05-03 16:51:33.161  INFO 12588 --- [http-nio-8080-exec-10] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D5
+2023-05-03 16:51:36.577  INFO 12588 --- [http-nio-8080-exec-1] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D2
+2023-05-03 16:51:38.702  INFO 12588 --- [http-nio-8080-exec-2] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D3
+2023-05-03 16:52:05.684  INFO 12588 --- [http-nio-8080-exec-3] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D5
+2023-05-03 16:52:07.911  INFO 12588 --- [http-nio-8080-exec-7] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D4
+2023-05-03 16:52:11.562  INFO 12588 --- [http-nio-8080-exec-5] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D3
+2023-05-03 16:52:14.544  INFO 12588 --- [http-nio-8080-exec-6] T.Chess.ChessGameSocket                  : Entered into Message: Got Message:D4
