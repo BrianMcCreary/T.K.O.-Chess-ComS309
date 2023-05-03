@@ -19,9 +19,10 @@ public abstract class ChessPiece implements Serializable {
      * Method that, when implemented, determines a piece's available moves
      * @param board - the board where this piece resides
      * @param currentPosition - the current position of the piece (as a Coordinate object) relative to the board
+     * @param opponentsPreviousMove - string value with element at index 0 as the piece type and element at index 1 as the destination coordinate
      * @return String that is space separated for each available move
      */
-    public abstract String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition);
+    public abstract String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove);
 
     /**
      * Method that, when implemented, returns a string of an abbreviated version of the piece's type
@@ -42,8 +43,6 @@ public abstract class ChessPiece implements Serializable {
         if(shiftY != 0) {
            number += shiftY;
          }
-
-        System.out.println(letter + "" + number);
 
         return Coordinate.fromString(letter + "" + number);
     }

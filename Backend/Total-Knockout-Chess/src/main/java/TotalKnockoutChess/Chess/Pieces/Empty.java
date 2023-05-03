@@ -10,7 +10,7 @@ public class Empty extends ChessPiece{
     }
 
     @Override
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         return "";
     }
 

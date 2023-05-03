@@ -25,14 +25,14 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         String moves = "";
 //        Code to add every move as an available move for testing
         for(Coordinate c : Coordinate.values()){
             moves += c.toString() + " ";
         }
 
-
+        System.out.println("Piece " + this + " at " + currentPosition + " has the following available moves.\n" + moves);
         return moves;
     }
 

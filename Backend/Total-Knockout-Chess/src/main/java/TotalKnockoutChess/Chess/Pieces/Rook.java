@@ -13,18 +13,15 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         String moves = "";
-        String sideColor = board[currentPosition.x][currentPosition.y].getPiece().color;
 
         Coordinate  up      = Coordinate.fromString(currentPosition.toString()),
                     right   = Coordinate.fromString(currentPosition.toString()),
                     left    = Coordinate.fromString(currentPosition.toString()),
                     down    = Coordinate.fromString(currentPosition.toString());
 
-
         // Initialize for up
-        int col = currentPosition.x;
         int row = currentPosition.y + 1;
 
         // Checks squares above the current position
@@ -34,7 +31,7 @@ public class Rook extends ChessPiece {
             ChessPiece piece = board[up.x][up.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -51,8 +48,7 @@ public class Rook extends ChessPiece {
         }
 
         // Initialize for to the right
-        col = currentPosition.x + 1;
-        row = currentPosition.y;
+        int col = currentPosition.x + 1;
 
         // Checks squares to the right of the current position
         // until the edge of the board or a piece is hit
@@ -61,7 +57,7 @@ public class Rook extends ChessPiece {
             ChessPiece piece = board[right.x][right.y].getPiece();
 
             // If move is a castle
-            if ((piece instanceof King) && sideColor.equals(piece.color) && this.canCastle && ((King) piece).canCastle()){
+            if ((piece instanceof King) && color.equals(piece.color) && this.canCastle && ((King) piece).canCastle()){
                 switch(((King) piece).getCoordinate().toString()){
                     // White King
                     case "E1":
@@ -83,7 +79,7 @@ public class Rook extends ChessPiece {
             }
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -100,7 +96,6 @@ public class Rook extends ChessPiece {
         }
 
         // Initialize for down
-        col = currentPosition.x;
         row = currentPosition.y - 1;
 
         // Checks squares below the current position
@@ -110,7 +105,7 @@ public class Rook extends ChessPiece {
             ChessPiece piece = board[down.x][down.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -128,7 +123,6 @@ public class Rook extends ChessPiece {
 
         // Initialize for to the left
         col = currentPosition.x - 1;
-        row = currentPosition.y;
 
         // Checks squares to the left of the current position
         // until the edge of the board or a piece is hit
@@ -137,7 +131,7 @@ public class Rook extends ChessPiece {
             ChessPiece piece = board[left.x][left.y].getPiece();
 
             // If move is a castle
-            if ((piece instanceof King) && sideColor.equals(piece.color) && this.canCastle && ((King) piece).canCastle()){
+            if ((piece instanceof King) && color.equals(piece.color) && this.canCastle && ((King) piece).canCastle()){
                 switch(((King) piece).getCoordinate().toString()){
                     // White King
                     case "E1":
@@ -159,7 +153,7 @@ public class Rook extends ChessPiece {
             }
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 

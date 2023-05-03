@@ -10,10 +10,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         String moves = "";
-        String sideColor = board[currentPosition.x][currentPosition.y].getPiece().color;
-
         Coordinate  upLeft    = Coordinate.fromString(currentPosition.toString()),
                     upRight   = Coordinate.fromString(currentPosition.toString()),
                     downLeft  = Coordinate.fromString(currentPosition.toString()),
@@ -31,7 +29,7 @@ public class Bishop extends ChessPiece {
             ChessPiece piece = board[upLeft.x][upLeft.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -59,7 +57,7 @@ public class Bishop extends ChessPiece {
             ChessPiece piece = board[upRight.x][upRight.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -87,7 +85,7 @@ public class Bishop extends ChessPiece {
             ChessPiece piece = board[downLeft.x][downLeft.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 
@@ -115,7 +113,7 @@ public class Bishop extends ChessPiece {
             ChessPiece piece = board[downRight.x][downRight.y].getPiece();
 
             // If the coordinate holds another piece of the same color, break out of the loop
-            if (!(piece instanceof Empty) && sideColor.equals(piece.color)) {
+            if (!(piece instanceof Empty) && color.equals(piece.color)) {
                 break;
             }
 

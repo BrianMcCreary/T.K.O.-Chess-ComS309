@@ -23,7 +23,7 @@ public class ChessGame {
     private final String BOTTOM_COLOR = "white";
 
     private String whoseMove;
-    private String whiteFromSquare, blackFromSquare;
+    private String whiteFromSquare, blackFromSquare, whitePreviousMove, blackPreviousMove;
 
     private String whitePlayer, blackPlayer;
 
@@ -40,9 +40,6 @@ public class ChessGame {
         this.spectators = spectators;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
-        whoseMove = "white";
-        whiteFromSquare = "";
-        blackFromSquare = "";
         initializeGame();
     }
 
@@ -77,8 +74,14 @@ public class ChessGame {
         // Fill top row of the board (row 8)
         createDefaultTopOrBottomRow(7, TOP_COLOR);
 
+        // Set default values for game variables
         whiteCheckMated = false;
         blackCheckMated = false;
+        whoseMove = "white";
+        whiteFromSquare = "";
+        blackFromSquare = "";
+        whitePreviousMove = "";
+        blackPreviousMove = "";
     }
 
     // Helper method to generate default pawn rows
@@ -129,6 +132,17 @@ public class ChessGame {
             return false;
         }
 
+        // The previous move of the opponent
+        String opponentsPreviousMove = "";
+        switch(tiles[startCoordinate.x][startCoordinate.y].piece.color){
+            case "white":
+                opponentsPreviousMove = blackPreviousMove;
+                break;
+            case "black":
+                opponentsPreviousMove = whitePreviousMove;
+                break;
+        }
+
         // Find what tile contains the piece to move
         ChessGameTile moving = tiles[startCoordinate.x][startCoordinate.y];
 
@@ -136,7 +150,7 @@ public class ChessGame {
         ChessGameTile destinationTile = tiles[endCoordinate.x][endCoordinate.y];
 
         // Get the available moves for the piece attempting to move
-        String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate);
+        String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate, opponentsPreviousMove);
 
         // Check if the move matches any of the available moves for the piece
         boolean validMove = false;
@@ -249,6 +263,22 @@ public class ChessGame {
                     break;
                 }
             }
+        // If the moved piece was a pawn, check for en passant and check for promotion
+        else if(movedPiece instanceof Pawn){
+            Pawn pawn = (Pawn) movedPiece;
+            String enPassantString = pawn.enPassantMove;
+
+            // If enPassant occurred
+            if( !enPassantString.equals("") ){
+
+                // Clear the piece taken by en passant
+                Coordinate enPassantMove = Coordinate.fromString(enPassantString);
+                clearPiece(enPassantMove);
+
+                // Clear enPassantMove variable
+                pawn.enPassantMove = "";
+            }
+        }
 
         return true;
     }
@@ -303,6 +333,12 @@ public class ChessGame {
     }
 
     // Getter for a specific tile on board
+
+    /**
+     * Method that returns the ChessGameTile given a string version of a coordinate on the board
+     * @param coordinate - String value of a coordinate on the board
+     * @return - ChessGameTile corresponding to the coordinate given
+     */
     public ChessGameTile getTile(String coordinate) {
         Coordinate coord = Coordinate.fromString(coordinate);
 
@@ -329,5 +365,16 @@ public class ChessGame {
     public void setWhiteCheckMated(boolean whiteCheckMated){ this.whiteCheckMated = whiteCheckMated; }
     public boolean isBlackCheckMated(){ return blackCheckMated; }
     public void setBlackCheckMated(boolean blackCheckMated){ this.blackCheckMated = blackCheckMated; }
+
+    // Getters/Setters for previous moves
+    public String getWhitePreviousMove(){ return whitePreviousMove; }
+    public void setWhitePreviousMove(String whitePreviousMove){ this.whitePreviousMove = whitePreviousMove; }
+    public String getBlackPreviousMove(){ return blackPreviousMove; }
+    public void setBlackPreviousMove(String blackPreviousMove){ this.blackPreviousMove = blackPreviousMove; }
+
+    // Helper Method to set a tile to have an Empty object as its piece
+    private void clearPiece(Coordinate coordinate){
+        tiles[coordinate.x][coordinate.y].piece = new Empty();
+    }
 }
 

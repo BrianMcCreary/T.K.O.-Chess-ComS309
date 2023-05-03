@@ -3,6 +3,7 @@ package TotalKnockoutChess.Chess;
 import TotalKnockoutChess.Chess.Pieces.ChessPiece;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
 import TotalKnockoutChess.Chess.Pieces.King;
+import TotalKnockoutChess.Chess.Pieces.Pawn;
 import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Statistics.UserStatsRepository;
 import TotalKnockoutChess.Users.UserRepository;
@@ -330,9 +331,11 @@ public class ChessGameSocket {
                 switch (sideColor) {
                     case "white":
                         cg.setWhoseMove("black");
+                        cg.setWhitePreviousMove(cg.getTile(message).piece + " " + message);
                         break;
                     case "black":
                         cg.setWhoseMove("white");
+                        cg.setBlackPreviousMove(cg.getTile(message).piece + " " + message);
                         break;
                 }
                 cg.setWhiteFromSquare("");
