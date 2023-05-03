@@ -141,7 +141,7 @@ public class ChessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.v2_activity_chess);
+        setContentView(R.layout.activity_chess);
 
         ChessOptions = findViewById(R.id.ChessOptionsBtn);
 
@@ -311,6 +311,7 @@ public class ChessActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        OptionsLayout.removeAllViews();
                                         ChessOptions.setClickable(false);
                                         disableButtons();
                                     }
@@ -520,8 +521,9 @@ public class ChessActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String[] rows = boardSetup.split("#");
-
-                for (int row = 0; row < rows.length; row++) {
+                //int wherePiece = 0;
+                for (int row = rows.length - 1; row >= 0; row--) {
+                    //wherePiece++;
                     View NewRank = getLayoutInflater().inflate(R.layout.chess_board_row, null, false);
 
                     ImageButton[] tiles = {
@@ -571,6 +573,7 @@ public class ChessActivity extends AppCompatActivity {
                                 break;
                         }
 
+                        //String whichTile = file + wherePiece;
                         String whichTile = file + (row + 1);
                         board.put(whichTile, tiles[col]);
                         board.get(whichTile).setOnClickListener(new View.OnClickListener() {
