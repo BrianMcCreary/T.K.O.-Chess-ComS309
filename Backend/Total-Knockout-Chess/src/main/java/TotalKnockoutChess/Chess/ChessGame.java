@@ -1,10 +1,9 @@
 package TotalKnockoutChess.Chess;
 
 import TotalKnockoutChess.Chess.Pieces.*;
-import TotalKnockoutChess.Lobby.Lobby;
-import TotalKnockoutChess.Users.User;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -19,8 +18,10 @@ public class ChessGame {
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
 
-    private final String TOP_COLOR = "black";
-    private final String BOTTOM_COLOR = "white";
+    private final int PROMOTION_RANK_INDEX = 7;
+
+    private static final String TOP_COLOR = "black";
+    private static final String BOTTOM_COLOR = "white";
 
     private String whoseMove;
     private String whiteFromSquare, blackFromSquare, whitePreviousMove, blackPreviousMove;
@@ -28,6 +29,15 @@ public class ChessGame {
     private String whitePlayer, blackPlayer;
 
     private boolean whiteCheckMated, blackCheckMated;
+
+    private static final HashMap<String, ChessPiece> promotionPieceTypes = new HashMap<>();
+
+    static{
+        promotionPieceTypes.put(TOP_COLOR + "Bishop", new Bishop(TOP_COLOR));    promotionPieceTypes.put(BOTTOM_COLOR + "Bishop", new Bishop(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Rook", new Rook(TOP_COLOR));        promotionPieceTypes.put(BOTTOM_COLOR + "Rook", new Rook(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Queen", new Queen(TOP_COLOR));      promotionPieceTypes.put(BOTTOM_COLOR + "Queen", new Queen(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Knight", new Knight(TOP_COLOR));    promotionPieceTypes.put(BOTTOM_COLOR + "Knight", new Knight(BOTTOM_COLOR));
+    }
 
     //List of spectators in the game
     @ElementCollection(fetch = FetchType.EAGER)
@@ -278,6 +288,11 @@ public class ChessGame {
                 // Clear enPassantMove variable
                 pawn.enPassantMove = "";
             }
+
+            // If pawn reaches promotion rank
+            if(endCoordinate.y == PROMOTION_RANK_INDEX){
+                pawn.canPromote = true;
+            }
         }
 
         return true;
@@ -372,9 +387,19 @@ public class ChessGame {
     public String getBlackPreviousMove(){ return blackPreviousMove; }
     public void setBlackPreviousMove(String blackPreviousMove){ this.blackPreviousMove = blackPreviousMove; }
 
-    // Helper Method to set a tile to have an Empty object as its piece
-    private void clearPiece(Coordinate coordinate){
+    // Method to set a tile to have an Empty object as its piece
+    public void clearPiece(Coordinate coordinate){
         tiles[coordinate.x][coordinate.y].piece = new Empty();
+    }
+
+    // Method to set a tile to have the given piece as its piece
+    public void setPiece(Coordinate coordinate, ChessPiece piece){
+        tiles[coordinate.x][coordinate.y].piece = piece;
+    }
+
+    // Getter for promotion piece
+    public ChessPiece getPromotionPiece(String promotionPiece){
+        return promotionPieceTypes.get(promotionPiece);
     }
 }
 

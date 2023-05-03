@@ -3,6 +3,8 @@ package TotalKnockoutChess.Chess;
 import TotalKnockoutChess.Chess.Pieces.Coordinate;
 import TotalKnockoutChess.Lobby.Lobby;
 import TotalKnockoutChess.Lobby.LobbyRepository;
+import TotalKnockoutChess.Users.User;
+import TotalKnockoutChess.Users.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ChessGameController {
 
     @Autowired
     ChessGameRepository chessGameRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     //Messages to return to frontend
     private final String success = "{\"message\":\"success\"}";

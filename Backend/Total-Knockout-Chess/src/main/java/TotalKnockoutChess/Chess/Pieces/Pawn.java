@@ -6,6 +6,8 @@ public class Pawn extends ChessPiece{
     private static final long serialVersionUID = 0L;
     public String enPassantMove = "";
 
+    public boolean canPromote = false;
+
     public Pawn(String color) {
         super(color);
     }

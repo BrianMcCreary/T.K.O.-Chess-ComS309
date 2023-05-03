@@ -3,6 +3,7 @@ package TotalKnockoutChess.Chess.Pieces;
 import TotalKnockoutChess.Chess.ChessGameTile;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import static java.lang.Integer.parseInt;
 

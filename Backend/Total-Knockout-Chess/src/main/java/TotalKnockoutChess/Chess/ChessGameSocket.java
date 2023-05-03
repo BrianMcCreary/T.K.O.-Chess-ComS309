@@ -6,6 +6,7 @@ import TotalKnockoutChess.Chess.Pieces.King;
 import TotalKnockoutChess.Chess.Pieces.Pawn;
 import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Statistics.UserStatsRepository;
+import TotalKnockoutChess.Users.User;
 import TotalKnockoutChess.Users.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class ChessGameSocket {
 
     // Variable to toggle backend output of the board. Used for testing
     private final boolean BACKEND_BOARD = true;
+
+    private final String admin = "admin";
 
     @Autowired
     public void setChessGameRepository(ChessGameRepository chessGameRepository) {
@@ -61,6 +64,7 @@ public class ChessGameSocket {
         // store connecting user information
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
+
     }
 
     @OnMessage
@@ -166,6 +170,61 @@ public class ChessGameSocket {
             }
             else if(userIsBlackPlayer && whitePlayer != null){
                 sendUserMessage(whitePlayer, "GameWon");
+            }
+        }
+        // If a pawn reached
+        else if(messages[0].equals("Promote")){
+            String whoseMove = cg.getWhoseMove();
+
+            if ((whoseMove.equals("white") && username.equals(whitePlayer) || (whoseMove.equals("black") && username.equals(blackPlayer)))) {
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                Coordinate coordinate = Coordinate.fromString(messages[1]);
+                ChessPiece promotionPiece = cg.getPromotionPiece(messages[2]);
+
+                // Updates the tile at coordinate to promotionPiece
+                cg.setPiece(coordinate, promotionPiece);
+
+                // Update the turn
+                if(userIsWhitePlayer){
+                    cg.setWhoseMove("black");
+                }
+                else if(userIsBlackPlayer){
+                    cg.setWhoseMove("white");
+                }
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                sendAllMessage(cg,  "Piece promoted on " + messages[1] + " to a " + messages[2]);
+
+                // Update the database
+                chessGameRepository.save(cg);
+                chessGameRepository.flush();
+            }
+        }
+        // Admin object to clear tiles in a game
+        else if(messages[0].equals("Clear")){
+            if(username.equals(admin)){
+                cg.clearPiece(Coordinate.fromString(messages[1]));
+
+                // Update the database
+                chessGameRepository.save(cg);
+                chessGameRepository.flush();
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                // Inform game participants that the tile was cleared
+                sendAllMessage(cg, "An admin has cleared the tile on " + Coordinate.fromString(messages[1]));
             }
         }
     }
@@ -327,13 +386,26 @@ public class ChessGameSocket {
 
             boolean success = cg.makeMove(fromCoord, Coordinate.fromString(message));
             if (success) {
-                // Update whose move it is
+
+                // Check for promotion, then update whose move it is
                 switch (sideColor) {
                     case "white":
+                        // If the piece moved was a white pawn, and it moved to the promotion rank
+                        if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 7) {
+                            sendUserMessage(username, "Promotion " + message);
+                            return;
+                        }
+
                         cg.setWhoseMove("black");
                         cg.setWhitePreviousMove(cg.getTile(message).piece + " " + message);
                         break;
                     case "black":
+                        // If the piece moved was a black pawn, and it moved to the promotion rank
+                        if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 0){
+                            sendUserMessage(username, "Promotion " + message);
+                            return;
+                        }
+
                         cg.setWhoseMove("white");
                         cg.setBlackPreviousMove(cg.getTile(message).piece + " " + message);
                         break;
