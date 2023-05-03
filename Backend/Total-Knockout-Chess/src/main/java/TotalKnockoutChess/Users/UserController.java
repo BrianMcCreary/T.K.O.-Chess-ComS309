@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Returns list of all users in a space separated string")
-    @GetMapping(path = "/getusers")
+    @PutMapping(path = "/getusers")
     public String getUsersAsString(){
         String usernames = "";
 

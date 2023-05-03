@@ -7,13 +7,21 @@ public class Const {
 
     public static final String URL_SERVER_AN5 = "http://coms-309-005.class.las.iastate.edu:8080";
 
+
+
+    public static final String URL_SERVER_GETUSERS = "http://coms-309-005.class.las.iastate.edu:8080/getusers";
+
+
+
     public static final String URL_SERVER_USERS = "http://coms-309-005.class.las.iastate.edu:8080/users/";
 
     public static final String URL_SERVER_LOGIN = "http://coms-309-005.class.las.iastate.edu:8080/users/login";
 
 
 
-    public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/name/";
+    public static final String URL_SERVER_GETUSERSTATS = "http://coms-309-005.class.las.iastate.edu:8080/getUserStats/";
+
+    public static final String URL_SERVER_CHANGEUSERNAME = "http://coms-309-005.class.las.iastate.edu:8080/users/username/";
 
     public static final String URL_SERVER_CHANGEPASSWORD = "http://coms-309-005.class.las.iastate.edu:8080/users/password/";
 
@@ -51,7 +59,7 @@ public class Const {
     public static final String URL_SERVER_WEBSOCKETBOXING = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/boxing/";
 
     //WebSocket Address for Chess
-    public static final String URL_CHESS_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/websocket/chess/";
+    public static final String URL_CHESS_WEBSOCKET = "ws://coms-309-005.class.las.iastate.edu:8080/chess/";
 
     //Boxing Test URL
     public static final String URL_SERVER_BOXINGTEST = "http://coms-309-005.class.las.iastate.edu:8080/boxingGame/";

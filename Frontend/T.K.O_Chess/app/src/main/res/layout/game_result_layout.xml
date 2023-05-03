@@ -30,7 +30,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/BoxingToMenuBtn"
+            android:id="@+id/ReturnToMenuBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

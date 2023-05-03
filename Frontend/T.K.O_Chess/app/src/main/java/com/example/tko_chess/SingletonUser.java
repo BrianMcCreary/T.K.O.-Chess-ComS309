@@ -35,9 +35,6 @@ public class SingletonUser extends AppCompatActivity {
 
 
 
-    // Static method
-    // Returns an instance of this singleton class.
-
     /**
      * Gets an instance of the currently logged in user.
      * @return an instance of this singleton class.
@@ -52,10 +49,6 @@ public class SingletonUser extends AppCompatActivity {
 
 
 
-    // Constructor
-    // Here we will be creating private constructor
-    // restricted to this class itself
-
     /**
      * Constructor.
      */
@@ -63,6 +56,7 @@ public class SingletonUser extends AppCompatActivity {
         UserObject = null;
         //Instantiate UserObject
     }
+
 
 
     /**
@@ -89,6 +83,7 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
+
     /**
      *  Static method to log user out by nulling the static instance of the class and JSONObject variable.
      */
@@ -97,6 +92,7 @@ public class SingletonUser extends AppCompatActivity {
         UserInstance = null;
         UserObject = null;
     }
+
 
 
     /**
@@ -112,14 +108,33 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
+
     /**
      * Gets the password of the currently logged in user.
      * @return String with the password of the currently logged in user.
      * @throws JSONException if JSONObejct is null.
      */
-    public String getPassword() throws JSONException {
-        return (String) UserObject.get("password");
+    public String getPassword() {
+        try {
+            return (String) UserObject.get("password");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+    /**
+     * Gets if the user is an admin or not.
+     * @return Boolean true if user is an admin.
+     */
+    public boolean isAdmin() {
+        try {
+            return (boolean) UserObject.get("admin");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     /**
@@ -136,18 +151,6 @@ public class SingletonUser extends AppCompatActivity {
     }
 
 
-    /**
-     * Unknown method.
-     * @return Unknown
-     */
-    public JSONArray getListOfUsers(){
-        try{
-            return (JSONArray) UserObject.get("users");
-        } catch (JSONException e){
-            throw new RuntimeException(e);
-        }
-    }
-
 
     /**
      * Gets the pending friend requests of the currently logged in user.
@@ -160,6 +163,7 @@ public class SingletonUser extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
 
 
     /**
