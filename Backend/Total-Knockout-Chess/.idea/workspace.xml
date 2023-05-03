@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="78856750-ac2e-4583-b645-260c778b6b36" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
@@ -35,6 +36,19 @@
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Pawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Pawn.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Queen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/Pieces/Rook.class" afterDir="false" />
+=======
+    <list default="true" id="d97cdc34-9d2d-4bd9-9ef2-eba173a0eb3e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Users/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Users/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Users/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Boxing/BoxingGameSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Chess/ChessGameTile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TotalKnockoutChess/Users/UserController.class" afterDir="false" />
+>>>>>>> origin/main
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
