@@ -441,7 +441,7 @@ public class ChessGameSocket {
                 String whiteEnPassant = "";
                 String blackEnPassant = "";
 
-                if(whitePreviousMove.length >= 1){
+                if(whitePreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
                     whiteEnPassant = ((Pawn)cg.getTile(whitePreviousMove[1]).getPiece()).enPassantMove;
                 }
 
@@ -450,7 +450,7 @@ public class ChessGameSocket {
                     sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
                 }
 
-                if(blackPreviousMove.length >= 1){
+                if(blackPreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
                     blackEnPassant = ((Pawn)cg.getTile(blackPreviousMove[1]).getPiece()).enPassantMove;
                 }
 
