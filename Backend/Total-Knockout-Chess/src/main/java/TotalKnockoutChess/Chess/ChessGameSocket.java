@@ -29,6 +29,8 @@ public class ChessGameSocket {
     // Variable to toggle backend output of the board. Used for testing
     private final boolean BACKEND_BOARD = false;
 
+    private String admin = "admin";
+
     @Autowired
     public void setChessGameRepository(ChessGameRepository chessGameRepository) {
         this.chessGameRepository = chessGameRepository;
@@ -168,6 +170,69 @@ public class ChessGameSocket {
             }
             else if(userIsBlackPlayer && whitePlayer != null){
                 sendUserMessage(whitePlayer, "GameWon");
+            }
+        }// If a pawn reached
+        else if(messages[0].equals("Promote")){
+            String whoseMove = cg.getWhoseMove();
+
+            if ((whoseMove.equals("white") && username.equals(whitePlayer) || (whoseMove.equals("black") && username.equals(blackPlayer)))) {
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                ChessPiece promotionPiece = cg.getPromotionPiece(messages[2]);
+
+                // Updates the tile at coordinate to promotionPiece
+                cg.setTile(messages[1], promotionPiece);
+
+                // Update the turn
+                if(userIsWhitePlayer){
+                    cg.setWhoseMove("black");
+                }
+                else if(userIsBlackPlayer){
+                    cg.setWhoseMove("white");
+                    sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
+                            + fromCoord + " " + Coordinate.fromString(message));
+                }
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                switch(sideColor){
+                    case "white":
+
+                        break;
+                    case "black":
+                        sendAllMessage(cg, "Player2Moved " + cg.getTile(message).piece + " "
+                                + fromCoord + " " + Coordinate.fromString(message));
+                        break;
+                }
+
+                // Update the database
+                chessGameRepository.save(cg);
+                chessGameRepository.flush();
+            }
+        }
+        // Admin object to clear tiles in a game
+        else if(messages[0].equals("Clear")){
+            if(username.equals(admin)){
+                cg.clearTile(messages[1]);
+
+                // Update the database
+                chessGameRepository.save(cg);
+                chessGameRepository.flush();
+
+                // FOR BACKEND TESTING
+                if(BACKEND_BOARD){
+                    cg.displayBoard();
+                }
+
+                // Inform game participants that the tile was cleared
+                sendAllMessage(cg, "An admin has cleared the tile on " + Coordinate.fromString(messages[1]));
             }
         }
     }

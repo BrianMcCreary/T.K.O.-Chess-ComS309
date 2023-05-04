@@ -5,6 +5,7 @@ import TotalKnockoutChess.Lobby.Lobby;
 import TotalKnockoutChess.Users.User;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -19,14 +20,23 @@ public class ChessGame {
     private final int BOARD_WIDTH = 8;
     private final int BOARD_HEIGHT = 8;
 
-    private final String TOP_COLOR = "black";
-    private final String BOTTOM_COLOR = "white";
+    private static final String TOP_COLOR = "black";
+    private static final String BOTTOM_COLOR = "white";
 
     private String whoseMove;
     private String whiteFromSquare, blackFromSquare;
 
     private String whitePlayer;
     private String blackPlayer;
+
+    private static HashMap<String, ChessPiece> promotionPieceTypes = new HashMap<>();
+
+    static{
+        promotionPieceTypes.put(TOP_COLOR + "Bishop", new Bishop(TOP_COLOR)); promotionPieceTypes.put(BOTTOM_COLOR + "Bishop", new Bishop(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Queen", new Queen(TOP_COLOR)); promotionPieceTypes.put(BOTTOM_COLOR + "Queen", new Queen(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Knight", new Knight(TOP_COLOR)); promotionPieceTypes.put(BOTTOM_COLOR + "Knight", new Knight(BOTTOM_COLOR));
+        promotionPieceTypes.put(TOP_COLOR + "Rook", new Rook(TOP_COLOR)); promotionPieceTypes.put(BOTTOM_COLOR + "Rook", new Rook(BOTTOM_COLOR));
+    }
 
     boolean running;
 
@@ -222,5 +232,22 @@ public class ChessGame {
     // Getter/Setter for game state
     public boolean isRunning(){ return running; }
     public void setRunning(boolean running){ this.running = running; }
+
+    // Method to clear a tile
+    public void clearTile(String coordinate){
+        Coordinate coord = Coordinate.fromString(coordinate);
+        tiles[coord.x][coord.y].piece = new Empty();
+    }
+
+    // Method to set a tile
+    public void setTile(String coordinate, ChessPiece piece){
+        Coordinate coord = Coordinate.fromString(coordinate);
+        tiles[coord.x][coord.y].piece = piece;
+    }
+
+    // Method to get a promotion piece
+    public ChessPiece getPromotionPiece(String pieceType){
+        return promotionPieceTypes.get(pieceType);
+    }
 }
 
