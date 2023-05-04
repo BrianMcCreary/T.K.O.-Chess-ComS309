@@ -172,24 +172,6 @@ public class ChessGameSocket {
                 sendUserMessage(whitePlayer, "GameWon");
             }
         }
-        // Admin object to clear tiles in a game
-        else if(messages[0].equals("Clear")){
-            if(username.equals(admin)){
-                cg.clearPiece(Coordinate.fromString(messages[1]));
-
-                // Update the database
-                chessGameRepository.save(cg);
-                chessGameRepository.flush();
-
-                // FOR BACKEND TESTING
-                if(BACKEND_BOARD){
-                    cg.displayBoard();
-                }
-
-                // Inform game participants that the tile was cleared
-                sendAllMessage(cg, "An admin has cleared the tile on " + Coordinate.fromString(messages[1]));
-            }
-        }
         // If a pawn reached
         else if(messages[0].equals("Promote")){
             String whoseMove = cg.getWhoseMove();
@@ -412,6 +394,7 @@ public class ChessGameSocket {
                         // If the piece moved was a white pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 7) {
                             sendUserMessage(username, "Promotion " + message);
+                            return;
                         }
 
                         cg.setWhoseMove("black");
@@ -421,6 +404,7 @@ public class ChessGameSocket {
                         // If the piece moved was a black pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 0){
                             sendUserMessage(username, "Promotion " + message);
+                            return;
                         }
 
                         cg.setWhoseMove("white");
