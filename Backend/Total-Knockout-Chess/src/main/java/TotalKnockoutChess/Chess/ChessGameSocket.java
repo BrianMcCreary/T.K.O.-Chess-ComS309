@@ -210,17 +210,18 @@ public class ChessGameSocket {
                 // Update the turn
                 if(userIsWhitePlayer){
                     cg.setWhoseMove("black");
+                    sendAllMessage(cg,  "Player1Moved " + messages[2] + " " + messages[1] + " " +  messages[1]);
                 }
                 else if(userIsBlackPlayer){
                     cg.setWhoseMove("white");
+                    sendAllMessage(cg,  "Player2Moved " + messages[2] + " " + messages[1] + " " +  messages[1]);
+
                 }
 
                 // FOR BACKEND TESTING
                 if(BACKEND_BOARD){
                     cg.displayBoard();
                 }
-
-                sendAllMessage(cg,  "Piece promoted on " + messages[1] + " to a " + messages[2]);
 
                 // Update the database
                 chessGameRepository.save(cg);
