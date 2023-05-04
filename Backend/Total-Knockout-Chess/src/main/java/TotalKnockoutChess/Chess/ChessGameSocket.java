@@ -436,28 +436,29 @@ public class ChessGameSocket {
                     return;
                 }
 
-                String[] whitePreviousMove = cg.getWhitePreviousMove().split(" ");
-                String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
-                String whiteEnPassant = "";
-                String blackEnPassant = "";
-
-                if(whitePreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
-                    whiteEnPassant = ((Pawn)cg.getTile(whitePreviousMove[1]).getPiece()).enPassantMove;
-                }
-
-                // If white's previous move was enpassant, send message to clear the taken piece
-                if(!whiteEnPassant.equals("")){
-                    sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
-                }
-
-                if(blackPreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
-                    blackEnPassant = ((Pawn)cg.getTile(blackPreviousMove[1]).getPiece()).enPassantMove;
-                }
-
-                // If black's previous move was enpassant, send message to clear the taken piece
-                if(!blackEnPassant.equals("")){
-                    sendAllMessage(cg, "EnPassant " + blackPreviousMove[1]);
-                }
+                // TODO Fix enpassant
+//                String[] whitePreviousMove = cg.getWhitePreviousMove().split(" ");
+//                String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
+//                String whiteEnPassant = "";
+//                String blackEnPassant = "";
+//
+//                if(whitePreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
+//                    whiteEnPassant = ((Pawn)cg.getTile(whitePreviousMove[1]).getPiece()).enPassantMove;
+//                }
+//
+//                // If white's previous move was enpassant, send message to clear the taken piece
+//                if(!whiteEnPassant.equals("")){
+//                    sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
+//                }
+//
+//                if(blackPreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
+//                    blackEnPassant = ((Pawn)cg.getTile(blackPreviousMove[1]).getPiece()).enPassantMove;
+//                }
+//
+//                // If black's previous move was enpassant, send message to clear the taken piece
+//                if(!blackEnPassant.equals("")){
+//                    sendAllMessage(cg, "EnPassant " + blackPreviousMove[1]);
+//                }
 
                 // Ensure the database is updated
                 chessGameRepository.save(cg);
