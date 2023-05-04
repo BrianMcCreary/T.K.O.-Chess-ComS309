@@ -251,8 +251,6 @@ public class ChessGame {
                 Coordinate enPassantMove = Coordinate.fromString(enPassantString);
                 clearPiece(enPassantMove);
 
-                // Clear enPassantMove variable
-                pawn.enPassantMove = "";
             }
 
             // If pawn reaches promotion rank
