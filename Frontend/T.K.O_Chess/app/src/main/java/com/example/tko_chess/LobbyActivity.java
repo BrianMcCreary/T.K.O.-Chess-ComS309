@@ -322,9 +322,6 @@ public class LobbyActivity extends AppCompatActivity {
 								intent.putExtra("Gamemode", GameMode);
 								intent.putExtra("Player1", WhoPlayer1);
 								intent.putExtra("Player2", WhoPlayer2);
-								/*ntent.putExtra("Player1Wins", 0);
-								intent.putExtra("Player2Wins", 0);
-								intent.putExtra("RoundNumber", 0);*/
 
 								startActivity(intent);
 							} else
@@ -432,7 +429,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Enables the start game button
 						case "CanStart":
-							CanStart = true;
 							//Alerts player of lobby event
 							displayLobbyEvent(strings);
 
@@ -444,7 +440,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 						//Enables the start game button
 						case "CannotStart":
-							CanStart = false;
 							disableStartGame();
 
 							//Exit switch statement
@@ -519,7 +514,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user PlayerType to player 1 if user is not already player 1
 				if (!WhoPlayer1.equals(currUser.getUsername())) {
 					WebSocket.send("SwitchToP1");
-					System.out.println("Sent SwitchToP1");
 				}
 			}
 		});
@@ -538,7 +532,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user PlayerType to player 2 if user is not already player 2
 				if (!WhoPlayer2.equals(currUser.getUsername())) {
 					WebSocket.send("SwitchToP2");
-					System.out.println("Sent SwitchToP2");
 				}
 			}
 		});
@@ -557,7 +550,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user PlayerType to spectator if user is not already spectator
 				if (!PlayerOrSpectator.equals("Spectator")) {
 					WebSocket.send("SwitchToSpectate");
-					System.out.println("Sent SwitchToSpectate");
 				}
 			}
 		});
@@ -576,7 +568,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user's ready status to unready if user is not already "not ready".
 				if (UserReady) {
 					WebSocket.send("UnReady");
-					System.out.println("Sent UnReady");
 				}
 			}
 		});
@@ -595,7 +586,6 @@ public class LobbyActivity extends AppCompatActivity {
 				//Change user's ready status to ready if user is not already "ready".
 				if (!UserReady) {
 					WebSocket.send("Ready");
-					System.out.println("Sent Ready");
 				}
 			}
 		});
@@ -613,7 +603,6 @@ public class LobbyActivity extends AppCompatActivity {
 
 				if (CanStart) {
 					WebSocket.send("Start " + GameMode);
-					System.out.println("Sent Start");
 				}
 			}
 		});

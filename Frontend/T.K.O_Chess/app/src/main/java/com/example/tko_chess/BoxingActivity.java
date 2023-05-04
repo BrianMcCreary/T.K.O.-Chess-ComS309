@@ -616,23 +616,23 @@ public class BoxingActivity extends AppCompatActivity {
 
                                 } else
 
-                                //If player 2 won the round
-                                if (strings[1].equals("Player2")) {
-                                    //Shows both players' moves
-                                    showPlayer1Move(strings[4]);
-                                    showOpponentMove(strings[2]);
+                                    //If player 2 won the round
+                                    if (strings[1].equals("Player2")) {
+                                        //Shows both players' moves
+                                        showPlayer1Move(strings[4]);
+                                        showOpponentMove(strings[2]);
 
-                                    //Waits 3 seconds
-                                    waitTime(3.0);
+                                        //Waits 3 seconds
+                                        waitTime(3.0);
 
-                                    //Lowers health of opponent
-                                    UserHealth -= 1;
-                                    lowerUserHealth(UserHealth);
+                                        //Lowers health of opponent
+                                        UserHealth -= 1;
+                                        lowerUserHealth(UserHealth);
 
-                                    //Hides both players' moves
-                                    showDefaultStance();
-                                    hideOpponentMove();
-                                }
+                                        //Hides both players' moves
+                                        showDefaultStance();
+                                        hideOpponentMove();
+                                    }
                             }
 
                             //Exit switch statement
