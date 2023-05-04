@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d97cdc34-9d2d-4bd9-9ef2-eba173a0eb3e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +30,7 @@
     &quot;last_opened_file_path&quot;: &quot;E:/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.StatisticsTest">
+  <component name="RunManager" selected="JUnit.TotalKnockoutChess in Total-Knockout-Chess">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
       <module name="Total-Knockout-Chess" />
@@ -64,8 +63,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.StatisticsTest" />
         <item itemvalue="JUnit.TotalKnockoutChess in Total-Knockout-Chess" />
+        <item itemvalue="JUnit.StatisticsTest" />
       </list>
     </recent_temporary>
   </component>
@@ -89,5 +88,8 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Total_Knockout_Chess$TotalKnockoutChess_in_Total_Knockout_Chess.ic" NAME="TotalKnockoutChess in Total-Knockout-Chess Coverage Results" MODIFIED="1683228276724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
