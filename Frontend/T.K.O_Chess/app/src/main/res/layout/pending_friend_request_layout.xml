@@ -16,7 +16,7 @@
         android:textColorHint="@color/black"
         android:textSize="24sp"
         android:textColor="@color/black"
-        android:layout_weight="0.2">
+        android:layout_weight="0.22">
     </TextView>
 
     <Button

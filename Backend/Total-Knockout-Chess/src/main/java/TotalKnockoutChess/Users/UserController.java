@@ -33,10 +33,23 @@ public class UserController {
     private final String falseMessage = "{\"message\":\"false\"}";
 
     //Method that returns a list of all users
-    @ApiOperation(value = "Returns list of all Users")
+    @ApiOperation(value = "Returns list of all Users as as JSONArray")
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @ApiOperation(value = "Returns list of all users in a space separated string")
+    @PutMapping(path = "/getusers")
+    public String getUsersAsString(){
+        String usernames = "";
+
+        // For each user, add their username to the list
+        for(User user : userRepository.findAll()){
+            usernames += user.getUsername() + " ";
+        }
+
+        return usernames;
     }
 
     //Method that creates a new user given the username is > 0 characters, the password is >= 8 characters, and the username isn't already taken
@@ -199,5 +212,20 @@ public class UserController {
             }
         }
         return "failure";     //return failure if user isn't found
+    }
+
+    @ApiOperation(value = "Method to make users an admin")
+    @PutMapping(path = "/users/makeadmin/{username}")
+    public String makeAdmin(@PathVariable String username){
+        for (User u : userRepository.findAll()) {       //find user
+            if (u.getUsername().equals(username)) {
+                u.setAdmin(true);
+
+                userRepository.save(u);
+                userRepository.flush();
+                return "success";
+            }
+        }
+        return "failure";
     }
 }

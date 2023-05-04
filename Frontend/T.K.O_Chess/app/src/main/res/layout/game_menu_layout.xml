@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="125dp"
-    android:layout_height="300dp">
+    android:layout_height="200dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,23 +46,6 @@
             android:backgroundTint="@color/soft_blue"
             android:text="Back to Game"
             android:textColor="@color/black" />
-
-        <EditText
-            android:id="@+id/BoxingTestText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text=""
-            android:textSize="16sp"
-            android:hint="Opponent name"/>
-
-        <Button
-            android:id="@+id/TestBoxingBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Host Test" />
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,13 +24,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "E:/COMS309/1_an_5/Backend/Total-Knockout-Chess"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="JUnit.StatisticsTest">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
@@ -87,11 +87,6 @@
           <properties class="org.hibernate.TransientPropertyValueException" package="org.hibernate" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/TotalKnockoutChess/StatisticsTest.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
