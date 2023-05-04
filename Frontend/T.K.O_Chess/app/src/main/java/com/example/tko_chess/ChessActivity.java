@@ -95,7 +95,7 @@ public class ChessActivity extends AppCompatActivity {
         OptionsBtn = findViewById(R.id.ChessMenuBtn);
         OptionsLayout = findViewById(R.id.OptionsLayout2);
         GameOverLayout = findViewById(R.id.GameOverLayout2);
-        //PromotionLayout = findViewById(R.id.linearLayout);
+        PromotionLayout = findViewById(R.id.linearLayout);
 
         movesLeftText = findViewById(R.id.MovesLeftText);
         WhoseMove = findViewById(R.id.whoseMoveText);
@@ -283,7 +283,7 @@ public class ChessActivity extends AppCompatActivity {
                             break;
 
                         case "Promotion":
-
+                            displayPiecePromotion(strings[1]);
                             break;
                     }
                 }
@@ -380,11 +380,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -398,11 +396,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -416,11 +412,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -434,11 +428,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -452,11 +444,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -470,11 +460,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -488,11 +476,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -506,11 +492,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "A8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -524,11 +508,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -542,11 +524,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -560,11 +540,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -578,11 +556,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -596,11 +572,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -614,11 +588,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -632,11 +604,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -650,11 +620,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "B8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -668,11 +636,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -686,11 +652,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -704,11 +668,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -722,11 +684,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -740,11 +700,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -758,11 +716,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -776,11 +732,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -794,11 +748,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "C8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -812,11 +764,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -830,11 +780,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -848,11 +796,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -866,11 +812,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -884,11 +828,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -902,11 +844,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -920,11 +860,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -938,11 +876,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "D8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -956,11 +892,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -974,11 +908,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -992,11 +924,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1010,11 +940,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1028,11 +956,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1046,11 +972,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1064,11 +988,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1082,11 +1004,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "E8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1100,11 +1020,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1118,11 +1036,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1136,11 +1052,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1154,11 +1068,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1172,11 +1084,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1190,11 +1100,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1208,11 +1116,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1226,11 +1132,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "F8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1244,11 +1148,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1262,11 +1164,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1280,11 +1180,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1298,11 +1196,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1316,11 +1212,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1334,11 +1228,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1352,11 +1244,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1370,11 +1260,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "G8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1388,11 +1276,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H1";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1406,11 +1292,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H2";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1424,11 +1308,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H3";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1442,11 +1324,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H4";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1460,11 +1340,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H5";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1478,11 +1356,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H6";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1496,11 +1372,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H7";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -1514,11 +1388,9 @@ public class ChessActivity extends AppCompatActivity {
                     WebSocket.send(tile);
                     highlight();
                 } else if(tracker > 1){
-                    setTransparent(tile);
                     unhighlight();
                     tile = "H8";
                     WebSocket.send(tile);
-                    movePiece(tile, piece);
                     tracker = 0;
                 }
             }
@@ -2532,203 +2404,203 @@ public class ChessActivity extends AppCompatActivity {
                 }
                 if(piece.equals("blackRook")){
                     if(tile.equals("A1")){
-                        A1.setImageResource(R.drawable.black_bishop);
+                        A1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A2")){
-                        A2.setImageResource(R.drawable.black_bishop);
+                        A2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A3")){
-                        A3.setImageResource(R.drawable.black_bishop);
+                        A3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A4")){
-                        A4.setImageResource(R.drawable.black_bishop);
+                        A4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A5")){
-                        A5.setImageResource(R.drawable.black_bishop);
+                        A5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A6")){
-                        A6.setImageResource(R.drawable.black_bishop);
+                        A6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A7")){
-                        A7.setImageResource(R.drawable.black_bishop);
+                        A7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("A8")){
-                        A8.setImageResource(R.drawable.black_bishop);
+                        A8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("B1")){
-                        B1.setImageResource(R.drawable.black_bishop);
+                        B1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B2")){
-                        B2.setImageResource(R.drawable.black_bishop);
+                        B2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B3")){
-                        B3.setImageResource(R.drawable.black_bishop);
+                        B3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B4")){
-                        B4.setImageResource(R.drawable.black_bishop);
+                        B4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B5")){
-                        B5.setImageResource(R.drawable.black_bishop);
+                        B5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B6")){
-                        B6.setImageResource(R.drawable.black_bishop);
+                        B6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B7")){
-                        B7.setImageResource(R.drawable.black_bishop);
+                        B7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("B8")){
-                        B8.setImageResource(R.drawable.black_bishop);
+                        B8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("C1")){
-                        C1.setImageResource(R.drawable.black_bishop);
+                        C1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C2")){
-                        C2.setImageResource(R.drawable.black_bishop);
+                        C2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C3")){
-                        C3.setImageResource(R.drawable.black_bishop);
+                        C3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C4")){
-                        C4.setImageResource(R.drawable.black_bishop);
+                        C4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C5")){
-                        C5.setImageResource(R.drawable.black_bishop);
+                        C5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C6")){
-                        C6.setImageResource(R.drawable.black_bishop);
+                        C6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C7")){
-                        C7.setImageResource(R.drawable.black_bishop);
+                        C7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("C8")){
-                        C8.setImageResource(R.drawable.black_bishop);
+                        C8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("D1")){
-                        D1.setImageResource(R.drawable.black_bishop);
+                        D1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D2")){
-                        D2.setImageResource(R.drawable.black_bishop);
+                        D2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D3")){
-                        D3.setImageResource(R.drawable.black_bishop);
+                        D3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D4")){
-                        D4.setImageResource(R.drawable.black_bishop);
+                        D4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D5")){
-                        D5.setImageResource(R.drawable.black_bishop);
+                        D5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D6")){
-                        D6.setImageResource(R.drawable.black_bishop);
+                        D6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D7")){
-                        D7.setImageResource(R.drawable.black_bishop);
+                        D7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("D8")){
-                        D8.setImageResource(R.drawable.black_bishop);
+                        D8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("E1")){
-                        E1.setImageResource(R.drawable.black_bishop);
+                        E1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E2")){
-                        E2.setImageResource(R.drawable.black_bishop);
+                        E2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E3")){
-                        E3.setImageResource(R.drawable.black_bishop);
+                        E3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E4")){
-                        E4.setImageResource(R.drawable.black_bishop);
+                        E4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E5")){
-                        E5.setImageResource(R.drawable.black_bishop);
+                        E5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E6")){
-                        E6.setImageResource(R.drawable.black_bishop);
+                        E6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E7")){
-                        E7.setImageResource(R.drawable.black_bishop);
+                        E7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("E8")){
-                        E8.setImageResource(R.drawable.black_bishop);
+                        E8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("F1")){
-                        F1.setImageResource(R.drawable.black_bishop);
+                        F1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F2")){
-                        F2.setImageResource(R.drawable.black_bishop);
+                        F2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F3")){
-                        F3.setImageResource(R.drawable.black_bishop);
+                        F3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F4")){
-                        F4.setImageResource(R.drawable.black_bishop);
+                        F4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F5")){
-                        F5.setImageResource(R.drawable.black_bishop);
+                        F5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F6")){
-                        F6.setImageResource(R.drawable.black_bishop);
+                        F6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F7")){
-                        F7.setImageResource(R.drawable.black_bishop);
+                        F7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("F8")){
-                        F8.setImageResource(R.drawable.black_bishop);
+                        F8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("G1")){
-                        G1.setImageResource(R.drawable.black_bishop);
+                        G1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G2")){
-                        G2.setImageResource(R.drawable.black_bishop);
+                        G2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G3")){
-                        G3.setImageResource(R.drawable.black_bishop);
+                        G3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G4")){
-                        G4.setImageResource(R.drawable.black_bishop);
+                        G4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G5")){
-                        G5.setImageResource(R.drawable.black_bishop);
+                        G5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G6")){
-                        G6.setImageResource(R.drawable.black_bishop);
+                        G6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G7")){
-                        G7.setImageResource(R.drawable.black_bishop);
+                        G7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("G8")){
-                        G8.setImageResource(R.drawable.black_bishop);
+                        G8.setImageResource(R.drawable.black_rook);
                     }
 
                     if(tile.equals("H1")){
-                        H1.setImageResource(R.drawable.black_bishop);
+                        H1.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H2")){
-                        H2.setImageResource(R.drawable.black_bishop);
+                        H2.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H3")){
-                        H3.setImageResource(R.drawable.black_bishop);
+                        H3.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H4")){
-                        H4.setImageResource(R.drawable.black_bishop);
+                        H4.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H5")){
-                        H5.setImageResource(R.drawable.black_bishop);
+                        H5.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H6")){
-                        H6.setImageResource(R.drawable.black_bishop);
+                        H6.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H7")){
-                        H7.setImageResource(R.drawable.black_bishop);
+                        H7.setImageResource(R.drawable.black_rook);
                     }
                     if(tile.equals("H8")){
-                        H8.setImageResource(R.drawable.black_bishop);
+                        H8.setImageResource(R.drawable.black_rook);
                     }
                 }
                 if(piece.equals("blackBishop")){
@@ -4796,94 +4668,103 @@ public class ChessActivity extends AppCompatActivity {
         });
     }
 
-//    private void displayPiecePromotion(String tile){
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                PromotionLayout.removeAllViews();
-//                PromotionLayout.setVisibility(View.VISIBLE);
-//
-//                View inflatedLayout = getLayoutInflater().inflate(R.layout.piece_promotion_layout, null, false);
-//                ImageButton Queen = (ImageButton) inflatedLayout.findViewById(R.id.Queen);
-//                ImageButton Knight = (ImageButton) inflatedLayout.findViewById(R.id.Knight);
-//                ImageButton Rook = (ImageButton) inflatedLayout.findViewById(R.id.Rook);
-//                ImageButton Bishop = (ImageButton) inflatedLayout.findViewById(R.id.Bishop);
-//
-//               if(UserRole.equals("Player1")){
-//                   Queen.setImageResource(R.drawable.white_queen);
-//                   Knight.setImageResource(R.drawable.white_knight);
-//                   Rook.setImageResource(R.drawable.white_rook);
-//                   Bishop.setImageResource(R.drawable.white_bishop);
-//
-//                   Queen.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "whiteQueen";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Knight.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "whiteKnight";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Rook.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "whiteRook";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Bishop.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "whiteBishop";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//               }
-//               if(UserRole.equals("Player2")){
-//                   Queen.setImageResource(R.drawable.black_queen);
-//                   Knight.setImageResource(R.drawable.black_knight);
-//                   Rook.setImageResource(R.drawable.black_rook);
-//                   Bishop.setImageResource(R.drawable.black_bishop);
-//
-//                   Queen.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "blackQueen";
-//
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Knight.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "blackKnight";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Rook.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "blackRook";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//                   Bishop.setOnClickListener(new View.OnClickListener() {
-//                       @Override
-//                       public void onClick(View v) {
-//                           piece = "blackBishop";
-//                           movePiece(tile, piece);
-//                       }
-//                   });
-//               }
-//
-//            }
-//        });
-//    }
+    private void displayPiecePromotion(String tile){
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PromotionLayout.removeAllViews();
+                PromotionLayout.setVisibility(View.VISIBLE);
+
+                View inflatedLayout = getLayoutInflater().inflate(R.layout.piece_promotion_layout, null, false);
+                ImageButton Queen = (ImageButton) inflatedLayout.findViewById(R.id.Queen);
+                ImageButton Knight = (ImageButton) inflatedLayout.findViewById(R.id.Knight);
+                ImageButton Rook = (ImageButton) inflatedLayout.findViewById(R.id.Rook);
+                ImageButton Bishop = (ImageButton) inflatedLayout.findViewById(R.id.Bishop);
+
+                PromotionLayout.addView(inflatedLayout);
+
+               if(UserRole.equals("Player1")){
+                   Queen.setImageResource(R.drawable.white_queen);
+                   Knight.setImageResource(R.drawable.white_knight);
+                   Rook.setImageResource(R.drawable.white_rook);
+                   Bishop.setImageResource(R.drawable.white_bishop);
+
+                   Queen.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "whiteQueen";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Knight.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "whiteKnight";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Rook.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "whiteRook";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Bishop.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "whiteBishop";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+               }
+               if(UserRole.equals("Player2")){
+                   Queen.setImageResource(R.drawable.black_queen);
+                   Knight.setImageResource(R.drawable.black_knight);
+                   Rook.setImageResource(R.drawable.black_rook);
+                   Bishop.setImageResource(R.drawable.black_bishop);
+
+                   Queen.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "blackQueen";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Knight.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "blackKnight";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Rook.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "blackRook";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+                   Bishop.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           piece = "blackBishop";
+                           WebSocket.send("Promote " + tile + " " + piece);
+                           PromotionLayout.setVisibility(View.INVISIBLE);
+                       }
+                   });
+               }
+
+            }
+        });
+    }
 
 }

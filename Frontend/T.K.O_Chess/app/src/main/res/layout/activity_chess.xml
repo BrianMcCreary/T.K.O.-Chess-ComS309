@@ -58,19 +58,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/chess_board" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="414dp"
-        android:layout_height="105dp"
-        android:background="@color/very_light_grey"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
-
     <ImageButton
         android:id="@+id/A8"
         android:layout_width="48dp"
@@ -1175,6 +1162,19 @@
         app:iconTint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="@id/chessboard"
         app:layout_constraintTop_toTopOf="@id/chessboard" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="414dp"
+        android:layout_height="105dp"
+        android:background="@color/very_light_grey"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/OptionsLayout2"
