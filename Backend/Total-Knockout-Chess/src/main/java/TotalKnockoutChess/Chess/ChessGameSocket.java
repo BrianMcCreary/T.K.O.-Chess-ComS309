@@ -210,13 +210,9 @@ public class ChessGameSocket {
                 // Update the turn
                 if(userIsWhitePlayer){
                     cg.setWhoseMove("black");
-                    sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
-                            + cg.getWhiteFromSquare() + " " + Coordinate.fromString(message));
                 }
                 else if(userIsBlackPlayer){
                     cg.setWhoseMove("white");
-                    sendAllMessage(cg, "Player2Moved " + cg.getTile(message).piece + " "
-                            + cg.getBlackFromSquare() + " " + Coordinate.fromString(message));
                 }
 
                 // FOR BACKEND TESTING
@@ -415,7 +411,6 @@ public class ChessGameSocket {
                         // If the piece moved was a white pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 7) {
                             sendUserMessage(username, "Promotion " + message);
-                            return;
                         }
 
                         cg.setWhoseMove("black");
@@ -425,7 +420,6 @@ public class ChessGameSocket {
                         // If the piece moved was a black pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 0){
                             sendUserMessage(username, "Promotion " + message);
-                            return;
                         }
 
                         cg.setWhoseMove("white");
