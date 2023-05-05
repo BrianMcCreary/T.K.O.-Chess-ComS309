@@ -13,6 +13,7 @@ public class ChessGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Lob
     private ChessGameTile[][] tiles;
 
     private final int BOARD_WIDTH = 8;
