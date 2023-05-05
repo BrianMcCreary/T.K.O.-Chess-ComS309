@@ -1,17 +1,13 @@
 package TotalKnockoutChess;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import TotalKnockoutChess.Users.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.restassured.RestAssured;
@@ -225,36 +221,18 @@ public class UserTest {
     }
     @Test
     public void deletionTest() throws Exception {
-//----------------Creation test---------------------------------
-        Response response = RestAssured.given().
-                header("Content-Type", "text/plain").
-                header("charset", "utf-8").
-                body("").
-                when().
-                post("/users/tester150/password/password");
-
-        int statusCode = response.getStatusCode();
-        assertEquals(200, statusCode);
-
-        String returnString = response.getBody().asString();
-        try {
-            JSONObject returnObj = new JSONObject(returnString);
-            assertEquals("success", returnObj.get("message"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 //----------------Deletion test (deleteUser)--------------------------------
         Response response3 = RestAssured.given().
                 header("Content-Type", "text/plain").
                 header("charset","utf-8").
                 body("").
                 when().
-                put("/users/tester150");
+                put("/users/tester100");
 
-        statusCode = response3.getStatusCode();
+        int statusCode = response3.getStatusCode();
         assertEquals(200, statusCode);
 
-        returnString = response3.getBody().asString();
+        String returnString = response3.getBody().asString();
         try {
         JSONObject returnObj = new JSONObject(returnString);
         assertEquals("success", returnObj.get("message"));
