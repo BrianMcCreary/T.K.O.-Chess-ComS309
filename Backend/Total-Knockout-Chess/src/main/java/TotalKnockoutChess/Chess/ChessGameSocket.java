@@ -21,6 +21,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 @Controller
 @ServerEndpoint("/chess/{username}")
 public class ChessGameSocket {
@@ -447,38 +449,32 @@ public class ChessGameSocket {
                 String[] whitePreviousMove = cg.getWhitePreviousMove().split(" ");
                 String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
 
-                System.out.println("Before en passant checks");
-
                 // Check if last move was En Passant
                         String whiteEnPassant = "";
                         String blackEnPassant = "";
                         ChessPiece previousMovedPiece = cg.getTile(message).getPiece();
 
                         if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof Pawn)){
-                            System.out.println("WhiteEnPassant " + whiteEnPassant);
-                            whiteEnPassant = ((Pawn)(cg.getTile(whitePreviousMove[1]).getPiece())).enPassantMove;
-                            System.out.println("WhiteEnPassant " + whiteEnPassant);
+                            Coordinate whitePreviousMoveCoordinate = Coordinate.fromString(whitePreviousMove[1]);
+                            String enPassantedPieceLocation = shiftCoordinate(whitePreviousMoveCoordinate, 0, -1).toString();
+                            whiteEnPassant = ( (Pawn)(cg.getTile(enPassantedPieceLocation).getPiece()) ).enPassantMove;
                         }
 
                         // If white's previous move was enpassant, send message to clear the taken piece
                         if(!whiteEnPassant.equals("")){
-                            System.out.println("Attempting to send WhiteEnPassant " + whiteEnPassant);
                             sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
                         }
 
                         if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof Pawn)){
-                            System.out.println("BlackEnPassant " + whiteEnPassant);
-                            blackEnPassant = ((Pawn)(cg.getTile(blackPreviousMove[1]).getPiece())).enPassantMove;
-                            System.out.println("BlackEnPassant " + whiteEnPassant);
+                            Coordinate blackPreviousMoveCoordinate = Coordinate.fromString(blackPreviousMove[1]);
+                            String enPassantedPieceLocation = shiftCoordinate(blackPreviousMoveCoordinate, 0, 1).toString();
+                            blackEnPassant = ( (Pawn)(cg.getTile(enPassantedPieceLocation).getPiece()) ).enPassantMove;
                         }
 
                         // If black's previous move was enpassant, send message to clear the taken piece
                         if(!blackEnPassant.equals("")){
-                            System.out.println("Attempting to send BlackEnPassant " + whiteEnPassant);
                             sendAllMessage(cg, "EnPassant " + blackPreviousMove[1]);
                         }
-                System.out.println("After en passant checks");
-                System.out.println("Before castle checks");
 
 
                 // Check if last move was castle
@@ -487,31 +483,23 @@ public class ChessGameSocket {
 
                         // White castle check
                         if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof King)){
-                            System.out.println("WhiteCastle " + whiteCastle);
                             whiteCastle = ((King)(cg.getTile(whitePreviousMove[1]).getPiece())).castleRook();
-                            System.out.println("WhiteCastle " + whiteCastle);
                         }
 
                         // If white's previous move was castle, send message to clear the taken piece
                         if(!whiteCastle.equals("")){
-                            System.out.println("Attempting to send WhiteCastle " + whiteCastle);
                             sendAllMessage(cg, "Player1Moved " + whiteCastle);
                         }
 
                         // Black castle check
                         if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof King)){
-                            System.out.println("BlackCastle " + blackCastle);
                             blackCastle = ((King)(cg.getTile(blackPreviousMove[1]).getPiece())).castleRook();
-                            System.out.println("BlackCastle " + blackCastle);
                         }
 
                         // If black's previous move was castle, send message to clear the taken piece
                         if(!blackCastle.equals("")){
-                            System.out.println("Attempting to send BlackCastle " + blackCastle);
                             sendAllMessage(cg, "Player2Moved " + blackCastle);
                         }
-
-                System.out.println("After castle checks");
 
                 // Ensure the database is updated
                 chessGameRepository.save(cg);
@@ -523,11 +511,6 @@ public class ChessGameSocket {
                 }
 
                 // Tell players that a move has been made
-                sendUserMessage(username, "userMoved");
-                sendUserMessage(oppositePlayer, "opponentMoved " + fromCoord + " "
-                        + message + " " + cg.getTile(message).piece);
-
-                // Alternative way to tell players that a move has been made
                 switch(sideColor){
                     case "white":
                         sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
@@ -573,5 +556,23 @@ public class ChessGameSocket {
             }
         }
         return null;
+    }
+
+    // Helper method to shift a coordinate
+    public Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+        String coordinate = coord.toString();
+
+        char letter = coordinate.charAt(0);
+        int number = parseInt(coordinate.substring(1));
+
+        if(shiftX != 0) {
+            letter += shiftX;
+        }
+
+        if(shiftY != 0) {
+            number += shiftY;
+        }
+
+        return Coordinate.fromString(letter + "" + number);
     }
 }
