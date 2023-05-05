@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
@@ -28,7 +29,9 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import android.util.Log;
 
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class LobbyActivityTest {
 

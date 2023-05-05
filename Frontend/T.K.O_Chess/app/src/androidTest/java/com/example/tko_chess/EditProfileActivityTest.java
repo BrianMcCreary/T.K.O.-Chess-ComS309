@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,9 @@ import static org.hamcrest.core.StringEndsWith.endsWith;
 import android.util.Log;
 
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class EditProfileActivityTest {
 
@@ -47,7 +50,7 @@ public class EditProfileActivityTest {
     }
 
     @Test
-    public void changeUsername(){
+    public void Test1(){ // change username
         String username = "tester8";
         String password = "password";
 
@@ -76,7 +79,7 @@ public class EditProfileActivityTest {
     }
 
     @Test
-    public void changeUsernameBack(){
+    public void Test2(){ //change Username Back
         String currentUsername = "testUsername";
         String newUsername = "tester8";
         String password = "password";
@@ -105,7 +108,7 @@ public class EditProfileActivityTest {
     }
 
     @Test
-    public void changePassword(){
+    public void Test3(){ //change Password
         String username = "tester8";
         String password = "password";
 
@@ -134,7 +137,7 @@ public class EditProfileActivityTest {
     }
 
     @Test
-    public void changePasswordBack(){
+    public void Test4(){ // change Password Back
         String username = "tester8";
         String password = "password1";
 
