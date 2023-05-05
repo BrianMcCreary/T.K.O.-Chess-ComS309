@@ -1,0 +1,307 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > BoxingGame</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Boxing</a>
+</div>
+
+<h1>Coverage Summary for Class: BoxingGame (TotalKnockoutChess.Boxing)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BoxingGame</td>
+<td class="coverageStat">
+  <span class="percent">
+    52%
+  </span>
+  <span class="absValue">
+    (13/25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40.7%
+  </span>
+  <span class="absValue">
+    (24/59)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BoxingGame$HibernateProxy$vgghkwm1</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    52%
+  </span>
+  <span class="absValue">
+    (13/25)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40.7%
+  </span>
+  <span class="absValue">
+    (24/59)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Boxing;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;
+&nbsp;import javax.persistence.*;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class BoxingGame {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    private String player1;
+&nbsp;
+&nbsp;    //Amount of lives player1 has left, starts with 3
+&nbsp;    private int p1Lives;
+&nbsp;
+&nbsp;    //Move that player1 is doing
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    private String p1Move;
+&nbsp;
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    private String player2;
+&nbsp;
+&nbsp;    //Amount of lives player2 has left, starts with 3
+&nbsp;    private int p2Lives;
+&nbsp;
+&nbsp;    //Move that player2 is doing
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    private String p2Move;
+&nbsp;
+&nbsp;    //List of spectators in the game
+&nbsp;    @ElementCollection(fetch = FetchType.EAGER)
+&nbsp;    private List&lt;String&gt; spectators;
+&nbsp;
+<b class="fc">&nbsp;    public BoxingGame(String player1, String player2, List&lt;String&gt; spectators) {</b>
+<b class="fc">&nbsp;        this.player1 = player1;</b>
+<b class="fc">&nbsp;        this.player2 = player2;</b>
+<b class="fc">&nbsp;        this.spectators = spectators;</b>
+<b class="fc">&nbsp;        p1Lives = 3;</b>
+<b class="fc">&nbsp;        p2Lives = 3;</b>
+<b class="fc">&nbsp;        p1Move = &quot;&quot;;</b>
+<b class="fc">&nbsp;        p2Move = &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public BoxingGame() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method used to remove a life from the round losing player
+&nbsp;    public void dockLife(String player) {
+<b class="nc">&nbsp;        if (player.equals(player1)) {</b>
+<b class="nc">&nbsp;            p1Lives--;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (player.equals(player2)) {</b>
+<b class="nc">&nbsp;            p2Lives--;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getP1Lives() {
+<b class="fc">&nbsp;        return p1Lives;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getP2Lives() {
+<b class="fc">&nbsp;        return p2Lives;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setP1Lives(int lives) {
+<b class="nc">&nbsp;        p1Lives = lives;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setP2Lives(int lives) {
+<b class="nc">&nbsp;        p2Lives = lives;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPlayer1() {
+<b class="fc">&nbsp;        return player1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPlayer1(String player1) {
+<b class="nc">&nbsp;        this.player1 = player1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getPlayer2() {
+<b class="fc">&nbsp;        return player2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPlayer2(String player2) {
+<b class="nc">&nbsp;        this.player2 = player2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(int id) {
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setP1Move(String move) {
+<b class="nc">&nbsp;        p1Move = move;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getP1Move() {
+<b class="fc">&nbsp;        return p1Move;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setP2Move(String move) {
+<b class="nc">&nbsp;        p2Move = move;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getP2Move() {
+<b class="fc">&nbsp;        return p2Move;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addToSpectators(String username) {
+<b class="nc">&nbsp;        spectators.add(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void removeFromSpectators(String username) {
+<b class="nc">&nbsp;        spectators.remove(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; getSpectators() {
+<b class="fc">&nbsp;        return spectators;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean contains(String username) {
+<b class="nc">&nbsp;        return player1.equals(username) || player2.equals(username) || spectators.contains(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method used to get the username of the round winner
+&nbsp;    public String getRoundWinner() {
+&nbsp;        //If player1&#39;s move is kick, look at player2&#39;s move and determine who won
+<b class="fc">&nbsp;        if (p1Move.equals(&quot;kick&quot;)) {</b>
+<b class="nc">&nbsp;            if (p2Move.equals(&quot;kick&quot;)) {</b>
+<b class="nc">&nbsp;                return &quot;tie&quot;;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;block&quot;)) {</b>
+<b class="nc">&nbsp;                return player1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;jab&quot;)) {</b>
+<b class="nc">&nbsp;                return player2;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //If player1&#39;s move is block, look at player2&#39;s move and determine who won
+<b class="fc">&nbsp;        else if (p1Move.equals(&quot;block&quot;)) {</b>
+<b class="nc">&nbsp;            if (p2Move.equals(&quot;kick&quot;)) {</b>
+<b class="nc">&nbsp;                return player2;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;block&quot;)) {</b>
+<b class="nc">&nbsp;                return &quot;tie&quot;;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;jab&quot;)) {</b>
+<b class="nc">&nbsp;                return player1;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //If player1&#39;s move is jab, look at player2&#39;s move and determine who won
+<b class="fc">&nbsp;        else if (p1Move.equals(&quot;jab&quot;)) {</b>
+<b class="nc">&nbsp;            if (p2Move.equals(&quot;kick&quot;)) {</b>
+<b class="nc">&nbsp;                return player1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;block&quot;)) {</b>
+<b class="nc">&nbsp;                return player2;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (p2Move.equals(&quot;jab&quot;)) {</b>
+<b class="nc">&nbsp;                return &quot;tie&quot;;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clearMoves() {
+<b class="nc">&nbsp;        p1Move = &quot;&quot;;</b>
+<b class="nc">&nbsp;        p2Move = &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method for determining if one of the players has won
+&nbsp;    public boolean isGameOver() {
+<b class="fc">&nbsp;        return p1Lives == 0 || p2Lives == 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method for determining who won the game
+&nbsp;    public String getGameWinner() {
+<b class="fc">&nbsp;        if (p1Lives == 0) {</b>
+<b class="nc">&nbsp;            return player2;</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="fc">&nbsp;            return player1;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

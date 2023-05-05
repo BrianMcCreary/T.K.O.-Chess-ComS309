@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LobbyController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Lobby</a>
+</div>
+
+<h1>Coverage Summary for Class: LobbyController (TotalKnockoutChess.Lobby)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LobbyController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (4/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27.7%
+  </span>
+  <span class="absValue">
+    (13/47)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Lobby;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;import TotalKnockoutChess.Users.UserRepository;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import io.swagger.annotations.ApiOperation;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Api(value = &quot;LobbyController&quot;, description = &quot;Controller used to manage Lobby entities&quot;)
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/lobby&quot;)
+<b class="fc">&nbsp;public class LobbyController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    LobbyRepository lobbyRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final String success = &quot;success&quot;;</b>
+<b class="fc">&nbsp;    private final String failure = &quot;failure&quot;;</b>
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Attempts to create a lobby from the given lobby code&quot;)
+&nbsp;    @PostMapping(&quot;/{owner}&quot;)
+&nbsp;    public String createLobby(@PathVariable String owner) {
+<b class="fc">&nbsp;        Lobby lobby = new Lobby(owner);</b>
+<b class="fc">&nbsp;        lobby.generateLobbyCode(lobbyRepository.findAll());</b>
+&nbsp;
+<b class="fc">&nbsp;        lobbyRepository.save(lobby);</b>
+<b class="fc">&nbsp;        lobbyRepository.flush();</b>
+&nbsp;
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Returns whether any of the lobbies in the repository matches the given lobby code&quot;)
+&nbsp;    @GetMapping(&quot;/find/{lobbyCode}&quot;)
+&nbsp;    public String findLobby(@PathVariable Long lobbyCode) {
+<b class="nc">&nbsp;        for (Lobby l : lobbyRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if (l.getCode().equals(lobbyCode)) {</b>
+<b class="nc">&nbsp;                return success;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;Lobby not found&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Mapping to delete a lobby from the repository.
+&nbsp;    @ApiOperation(value = &quot;Deletes a lobby from the repository from the given lobby owner&quot;)
+&nbsp;    @DeleteMapping(&quot;/delete/{lobbyOwner}&quot;)
+&nbsp;    public String deleteLobby(@PathVariable String lobbyOwner){
+<b class="fc">&nbsp;        for(Lobby l : lobbyRepository.findAll()){</b>
+<b class="fc">&nbsp;            if(l.getOwner().equals(lobbyOwner)) {</b>
+<b class="fc">&nbsp;                lobbyRepository.delete(l);</b>
+<b class="fc">&nbsp;                return &quot;success&quot;;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return &quot;failure&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Mapping to get all current lobbies.
+&nbsp;    @ApiOperation(value = &quot;Returns a list of all lobby entities in the repository&quot;)
+&nbsp;    @GetMapping(&quot;/all&quot;)
+&nbsp;    public List&lt;Lobby&gt; getLobbies(){
+<b class="fc">&nbsp;        return lobbyRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Returns a list of strings representing all spectators in the lobby, specified by the lobby code&quot;)
+&nbsp;    @GetMapping(&quot;/spectators/{lobbyCode}&quot;)
+&nbsp;    public List&lt;String&gt; getLobbySpectators(@PathVariable Long lobbyCode){
+<b class="nc">&nbsp;        Lobby lobby = lobbyRepository.getByCode(lobbyCode);</b>
+<b class="nc">&nbsp;        return lobby.getSpectators();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method used when a player joins a lobby, gives them all the information they need
+&nbsp;    @ApiOperation(value = &quot;Returns a list of strings containing the username and ready status of each user in the lobby, specified by the lobby code&quot;)
+&nbsp;    @GetMapping(&quot;/justJoined/{lobbyCode}&quot;)
+&nbsp;    public List&lt;String&gt; getUsersInLobby(@PathVariable Long lobbyCode) {
+<b class="nc">&nbsp;        Lobby lobby = lobbyRepository.getByCode(lobbyCode);</b>
+<b class="nc">&nbsp;        List&lt;String&gt; users = new ArrayList&lt;String&gt;();</b>
+<b class="nc">&nbsp;        if (lobby != null) {</b>
+<b class="nc">&nbsp;            if (lobby.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                String readyStatus = &quot;NotReady&quot;;</b>
+<b class="nc">&nbsp;                if (lobby.getPlayer1Ready()) {</b>
+<b class="nc">&nbsp;                    readyStatus = &quot;Ready&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                users.add(lobby.getPlayer1() + &quot; Player1 &quot; + readyStatus);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (lobby.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                String readyStatus = &quot;NotReady&quot;;</b>
+<b class="nc">&nbsp;                if (lobby.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                    readyStatus = &quot;Ready&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                users.add(lobby.getPlayer2() + &quot; Player2 &quot; + readyStatus);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (!lobby.getSpectators().isEmpty()) {</b>
+<b class="nc">&nbsp;                for (String spectator : lobby.getSpectators()) {</b>
+<b class="nc">&nbsp;                    users.add(spectator + &quot; Spectator NotReady&quot;);</b>
+<b class="nc">&nbsp;                }</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return users;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method to get the user from the repository given their username
+&nbsp;    private User getUser(String username){
+<b class="nc">&nbsp;        User usr = null;</b>
+&nbsp;
+&nbsp;        // Check repository for user that matches the username
+<b class="nc">&nbsp;        for(User user : userRepository.findAll()){</b>
+<b class="nc">&nbsp;            if(user.getUsername().equals(username)){</b>
+<b class="nc">&nbsp;                usr = user;</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return usr;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

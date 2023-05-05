@@ -1,0 +1,492 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ChessGame</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Chess</a>
+</div>
+
+<h1>Coverage Summary for Class: ChessGame (TotalKnockoutChess.Chess)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChessGame</td>
+<td class="coverageStat">
+  <span class="percent">
+    52.9%
+  </span>
+  <span class="absValue">
+    (18/34)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40.7%
+  </span>
+  <span class="absValue">
+    (57/140)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ChessGame$HibernateProxy$SEOJIrwY</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    52.9%
+  </span>
+  <span class="absValue">
+    (18/34)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40.7%
+  </span>
+  <span class="absValue">
+    (57/140)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Chess;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Chess.Pieces.*;
+&nbsp;
+&nbsp;import javax.persistence.*;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class ChessGame {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @Lob
+&nbsp;    private ChessGameTile[][] tiles;
+&nbsp;
+<b class="fc">&nbsp;    private final int BOARD_WIDTH = 8;</b>
+<b class="fc">&nbsp;    private final int BOARD_HEIGHT = 8;</b>
+&nbsp;
+<b class="fc">&nbsp;    private final int PROMOTION_RANK_INDEX = 7;</b>
+&nbsp;
+&nbsp;    private static final String TOP_COLOR = &quot;black&quot;;
+&nbsp;    private static final String BOTTOM_COLOR = &quot;white&quot;;
+&nbsp;
+&nbsp;    private String whoseMove;
+&nbsp;    private String whiteFromSquare, blackFromSquare, whitePreviousMove, blackPreviousMove;
+&nbsp;
+&nbsp;    private String whitePlayer, blackPlayer;
+&nbsp;    private boolean whiteCheckMated, blackCheckMated;
+&nbsp;
+<b class="fc">&nbsp;    private static final HashMap&lt;String, ChessPiece&gt; promotionPieceTypes = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;    static{
+<b class="fc">&nbsp;        promotionPieceTypes.put(TOP_COLOR + &quot;Bishop&quot;, new Bishop(TOP_COLOR));    promotionPieceTypes.put(BOTTOM_COLOR + &quot;Bishop&quot;, new Bishop(BOTTOM_COLOR));</b>
+<b class="fc">&nbsp;        promotionPieceTypes.put(TOP_COLOR + &quot;Rook&quot;, new Rook(TOP_COLOR));        promotionPieceTypes.put(BOTTOM_COLOR + &quot;Rook&quot;, new Rook(BOTTOM_COLOR));</b>
+<b class="fc">&nbsp;        promotionPieceTypes.put(TOP_COLOR + &quot;Queen&quot;, new Queen(TOP_COLOR));      promotionPieceTypes.put(BOTTOM_COLOR + &quot;Queen&quot;, new Queen(BOTTOM_COLOR));</b>
+<b class="fc">&nbsp;        promotionPieceTypes.put(TOP_COLOR + &quot;Knight&quot;, new Knight(TOP_COLOR));    promotionPieceTypes.put(BOTTOM_COLOR + &quot;Knight&quot;, new Knight(BOTTOM_COLOR));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //List of spectators in the game
+&nbsp;    @ElementCollection(fetch = FetchType.EAGER)
+&nbsp;    private List&lt;String&gt; spectators;
+&nbsp;
+<b class="fc">&nbsp;    public ChessGame() {</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public ChessGame(String whitePlayer, String blackPlayer, List&lt;String&gt; spectators) {</b>
+<b class="fc">&nbsp;        this.spectators = spectators;</b>
+<b class="fc">&nbsp;        this.whitePlayer = whitePlayer;</b>
+<b class="fc">&nbsp;        this.blackPlayer = blackPlayer;</b>
+<b class="fc">&nbsp;        initializeGame();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method to initialize the game
+&nbsp;    private void initializeGame() {
+<b class="fc">&nbsp;        tiles = new ChessGameTile[BOARD_HEIGHT][BOARD_WIDTH];</b>
+&nbsp;
+&nbsp;        // Create ChessGameTile&#39;s to fill &quot;tiles&quot; 2d array
+<b class="fc">&nbsp;        for (int row = 0; row &lt; BOARD_HEIGHT; row++) {</b>
+<b class="fc">&nbsp;            for (int col = 0; col &lt; BOARD_WIDTH; col++) {</b>
+<b class="fc">&nbsp;                tiles[col][row] = new ChessGameTile();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // Fill bottom row of the board (row 1)
+<b class="fc">&nbsp;        createDefaultTopOrBottomRow(0, BOTTOM_COLOR);</b>
+&nbsp;
+&nbsp;        // Fill second bottommost row of the board (row 2)
+<b class="fc">&nbsp;        createPawnRow(1, BOTTOM_COLOR);</b>
+&nbsp;
+&nbsp;        // Fill middle rows of the board (rows 3 - 6)
+<b class="fc">&nbsp;        for (int row = 2; row &lt; BOARD_HEIGHT - 2; row++) {</b>
+<b class="fc">&nbsp;            for (int col = 0; col &lt; BOARD_WIDTH; col++) {</b>
+<b class="fc">&nbsp;                tiles[col][row].piece = new Empty(); // Empty piece type has no color</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // Fill second topmost row of the board (row 2)
+<b class="fc">&nbsp;        createPawnRow(6, TOP_COLOR);</b>
+&nbsp;
+&nbsp;
+&nbsp;        // Fill top row of the board (row 8)
+<b class="fc">&nbsp;        createDefaultTopOrBottomRow(7, TOP_COLOR);</b>
+&nbsp;
+&nbsp;        // Set default values for game variables
+<b class="fc">&nbsp;        whiteCheckMated = false;</b>
+<b class="fc">&nbsp;        blackCheckMated = false;</b>
+<b class="fc">&nbsp;        whoseMove = &quot;white&quot;;</b>
+<b class="fc">&nbsp;        whiteFromSquare = &quot;&quot;;</b>
+<b class="fc">&nbsp;        blackFromSquare = &quot;&quot;;</b>
+<b class="fc">&nbsp;        whitePreviousMove = &quot;&quot;;</b>
+<b class="fc">&nbsp;        blackPreviousMove = &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method to generate default pawn rows
+&nbsp;    private void createPawnRow(int row, String color) {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; BOARD_WIDTH; i++) {</b>
+<b class="fc">&nbsp;            tiles[i][row].piece = new Pawn(color);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method to generate default edge rows
+&nbsp;    private void createDefaultTopOrBottomRow(int row, String color) {
+<b class="fc">&nbsp;        tiles[0][row].piece = new Rook(color);</b>
+<b class="fc">&nbsp;        tiles[1][row].piece = new Knight(color);</b>
+<b class="fc">&nbsp;        tiles[2][row].piece = new Bishop(color);</b>
+<b class="fc">&nbsp;        tiles[3][row].piece = new Queen(color);</b>
+&nbsp;
+&nbsp;
+&nbsp;        // For the king piece, provide the constructor with information of starting position
+<b class="fc">&nbsp;        if (row == 0) {</b>
+<b class="fc">&nbsp;            tiles[4][row].piece = new King(color, Coordinate.E1);</b>
+<b class="fc">&nbsp;        } else if (row == 7) {</b>
+<b class="fc">&nbsp;            tiles[4][row].piece = new King(color, Coordinate.E8);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        tiles[5][row].piece = new Bishop(color);</b>
+<b class="fc">&nbsp;        tiles[6][row].piece = new Knight(color);</b>
+<b class="fc">&nbsp;        tiles[7][row].piece = new Rook(color);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(int id) {
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method to update the ChessGameTiles array
+&nbsp;     *
+&nbsp;     * @param startCoordinate - original Coordinate of the moving piece
+&nbsp;     * @param endCoordinate   - destination Coordinate of the moving piece
+&nbsp;     * @return true if the update was successful, false otherwise
+&nbsp;     */
+&nbsp;    public boolean makeMove(Coordinate startCoordinate, Coordinate endCoordinate) {
+&nbsp;        // If coordinates are out of bounds, return without updating the board
+<b class="nc">&nbsp;        if (startCoordinate.x &lt; 0 || startCoordinate.y &lt; 0 || endCoordinate.x &lt; 0 || endCoordinate.y &lt; 0 || startCoordinate.x &gt; BOARD_WIDTH - 1 || startCoordinate.y &gt; BOARD_HEIGHT - 1 || endCoordinate.x &gt; BOARD_WIDTH - 1 || endCoordinate.y &gt; BOARD_HEIGHT - 1) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // The previous move of the opponent
+<b class="nc">&nbsp;        String opponentsPreviousMove = &quot;&quot;;</b>
+<b class="nc">&nbsp;        switch(tiles[startCoordinate.x][startCoordinate.y].piece.color){</b>
+&nbsp;            case &quot;white&quot;:
+<b class="nc">&nbsp;                opponentsPreviousMove = blackPreviousMove;</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case &quot;black&quot;:
+<b class="nc">&nbsp;                opponentsPreviousMove = whitePreviousMove;</b>
+&nbsp;                break;
+&nbsp;        }
+&nbsp;
+&nbsp;        // Find what tile contains the piece to move
+<b class="nc">&nbsp;        ChessGameTile moving = tiles[startCoordinate.x][startCoordinate.y];</b>
+&nbsp;
+&nbsp;        // Find the tile the piece wants to move to
+<b class="nc">&nbsp;        ChessGameTile destinationTile = tiles[endCoordinate.x][endCoordinate.y];</b>
+&nbsp;
+&nbsp;        // Get the available moves for the piece attempting to move
+<b class="nc">&nbsp;        String availableMoves = moving.piece.calculateAvailableMoves(tiles, startCoordinate, opponentsPreviousMove);</b>
+&nbsp;
+&nbsp;        // Check if the move matches any of the available moves for the piece
+<b class="nc">&nbsp;        boolean validMove = false;</b>
+&nbsp;
+<b class="nc">&nbsp;        for (String move : availableMoves.split(&quot; &quot;)) {</b>
+<b class="nc">&nbsp;            if (move.equals(endCoordinate.toString())) {</b>
+<b class="nc">&nbsp;                validMove = true;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // If the move was not found in the piece&#39;s available moves, return false
+<b class="nc">&nbsp;        if (!validMove) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // If move results in King being taken, update checkMated variables
+<b class="nc">&nbsp;        if(destinationTile.piece instanceof King){</b>
+<b class="nc">&nbsp;            King king = (King)destinationTile.piece;</b>
+<b class="nc">&nbsp;            king.setCheckMated(true);</b>
+&nbsp;
+&nbsp;            // Update game checkMated variable for appropriate king
+<b class="nc">&nbsp;            switch(king.color){</b>
+&nbsp;                case &quot;white&quot;:
+<b class="nc">&nbsp;                    whiteCheckMated = true;</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case &quot;black&quot;:
+<b class="nc">&nbsp;                    blackCheckMated = true;</b>
+&nbsp;                    break;
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // Update the destination tile with the moved piece
+<b class="nc">&nbsp;        destinationTile.piece = moving.piece;</b>
+&nbsp;
+&nbsp;        // Update the starting tile with an empty piece
+<b class="nc">&nbsp;        tiles[startCoordinate.x][startCoordinate.y].piece = new Empty();</b>
+&nbsp;
+<b class="nc">&nbsp;        ChessPiece movedPiece = destinationTile.piece;</b>
+&nbsp;
+&nbsp;        // If the moved piece was a king, update its fields accordingly
+<b class="nc">&nbsp;        if (movedPiece instanceof King) {</b>
+<b class="nc">&nbsp;            ((King) movedPiece).setCanCastle(false);</b>
+<b class="nc">&nbsp;            ((King) movedPiece).setCoordinate(endCoordinate);</b>
+&nbsp;
+&nbsp;            // If move was a castle, update the rook&#39;s position
+<b class="nc">&nbsp;            switch(startCoordinate.toString()){</b>
+&nbsp;                // White King
+&nbsp;                case &quot;E1&quot;:
+&nbsp;                    // This piece went on C1 (white queen&#39;s side castle)
+<b class="nc">&nbsp;                    if(endCoordinate.equals(Coordinate.C1)) {</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.D1.x][Coordinate.D1.y].piece = tiles[Coordinate.A1.x][Coordinate.A1.y].piece; // Move rook with castle</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.A1.x][Coordinate.A1.y].piece = new Empty(); // Set where the castled rook was to empty</b>
+&nbsp;                    }
+&nbsp;                    // This piece went on G1 (white king&#39;s side castle)
+<b class="nc">&nbsp;                    else if(endCoordinate.equals(Coordinate.G1)){</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.F1.x][Coordinate.F1.y].piece = tiles[Coordinate.H1.x][Coordinate.H1.y].piece; // Move rook with castle</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.H1.x][Coordinate.H1.y].piece = new Empty(); // Set where the castled rook was to empty</b>
+&nbsp;                    }
+&nbsp;                    break;
+&nbsp;                // Black King
+&nbsp;                case &quot;E8&quot;:
+&nbsp;                    // This piece went on C8 (black queen&#39;s side castle)
+<b class="nc">&nbsp;                    if(endCoordinate.equals(Coordinate.C8)) {</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.D8.x][Coordinate.D8.y].piece = tiles[Coordinate.A8.x][Coordinate.A8.y].piece; // Move rook with castle</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.A8.x][Coordinate.A8.y].piece = new Empty(); // Set where the castled rook was to empty</b>
+&nbsp;                    }
+&nbsp;                    // This piece went on G8 (black king&#39;s side castle)
+<b class="nc">&nbsp;                    else if(endCoordinate.equals(Coordinate.G8)){</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.F8.x][Coordinate.F8.y].piece = tiles[Coordinate.H8.x][Coordinate.H8.y].piece; // Move rook with castle</b>
+<b class="nc">&nbsp;                        tiles[Coordinate.H8.x][Coordinate.H8.y].piece = new Empty(); // Set where the castled rook was to empty</b>
+&nbsp;                    }
+&nbsp;                    break;
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+&nbsp;        }
+&nbsp;        // If the moved piece was a rook, update its &#39;canCastle&#39; field accordingly
+<b class="nc">&nbsp;        else if (movedPiece instanceof Rook) {</b>
+<b class="nc">&nbsp;            ((Rook) movedPiece).setCanCastle(false);</b>
+&nbsp;        }
+&nbsp;        // If the moved piece was a pawn, check for en passant and check for promotion
+<b class="nc">&nbsp;        else if(movedPiece instanceof Pawn){</b>
+<b class="nc">&nbsp;            Pawn pawn = (Pawn) movedPiece;</b>
+&nbsp;
+&nbsp;            // If enPassant occurred
+<b class="nc">&nbsp;            if(pawn.enPassantOccured){</b>
+&nbsp;
+&nbsp;                // Clear the piece taken by en passant
+<b class="nc">&nbsp;                Coordinate enPassantMove = endCoordinate;</b>
+&nbsp;
+<b class="nc">&nbsp;                switch(pawn.color){</b>
+&nbsp;                    case &quot;white&quot;:
+<b class="nc">&nbsp;                        enPassantMove = movedPiece.shiftCoordinate(endCoordinate, 0, 1);</b>
+<b class="nc">&nbsp;                        break;</b>
+&nbsp;                    case &quot;black&quot;:
+<b class="nc">&nbsp;                        enPassantMove = movedPiece.shiftCoordinate(endCoordinate, 0, -1);</b>
+&nbsp;                        break;
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                clearPiece(enPassantMove);</b>
+&nbsp;
+&nbsp;            }
+&nbsp;
+&nbsp;            // If pawn reaches promotion rank
+<b class="nc">&nbsp;            if(endCoordinate.y == PROMOTION_RANK_INDEX){</b>
+<b class="nc">&nbsp;                pawn.canPromote = true;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter for the current board
+&nbsp;    public ChessGameTile[][] getBoard() {
+<b class="fc">&nbsp;        return tiles;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to display a text version of the current board
+&nbsp;    public void displayBoard() {
+<b class="nc">&nbsp;        System.out.println(&quot;\t\ta\t\t\tb\t\t\tc\t\t\td\t\t\te\t\t\tf\t\t\tg\t\t\th&quot;);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;------------------------------------------------&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;------------------------------------------------&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int row = BOARD_HEIGHT - 1; row &gt;= 0; row--) {</b>
+<b class="nc">&nbsp;            System.out.print(row + 1);</b>
+<b class="nc">&nbsp;            for (int col = 0; col &lt; BOARD_WIDTH; col++) {</b>
+<b class="nc">&nbsp;                System.out.print(&quot;\t&quot; + tiles[col][row].piece.toString());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            System.out.println(&quot;\t&quot; + (row + 1));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.print(&quot;------------------------------------------------&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;------------------------------------------------&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t\ta\t\t\tb\t\t\tc\t\t\td\t\t\te\t\t\tf\t\t\tg\t\t\th&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getters/Setters for player moves
+&nbsp;    public String getWhoseMove() {
+<b class="fc">&nbsp;        return whoseMove;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setWhoseMove(String whoseMove) {
+<b class="nc">&nbsp;        this.whoseMove = whoseMove;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getWhiteFromSquare() {
+<b class="fc">&nbsp;        return whiteFromSquare;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setWhiteFromSquare(String whiteFromSquare) {
+<b class="nc">&nbsp;        this.whiteFromSquare = whiteFromSquare;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getBlackFromSquare() {
+<b class="fc">&nbsp;        return blackFromSquare;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBlackFromSquare(String blackFromSquare) {
+<b class="nc">&nbsp;        this.blackFromSquare = blackFromSquare;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter for a specific tile on board
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method that returns the ChessGameTile given a string version of a coordinate on the board
+&nbsp;     * @param coordinate - String value of a coordinate on the board
+&nbsp;     * @return - ChessGameTile corresponding to the coordinate given
+&nbsp;     */
+&nbsp;    public ChessGameTile getTile(String coordinate) {
+<b class="nc">&nbsp;        Coordinate coord = Coordinate.fromString(coordinate);</b>
+&nbsp;
+<b class="nc">&nbsp;        return tiles[coord.x][coord.y];</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getters/Setters for players
+&nbsp;    public String getWhitePlayer() {
+<b class="fc">&nbsp;        return whitePlayer;</b>
+&nbsp;    }
+&nbsp;    public String getBlackPlayer() {
+<b class="fc">&nbsp;        return blackPlayer;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public void setWhitePlayer(String whitePlayer){ this.whitePlayer = whitePlayer; }</b>
+<b class="nc">&nbsp;    public void setBlackPlayer(String blackPlayer){ this.blackPlayer = blackPlayer; }</b>
+&nbsp;
+&nbsp;    // Getter for spectators
+&nbsp;    public List&lt;String&gt; getSpectators() {
+<b class="fc">&nbsp;        return spectators;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getters/Setters for game state
+<b class="fc">&nbsp;    public boolean isWhiteCheckMated(){ return whiteCheckMated; }</b>
+<b class="nc">&nbsp;    public void setWhiteCheckMated(boolean whiteCheckMated){ this.whiteCheckMated = whiteCheckMated; }</b>
+<b class="fc">&nbsp;    public boolean isBlackCheckMated(){ return blackCheckMated; }</b>
+<b class="nc">&nbsp;    public void setBlackCheckMated(boolean blackCheckMated){ this.blackCheckMated = blackCheckMated; }</b>
+&nbsp;
+&nbsp;    // Getters/Setters for previous moves
+<b class="fc">&nbsp;    public String getWhitePreviousMove(){ return whitePreviousMove; }</b>
+<b class="nc">&nbsp;    public void setWhitePreviousMove(String whitePreviousMove){ this.whitePreviousMove = whitePreviousMove; }</b>
+<b class="fc">&nbsp;    public String getBlackPreviousMove(){ return blackPreviousMove; }</b>
+<b class="nc">&nbsp;    public void setBlackPreviousMove(String blackPreviousMove){ this.blackPreviousMove = blackPreviousMove; }</b>
+&nbsp;
+&nbsp;    // Method to set a tile to have an Empty object as its piece
+&nbsp;    public void clearPiece(Coordinate coordinate){
+<b class="nc">&nbsp;        tiles[coordinate.x][coordinate.y].piece = new Empty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to set a tile to have the given piece as its piece
+&nbsp;    public void setPiece(Coordinate coordinate, ChessPiece piece){
+<b class="nc">&nbsp;        tiles[coordinate.x][coordinate.y].piece = piece;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter for promotion piece
+&nbsp;    public ChessPiece getPromotionPiece(String promotionPiece){
+<b class="nc">&nbsp;        return promotionPieceTypes.get(promotionPiece);</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,552 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LobbySocket</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Lobby</a>
+</div>
+
+<h1>Coverage Summary for Class: LobbySocket (TotalKnockoutChess.Lobby)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LobbySocket</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    42.9%
+  </span>
+  <span class="absValue">
+    (6/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2.9%
+  </span>
+  <span class="absValue">
+    (8/274)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Lobby;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Boxing.BoxingGame;
+&nbsp;import TotalKnockoutChess.Boxing.BoxingGameRepository;
+&nbsp;import TotalKnockoutChess.Chess.ChessGame;
+&nbsp;import TotalKnockoutChess.Chess.ChessGameRepository;
+&nbsp;import TotalKnockoutChess.Users.UserRepository;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import javax.websocket.Session;
+&nbsp;import javax.websocket.server.ServerEndpoint;
+&nbsp;import javax.websocket.OnClose;
+&nbsp;import javax.websocket.OnError;
+&nbsp;import javax.websocket.OnMessage;
+&nbsp;import javax.websocket.OnOpen;
+&nbsp;import javax.websocket.server.PathParam;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Hashtable;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@ServerEndpoint(value = &quot;/websocket/lobby/{username}/{joinOrHost}/{lobbyCode}&quot;)
+&nbsp;@Component
+<b class="fc">&nbsp;public class LobbySocket {</b>
+&nbsp;
+&nbsp;    private static LobbyRepository lobbyRepository;
+&nbsp;    private static UserRepository userRepository;
+&nbsp;
+&nbsp;    private static ChessGameRepository chessGameRepository;
+&nbsp;
+&nbsp;    private static BoxingGameRepository boxingGameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setLobbyRepository(LobbyRepository lobbyRepository) {
+<b class="fc">&nbsp;        this.lobbyRepository = lobbyRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserRepository(UserRepository userRepository) {
+<b class="fc">&nbsp;        this.userRepository = userRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setBoxingGameRepository(BoxingGameRepository boxingGameRepository) {
+<b class="fc">&nbsp;        this.boxingGameRepository = boxingGameRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setChessGameRepository(ChessGameRepository chessGameRepository) {
+<b class="fc">&nbsp;        this.chessGameRepository = chessGameRepository;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();</b>
+<b class="fc">&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(LobbySocket.class);</b>
+&nbsp;
+&nbsp;    @OnOpen
+&nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username, @PathParam(&quot;joinOrHost&quot;) String joinOrHost, @PathParam(&quot;lobbyCode&quot;) Long lobbyCode) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Open&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Opened connection&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
+<b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (joinOrHost.equals(&quot;host&quot;)) {        //If hosting, create lobby and generate code.</b>
+<b class="nc">&nbsp;            Lobby lobby = new Lobby(username);</b>
+<b class="nc">&nbsp;            lobby.setCode(lobby.generateLobbyCode(lobbyRepository.findAll()));</b>
+<b class="nc">&nbsp;            lobbyRepository.save(lobby);</b>
+<b class="nc">&nbsp;            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(&quot;LobbyCode &quot; + lobby.getCode().toString());</b>
+<b class="nc">&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(&quot;JustJoined &quot; + username + &quot;.Spectator.NotReady&quot;);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        else if (joinOrHost.equals(&quot;join&quot;)) {       //If joining a lobby, find lobby with the code and insert the user</b>
+<b class="nc">&nbsp;            Lobby lobby = findLobbyWithCode(lobbyCode);</b>
+<b class="nc">&nbsp;            if (lobby != null) {</b>
+<b class="nc">&nbsp;                lobby.addToSpectators(username);</b>
+<b class="nc">&nbsp;                lobby.incrementUserCount();</b>
+<b class="nc">&nbsp;                lobbyRepository.save(lobby);</b>
+<b class="nc">&nbsp;                lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                sendOtherUsersMessage(username, &quot;Spectator &quot; + username);</b>
+<b class="nc">&nbsp;                String lobbySetup = &quot;JustJoined &quot;;</b>
+<b class="nc">&nbsp;                if (lobby.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                    String readyStatus = &quot;NotReady&quot;;</b>
+<b class="nc">&nbsp;                    if (lobby.getPlayer1Ready()) {</b>
+<b class="nc">&nbsp;                        readyStatus = &quot;Ready&quot;;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    lobbySetup += lobby.getPlayer1() + &quot;.Player1.&quot; + readyStatus + &quot;#&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (lobby.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                    String readyStatus = &quot;NotReady&quot;;</b>
+<b class="nc">&nbsp;                    if (lobby.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                        readyStatus = &quot;Ready&quot;;</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    lobbySetup += lobby.getPlayer2() + &quot;.Player2.&quot; + readyStatus + &quot;#&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                List&lt;String&gt; spectators = lobby.getSpectators();</b>
+<b class="nc">&nbsp;                for (int i = 0; i &lt; spectators.size(); ++i) {</b>
+<b class="nc">&nbsp;                    lobbySetup += spectators.get(i) + &quot;.Spectator.NotReady#&quot;;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                usernameSessionMap.get(username).getBasicRemote().sendText(lobbySetup);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnMessage
+&nbsp;    public void onMessage(Session session, String message) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Message. Got Message: &quot; + message);</b>
+&nbsp;
+&nbsp;        //Username of the user in this session
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+<b class="nc">&nbsp;        String[] messages = message.split(&quot; &quot;);</b>
+&nbsp;
+&nbsp;        //If the message received is &quot;Ready&quot;, find which player the user is (Player1 or Player2), and set their ready status
+<b class="nc">&nbsp;        if (message.equals(&quot;Ready&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            boolean wasNotP1 = true;</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                if (l.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                        l.setPlayer1Ready(true);</b>
+<b class="nc">&nbsp;                        wasNotP1 = false;</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;Ready &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (l.getPlayer2() != null &amp;&amp; wasNotP1) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                        l.setPlayer2Ready(true);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;Ready &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (l.getPlayer1Ready() &amp;&amp; l.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText(&quot;CanStart&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;UnReady&quot;, find which player the user is and clear their ready status
+<b class="nc">&nbsp;        else if (message.equals(&quot;UnReady&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                boolean sendCantStart = l.getPlayer1Ready() &amp;&amp; l.getPlayer2Ready();</b>
+<b class="nc">&nbsp;                boolean wasNotP1 = true;</b>
+<b class="nc">&nbsp;                if (l.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                        wasNotP1 = false;</b>
+<b class="nc">&nbsp;                        l.setPlayer1Ready(false);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (l.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer2().equals(username) &amp;&amp; wasNotP1) {</b>
+<b class="nc">&nbsp;                        l.setPlayer2Ready(false);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (sendCantStart) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText(&quot;CannotStart&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;Start&quot;, start the correct type of game with the correct players and spectators
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;Start&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                if (messages[1].equals(&quot;Boxing&quot;)) {</b>
+<b class="nc">&nbsp;                    BoxingGame bg = new BoxingGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());</b>
+<b class="nc">&nbsp;                    boxingGameRepository.save(bg);</b>
+<b class="nc">&nbsp;                    boxingGameRepository.flush();</b>
+<b class="nc">&nbsp;                    sendAllUsersMessage(username, l.getSpectators(), &quot;StartGame Player1 &quot; + l.getPlayer1() + &quot; Player2 &quot; + l.getPlayer2());</b>
+<b class="nc">&nbsp;                    lobbyRepository.delete(l);</b>
+<b class="nc">&nbsp;                    lobbyRepository.flush();</b>
+&nbsp;
+<b class="nc">&nbsp;                } // When frontend wants to start either a chess game or chess-boxing match, a chess game will be created</b>
+<b class="nc">&nbsp;                else if (messages[1].equals(&quot;Chess&quot;) || messages[1].equals(&quot;ChessBoxing&quot;)) {</b>
+<b class="nc">&nbsp;                    ChessGame cg = new ChessGame(l.getPlayer1(), l.getPlayer2(), l.getSpectators());</b>
+<b class="nc">&nbsp;                    chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                    chessGameRepository.flush();</b>
+<b class="nc">&nbsp;                    sendAllUsersMessage(username, l.getSpectators(), &quot;StartGame Player1 &quot; + l.getPlayer1() + &quot; Player2 &quot; + l.getPlayer2());</b>
+<b class="nc">&nbsp;                    lobbyRepository.delete(l);</b>
+<b class="nc">&nbsp;                    lobbyRepository.flush();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;SwitchToP1&quot;, find which type of user they are and switch them to
+&nbsp;        //Player1 if applicable, if they were Player2, make sure Player2 ready status is false
+<b class="nc">&nbsp;        else if (message.equals(&quot;SwitchToP1&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                String prev = &quot;&quot;;</b>
+<b class="nc">&nbsp;                if (l.getPlayer1() == null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                        if (l.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                            prev = &quot;Player2 &quot;;</b>
+<b class="nc">&nbsp;                            if (l.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                                l.setPlayer2Ready(false);</b>
+<b class="nc">&nbsp;                                lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                                lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                                sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                            }
+<b class="nc">&nbsp;                            l.setPlayer2(null);</b>
+<b class="nc">&nbsp;                            l.setPlayer1(username);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Player1 &quot; + username);</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                    if (l.getSpectators().contains(username)) {</b>
+<b class="nc">&nbsp;                        prev = &quot;Spectator &quot;;</b>
+<b class="nc">&nbsp;                        l.removeSpectator(username);</b>
+<b class="nc">&nbsp;                        l.setPlayer1(username);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Player1 &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;SwitchToP2&quot;, find which type of user they are and switch them to
+&nbsp;        //Player2 if applicable, if they were Player1, make sure Player1 ready status is false
+<b class="nc">&nbsp;        else if (message.equals(&quot;SwitchToP2&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                String prev = &quot;&quot;;</b>
+<b class="nc">&nbsp;                if (l.getPlayer2() == null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                        if (l.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                            prev = &quot;Player1 &quot;;</b>
+<b class="nc">&nbsp;                            if (l.getPlayer1Ready()) {</b>
+<b class="nc">&nbsp;                                l.setPlayer1Ready(false);</b>
+<b class="nc">&nbsp;                                lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                                lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                                sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                            }
+<b class="nc">&nbsp;                            l.setPlayer1(null);</b>
+<b class="nc">&nbsp;                            l.setPlayer2(username);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Player2 &quot; + username);</b>
+&nbsp;                        }
+&nbsp;                    }
+<b class="nc">&nbsp;                    if (l.getSpectators().contains(username)) {</b>
+<b class="nc">&nbsp;                        prev = &quot;Spectator &quot;;</b>
+<b class="nc">&nbsp;                        l.removeSpectator(username);</b>
+<b class="nc">&nbsp;                        l.setPlayer2(username);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Player2 &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;SwitchToSpectate&quot;, find which type of player the user is and switch them
+&nbsp;        //to a spectator, make sure their Player number ready status is set to false
+<b class="nc">&nbsp;        else if (message.equals(&quot;SwitchToSpectate&quot;)) {</b>
+<b class="nc">&nbsp;            Lobby l = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;            if (l != null) {</b>
+<b class="nc">&nbsp;                String prev = &quot;&quot;;</b>
+<b class="nc">&nbsp;                boolean wasNotP1 = true;</b>
+<b class="nc">&nbsp;                if (l.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                        wasNotP1 = false;</b>
+<b class="nc">&nbsp;                        prev = &quot;Player1 &quot;;</b>
+<b class="nc">&nbsp;                        if (l.getPlayer1Ready() &amp;&amp; l.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                            usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText(&quot;CannotStart&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        if (l.getPlayer1Ready()) {</b>
+<b class="nc">&nbsp;                            l.setPlayer1Ready(false);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        l.setPlayer1(null);</b>
+<b class="nc">&nbsp;                        l.addToSpectators(username);</b>
+<b class="nc">&nbsp;                        lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                        lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                        sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Spectator &quot; + username);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (wasNotP1) {</b>
+<b class="nc">&nbsp;                    if (l.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                        if (l.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                            prev = &quot;Player2 &quot;;</b>
+<b class="nc">&nbsp;                            if (l.getPlayer1Ready() &amp;&amp; l.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                                usernameSessionMap.get(l.getOwner()).getBasicRemote().sendText(&quot;CannotStart&quot;);</b>
+&nbsp;                            }
+<b class="nc">&nbsp;                            if (l.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                                l.setPlayer2Ready(false);</b>
+<b class="nc">&nbsp;                                lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                                lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                                sendAllUsersMessage(username, l.getSpectators(), &quot;UnReady &quot; + username);</b>
+&nbsp;                            }
+<b class="nc">&nbsp;                            l.setPlayer2(null);</b>
+<b class="nc">&nbsp;                            l.addToSpectators(username);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(l);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendAllUsersMessage(username, l.getSpectators(), &quot;Switch &quot; + prev + &quot;Spectator &quot; + username);</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //If the message is &quot;Kick&quot;, use the appended username and send that user a message saying they were kicked
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;Kick&quot;)) {</b>
+<b class="nc">&nbsp;            String usernameKicked = messages[1];</b>
+<b class="nc">&nbsp;            usernameSessionMap.get(usernameKicked).getBasicRemote().sendText(&quot;Kicked&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnClose
+&nbsp;    public void onClose(Session session) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into close&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+<b class="nc">&nbsp;        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (lobby != null) {</b>
+&nbsp;            //Upon closure of the websocket connection, check if the user was the host, if they were, delete the lobby and
+&nbsp;            //tell everyone the host left. If the user was a player or spectator, remove them from the lobby and tell everyone
+&nbsp;            //else who left.
+<b class="nc">&nbsp;            if (lobby.getOwner().equals(username)) {</b>
+<b class="nc">&nbsp;                sendOtherUsersMessage(username, &quot;HostLeft&quot;);</b>
+<b class="nc">&nbsp;                lobbyRepository.delete(lobby);</b>
+&nbsp;            }
+&nbsp;            else {
+<b class="nc">&nbsp;                String who = &quot;&quot;;</b>
+<b class="nc">&nbsp;                if (lobby.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                    if (lobby.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                        who = &quot;Player1 &quot;;</b>
+<b class="nc">&nbsp;                        sendOtherUsersMessage(username, &quot;PlayerLeft &quot; + who + username);</b>
+<b class="nc">&nbsp;                        if (lobby.getPlayer1Ready() &amp;&amp; lobby.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                            usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText(&quot;CannotStart&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        if (lobby.getPlayer1Ready()) {</b>
+<b class="nc">&nbsp;                            lobby.setPlayer1Ready(false);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(lobby);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendOtherUsersMessage(username, &quot;Unready &quot; + username);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        lobby.setPlayer1(null);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (lobby.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                    if (lobby.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                        who = &quot;Player2 &quot;;</b>
+<b class="nc">&nbsp;                        sendOtherUsersMessage(username, &quot;PlayerLeft &quot; + who + username);</b>
+<b class="nc">&nbsp;                        if (lobby.getPlayer1Ready() &amp;&amp; lobby.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                            usernameSessionMap.get(lobby.getOwner()).getBasicRemote().sendText(&quot;CannotStart&quot;);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        if (lobby.getPlayer2Ready()) {</b>
+<b class="nc">&nbsp;                            lobby.setPlayer2Ready(false);</b>
+<b class="nc">&nbsp;                            lobbyRepository.save(lobby);</b>
+<b class="nc">&nbsp;                            lobbyRepository.flush();</b>
+<b class="nc">&nbsp;                            sendOtherUsersMessage(username, &quot;Unready &quot; + username);</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        lobby.setPlayer2(null);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                if (lobby.getSpectators().contains(username)) {</b>
+<b class="nc">&nbsp;                    who = &quot;Spectator &quot;;</b>
+<b class="nc">&nbsp;                    sendOtherUsersMessage(username, &quot;PlayerLeft &quot; + who + username);</b>
+<b class="nc">&nbsp;                    lobby.removeSpectator(username);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                lobby.decrementUserCount();</b>
+<b class="nc">&nbsp;                lobbyRepository.save(lobby);</b>
+<b class="nc">&nbsp;                lobbyRepository.flush();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //Remove the session and username from the Maps
+<b class="nc">&nbsp;        sessionUsernameMap.remove(session);</b>
+<b class="nc">&nbsp;        usernameSessionMap.remove(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnError
+&nbsp;    public void onError(Session session, Throwable throwable) {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Error&quot;);</b>
+<b class="nc">&nbsp;        throwable.printStackTrace();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to find the lobby that the given user is in
+&nbsp;    private Lobby findLobbyWithUsername(List&lt;Lobby&gt; lobbies, String username) {
+<b class="nc">&nbsp;        for (Lobby l : lobbies) {</b>
+<b class="nc">&nbsp;            if (l.contains(username)) {</b>
+<b class="nc">&nbsp;                return l;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to find the lobby that the given code correlates to
+&nbsp;    private Lobby findLobbyWithCode(Long code) {
+<b class="nc">&nbsp;        for (Lobby l : lobbyRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if (l.getCode().equals(code)) {</b>
+<b class="nc">&nbsp;                return l;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method to send all other users a message
+&nbsp;    private void sendOtherUsersMessage(String username, String message) throws IOException {
+<b class="nc">&nbsp;        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;        if (lobby != null) {</b>
+<b class="nc">&nbsp;            if (lobby.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                if (!lobby.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(lobby.getPlayer1()).getBasicRemote().sendText(message);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (lobby.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                if (!lobby.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(lobby.getPlayer2()).getBasicRemote().sendText(message);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            List&lt;String&gt; spectators = lobby.getSpectators();</b>
+<b class="nc">&nbsp;            for (String u : spectators) {</b>
+<b class="nc">&nbsp;                if (!u.equals(username)) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(u).getBasicRemote().sendText(message);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method to send all users in the lobby a message
+&nbsp;    private void sendAllUsersMessage(String username, List&lt;String&gt; spectators, String message) throws IOException {
+<b class="nc">&nbsp;        Lobby lobby = findLobbyWithUsername(lobbyRepository.findAll(), username);</b>
+<b class="nc">&nbsp;        if (lobby != null) {</b>
+<b class="nc">&nbsp;            if (lobby.getPlayer1() != null) {</b>
+<b class="nc">&nbsp;                usernameSessionMap.get(lobby.getPlayer1()).getBasicRemote().sendText(message);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (lobby.getPlayer2() != null) {</b>
+<b class="nc">&nbsp;                usernameSessionMap.get(lobby.getPlayer2()).getBasicRemote().sendText(message);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            for (String u : spectators) {</b>
+<b class="nc">&nbsp;                usernameSessionMap.get(u).getBasicRemote().sendText(message);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

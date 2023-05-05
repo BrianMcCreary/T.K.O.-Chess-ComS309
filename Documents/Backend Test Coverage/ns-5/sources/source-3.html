@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Friendship</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Friends</a>
+</div>
+
+<h1>Coverage Summary for Class: Friendship (TotalKnockoutChess.Friends)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Friendship</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Friendship$HibernateProxy$e7Ff52Mr</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Friends;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;
+&nbsp;import javax.persistence.*;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class Friendship {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    private User user1;     //User1 of the friendship
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    private User user2;     //User2 of the friendship
+&nbsp;
+<b class="fc">&nbsp;    public Friendship() {</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Friendship(User user1, User user2) {</b>
+<b class="fc">&nbsp;        this.user1 = user1;</b>
+<b class="fc">&nbsp;        this.user2 = user2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser1() {
+<b class="fc">&nbsp;        return user1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser2() {
+<b class="fc">&nbsp;        return user2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUser1(User user1) {
+<b class="nc">&nbsp;        this.user1 = user1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUser2(User user2) {
+<b class="nc">&nbsp;        this.user2 = user2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Long getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(Long id) {
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

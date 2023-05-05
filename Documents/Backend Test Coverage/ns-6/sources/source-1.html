@@ -1,0 +1,343 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Lobby</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Lobby</a>
+</div>
+
+<h1>Coverage Summary for Class: Lobby (TotalKnockoutChess.Lobby)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Lobby</td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (12/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.4%
+  </span>
+  <span class="absValue">
+    (28/71)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Lobby$HibernateProxy$5xG1SlGz</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (12/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    39.4%
+  </span>
+  <span class="absValue">
+    (28/71)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Lobby;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;import javax.persistence.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@Table(name = &quot;lobby&quot;)
+&nbsp;public class Lobby {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    private Long code;
+&nbsp;
+&nbsp;    private int userCount;
+&nbsp;
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    String owner;
+&nbsp;
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    String player1;
+&nbsp;
+&nbsp;    private boolean player1Ready;
+&nbsp;
+&nbsp;    @Column(columnDefinition = &quot;TEXT&quot;)
+&nbsp;    String player2;
+&nbsp;
+&nbsp;    private boolean player2Ready;
+&nbsp;
+&nbsp;    @ElementCollection(fetch = FetchType.EAGER)
+&nbsp;    private List&lt;String&gt; spectators;
+&nbsp;
+<b class="fc">&nbsp;    public Lobby(){</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Main constructor for lobby objects.
+&nbsp;     * @param owner - User object who made the lobby
+&nbsp;     */
+<b class="fc">&nbsp;    public Lobby(String owner) {</b>
+<b class="fc">&nbsp;        spectators = new ArrayList&lt;String&gt;();</b>
+<b class="fc">&nbsp;        spectators.add(owner);</b>
+<b class="fc">&nbsp;        this.owner = owner;</b>
+<b class="fc">&nbsp;        player1 = null;</b>
+<b class="fc">&nbsp;        player2 = null;</b>
+<b class="fc">&nbsp;        userCount = 1;</b>
+<b class="fc">&nbsp;        player1Ready = false;</b>
+<b class="fc">&nbsp;        player2Ready = false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Generate code for the lobby
+&nbsp;    public Long generateLobbyCode(List&lt;Lobby&gt; lobbies){
+<b class="fc">&nbsp;        Random rand = new Random(System.currentTimeMillis());</b>
+<b class="fc">&nbsp;        Long lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000; // Values from 100,000 to 999,999</b>
+<b class="fc">&nbsp;        boolean isUnique = false;</b>
+<b class="fc">&nbsp;        boolean changed = false;</b>
+&nbsp;
+&nbsp;        // Make sure lobby code is unique
+<b class="fc">&nbsp;        while (!isUnique) {</b>
+<b class="fc">&nbsp;            for (Lobby l : lobbies) {</b>
+<b class="nc">&nbsp;                if (lobbyCode.equals(l.getCode())) {</b>
+<b class="nc">&nbsp;                    lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000;</b>
+<b class="nc">&nbsp;                    changed = true;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="fc">&nbsp;            if (changed) {</b>
+<b class="nc">&nbsp;                changed = false;</b>
+&nbsp;            }
+&nbsp;            else {
+<b class="fc">&nbsp;                isUnique = true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return lobbyCode;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter and Setter for lobby code
+&nbsp;    public Long getCode(){
+<b class="fc">&nbsp;        return code;</b>
+&nbsp;    }
+<b class="nc">&nbsp;    public void setCode(Long code) { this.code = code; }</b>
+&nbsp;
+&nbsp;    // Getter and Setter for the id of the lobby
+&nbsp;    public int getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;    public void setId(int id){
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter and Setter for the owner of the lobby
+&nbsp;    public String getOwner() {
+<b class="fc">&nbsp;        return owner;</b>
+&nbsp;    }
+&nbsp;    public void setOwner(String owner){
+<b class="nc">&nbsp;        this.owner = owner;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter and Setter for player1
+&nbsp;    public String getPlayer1() {
+<b class="fc">&nbsp;        return player1;</b>
+&nbsp;    }
+&nbsp;    public void setPlayer1(String player1){
+<b class="nc">&nbsp;        this.player1 = player1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter and Setter for player2
+&nbsp;    public String getPlayer2() {
+<b class="fc">&nbsp;        return player2;</b>
+&nbsp;    }
+&nbsp;    public void setPlayer2(String player2){
+<b class="nc">&nbsp;        this.player2 = player2;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getPlayer1Ready() {
+<b class="fc">&nbsp;        return player1Ready;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPlayer1Ready(boolean player1Ready) {
+<b class="nc">&nbsp;        this.player1Ready = player1Ready;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getPlayer2Ready() {
+<b class="fc">&nbsp;        return player2Ready;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPlayer2Ready(boolean player2Ready) {
+<b class="nc">&nbsp;        this.player2Ready = player2Ready;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Getter for spectators
+&nbsp;    public List&lt;String&gt; getSpectators(){
+<b class="fc">&nbsp;        return spectators;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // The first time a player joins the lobby, they are a spectator. They can switch to be a player with
+&nbsp;    // the &quot;switchToPlayer&quot; method.
+&nbsp;    public void addToSpectators(String user){
+<b class="nc">&nbsp;        spectators.add(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  Method to swap from spectator to player
+&nbsp;     *  @param user - User object to switch from spectator to player.
+&nbsp;     *  @param playerIndex - Index of which player slot &#39;user&#39; will switch to. Must be either 1 or 2.
+&nbsp;      */
+&nbsp;    public void switchToPlayer(String user, int playerIndex){
+<b class="nc">&nbsp;        spectators.remove(user);</b>
+<b class="nc">&nbsp;        if(playerIndex == 1){</b>
+<b class="nc">&nbsp;            player1 = user;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if(playerIndex == 2){</b>
+<b class="nc">&nbsp;            player2 = user;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     *  Method to swap from player to spectator
+&nbsp;     *  @param user - User object to switch from player to spectator.
+&nbsp;     */
+&nbsp;    public void switchToSpectator(String user){
+&nbsp;        // Will only switch if user is not already spectating.
+<b class="nc">&nbsp;        if(!spectators.contains(user) &amp;&amp; this.contains(user)) {</b>
+&nbsp;
+&nbsp;            // Before using .equals, must make sure player1 and player2 objects aren&#39;t null
+<b class="nc">&nbsp;            if (player1 != null &amp;&amp; player2 != null) {</b>
+<b class="nc">&nbsp;                if (player1.equals(user)) {</b>
+<b class="nc">&nbsp;                    player1 = null;</b>
+<b class="nc">&nbsp;                } else if (player2.equals(user)) {</b>
+<b class="nc">&nbsp;                    player2 = null;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } else if (player1 != null &amp;&amp; player1.equals(user)) {</b>
+<b class="nc">&nbsp;                player1 = null;</b>
+<b class="nc">&nbsp;            } else if (player2 != null &amp;&amp; player2.equals(user)) {</b>
+<b class="nc">&nbsp;                player2 = null;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            spectators.add(user);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to return whether a specific user is in the lobby
+&nbsp;    public boolean contains(String user){
+&nbsp;
+&nbsp;        // Check if user is spectating
+<b class="nc">&nbsp;        if (spectators.contains(user)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Check if both player objects are null (needed to not throw errors when calling .equals)
+<b class="nc">&nbsp;        if (player1 != null) {</b>
+<b class="nc">&nbsp;            if (player1.equals(user)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        if (player2 != null) {</b>
+<b class="nc">&nbsp;            if (player2.equals(user)) {</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString(){
+<b class="nc">&nbsp;        return &quot;LobbyID: &quot; + id + &quot;\nLobby Code: &quot; + code;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Methods to control increase and decrease of users in the lobby
+&nbsp;    public void incrementUserCount(){
+<b class="nc">&nbsp;        userCount++;</b>
+&nbsp;    }
+&nbsp;    public void decrementUserCount(){
+<b class="nc">&nbsp;        if(userCount &gt; 0) {</b>
+<b class="nc">&nbsp;            userCount--;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    // Method to return number of users in the lobby
+&nbsp;    public int getUserCount(){
+<b class="fc">&nbsp;        return userCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Method to remove someone from the spectators list
+&nbsp;    public void removeSpectator(String spectator) {
+<b class="nc">&nbsp;        spectators.remove(spectator);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

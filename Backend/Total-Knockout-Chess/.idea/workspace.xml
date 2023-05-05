@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d97cdc34-9d2d-4bd9-9ef2-eba173a0eb3e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,13 +31,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/conno/Documents/COMS309/1_an_5/Backend/Total-Knockout-Chess"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="JUnit.TotalKnockoutChess in Total-Knockout-Chess (1)">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />

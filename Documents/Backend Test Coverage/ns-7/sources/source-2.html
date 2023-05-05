@@ -1,0 +1,266 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserStatsController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Statistics</a>
+</div>
+
+<h1>Coverage Summary for Class: UserStatsController (TotalKnockoutChess.Statistics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserStatsController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.4%
+  </span>
+  <span class="absValue">
+    (85/93)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Statistics;
+&nbsp;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import io.swagger.annotations.ApiOperation;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;@Api(value = &quot;UserStatsController&quot;, description = &quot;Controller used to manage UserStats entities&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class UserStatsController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserStatsRepository userStatsRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;     //Messages to return to frontend</b>
+<b class="fc">&nbsp;    private final String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Returns a UserStats object by their username&quot;)
+&nbsp;    @GetMapping(path = &quot;/userStats/{username}&quot;)
+&nbsp;    public UserStats getUserStats(@PathVariable String username) {
+<b class="fc">&nbsp;        for (UserStats userStats : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (userStats.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                return userStats;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;    //UserStats not found</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Returns a string detailing a User&#39;s stats given their username&quot;)
+&nbsp;    @GetMapping(path = &quot;/getUserStats/{username}&quot;)
+&nbsp;    public String getUserStatsString(@PathVariable String username) {
+&nbsp;        String message;
+<b class="fc">&nbsp;        for (UserStats userStats : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (userStats.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                message = String.format(&quot;ChessBoxing %d %.1f Chess %d %.1f Boxing %d %.1f&quot;, userStats.getChessBoxingGames(), userStats.getChessBoxingWinRate(),</b>
+<b class="fc">&nbsp;                        userStats.getChessGames(), userStats.getChessWinRate(), userStats.getBoxingGames(), userStats.getBoxingWinRate());</b>
+<b class="fc">&nbsp;                return message;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Chess win to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/chessWin/{username}&quot;)
+&nbsp;    public String chessW(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.chessWin();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Chess loss to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/chessLoss/{username}&quot;)
+&nbsp;    public String chessL(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.chessLoss();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Boxing win to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/boxingWin/{username}&quot;)
+&nbsp;    public String boxingW(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.boxingWin();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Boxing loss to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/boxingLoss/{username}&quot;)
+&nbsp;    public String boxingL(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.boxingLoss();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Chess Boxing win to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/chessBoxingWin/{username}&quot;)
+&nbsp;    public String chessBoxingW(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.chessBoxingWin();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Adds a Chess Boxing loss to stats given their username&quot;)
+&nbsp;    @PutMapping(path = &quot;/userStats/chessBoxingLoss/{username}&quot;)
+&nbsp;    public String chessBoxingL(@PathVariable String username) {
+<b class="fc">&nbsp;        UserStats userStats = null;</b>
+<b class="fc">&nbsp;        boolean userStatsFound = false;</b>
+<b class="fc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (us.getUser().getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                userStats = us;</b>
+<b class="fc">&nbsp;                userStatsFound = true;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!userStatsFound) {</b>
+<b class="nc">&nbsp;            return failure;     //Couldn&#39;t find user</b>
+&nbsp;        }
+<b class="fc">&nbsp;        userStats.chessBoxingLoss();</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

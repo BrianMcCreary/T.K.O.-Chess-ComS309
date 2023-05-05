@@ -1,0 +1,677 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ChessGameSocket</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Chess</a>
+</div>
+
+<h1>Coverage Summary for Class: ChessGameSocket (TotalKnockoutChess.Chess)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChessGameSocket</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    27.8%
+  </span>
+  <span class="absValue">
+    (5/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3.9%
+  </span>
+  <span class="absValue">
+    (9/231)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Chess;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Chess.Pieces.ChessPiece;
+&nbsp;import TotalKnockoutChess.Chess.Pieces.Coordinate;
+&nbsp;import TotalKnockoutChess.Chess.Pieces.King;
+&nbsp;import TotalKnockoutChess.Chess.Pieces.Pawn;
+&nbsp;import TotalKnockoutChess.Statistics.UserStats;
+&nbsp;import TotalKnockoutChess.Statistics.UserStatsRepository;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;import TotalKnockoutChess.Users.UserRepository;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;
+&nbsp;import javax.websocket.*;
+&nbsp;import javax.websocket.server.PathParam;
+&nbsp;import javax.websocket.server.ServerEndpoint;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Hashtable;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;import static java.lang.Integer.parseInt;
+&nbsp;
+&nbsp;@Controller
+&nbsp;@ServerEndpoint(&quot;/chess/{username}&quot;)
+<b class="fc">&nbsp;public class ChessGameSocket {</b>
+&nbsp;
+&nbsp;    private static ChessGameRepository chessGameRepository;
+&nbsp;    private static UserRepository userRepository;
+&nbsp;    private static UserStatsRepository userStatsRepository;
+&nbsp;
+&nbsp;    // Variable to toggle backend output of the board. Used for testing
+<b class="fc">&nbsp;    private final boolean BACKEND_BOARD = false;</b>
+&nbsp;
+<b class="fc">&nbsp;    private final String admin = &quot;admin&quot;;</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setChessGameRepository(ChessGameRepository chessGameRepository) {
+<b class="fc">&nbsp;        this.chessGameRepository = chessGameRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserStatsRepository(UserStatsRepository userStatsRepository) {
+<b class="fc">&nbsp;        this.userStatsRepository = userStatsRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserRepository(UserRepository userRepository) {
+<b class="fc">&nbsp;        this.userRepository = userRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Store all socket session and their corresponding username.
+<b class="fc">&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();</b>
+<b class="fc">&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(ChessGameSocket.class);</b>
+&nbsp;
+&nbsp;    @OnOpen
+&nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username)
+&nbsp;            throws IOException {
+&nbsp;
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Open&quot;);</b>
+&nbsp;
+&nbsp;        // store connecting user information
+<b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
+<b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnMessage
+&nbsp;    public void onMessage(Session session, String message) throws IOException {
+&nbsp;
+&nbsp;        // Handle new messages
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Message: Got Message:&quot; + message);</b>
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+&nbsp;
+<b class="nc">&nbsp;        String[] messages = message.split(&quot; &quot;);</b>
+&nbsp;
+&nbsp;        //Chess game that the user in this session is in
+<b class="nc">&nbsp;        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);</b>
+&nbsp;
+&nbsp;        // Chess game status
+<b class="nc">&nbsp;        boolean whiteCheckMated = cg.isWhiteCheckMated();</b>
+<b class="nc">&nbsp;        boolean blackCheckMated = cg.isBlackCheckMated();</b>
+&nbsp;
+<b class="nc">&nbsp;        String whitePlayer = cg.getWhitePlayer();</b>
+<b class="nc">&nbsp;        String blackPlayer = cg.getBlackPlayer();</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean userIsBlackPlayer = false, userIsWhitePlayer = false;</b>
+&nbsp;        // Update booleans as appropriate
+<b class="nc">&nbsp;        if (username.equals(whitePlayer)) {</b>
+<b class="nc">&nbsp;            userIsWhitePlayer = true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (username.equals(blackPlayer)) {</b>
+<b class="nc">&nbsp;            userIsBlackPlayer = true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // If message is a coordinate and the game is running
+<b class="nc">&nbsp;        if (message.length() == 2 &amp;&amp; (!whiteCheckMated &amp;&amp; !blackCheckMated)) {</b>
+&nbsp;
+<b class="nc">&nbsp;            String whoseMove = cg.getWhoseMove();</b>
+&nbsp;
+&nbsp;            // FOR BACKEND TESTING
+&nbsp;            if(BACKEND_BOARD){
+&nbsp;                cg.displayBoard();
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            switch (whoseMove) {</b>
+&nbsp;                // If it is white&#39;s turn
+&nbsp;                case &quot;white&quot;:
+<b class="nc">&nbsp;                    if (userIsWhitePlayer) {</b>
+<b class="nc">&nbsp;                        executePlayerTurn(cg, username, message, &quot;white&quot;, blackPlayer);</b>
+<b class="nc">&nbsp;                    } else if (userIsBlackPlayer) {</b>
+&nbsp;                        // TODO Return players available moves
+&nbsp;                    }
+&nbsp;                    break;
+&nbsp;                // If it is black&#39;s turn
+&nbsp;                case &quot;black&quot;:
+<b class="nc">&nbsp;                    if (userIsBlackPlayer) {</b>
+<b class="nc">&nbsp;                        executePlayerTurn(cg, username, message, &quot;black&quot;, whitePlayer);</b>
+<b class="nc">&nbsp;                    } else if (userIsWhitePlayer) {</b>
+&nbsp;                        // TODO Return players available moves
+&nbsp;                    }
+&nbsp;                    break;
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        // If message requests the board
+<b class="nc">&nbsp;        else if (message.equals(&quot;GetBoard&quot;)) {</b>
+<b class="nc">&nbsp;            sendUserMessage(username, getBoard(cg));</b>
+&nbsp;        }
+&nbsp;        //If a user has won, update their statistics
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;GameType&quot;)) {</b>
+<b class="nc">&nbsp;            UserStats us = getUserStats(username);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (us != null) {</b>
+<b class="nc">&nbsp;                switch(messages[1]){</b>
+&nbsp;                    case &quot;Chess&quot;:
+&nbsp;                        // If user won Chess
+<b class="nc">&nbsp;                        if (messages[2].equals(&quot;win&quot;)) {</b>
+<b class="nc">&nbsp;                            us.chessWin();</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;GameWonBy &quot; + username);</b>
+&nbsp;                        }
+&nbsp;                        // If user lost Chess
+<b class="nc">&nbsp;                        else if (messages[2].equals(&quot;loss&quot;)) {</b>
+<b class="nc">&nbsp;                            us.chessLoss();</b>
+&nbsp;                        }
+&nbsp;                        break;
+&nbsp;                    case &quot;ChessBoxing&quot;:
+&nbsp;                        // If user won ChessBoxing
+<b class="nc">&nbsp;                        if (messages[2].equals(&quot;win&quot;)) {</b>
+<b class="nc">&nbsp;                            us.chessBoxingWin();</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;GameWonBy &quot; + username);</b>
+&nbsp;                        }
+&nbsp;                        // If user lost ChessBoxing
+<b class="nc">&nbsp;                        else if (messages[2].equals(&quot;loss&quot;)) {</b>
+<b class="nc">&nbsp;                            us.chessBoxingLoss();</b>
+&nbsp;                        }
+&nbsp;                        break;
+&nbsp;                }
+<b class="nc">&nbsp;                userStatsRepository.save(us);</b>
+<b class="nc">&nbsp;                userStatsRepository.flush();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        // If user hit the &quot;I Lost&quot; button
+<b class="nc">&nbsp;        else if(message.equals(&quot;Lost&quot;)){</b>
+<b class="nc">&nbsp;            sendUserMessage(username, &quot;GameLoss&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            if(userIsWhitePlayer &amp;&amp; blackPlayer != null){</b>
+<b class="nc">&nbsp;                sendUserMessage(blackPlayer, &quot;GameWon&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if(userIsBlackPlayer &amp;&amp; whitePlayer != null){</b>
+<b class="nc">&nbsp;                sendUserMessage(whitePlayer, &quot;GameWon&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        // If a pawn reached
+<b class="nc">&nbsp;        else if(messages[0].equals(&quot;Promote&quot;)){</b>
+<b class="nc">&nbsp;            String whoseMove = cg.getWhoseMove();</b>
+&nbsp;
+<b class="nc">&nbsp;            if ((whoseMove.equals(&quot;white&quot;) &amp;&amp; username.equals(whitePlayer) || (whoseMove.equals(&quot;black&quot;) &amp;&amp; username.equals(blackPlayer)))) {</b>
+&nbsp;
+&nbsp;                // FOR BACKEND TESTING
+&nbsp;                if(BACKEND_BOARD){
+&nbsp;                    cg.displayBoard();
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                Coordinate coordinate = Coordinate.fromString(messages[1]);</b>
+<b class="nc">&nbsp;                ChessPiece promotionPiece = cg.getPromotionPiece(messages[2]);</b>
+&nbsp;
+&nbsp;                // Updates the tile at coordinate to promotionPiece
+<b class="nc">&nbsp;                cg.setPiece(coordinate, promotionPiece);</b>
+&nbsp;
+&nbsp;                // Update the turn
+<b class="nc">&nbsp;                if(userIsWhitePlayer){</b>
+<b class="nc">&nbsp;                    cg.setWhoseMove(&quot;black&quot;);</b>
+<b class="nc">&nbsp;                    sendAllMessage(cg,  &quot;Player1Moved &quot; + messages[2] + &quot; &quot; + cg.getWhitePreviousMove().split(&quot; &quot;)[1] + &quot; &quot; +  messages[1]);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                else if(userIsBlackPlayer){</b>
+<b class="nc">&nbsp;                    cg.setWhoseMove(&quot;white&quot;);</b>
+<b class="nc">&nbsp;                    sendAllMessage(cg,  &quot;Player2Moved &quot; + messages[2] + &quot; &quot; +  cg.getBlackPreviousMove().split(&quot; &quot;)[1] + &quot; &quot; +  messages[1]);</b>
+&nbsp;                }
+&nbsp;
+&nbsp;                // FOR BACKEND TESTING
+&nbsp;                if(BACKEND_BOARD){
+&nbsp;                    cg.displayBoard();
+&nbsp;                }
+&nbsp;
+&nbsp;                // Update the database
+<b class="nc">&nbsp;                chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                chessGameRepository.flush();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        // Admin object to clear tiles in a game
+<b class="nc">&nbsp;        else if(messages[0].equals(&quot;Clear&quot;)){</b>
+<b class="nc">&nbsp;            if(username.equals(admin)){</b>
+<b class="nc">&nbsp;                cg.clearPiece(Coordinate.fromString(messages[1]));</b>
+&nbsp;
+&nbsp;                // Update the database
+<b class="nc">&nbsp;                chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                chessGameRepository.flush();</b>
+&nbsp;
+&nbsp;                // FOR BACKEND TESTING
+&nbsp;                if(BACKEND_BOARD){
+&nbsp;                    cg.displayBoard();
+&nbsp;                }
+&nbsp;
+&nbsp;                // Inform game participants that the tile was cleared
+<b class="nc">&nbsp;                sendAllMessage(cg, &quot;An admin has cleared the tile on &quot; + Coordinate.fromString(messages[1]));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnClose
+&nbsp;    public void onClose(Session session) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Close&quot;);</b>
+&nbsp;
+&nbsp;        // Find username and related chess game
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+<b class="nc">&nbsp;        ChessGame cg = findChessGame(chessGameRepository.findAll(), username);</b>
+&nbsp;
+&nbsp;        // remove the user connection information
+<b class="nc">&nbsp;        sessionUsernameMap.remove(session);</b>
+<b class="nc">&nbsp;        usernameSessionMap.remove(username);</b>
+&nbsp;
+&nbsp;        // If game with username was not found
+<b class="nc">&nbsp;        if(cg == null){</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+&nbsp;        // If user that left was one of the players, delete the game from the database
+<b class="nc">&nbsp;        if ((cg.getWhitePlayer() != null &amp;&amp; cg.getWhitePlayer().equals(username))</b>
+<b class="nc">&nbsp;                || (cg.getBlackPlayer() != null &amp;&amp; cg.getBlackPlayer().equals(username))) {</b>
+&nbsp;
+&nbsp;            // Send opponent that this player left the game
+<b class="nc">&nbsp;            if (cg.getWhitePlayer().equals(username)) {</b>
+<b class="nc">&nbsp;                cg.setWhitePlayer(null);</b>
+<b class="nc">&nbsp;                sendUserMessage(cg.getBlackPlayer(), &quot;OpponentLeft&quot;);</b>
+<b class="nc">&nbsp;            } else if (cg.getBlackPlayer().equals(username)) {</b>
+<b class="nc">&nbsp;                cg.setBlackPlayer(null);</b>
+<b class="nc">&nbsp;                sendUserMessage(cg.getWhitePlayer(), &quot;OpponentLeft&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            sendAllMessage(cg, &quot;PlayerLeft &quot; + username);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            chessGameRepository.delete(cg);</b>
+<b class="nc">&nbsp;            chessGameRepository.flush();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnError
+&nbsp;    public void onError(Session session, Throwable throwable) {
+&nbsp;        // Do error handling here
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Error&quot;);</b>
+<b class="nc">&nbsp;        throwable.printStackTrace();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private ChessGame findChessGame(List&lt;ChessGame&gt; all, String username) {
+<b class="nc">&nbsp;        ChessGame game = null;</b>
+&nbsp;
+&nbsp;        // Search through repository for chess game with username in it
+<b class="nc">&nbsp;        for (ChessGame g : all) {</b>
+<b class="nc">&nbsp;            if ((g.getWhitePlayer() != null &amp;&amp; g.getWhitePlayer().equals(username))</b>
+<b class="nc">&nbsp;                    || (g.getBlackPlayer() != null &amp;&amp; g.getBlackPlayer().equals(username))</b>
+<b class="nc">&nbsp;                    || g.getSpectators().contains(username)) {</b>
+<b class="nc">&nbsp;                game = g;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        return game;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void sendUserMessage(String username, String message) throws IOException {
+<b class="nc">&nbsp;        System.out.println(&quot;Attempt to send &quot; + username + &quot;: &quot; + message);</b>
+<b class="nc">&nbsp;        Session s = usernameSessionMap.get(username);</b>
+&nbsp;
+&nbsp;        // Ensure the user is in the session
+<b class="nc">&nbsp;        if(s != null){</b>
+<b class="nc">&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void sendAllPlayersMessage(ChessGame game, String message) throws IOException {
+<b class="nc">&nbsp;        String whitePlayer = game.getWhitePlayer();</b>
+<b class="nc">&nbsp;        String blackPlayer = game.getBlackPlayer();</b>
+&nbsp;
+&nbsp;        // If whitePlayer is in lobby
+<b class="nc">&nbsp;        if(whitePlayer != null) {</b>
+<b class="nc">&nbsp;            sendUserMessage(whitePlayer, message);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // If blackPlayer is in lobby
+<b class="nc">&nbsp;        if(blackPlayer != null) {</b>
+<b class="nc">&nbsp;            sendUserMessage(blackPlayer, message);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void sendAllSpectators(ChessGame game, String message) throws IOException {
+<b class="nc">&nbsp;        List&lt;String&gt; spectators = game.getSpectators();</b>
+&nbsp;
+&nbsp;        // Iterate over all spectators in the game and send them the message
+<b class="nc">&nbsp;        for(String spectator : spectators){</b>
+<b class="nc">&nbsp;            sendUserMessage(spectator, message);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void sendAllMessage(ChessGame game, String message) throws IOException{
+<b class="nc">&nbsp;        sendAllPlayersMessage(game, message);</b>
+<b class="nc">&nbsp;        sendAllSpectators(game, message);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void executePlayerTurn(ChessGame cg, String username, String message, String sideColor, String oppositePlayer) throws IOException {
+&nbsp;
+&nbsp;        // Coordinate of the piece to move
+<b class="nc">&nbsp;        Coordinate fromCoord = null;</b>
+<b class="nc">&nbsp;        if (sideColor.equals(&quot;white&quot;)) {</b>
+<b class="nc">&nbsp;            fromCoord = Coordinate.fromString(cg.getWhiteFromSquare());</b>
+<b class="nc">&nbsp;        } else if (sideColor.equals(&quot;black&quot;)) {</b>
+<b class="nc">&nbsp;            fromCoord = Coordinate.fromString(cg.getBlackFromSquare());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;        chessGameRepository.flush();</b>
+&nbsp;
+&nbsp;        // The piece that is on the tile sent in the message
+<b class="nc">&nbsp;        ChessPiece pieceOnSentTile = cg.getTile(message).piece;</b>
+&nbsp;
+&nbsp;
+&nbsp;        // If the user has not selected one of their pieces and do not select one this time, return
+<b class="nc">&nbsp;        if (fromCoord == null &amp;&amp; !pieceOnSentTile.color.equals(sideColor)) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        // If this side&#39;s player clicked on one of their piece&#39;s
+<b class="nc">&nbsp;        if (pieceOnSentTile.color.equals(sideColor)) {</b>
+&nbsp;
+&nbsp;            // Update this side&#39;s player&#39;s from square
+<b class="nc">&nbsp;            switch (sideColor) {</b>
+&nbsp;                case &quot;white&quot;:
+<b class="nc">&nbsp;                    cg.setWhiteFromSquare(message);</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case &quot;black&quot;:
+<b class="nc">&nbsp;                    cg.setBlackFromSquare(message);</b>
+&nbsp;                    break;
+&nbsp;            }
+&nbsp;
+&nbsp;            // Update the database
+<b class="nc">&nbsp;            chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;            chessGameRepository.flush();</b>
+&nbsp;
+&nbsp;            // FOR BACKEND TESTING
+&nbsp;            if(BACKEND_BOARD){
+&nbsp;                cg.displayBoard();
+&nbsp;            }
+&nbsp;
+&nbsp;            // Sends this side&#39;s player the piece type on sent tile
+<b class="nc">&nbsp;            sendUserMessage(username, pieceOnSentTile.toString());</b>
+&nbsp;
+&nbsp;            // Sends this side&#39;s player the tile that is selected
+<b class="nc">&nbsp;            sendUserMessage(username, &quot;TileSelected &quot; + Coordinate.fromString(message));</b>
+&nbsp;        }
+&nbsp;        // If this side&#39;s player has clicked on a one of their piece&#39;s previously and clicked on either an empty tile or an opponent&#39;s piece
+&nbsp;        else {
+&nbsp;            // Make sure game is updated
+<b class="nc">&nbsp;            chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;            chessGameRepository.flush();</b>
+&nbsp;
+<b class="nc">&nbsp;            boolean success = cg.makeMove(fromCoord, Coordinate.fromString(message));</b>
+<b class="nc">&nbsp;            if (success) {</b>
+&nbsp;
+&nbsp;                // Check for promotion, then update whose move it is
+<b class="nc">&nbsp;                switch (sideColor) {</b>
+&nbsp;                    case &quot;white&quot;:
+&nbsp;                        // If the piece moved was a white pawn, and it moved to the promotion rank
+<b class="nc">&nbsp;                        if(cg.getTile(message).piece instanceof Pawn &amp;&amp; Coordinate.fromString(message).y == 7) {</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;Player1Moved whitePawn &quot; + fromCoord + &quot; &quot; + Coordinate.fromString(message));</b>
+<b class="nc">&nbsp;                            sendUserMessage(username, &quot;Promotion &quot; + message);</b>
+<b class="nc">&nbsp;                            cg.setWhitePreviousMove(cg.getTile(message).piece + &quot; &quot; + message);</b>
+&nbsp;
+&nbsp;                            // Ensure the database is updated
+<b class="nc">&nbsp;                            chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                            chessGameRepository.flush();</b>
+&nbsp;                            return;
+&nbsp;                        }
+&nbsp;
+<b class="nc">&nbsp;                        cg.setWhitePreviousMove(cg.getTile(message).piece + &quot; &quot; + message);</b>
+<b class="nc">&nbsp;                        cg.setWhoseMove(&quot;black&quot;);</b>
+<b class="nc">&nbsp;                        break;</b>
+&nbsp;                    case &quot;black&quot;:
+&nbsp;                        // If the piece moved was a black pawn, and it moved to the promotion rank
+<b class="nc">&nbsp;                        if(cg.getTile(message).piece instanceof Pawn &amp;&amp; Coordinate.fromString(message).y == 0){</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;Player2Moved blackPawn &quot; + fromCoord + &quot; &quot; + Coordinate.fromString(message));</b>
+<b class="nc">&nbsp;                            sendUserMessage(username, &quot;Promotion &quot; + message);</b>
+<b class="nc">&nbsp;                            cg.setBlackPreviousMove(cg.getTile(message).piece + &quot; &quot; + message);</b>
+&nbsp;
+&nbsp;                            // Ensure the database is updated
+<b class="nc">&nbsp;                            chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                            chessGameRepository.flush();</b>
+&nbsp;                            return;
+&nbsp;                        }
+&nbsp;
+<b class="nc">&nbsp;                        cg.setBlackPreviousMove(cg.getTile(message).piece + &quot; &quot; + message);</b>
+<b class="nc">&nbsp;                        cg.setWhoseMove(&quot;white&quot;);</b>
+&nbsp;                        break;
+&nbsp;                }
+<b class="nc">&nbsp;                cg.setWhiteFromSquare(&quot;&quot;);</b>
+<b class="nc">&nbsp;                cg.setBlackFromSquare(&quot;&quot;);</b>
+&nbsp;
+&nbsp;                // Get chess game status
+<b class="nc">&nbsp;                boolean whiteCheckMated = cg.isWhiteCheckMated();</b>
+<b class="nc">&nbsp;                boolean blackCheckMated = cg.isBlackCheckMated();</b>
+&nbsp;
+&nbsp;                // If white was checkMated
+<b class="nc">&nbsp;                if(whiteCheckMated){</b>
+<b class="nc">&nbsp;                    sendAllMessage(cg, &quot;GameWonBy &quot; + cg.getBlackPlayer()); // Black won</b>
+&nbsp;                    // Ensure the database is updated
+<b class="nc">&nbsp;                    chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                    chessGameRepository.flush();</b>
+&nbsp;                    return;
+&nbsp;                }
+&nbsp;                // If black was checkMated
+<b class="nc">&nbsp;                else if(blackCheckMated){</b>
+<b class="nc">&nbsp;                    sendAllMessage(cg, &quot;GameWonBy &quot; + cg.getWhitePlayer()); // White won</b>
+&nbsp;                    // Ensure the database is updated
+<b class="nc">&nbsp;                    chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                    chessGameRepository.flush();</b>
+&nbsp;                    return;
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                String[] whitePreviousMove = cg.getWhitePreviousMove().split(&quot; &quot;);</b>
+<b class="nc">&nbsp;                String[] blackPreviousMove = cg.getBlackPreviousMove().split(&quot; &quot;);</b>
+&nbsp;
+&nbsp;                // Check if last move was En Passant
+<b class="nc">&nbsp;                        ChessPiece previousMovedPiece = cg.getTile(message).getPiece();</b>
+<b class="nc">&nbsp;                        String enPassantedPieceLocation = &quot;&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;                        if(whitePreviousMove.length &gt;= 1 &amp;&amp; (previousMovedPiece.color.equals(&quot;white&quot;) &amp;&amp; previousMovedPiece instanceof Pawn &amp;&amp; ((Pawn)previousMovedPiece).enPassantOccured)) {</b>
+<b class="nc">&nbsp;                            Coordinate whitePreviousMoveCoordinate = Coordinate.fromString(whitePreviousMove[1]);</b>
+<b class="nc">&nbsp;                            enPassantedPieceLocation = shiftCoordinate(whitePreviousMoveCoordinate, 0, -1).toString();</b>
+<b class="nc">&nbsp;                            ((Pawn)previousMovedPiece).enPassantOccured = false;</b>
+&nbsp;                        }
+&nbsp;
+<b class="nc">&nbsp;                        if(blackPreviousMove.length &gt;= 1 &amp;&amp; (previousMovedPiece.color.equals(&quot;black&quot;) &amp;&amp; previousMovedPiece instanceof Pawn &amp;&amp; ((Pawn)previousMovedPiece).enPassantOccured)){</b>
+<b class="nc">&nbsp;                            Coordinate blackPreviousMoveCoordinate = Coordinate.fromString(blackPreviousMove[1]);</b>
+<b class="nc">&nbsp;                            enPassantedPieceLocation = shiftCoordinate(blackPreviousMoveCoordinate, 0, 1).toString();</b>
+<b class="nc">&nbsp;                            ((Pawn)previousMovedPiece).enPassantOccured = false;</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;                        // If the previous move was enpassant, send message to clear the taken piece
+<b class="nc">&nbsp;                        if(!enPassantedPieceLocation.equals(&quot;&quot;)){</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;EnPassant &quot; + enPassantedPieceLocation);</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;
+&nbsp;                // Check if last move was castle
+<b class="nc">&nbsp;                        String whiteCastle = &quot;&quot;;</b>
+<b class="nc">&nbsp;                        String blackCastle = &quot;&quot;;</b>
+&nbsp;
+&nbsp;                        // White castle check
+<b class="nc">&nbsp;                        if(whitePreviousMove.length &gt;= 1 &amp;&amp; (previousMovedPiece.color.equals(&quot;white&quot;) &amp;&amp; previousMovedPiece instanceof King)){</b>
+<b class="nc">&nbsp;                            whiteCastle = ((King)(cg.getTile(whitePreviousMove[1]).getPiece())).castleRook();</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;                        // If white&#39;s previous move was castle, send message to clear the taken piece
+<b class="nc">&nbsp;                        if(!whiteCastle.equals(&quot;&quot;)){</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;Player1Moved &quot; + whiteCastle);</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;                        // Black castle check
+<b class="nc">&nbsp;                        if(blackPreviousMove.length &gt;= 1 &amp;&amp; (previousMovedPiece.color.equals(&quot;black&quot;) &amp;&amp; previousMovedPiece instanceof King)){</b>
+<b class="nc">&nbsp;                            blackCastle = ((King)(cg.getTile(blackPreviousMove[1]).getPiece())).castleRook();</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;                        // If black&#39;s previous move was castle, send message to clear the taken piece
+<b class="nc">&nbsp;                        if(!blackCastle.equals(&quot;&quot;)){</b>
+<b class="nc">&nbsp;                            sendAllMessage(cg, &quot;Player2Moved &quot; + blackCastle);</b>
+&nbsp;                        }
+&nbsp;
+&nbsp;                // Ensure the database is updated
+<b class="nc">&nbsp;                chessGameRepository.save(cg);</b>
+<b class="nc">&nbsp;                chessGameRepository.flush();</b>
+&nbsp;
+&nbsp;                // FOR BACKEND TESTING
+&nbsp;                if(BACKEND_BOARD){
+&nbsp;                    cg.displayBoard();
+&nbsp;                }
+&nbsp;
+&nbsp;                // Tell players that a move has been made
+<b class="nc">&nbsp;                switch(sideColor){</b>
+&nbsp;                    case &quot;white&quot;:
+<b class="nc">&nbsp;                        sendAllMessage(cg, &quot;Player1Moved &quot; + cg.getTile(message).piece + &quot; &quot;</b>
+<b class="nc">&nbsp;                            + fromCoord + &quot; &quot; + Coordinate.fromString(message));</b>
+<b class="nc">&nbsp;                        break;</b>
+&nbsp;                    case &quot;black&quot;:
+<b class="nc">&nbsp;                        sendAllMessage(cg, &quot;Player2Moved &quot; + cg.getTile(message).piece + &quot; &quot;</b>
+<b class="nc">&nbsp;                                + fromCoord + &quot; &quot; + Coordinate.fromString(message));</b>
+&nbsp;                        break;
+&nbsp;                }
+<b class="nc">&nbsp;            } else {</b>
+<b class="nc">&nbsp;                sendUserMessage(username, &quot;invalidMove&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getBoard(ChessGame game) {
+<b class="nc">&nbsp;        String encodedBoard = &quot;GameBoard &quot;;</b>
+<b class="nc">&nbsp;        ChessGameTile[][] board = game.getBoard();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int row = 0; row &lt; board.length; row++) {</b>
+<b class="nc">&nbsp;            for (int col = 0; col &lt; board[row].length; col++) {</b>
+&nbsp;                // Add current piece to the encodedBoard
+<b class="nc">&nbsp;                ChessPiece piece = board[col][row].piece;</b>
+&nbsp;
+&nbsp;                // &#39;.&#39; represents end of a column
+<b class="nc">&nbsp;                encodedBoard += piece.toString() + &quot;.&quot;;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            // Add # to signify end of row.
+<b class="nc">&nbsp;            encodedBoard += &quot;#&quot;;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Returns the chess board with the format &quot;ChessBoard A1Piece.B1Piece...H1Piece#A2Piece.B2Piece.......H8Piece&quot;
+<b class="nc">&nbsp;        return encodedBoard;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to get a UserStats object from their username
+&nbsp;    private UserStats getUserStats(String username) {
+<b class="nc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if (us.getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                return us;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Helper method to shift a coordinate
+&nbsp;    public Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+<b class="nc">&nbsp;        String coordinate = coord.toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        char letter = coordinate.charAt(0);</b>
+<b class="nc">&nbsp;        int number = parseInt(coordinate.substring(1));</b>
+&nbsp;
+<b class="nc">&nbsp;        if(shiftX != 0) {</b>
+<b class="nc">&nbsp;            letter += shiftX;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if(shiftY != 0) {</b>
+<b class="nc">&nbsp;            number += shiftY;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return Coordinate.fromString(letter + &quot;&quot; + number);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

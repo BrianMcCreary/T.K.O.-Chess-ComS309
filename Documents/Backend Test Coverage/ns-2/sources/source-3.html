@@ -1,0 +1,330 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > BoxingGameSocket</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Boxing</a>
+</div>
+
+<h1>Coverage Summary for Class: BoxingGameSocket (TotalKnockoutChess.Boxing)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BoxingGameSocket</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    36.4%
+  </span>
+  <span class="absValue">
+    (4/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.2%
+  </span>
+  <span class="absValue">
+    (6/115)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Boxing;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Statistics.UserStats;
+&nbsp;import TotalKnockoutChess.Statistics.UserStatsRepository;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;
+&nbsp;import javax.websocket.Session;
+&nbsp;import javax.websocket.server.ServerEndpoint;
+&nbsp;import javax.websocket.OnClose;
+&nbsp;import javax.websocket.OnError;
+&nbsp;import javax.websocket.OnMessage;
+&nbsp;import javax.websocket.OnOpen;
+&nbsp;import javax.websocket.server.PathParam;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Hashtable;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@ServerEndpoint(value = &quot;/websocket/boxing/{username}&quot;)
+&nbsp;@Component
+<b class="fc">&nbsp;public class BoxingGameSocket {</b>
+&nbsp;
+&nbsp;    private static BoxingGameRepository boxingGameRepository;
+&nbsp;
+&nbsp;    private static UserStatsRepository userStatsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setBoxingGameRepository(BoxingGameRepository boxingGameRepository) {
+<b class="fc">&nbsp;        this.boxingGameRepository = boxingGameRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserStatsRepository(UserStatsRepository userStatsRepository) {
+<b class="fc">&nbsp;        this.userStatsRepository = userStatsRepository;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();</b>
+<b class="fc">&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(BoxingGameSocket.class);</b>
+&nbsp;
+&nbsp;    @OnOpen
+&nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Open&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Opened connection&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
+<b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnMessage
+&nbsp;    public void onMessage(Session session, String message) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Message. Got Message: &quot; + message);</b>
+&nbsp;
+&nbsp;        //Username of the user in this session
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+&nbsp;
+&nbsp;        //Boxing game that the user in this session is in
+<b class="nc">&nbsp;        BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);</b>
+&nbsp;
+<b class="nc">&nbsp;        String messages[] = message.split(&quot; &quot;);</b>
+&nbsp;
+&nbsp;        //If the received message is a move, update game accordingly
+<b class="nc">&nbsp;        if (message.equals(&quot;kick&quot;) || message.equals(&quot;block&quot;) || message.equals(&quot;jab&quot;)) {</b>
+<b class="nc">&nbsp;            if (bg != null) {</b>
+&nbsp;                //If this session is with player 1 or player 2, update their move accordingly
+<b class="nc">&nbsp;                if (bg.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                    bg.setP1Move(message);</b>
+<b class="nc">&nbsp;                } else if (bg.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                    bg.setP2Move(message);</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                String roundWinner = &quot;&quot;;</b>
+&nbsp;
+&nbsp;                //If both of the users have a confirmed move
+<b class="nc">&nbsp;                if (!bg.getP1Move().equals(&quot;&quot;) &amp;&amp; !bg.getP2Move().equals(&quot;&quot;)) {</b>
+&nbsp;
+&nbsp;                    //roundWinner is username of the round winner (possibly tie)
+<b class="nc">&nbsp;                    roundWinner = bg.getRoundWinner();</b>
+&nbsp;
+&nbsp;                    //Find the round winner, send information to the client, and update the boxing game accordingly
+<b class="nc">&nbsp;                    if (roundWinner.equals(bg.getPlayer1())) {</b>
+<b class="nc">&nbsp;                        bg.dockLife(bg.getPlayer2());</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;RoundWin &quot; + bg.getP2Move());</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;RoundLoss &quot; + bg.getP1Move());</b>
+<b class="nc">&nbsp;                        sendSpectatorsMessage(bg.getPlayer1(), &quot;RoundOver Player1 &quot; + bg.getP1Move() + &quot; Player2 &quot; + bg.getP2Move());</b>
+<b class="nc">&nbsp;                    } else if (roundWinner.equals(bg.getPlayer2())) {</b>
+<b class="nc">&nbsp;                        bg.dockLife(bg.getPlayer1());</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;RoundLoss &quot; + bg.getP2Move());</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;RoundWin &quot; + bg.getP1Move());</b>
+<b class="nc">&nbsp;                        sendSpectatorsMessage(bg.getPlayer1(), &quot;RoundOver Player2 &quot; + bg.getP2Move() + &quot; Player1 &quot; + bg.getP1Move());</b>
+<b class="nc">&nbsp;                    } else if (roundWinner.equals(&quot;tie&quot;)) {</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;Tie &quot; + bg.getP2Move());</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;Tie &quot; + bg.getP1Move());</b>
+<b class="nc">&nbsp;                        sendSpectatorsMessage(bg.getPlayer1(), &quot;RoundTie &quot; + bg.getP1Move());</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    bg.clearMoves();</b>
+&nbsp;                }
+&nbsp;
+&nbsp;                //If one of the players is out of lives, send information to the client and delete the boxing game from the repository
+<b class="nc">&nbsp;                if (bg.isGameOver()) {</b>
+<b class="nc">&nbsp;                    String gameWinner = bg.getGameWinner();</b>
+<b class="nc">&nbsp;                    if (gameWinner.equals(bg.getPlayer1())) {</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;GameWin&quot;);</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;GameLoss&quot;);</b>
+<b class="nc">&nbsp;                        sendSpectatorsMessage(bg.getPlayer1(), &quot;GameOver Player1&quot;);</b>
+<b class="nc">&nbsp;                    } else if (gameWinner.equals(bg.getPlayer2())) {</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;GameLoss&quot;);</b>
+<b class="nc">&nbsp;                        usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;GameWin&quot;);</b>
+<b class="nc">&nbsp;                        sendSpectatorsMessage(bg.getPlayer1(), &quot;GameOver Player2&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    boxingGameRepository.delete(bg);</b>
+<b class="nc">&nbsp;                } else {</b>
+<b class="nc">&nbsp;                    boxingGameRepository.save(bg);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;        //If the user leaves, send information to their opponent&#39;s client and delete the boxing game from the repository
+<b class="nc">&nbsp;        else if (message.equals(&quot;leave&quot;)) {</b>
+<b class="nc">&nbsp;            if (bg != null) {</b>
+<b class="nc">&nbsp;                if (bg.getPlayer1().equals(username)) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(bg.getPlayer2()).getBasicRemote().sendText(&quot;OpponentLeft&quot;);</b>
+<b class="nc">&nbsp;                } else if (bg.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                    usernameSessionMap.get(bg.getPlayer1()).getBasicRemote().sendText(&quot;OpponentLeft&quot;);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                sendSpectatorsMessage(username, &quot;PlayerLeft&quot;);</b>
+<b class="nc">&nbsp;                boxingGameRepository.delete(bg);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //If a user has won, update their statistics
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;GameType&quot;)) {</b>
+<b class="nc">&nbsp;            UserStats us = getUserStats(username);</b>
+<b class="nc">&nbsp;            if (us != null) {</b>
+<b class="nc">&nbsp;                if (messages[1].equals(&quot;Boxing&quot;)) {</b>
+<b class="nc">&nbsp;                    if (messages[2].equals(&quot;win&quot;)) {</b>
+<b class="nc">&nbsp;                        us.boxingWin();</b>
+<b class="nc">&nbsp;                    } else if (messages[2].equals(&quot;loss&quot;)) {</b>
+<b class="nc">&nbsp;                        us.boxingLoss();</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                } else if (messages[1].equals(&quot;ChessBoxing&quot;)) {</b>
+<b class="nc">&nbsp;                    if (messages[2].equals(&quot;win&quot;)) {</b>
+<b class="nc">&nbsp;                        us.chessBoxingWin();</b>
+<b class="nc">&nbsp;                    } else if (messages[2].equals(&quot;loss&quot;)) {</b>
+<b class="nc">&nbsp;                        us.chessBoxingLoss();</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                userStatsRepository.save(us);</b>
+<b class="nc">&nbsp;                userStatsRepository.flush();</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //When creating a game for a ChessBoxing game
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;Start&quot;)) {</b>
+<b class="nc">&nbsp;            BoxingGame newGame = new BoxingGame(messages[1], messages[2], new ArrayList&lt;String&gt;());</b>
+<b class="nc">&nbsp;            boxingGameRepository.save(newGame);</b>
+<b class="nc">&nbsp;            boxingGameRepository.flush();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //When a spectator needs to get into the Boxing game for a ChessBoxing game
+<b class="nc">&nbsp;        else if (messages[0].equals(&quot;Join&quot;)) {</b>
+<b class="nc">&nbsp;            BoxingGame newGame = findBoxingGame(boxingGameRepository.findAll(), messages[1]);</b>
+<b class="nc">&nbsp;            if (newGame != null) {</b>
+<b class="nc">&nbsp;                newGame.addToSpectators(messages[2]);</b>
+<b class="nc">&nbsp;                boxingGameRepository.save(newGame);</b>
+<b class="nc">&nbsp;                boxingGameRepository.flush();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnClose
+&nbsp;    public void onClose(Session session) throws IOException {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into close&quot;);</b>
+&nbsp;
+&nbsp;        //Remove the session and username from the Maps
+<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
+<b class="nc">&nbsp;        BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);</b>
+<b class="nc">&nbsp;        if (bg != null) {</b>
+<b class="nc">&nbsp;            if (bg.getSpectators().contains(username)) {</b>
+<b class="nc">&nbsp;                bg.removeFromSpectators(username);</b>
+<b class="nc">&nbsp;                boxingGameRepository.save(bg);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (bg.getPlayer1().equals(username) || bg.getPlayer2().equals(username)) {</b>
+<b class="nc">&nbsp;                boxingGameRepository.delete(bg);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        sessionUsernameMap.remove(session);</b>
+<b class="nc">&nbsp;        usernameSessionMap.remove(username);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @OnError
+&nbsp;    public void onError(Session session, Throwable throwable) {
+<b class="nc">&nbsp;        logger.info(&quot;Entered into Error&quot;);</b>
+<b class="nc">&nbsp;        throwable.printStackTrace();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to find the boxing game that the given user is in
+&nbsp;    private BoxingGame findBoxingGame(List&lt;BoxingGame&gt; boxingGameList, String username) {
+<b class="nc">&nbsp;        for (BoxingGame bg : boxingGameList) {</b>
+<b class="nc">&nbsp;            if (bg.contains(username)) {</b>
+<b class="nc">&nbsp;                return bg;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to send spectators a message
+&nbsp;    private void sendSpectatorsMessage(String username, String message) throws IOException {
+<b class="nc">&nbsp;        BoxingGame bg = findBoxingGame(boxingGameRepository.findAll(), username);</b>
+<b class="nc">&nbsp;        List&lt;String&gt; spectators = bg.getSpectators();</b>
+<b class="nc">&nbsp;        for (String spec : spectators) {</b>
+<b class="nc">&nbsp;            usernameSessionMap.get(spec).getBasicRemote().sendText(message);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Helper method used to get a UserStats object from their username
+&nbsp;    private UserStats getUserStats(String username) {
+<b class="nc">&nbsp;        for (UserStats us : userStatsRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if (us.getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                return us;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>
