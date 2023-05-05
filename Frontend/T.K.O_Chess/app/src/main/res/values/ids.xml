@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="ChessOptionsBtn" type="id" />
-    <item name="ChessBoardLinearLayout" type="id" />
-    <item name="ChessOptionsLayout" type="id" />
-    <item name="TurnsLeftText" type="id" />
-    <item name="WhoseMoveText" type="id" />
-</resources>
