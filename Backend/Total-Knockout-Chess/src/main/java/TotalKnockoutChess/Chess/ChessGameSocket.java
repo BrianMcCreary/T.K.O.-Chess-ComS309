@@ -450,30 +450,24 @@ public class ChessGameSocket {
                 String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
 
                 // Check if last move was En Passant
-                        String whiteEnPassant = "";
-                        String blackEnPassant = "";
                         ChessPiece previousMovedPiece = cg.getTile(message).getPiece();
+                        String enPassantedPieceLocation = "";
 
-                        if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof Pawn)){
+                        if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof Pawn && ((Pawn)previousMovedPiece).enPassantOccured)) {
                             Coordinate whitePreviousMoveCoordinate = Coordinate.fromString(whitePreviousMove[1]);
-                            String enPassantedPieceLocation = shiftCoordinate(whitePreviousMoveCoordinate, 0, -1).toString();
-                            whiteEnPassant = ( (Pawn)(cg.getTile(enPassantedPieceLocation).getPiece()) ).enPassantMove;
+                            enPassantedPieceLocation = shiftCoordinate(whitePreviousMoveCoordinate, 0, -1).toString();
+                            ((Pawn)previousMovedPiece).enPassantOccured = false;
                         }
 
-                        // If white's previous move was enpassant, send message to clear the taken piece
-                        if(!whiteEnPassant.equals("")){
-                            sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
-                        }
-
-                        if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof Pawn)){
+                        if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof Pawn && ((Pawn)previousMovedPiece).enPassantOccured)){
                             Coordinate blackPreviousMoveCoordinate = Coordinate.fromString(blackPreviousMove[1]);
-                            String enPassantedPieceLocation = shiftCoordinate(blackPreviousMoveCoordinate, 0, 1).toString();
-                            blackEnPassant = ( (Pawn)(cg.getTile(enPassantedPieceLocation).getPiece()) ).enPassantMove;
+                            enPassantedPieceLocation = shiftCoordinate(blackPreviousMoveCoordinate, 0, 1).toString();
+                            ((Pawn)previousMovedPiece).enPassantOccured = false;
                         }
 
-                        // If black's previous move was enpassant, send message to clear the taken piece
-                        if(!blackEnPassant.equals("")){
-                            sendAllMessage(cg, "EnPassant " + blackPreviousMove[1]);
+                        // If the previous move was enpassant, send message to clear the taken piece
+                        if(!enPassantedPieceLocation.equals("")){
+                            sendAllMessage(cg, "EnPassant " + enPassantedPieceLocation);
                         }
 
 
