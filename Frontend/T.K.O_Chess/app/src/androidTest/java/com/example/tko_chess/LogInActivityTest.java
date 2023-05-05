@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,9 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import android.util.Log;
 
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class LogInActivityTest {
 
@@ -47,7 +50,7 @@ public class LogInActivityTest {
     }
 
     @Test
-    public void login(){
+    public void login1(){ // should pass
         String username = "tester8";
         String password = "password";
 
@@ -66,7 +69,7 @@ public class LogInActivityTest {
     }
 
     @Test
-    public void login2(){
+    public void login2(){ // should fail
         String username = "tester10";
         String password = "hello";
 

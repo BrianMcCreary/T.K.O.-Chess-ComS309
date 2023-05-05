@@ -1,0 +1,46 @@
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetDropDown\">\r\n    <runningDeviceTargetSelectedWithDropDown>\r\n      <Target>\r\n        <type value=\"RUNNING_DEVICE_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33_2.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n    </runningDeviceTargetSelectedWithDropDown>\r\n    <timeTargetWasSelectedWithDropDown value=\"2023-05-05T03:04:54.397010800Z\" />\r\n    <multipleDevicesSelectedInDropDown value=\"true\" />\r\n    <runningDeviceTargetsSelectedWithDialog>\r\n      <Target>\r\n        <type value=\"RUNNING_DEVICE_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33_2.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n      <Target>\r\n        <type value=\"RUNNING_DEVICE_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n    </runningDeviceTargetsSelectedWithDialog>\r\n    <targetsSelectedWithDialog>\r\n      <Target>\r\n        <type value=\"QUICK_BOOT_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33_2.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n      <Target>\r\n        <type value=\"QUICK_BOOT_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33_3.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n      <Target>\r\n        <type value=\"QUICK_BOOT_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\point\\.android\\avd\\Pixel_5_API_33.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n    </targetsSelectedWithDialog>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision fe228c1ae379dda062c42d3705ac96c864f1255a)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1683298275456)
+@@ -7,33 +7,12 @@
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\point\.android\avd\Pixel_5_API_33_2.avd" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </runningDeviceTargetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2023-05-05T03:04:54.397010800Z" />
+-    <multipleDevicesSelectedInDropDown value="true" />
+-    <runningDeviceTargetsSelectedWithDialog>
+-      <Target>
+-        <type value="RUNNING_DEVICE_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\point\.android\avd\Pixel_5_API_33_2.avd" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-      <Target>
+-        <type value="RUNNING_DEVICE_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="VIRTUAL_DEVICE_PATH" />
+             <value value="C:\Users\point\.android\avd\Pixel_5_API_33.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+-    </runningDeviceTargetsSelectedWithDialog>
++    </runningDeviceTargetSelectedWithDropDown>
++    <timeTargetWasSelectedWithDropDown value="2023-05-05T14:51:10.603429600Z" />
+     <targetsSelectedWithDialog>
+       <Target>
+         <type value="QUICK_BOOT_TARGET" />

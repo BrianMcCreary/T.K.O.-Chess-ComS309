@@ -2,6 +2,7 @@ package com.example.tko_chess;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
@@ -28,10 +29,12 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import android.util.Log;
 
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.nio.charset.Charset;
 import java.util.Random;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class RegisterActivityTest {
 
@@ -53,7 +56,8 @@ public class RegisterActivityTest {
 
         Random rand = new Random();
         int upperbound = 99999999;
-        int int_random = rand.nextInt(upperbound);
+        int lowerbound = 10000000;
+        int int_random = rand.nextInt(upperbound - lowerbound + 1) + lowerbound;
         String username = String.valueOf(int_random);
         String password = String.valueOf(int_random);
 
