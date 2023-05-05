@@ -61,6 +61,11 @@ public class FriendsActivityTest {
 		onView(withId(R.id.LoginButton)).perform(click());
 		onView(withId(R.id.MenuToFriendsBtn)).perform(click());
 
+		try{
+			Thread.sleep(SIMULATED_DELAY_MS);
+		}catch (InterruptedException e){
+		}
+
 		//Views friends and sends friend request
 		onView(withId(R.id.ViewFriendsBtn)).perform(click());
 
@@ -88,6 +93,11 @@ public class FriendsActivityTest {
 		onView(withId(R.id.LoginButton)).perform(click());
 		onView(withId(R.id.MenuToFriendsBtn)).perform(click());
 
+		try{
+			Thread.sleep(SIMULATED_DELAY_MS);
+		}catch (InterruptedException e){
+		}
+
 		//Views friends and sends friend request
 		onView(withId(R.id.ViewFriendsBtn)).perform(click());
 
@@ -98,6 +108,7 @@ public class FriendsActivityTest {
 		onView(withId(R.id.CancelFriendBtn)).perform(click());
 
 		onView(withId(R.id.SendFriendRequestText)).perform(typeText("tester1"), closeSoftKeyboard());
+		onView(withId(R.id.SendFriendRequestBtn)).perform(click());
 
 		onView(withId(R.id.FriendstoMenuBtn)).perform(click());
 		//intended(hasComponent(MainMenuActivity.class.getCanonicalName()));
@@ -118,6 +129,11 @@ public class FriendsActivityTest {
 
 		onView(withId(R.id.LoginButton)).perform(click());
 		onView(withId(R.id.MenuToFriendsBtn)).perform(click());
+
+		try{
+			Thread.sleep(SIMULATED_DELAY_MS);
+		}catch (InterruptedException e){
+		}
 
 		//Accept and remove friend
 		onView(withId(R.id.PendingFriendRequestBtn)).perform(click());
@@ -142,6 +158,11 @@ public class FriendsActivityTest {
 
 		onView(withId(R.id.LoginButton)).perform(click());
 		onView(withId(R.id.MenuToFriendsBtn)).perform(click());
+
+		try{
+			Thread.sleep(SIMULATED_DELAY_MS);
+		}catch (InterruptedException e){
+		}
 
 		onView(withId(R.id.ViewFriendsBtn)).perform(click());
 
@@ -172,6 +193,11 @@ public class FriendsActivityTest {
 
 		onView(withId(R.id.LoginButton)).perform(click());
 		onView(withId(R.id.MenuToFriendsBtn)).perform(click());
+
+		try{
+			Thread.sleep(SIMULATED_DELAY_MS);
+		}catch (InterruptedException e){
+		}
 
 		//Views friends and sends friend request
 		onView(withId(R.id.ViewFriendsBtn)).perform(click());
