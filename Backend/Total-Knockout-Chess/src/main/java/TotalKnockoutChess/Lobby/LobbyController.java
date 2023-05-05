@@ -24,6 +24,18 @@ public class LobbyController {
     private final String success = "success";
     private final String failure = "failure";
 
+    @ApiOperation(value = "Attempts to create a lobby from the given lobby code")
+    @PostMapping("/{owner}")
+    public String createLobby(@PathVariable String owner) {
+        Lobby lobby = new Lobby(owner);
+        lobby.generateLobbyCode(lobbyRepository.findAll());
+
+        lobbyRepository.save(lobby);
+        lobbyRepository.flush();
+
+        return success;
+    }
+
     @ApiOperation(value = "Returns whether any of the lobbies in the repository matches the given lobby code")
     @GetMapping("/find/{lobbyCode}")
     public String findLobby(@PathVariable Long lobbyCode) {
@@ -36,12 +48,17 @@ public class LobbyController {
     }
 
     //Mapping to delete a lobby from the repository.
-    @ApiOperation(value = "Deletes a lobby from the repository from the given lobby id")
-    @DeleteMapping("/delete/{lobbyId}")
-    public void deleteLobby(@PathVariable int lobbyId){
-        Lobby l = lobbyRepository.findById(lobbyId);
-        l.setOwner(null);
-        lobbyRepository.delete(l);
+    @ApiOperation(value = "Deletes a lobby from the repository from the given lobby owner")
+    @DeleteMapping("/delete/{lobbyOwner}")
+    public String deleteLobby(@PathVariable String lobbyOwner){
+        for(Lobby l : lobbyRepository.findAll()){
+            if(l.getOwner().equals(lobbyOwner)) {
+                lobbyRepository.delete(l);
+                return "success";
+            }
+        }
+
+        return "failure";
     }
 
     // Mapping to get all current lobbies.

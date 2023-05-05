@@ -32,7 +32,7 @@ public class ChessGameSocket {
     private static UserStatsRepository userStatsRepository;
 
     // Variable to toggle backend output of the board. Used for testing
-    private final boolean BACKEND_BOARD = true;
+    private final boolean BACKEND_BOARD = false;
 
     private final String admin = "admin";
 
