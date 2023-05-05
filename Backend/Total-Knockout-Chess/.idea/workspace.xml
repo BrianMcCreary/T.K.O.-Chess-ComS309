@@ -7,9 +7,8 @@
     <list default="true" id="d97cdc34-9d2d-4bd9-9ef2-eba173a0eb3e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/BoxingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/FriendsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/StatisticsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TotalKnockoutChess/StatisticsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/SpringFoxConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/SpringFoxConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Statistics/UserStatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Statistics/UserStatsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +33,7 @@
     &quot;last_opened_file_path&quot;: &quot;E:/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.TotalKnockoutChess in Total-Knockout-Chess">
+  <component name="RunManager" selected="Application.TotalKnockoutChessApplication">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
       <module name="Total-Knockout-Chess" />
