@@ -2,8 +2,10 @@ package com.example.tko_chess;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.OrderWith;
 import org.junit.runner.RunWith;
 
 
@@ -27,7 +29,9 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import android.util.Log;
 
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class FriendsActivityTest {
 
@@ -46,7 +50,7 @@ public class FriendsActivityTest {
 	}
 
 	@Test
-	public void sendFriend() {
+	public void Test1() {
 		//Logs in
 		String username = "tester8";
 		String password = "password";
@@ -63,6 +67,8 @@ public class FriendsActivityTest {
 		onView(withId(R.id.SendFriendRequestText)).perform(typeText("tester1"), closeSoftKeyboard());
 
 		onView(withId(R.id.SendFriendRequestBtn)).perform(click());
+
+		onView(withId(R.id.SentFriendRequestBtn)).perform(click());
 		//intended(hasComponent(MainMenuActivity.class.getCanonicalName()));
 		try{
 			Thread.sleep(SIMULATED_DELAY_MS);
@@ -71,7 +77,7 @@ public class FriendsActivityTest {
 	}
 
 	@Test
-	public void cancelFriend() {
+	public void Test2() {
 		//Logs in
 		String username = "tester8";
 		String password = "password";
@@ -102,7 +108,7 @@ public class FriendsActivityTest {
 	}
 
 	@Test
-	public void acceptFriend() {
+	public void Test3() {
 		//Logs in
 		String username = "tester1";
 		String password = "password";
@@ -126,7 +132,7 @@ public class FriendsActivityTest {
 	}
 
 	@Test
-	public void removeFriend() {
+	public void Test4() {
 		//Logs in
 		String username = "tester1";
 		String password = "password";
@@ -156,7 +162,7 @@ public class FriendsActivityTest {
 	}
 
 	@Test
-	public void DenyFriendReq() {
+	public void Test5() {
 		//Logs in
 		String username = "tester8";
 		String password = "password";
