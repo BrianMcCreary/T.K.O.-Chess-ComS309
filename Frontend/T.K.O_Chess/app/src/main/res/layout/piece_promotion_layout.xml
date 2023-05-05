@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/promotionLayout"
+        android:layout_width="414dp"
+        android:layout_height="105dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/Bishop"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
+            android:contentDescription="Bishop"
+            app:srcCompat="@drawable/black_bishop" />
+
+        <ImageButton
+            android:id="@+id/Knight"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
+            android:contentDescription="Knight"
+            app:srcCompat="@drawable/black_knight" />
+
+        <ImageButton
+            android:id="@+id/Queen"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
+            android:contentDescription="Queen"
+            app:srcCompat="@drawable/black_queen" />
+
+        <ImageButton
+            android:id="@+id/Rook"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/faded_soft_blue"
+            android:contentDescription="Rook"
+            app:srcCompat="@drawable/black_rook" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
