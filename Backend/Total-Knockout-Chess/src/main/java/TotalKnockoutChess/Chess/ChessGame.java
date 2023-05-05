@@ -246,7 +246,7 @@ public class ChessGame {
 
             // If enPassant occurred
             if(pawn.enPassantOccured){
-                
+
                 // Clear the piece taken by en passant
                 Coordinate enPassantMove = endCoordinate;
 

@@ -394,6 +394,7 @@ public class ChessGameSocket {
                     case "white":
                         // If the piece moved was a white pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 7) {
+                            sendAllMessage(cg, "Player1Moved whitePawn " + fromCoord + " " + Coordinate.fromString(message));
                             sendUserMessage(username, "Promotion " + message);
                             cg.setWhitePreviousMove(cg.getTile(message).piece + " " + message);
 
@@ -409,6 +410,7 @@ public class ChessGameSocket {
                     case "black":
                         // If the piece moved was a black pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 0){
+                            sendAllMessage(cg, "Player2Moved blackPawn " + fromCoord + " " + Coordinate.fromString(message));
                             sendUserMessage(username, "Promotion " + message);
                             cg.setBlackPreviousMove(cg.getTile(message).piece + " " + message);
 
