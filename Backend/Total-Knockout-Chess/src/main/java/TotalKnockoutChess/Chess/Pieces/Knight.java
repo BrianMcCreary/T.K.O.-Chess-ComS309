@@ -228,7 +228,7 @@ public class Knight extends ChessPiece {
         Coordinate down2Right1 = Coordinate.fromString(currentPosition.toString());
 
         // Checks square down two squares and to the right one square
-        down2Right1 = shiftCoordinate(down2Right1, 1, 2);
+        down2Right1 = shiftCoordinate(down2Right1, 1, -2);
 
         // If coordinate is on the board
         if(down2Right1 != null) {
