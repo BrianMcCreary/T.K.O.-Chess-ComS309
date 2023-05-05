@@ -21,6 +21,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 @Controller
 @ServerEndpoint("/chess/{username}")
 public class ChessGameSocket {
@@ -392,24 +394,34 @@ public class ChessGameSocket {
                     case "white":
                         // If the piece moved was a white pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 7) {
+                            sendAllMessage(cg, "Player1Moved whitePawn " + fromCoord + " " + Coordinate.fromString(message));
                             sendUserMessage(username, "Promotion " + message);
                             cg.setWhitePreviousMove(cg.getTile(message).piece + " " + message);
+
+                            // Ensure the database is updated
+                            chessGameRepository.save(cg);
+                            chessGameRepository.flush();
                             return;
                         }
 
-                        cg.setWhoseMove("black");
                         cg.setWhitePreviousMove(cg.getTile(message).piece + " " + message);
+                        cg.setWhoseMove("black");
                         break;
                     case "black":
                         // If the piece moved was a black pawn, and it moved to the promotion rank
                         if(cg.getTile(message).piece instanceof Pawn && Coordinate.fromString(message).y == 0){
+                            sendAllMessage(cg, "Player2Moved blackPawn " + fromCoord + " " + Coordinate.fromString(message));
                             sendUserMessage(username, "Promotion " + message);
                             cg.setBlackPreviousMove(cg.getTile(message).piece + " " + message);
+
+                            // Ensure the database is updated
+                            chessGameRepository.save(cg);
+                            chessGameRepository.flush();
                             return;
                         }
 
-                        cg.setWhoseMove("white");
                         cg.setBlackPreviousMove(cg.getTile(message).piece + " " + message);
+                        cg.setWhoseMove("white");
                         break;
                 }
                 cg.setWhiteFromSquare("");
@@ -436,29 +448,54 @@ public class ChessGameSocket {
                     return;
                 }
 
-                // TODO Fix enpassant
-//                String[] whitePreviousMove = cg.getWhitePreviousMove().split(" ");
-//                String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
-//                String whiteEnPassant = "";
-//                String blackEnPassant = "";
-//
-//                if(whitePreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
-//                    whiteEnPassant = ((Pawn)cg.getTile(whitePreviousMove[1]).getPiece()).enPassantMove;
-//                }
-//
-//                // If white's previous move was enpassant, send message to clear the taken piece
-//                if(!whiteEnPassant.equals("")){
-//                    sendAllMessage(cg, "EnPassant " + whitePreviousMove[1]);
-//                }
-//
-//                if(blackPreviousMove.length >= 1 && cg.getTile(message).piece instanceof Pawn){
-//                    blackEnPassant = ((Pawn)cg.getTile(blackPreviousMove[1]).getPiece()).enPassantMove;
-//                }
-//
-//                // If black's previous move was enpassant, send message to clear the taken piece
-//                if(!blackEnPassant.equals("")){
-//                    sendAllMessage(cg, "EnPassant " + blackPreviousMove[1]);
-//                }
+                String[] whitePreviousMove = cg.getWhitePreviousMove().split(" ");
+                String[] blackPreviousMove = cg.getBlackPreviousMove().split(" ");
+
+                // Check if last move was En Passant
+                        ChessPiece previousMovedPiece = cg.getTile(message).getPiece();
+                        String enPassantedPieceLocation = "";
+
+                        if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof Pawn && ((Pawn)previousMovedPiece).enPassantOccured)) {
+                            Coordinate whitePreviousMoveCoordinate = Coordinate.fromString(whitePreviousMove[1]);
+                            enPassantedPieceLocation = shiftCoordinate(whitePreviousMoveCoordinate, 0, -1).toString();
+                            ((Pawn)previousMovedPiece).enPassantOccured = false;
+                        }
+
+                        if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof Pawn && ((Pawn)previousMovedPiece).enPassantOccured)){
+                            Coordinate blackPreviousMoveCoordinate = Coordinate.fromString(blackPreviousMove[1]);
+                            enPassantedPieceLocation = shiftCoordinate(blackPreviousMoveCoordinate, 0, 1).toString();
+                            ((Pawn)previousMovedPiece).enPassantOccured = false;
+                        }
+
+                        // If the previous move was enpassant, send message to clear the taken piece
+                        if(!enPassantedPieceLocation.equals("")){
+                            sendAllMessage(cg, "EnPassant " + enPassantedPieceLocation);
+                        }
+
+
+                // Check if last move was castle
+                        String whiteCastle = "";
+                        String blackCastle = "";
+
+                        // White castle check
+                        if(whitePreviousMove.length >= 1 && (previousMovedPiece.color.equals("white") && previousMovedPiece instanceof King)){
+                            whiteCastle = ((King)(cg.getTile(whitePreviousMove[1]).getPiece())).castleRook();
+                        }
+
+                        // If white's previous move was castle, send message to clear the taken piece
+                        if(!whiteCastle.equals("")){
+                            sendAllMessage(cg, "Player1Moved " + whiteCastle);
+                        }
+
+                        // Black castle check
+                        if(blackPreviousMove.length >= 1 && (previousMovedPiece.color.equals("black") && previousMovedPiece instanceof King)){
+                            blackCastle = ((King)(cg.getTile(blackPreviousMove[1]).getPiece())).castleRook();
+                        }
+
+                        // If black's previous move was castle, send message to clear the taken piece
+                        if(!blackCastle.equals("")){
+                            sendAllMessage(cg, "Player2Moved " + blackCastle);
+                        }
 
                 // Ensure the database is updated
                 chessGameRepository.save(cg);
@@ -470,11 +507,6 @@ public class ChessGameSocket {
                 }
 
                 // Tell players that a move has been made
-                sendUserMessage(username, "userMoved");
-                sendUserMessage(oppositePlayer, "opponentMoved " + fromCoord + " "
-                        + message + " " + cg.getTile(message).piece);
-
-                // Alternative way to tell players that a move has been made
                 switch(sideColor){
                     case "white":
                         sendAllMessage(cg, "Player1Moved " + cg.getTile(message).piece + " "
@@ -520,5 +552,23 @@ public class ChessGameSocket {
             }
         }
         return null;
+    }
+
+    // Helper method to shift a coordinate
+    public Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+        String coordinate = coord.toString();
+
+        char letter = coordinate.charAt(0);
+        int number = parseInt(coordinate.substring(1));
+
+        if(shiftX != 0) {
+            letter += shiftX;
+        }
+
+        if(shiftY != 0) {
+            number += shiftY;
+        }
+
+        return Coordinate.fromString(letter + "" + number);
     }
 }

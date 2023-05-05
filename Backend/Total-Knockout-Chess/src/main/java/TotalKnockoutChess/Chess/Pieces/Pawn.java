@@ -4,9 +4,7 @@ import TotalKnockoutChess.Chess.ChessGameTile;
 
 public class Pawn extends ChessPiece{
     private static final long serialVersionUID = 0L;
-    public String enPassantMove = "";
-
-    public boolean canPromote = false;
+    public boolean canPromote = false, enPassantOccured = true;
 
     public Pawn(String color) {
         super(color);
@@ -51,7 +49,7 @@ public class Pawn extends ChessPiece{
         if(!opponentsPreviousMovePiece.equals("") && opponentsPreviousMovePiece.substring(5).equals("Pawn") && nextTo(currentPosition, opponentsPreviousMoveCoordinates)){
             enPassant = shiftCoordinate(opponentsPreviousMoveCoordinates, 0, -1);
             moves += enPassant + " ";
-            enPassantMove = opponentsPreviousMoveCoordinate;
+            enPassantOccured = true;
         }
 
         // Potential coordinates on the board. Down one from current position
@@ -124,7 +122,7 @@ public class Pawn extends ChessPiece{
         if(!opponentsPreviousMovePiece.equals("") && opponentsPreviousMovePiece.substring(5).equals("Pawn") && nextTo(currentPosition, opponentsPreviousMoveCoordinates)){
             enPassant = shiftCoordinate(opponentsPreviousMoveCoordinates, 0, 1);
             moves += enPassant + " ";
-            enPassantMove = opponentsPreviousMoveCoordinate;
+            enPassantOccured = true;
         }
 
         // Potential coordinates on the board. Up one from current position

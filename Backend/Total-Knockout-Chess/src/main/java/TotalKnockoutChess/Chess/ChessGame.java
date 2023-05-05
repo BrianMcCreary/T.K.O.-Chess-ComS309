@@ -13,6 +13,7 @@ public class ChessGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Lob
     private ChessGameTile[][] tiles;
 
     private final int BOARD_WIDTH = 8;
@@ -242,13 +243,22 @@ public class ChessGame {
         // If the moved piece was a pawn, check for en passant and check for promotion
         else if(movedPiece instanceof Pawn){
             Pawn pawn = (Pawn) movedPiece;
-            String enPassantString = pawn.enPassantMove;
 
             // If enPassant occurred
-            if( !enPassantString.equals("") ){
+            if(pawn.enPassantOccured){
 
                 // Clear the piece taken by en passant
-                Coordinate enPassantMove = Coordinate.fromString(enPassantString);
+                Coordinate enPassantMove = endCoordinate;
+
+                switch(pawn.color){
+                    case "white":
+                        enPassantMove = movedPiece.shiftCoordinate(endCoordinate, 0, 1);
+                        break;
+                    case "black":
+                        enPassantMove = movedPiece.shiftCoordinate(endCoordinate, 0, -1);
+                        break;
+                }
+
                 clearPiece(enPassantMove);
 
             }
