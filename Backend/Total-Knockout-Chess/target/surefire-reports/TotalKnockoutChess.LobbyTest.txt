@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: TotalKnockoutChess.LobbyTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.111 s <<< FAILURE! - in TotalKnockoutChess.LobbyTest
+lobbyCreationRetrievalAndDeletionTest  Time elapsed: 0.111 s  <<< ERROR!
+java.lang.NumberFormatException: For input string: "null"
+	at TotalKnockoutChess.LobbyTest.lobbyCreationRetrievalAndDeletionTest(LobbyTest.java:51)
+
