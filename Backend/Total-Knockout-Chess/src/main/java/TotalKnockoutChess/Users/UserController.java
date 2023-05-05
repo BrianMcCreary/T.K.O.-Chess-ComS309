@@ -1,9 +1,11 @@
 package TotalKnockoutChess.Users;
 
+import TotalKnockoutChess.Statistics.UserStats;
 import TotalKnockoutChess.Friends.FriendRequest;
 import TotalKnockoutChess.Friends.FriendRequestRepository;
 import TotalKnockoutChess.Friends.Friendship;
 import TotalKnockoutChess.Friends.FriendshipRepository;
+import TotalKnockoutChess.Statistics.UserStatsRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,32 @@ public class UserController {
     @Autowired
     FriendshipRepository friendshipRepository;
 
+    @Autowired
+    UserStatsRepository userStatsRepository;
+
     private final String success = "{\"message\":\"success\"}";     //Messages to return to frontend
     private final String failure = "{\"message\":\"failure\"}";
     private final String trueMessage = "{\"message\":\"true\"}";
     private final String falseMessage = "{\"message\":\"false\"}";
 
     //Method that returns a list of all users
-    @ApiOperation(value = "Returns list of all Users")
+    @ApiOperation(value = "Returns list of all Users as as JSONArray")
     @GetMapping(path = "/users")
     List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @ApiOperation(value = "Returns list of all users in a space separated string")
+    @PutMapping(path = "/getusers")
+    public String getUsersAsString(){
+        String usernames = "";
+
+        // For each user, add their username to the list
+        for(User user : userRepository.findAll()){
+            usernames += user.getUsername() + " ";
+        }
+
+        return usernames;
     }
 
     //Method that creates a new user given the username is > 0 characters, the password is >= 8 characters, and the username isn't already taken
@@ -54,6 +72,13 @@ public class UserController {
         }
         User u = new User(username, password);
         userRepository.save(u);
+        userRepository.flush();
+        UserStats us = new UserStats(u);
+        userStatsRepository.save(us);
+        userStatsRepository.flush();
+        u.initUserStats(us);
+        userRepository.save(u);
+        userRepository.flush();
         return success;
     }
 
@@ -61,6 +86,16 @@ public class UserController {
     @ApiOperation(value = "Delete the user with the given username")
     @PutMapping(path = "/users/{username}")
     public String deleteUser(@PathVariable String username) {
+        User user = null;
+        for (User u : userRepository.findAll()) {
+            if (u.getUsername().equals(username)) {
+                user = u;
+                break;
+            }
+        }
+        if (user == null) {
+            return failure;
+        }
         for (FriendRequest fr : friendRequestRepository.findAll()) {        //Iterate through all friend requests and remove the one's associated with this user
             if (fr.getSender().getUsername().equals(username)) {
                 fr.getReceiver().removeIncomingRequest(username);
@@ -81,13 +116,8 @@ public class UserController {
                 friendshipRepository.delete(f);
             }
         }
-        for (User u : userRepository.findAll()) {           //Delete the user
-            if (u.getUsername().equals(username)) {
-                userRepository.delete(u);
-                return success;
-            }
-        }
-        return failure;
+        userRepository.delete(user);
+        return success;
     }
 
     //Method that returns a user object given a username
@@ -138,47 +168,64 @@ public class UserController {
 
     //Method that changes a user's username given their current username, new username, and password
     @ApiOperation(value = "Allows the user to change their username as long as they know their password")
-    @PutMapping(path = "/users/name/{currentUsername}/{username}/{password}")
-    public @ResponseBody String changeUserName(@PathVariable String currentUsername, @PathVariable String username, @PathVariable String password) {
+    @PutMapping(path = "/users/username/{currentUsername}/{password}/{username}")
+    public String changeUserName(@PathVariable String currentUsername, @PathVariable String password, @PathVariable String username) {
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(username)) {
-                return failure;                         //username is taken
+                return "failure";                         //username is taken
             }
         }
         for (User u : userRepository.findAll()) {
             if (u.getUsername().equals(currentUsername)) {      //find current user
                 if (u.getPassword().equals(password)) {
                     u.setUsername(username);            //if given password matches, change username
+                    userRepository.save(u);
                     userRepository.flush();
-                    return success;
+                    return "success";
                 }
                 else {
-                    return failure;     //if given password does not match, return failure
+                    return "failure";     //if given password does not match, return failure
                 }
             }
         }
-        return failure;     //return failure if user isn't found
+        return "failure";     //return failure if user isn't found
     }
 
     //Method that changes a user's password given their username, current password, and new password
     @ApiOperation(value = "Allows the user to change their password as long as they know their old password")
-    @PutMapping(path = "/users/password/{username}/{password}/{currentPassword}")
-    public @ResponseBody String changeUserPassword(@PathVariable String username, @PathVariable String password, @PathVariable String currentPassword) {
+    @PutMapping(path = "/users/password/{username}/{currentPassword}/{password}")
+    public String changeUserPassword(@PathVariable String username, @PathVariable String currentPassword, @PathVariable String password) {
         if (password.length() < 8) {
-            return failure;     //if password is too short return failure
+            return "failure";     //if password is too short return failure
         }
         for (User u : userRepository.findAll()) {       //find user
             if (u.getUsername().equals(username)) {
                 if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly
                     u.setPassword(password);            //change password
+                    userRepository.save(u);
                     userRepository.flush();
-                    return success;
+                    return "success";
                 }
                 else {
-                    return failure;     //if they entered their old password incorrectly, return failure
+                    return "failure";     //if they entered their old password incorrectly, return failure
                 }
             }
         }
-        return failure;     //return failure if user isn't found
+        return "failure";     //return failure if user isn't found
+    }
+
+    @ApiOperation(value = "Method to make users an admin")
+    @PutMapping(path = "/users/makeadmin/{username}")
+    public String makeAdmin(@PathVariable String username){
+        for (User u : userRepository.findAll()) {       //find user
+            if (u.getUsername().equals(username)) {
+                u.setAdmin(true);
+
+                userRepository.save(u);
+                userRepository.flush();
+                return "success";
+            }
+        }
+        return "failure";
     }
 }

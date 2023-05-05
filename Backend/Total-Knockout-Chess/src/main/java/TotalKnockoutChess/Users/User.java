@@ -1,6 +1,8 @@
 package TotalKnockoutChess.Users;
 
 import TotalKnockoutChess.Lobby.Lobby;
+import TotalKnockoutChess.Statistics.UserStats;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +13,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "UserStats")
+    UserStats userStats;
+
     private String username;        //User username
     private String password;        //User password
+
+    private boolean isAdmin;        // Admin status
 
     @ElementCollection
     private List<String> incomingFriendRequests;        //User's incoming friend requests
@@ -33,6 +42,11 @@ public class User {
         incomingFriendRequests = new ArrayList<String>();
         outgoingFriendRequests = new ArrayList<String>();
         friends = new ArrayList<String>();
+        isAdmin = false;
+    }
+
+    public void initUserStats(UserStats userStats) {
+        this.userStats = userStats;
     }
 
     public User() {
@@ -108,6 +122,9 @@ public class User {
     public List<String> getFriends() {
         return friends;
     }
+
+    public boolean isAdmin(){ return isAdmin; }
+    public void setAdmin(boolean isAdmin){ this.isAdmin = isAdmin; }
 
     public String toString(){
         String str = "";

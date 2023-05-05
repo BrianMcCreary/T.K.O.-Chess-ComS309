@@ -61,32 +61,17 @@
         </activity>
 
         <activity
-            android:name=".TKOChessActivity"
-            android:exported="false">
-        </activity>
-
-        <activity
             android:name=".FriendsActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".Profiles"
+            android:name=".ProfileActivity"
             android:exported="false">
         </activity>
 
         <activity
-            android:name=".Profile_Editor"
-            android:exported="false">
-        </activity>
-
-        <activity
-            android:name=".ChangeUsername"
-            android:exported="false">
-        </activity>
-
-        <activity
-            android:name=".ChangePassword"
+            android:name=".EditProfileActivity"
             android:exported="false">
         </activity>
 

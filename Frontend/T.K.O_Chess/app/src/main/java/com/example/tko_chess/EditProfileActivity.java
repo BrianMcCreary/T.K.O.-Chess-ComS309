@@ -22,6 +22,7 @@ import org.w3c.dom.Text;
 
 /**
  * @author Lex Somers
+ * @author Zachary Scurlock
  * This is where the user will be able to choose whether to change their username or password
  */
 public class EditProfileActivity extends AppCompatActivity {

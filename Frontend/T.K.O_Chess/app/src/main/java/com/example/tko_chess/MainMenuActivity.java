@@ -128,8 +128,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         MenuToFriends = findViewById(R.id.MenuToFriendsBtn);
 
-
-
         MenuToFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,13 +5,12 @@ import TotalKnockoutChess.Chess.ChessGameTile;
 public class King extends ChessPiece {
     private static final long serialVersionUID = 0L;
 
-    private boolean checked, checkMated, canCastle;
+    private boolean checkMated, canCastle;
 
     private Coordinate coordinate;
 
     public King(String color, Coordinate coordinate) {
         super(color);
-        checked = false;
         checkMated = false;
         canCastle = true;
         this.coordinate = coordinate;
@@ -25,15 +24,28 @@ public class King extends ChessPiece {
         coordinate = updatedCoordinate;
     }
 
-    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition) {
+    @Override
+    public String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove) {
         String moves = "";
-//        Code to add every move as an available move for testing
-        for(Coordinate c : Coordinate.values()){
-            moves += c.toString() + " ";
+        Coordinate  up        = shiftCoordinate(currentPosition,  0,  1),
+                    down      = shiftCoordinate(currentPosition,  0, -1),
+                    left      = shiftCoordinate(currentPosition, -1,  0),
+                    right     = shiftCoordinate(currentPosition,  1,  0),
+                    upLeft    = shiftCoordinate(currentPosition, -1,  1),
+                    upRight   = shiftCoordinate(currentPosition,  1,  1),
+                    downLeft  = shiftCoordinate(currentPosition, -1, -1),
+                    downRight = shiftCoordinate(currentPosition,  1, -1);
+
+        Coordinate[] nearby = {up, down, left, right, upLeft, upRight, downLeft, downRight};
+
+        for(Coordinate c : nearby){
+            // If the coordinate is on the board and the tile at the coordinates has no piece on it, or it has an opponent's piece on it.
+            if(c != null && !board[c.x][c.y].getPiece().color.equals(color)){
+                moves += c + " ";
+            }
         }
 
-
-
+        System.out.println("Piece " + this + " at " + currentPosition + " has the following available moves.\n" + moves);
         return moves;
     }
 
@@ -41,12 +53,6 @@ public class King extends ChessPiece {
     public final String toString() {
         return color + "King";
     }
-
-
-    // Getter/Setter for checked field
-    public boolean isChecked(){ return checked; }
-    public void setChecked(boolean checked) { this.checked = checked; }
-
 
     // Getter/Setter for checkMated field
     public boolean isCheckMated(){ return checkMated; }
