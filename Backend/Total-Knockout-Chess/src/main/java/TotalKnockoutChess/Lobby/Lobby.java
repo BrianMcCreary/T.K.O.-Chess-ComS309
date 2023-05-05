@@ -62,7 +62,7 @@ public class Lobby {
         // Make sure lobby code is unique
         while (!isUnique) {
             for (Lobby l : lobbies) {
-                if (l.getCode().equals(lobbyCode)) {
+                if (lobbyCode.equals(l.getCode())) {
                     lobbyCode = Math.abs(rand.nextLong() % 900000) + 100000;
                     changed = true;
                 }

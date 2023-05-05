@@ -5,23 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d97cdc34-9d2d-4bd9-9ef2-eba173a0eb3e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/application.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TotalKnockoutChess/Chess/ChessGameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/Total-Knockout-Chess-1.0.0.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.BoxingTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.BoxingTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.FriendsTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.FriendsTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.StatisticsTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TotalKnockoutChess.StatisticsTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.BoxingTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.BoxingTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.FriendsTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.FriendsTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.StatisticsTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TotalKnockoutChess.StatisticsTest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -34,14 +31,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/COMS309/1_an_5/Backend/Total-Knockout-Chess&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/conno/Documents/COMS309/1_an_5/Backend/Total-Knockout-Chess"
   }
-}</component>
-  <component name="RunManager" selected="Application.TotalKnockoutChessApplication">
+}]]></component>
+  <component name="RunManager" selected="JUnit.TotalKnockoutChess in Total-Knockout-Chess (1)">
     <configuration name="TotalKnockoutChessApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TotalKnockoutChess.TotalKnockoutChessApplication" />
       <module name="Total-Knockout-Chess" />
@@ -64,6 +61,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TotalKnockoutChess in Total-Knockout-Chess (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Total-Knockout-Chess" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TotalKnockoutChess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TotalKnockoutChess" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TotalKnockoutChess in Total-Knockout-Chess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Total-Knockout-Chess" />
       <option name="TEST_OBJECT" value="directory" />
@@ -74,6 +85,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TotalKnockoutChess in Total-Knockout-Chess (1)" />
         <item itemvalue="JUnit.TotalKnockoutChess in Total-Knockout-Chess" />
         <item itemvalue="JUnit.StatisticsTest" />
       </list>
@@ -90,6 +102,17 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -101,6 +124,9 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Total_Knockout_Chess$TotalKnockoutChess_in_Total_Knockout_Chess__1_.ic" NAME="TotalKnockoutChess in Total-Knockout-Chess (1) Coverage Results" MODIFIED="1683286667689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>TotalKnockoutChess.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Total_Knockout_Chess$TotalKnockoutChess_in_Total_Knockout_Chess.ic" NAME="TotalKnockoutChess in Total-Knockout-Chess Coverage Results" MODIFIED="1683228276724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -1,0 +1,153 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ChessPiece</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Chess.Pieces</a>
+</div>
+
+<h1>Coverage Summary for Class: ChessPiece (TotalKnockoutChess.Chess.Pieces)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChessPiece</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (2/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Chess.Pieces;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Chess.ChessGameTile;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.HashMap;
+&nbsp;
+&nbsp;import static java.lang.Integer.parseInt;
+&nbsp;
+&nbsp;public abstract class ChessPiece implements Serializable {
+&nbsp;
+&nbsp;    private static final long serialVersionUID = 0L;
+&nbsp;    public String color;
+&nbsp;
+<b class="fc">&nbsp;    public ChessPiece(String color) {</b>
+<b class="fc">&nbsp;        this.color = color;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method that, when implemented, determines a piece&#39;s available moves
+&nbsp;     * @param board - the board where this piece resides
+&nbsp;     * @param currentPosition - the current position of the piece (as a Coordinate object) relative to the board
+&nbsp;     * @param opponentsPreviousMove - string value with element at index 0 as the piece type and element at index 1 as the destination coordinate
+&nbsp;     * @return String that is space separated for each available move
+&nbsp;     */
+&nbsp;    public abstract String calculateAvailableMoves(ChessGameTile[][] board, Coordinate currentPosition, String opponentsPreviousMove);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Method that, when implemented, returns a string of an abbreviated version of the piece&#39;s type
+&nbsp;     * @return String - abbreviated piece type in the format &quot;W/B{firstLetterOrTwoOfPieceType}&quot;. For empty piece, &quot;-&quot;. For black king, &quot;BK&quot;. For white knight, &quot;WKn&quot;, etc.
+&nbsp;     */
+&nbsp;    public abstract String toString();
+&nbsp;
+&nbsp;    public Coordinate shiftCoordinate(Coordinate coord, int shiftX, int shiftY) {
+<b class="nc">&nbsp;        String coordinate = coord.toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        char letter = coordinate.charAt(0);</b>
+<b class="nc">&nbsp;        int number = parseInt(coordinate.substring(1));</b>
+&nbsp;
+<b class="nc">&nbsp;        if(shiftX != 0) {</b>
+<b class="nc">&nbsp;            letter += shiftX;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if(shiftY != 0) {</b>
+<b class="nc">&nbsp;           number += shiftY;</b>
+&nbsp;         }
+&nbsp;
+<b class="nc">&nbsp;        return Coordinate.fromString(letter + &quot;&quot; + number);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

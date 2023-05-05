@@ -24,6 +24,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tester1" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -89,6 +90,19 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tester1" value="120" />
                   <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-724740815">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -167,6 +181,46 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tester1" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1777845971">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1777846002">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1851555714">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -180,6 +234,20 @@
                   <entry key="Duration" value="90" />
                   <entry key="Tester1" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="2004709643">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="tester1" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

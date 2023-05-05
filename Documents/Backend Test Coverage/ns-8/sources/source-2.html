@@ -1,0 +1,334 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Users</a>
+</div>
+
+<h1>Coverage Summary for Class: UserController (TotalKnockoutChess.Users)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69.5%
+  </span>
+  <span class="absValue">
+    (73/105)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Users;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Statistics.UserStats;
+&nbsp;import TotalKnockoutChess.Friends.FriendRequest;
+&nbsp;import TotalKnockoutChess.Friends.FriendRequestRepository;
+&nbsp;import TotalKnockoutChess.Friends.Friendship;
+&nbsp;import TotalKnockoutChess.Friends.FriendshipRepository;
+&nbsp;import TotalKnockoutChess.Statistics.UserStatsRepository;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import io.swagger.annotations.ApiOperation;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Api(value = &quot;UserController&quot;, description = &quot;Controller used to manage User entities&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class UserController {</b>
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    FriendRequestRepository friendRequestRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    FriendshipRepository friendshipRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserStatsRepository userStatsRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;     //Messages to return to frontend</b>
+<b class="fc">&nbsp;    private final String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private final String trueMessage = &quot;{\&quot;message\&quot;:\&quot;true\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private final String falseMessage = &quot;{\&quot;message\&quot;:\&quot;false\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    //Method that returns a list of all users
+&nbsp;    @ApiOperation(value = &quot;Returns list of all Users as as JSONArray&quot;)
+&nbsp;    @GetMapping(path = &quot;/users&quot;)
+&nbsp;    List&lt;User&gt; getAllUsers() {
+<b class="fc">&nbsp;        return userRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Returns list of all users in a space separated string&quot;)
+&nbsp;    @PutMapping(path = &quot;/getusers&quot;)
+&nbsp;    public String getUsersAsString(){
+<b class="fc">&nbsp;        String usernames = &quot;&quot;;</b>
+&nbsp;
+&nbsp;        // For each user, add their username to the list
+<b class="fc">&nbsp;        for(User user : userRepository.findAll()){</b>
+<b class="fc">&nbsp;            usernames += user.getUsername() + &quot; &quot;;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return usernames;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that creates a new user given the username is &gt; 0 characters, the password is &gt;= 8 characters, and the username isn&#39;t already taken
+&nbsp;    @ApiOperation(value = &quot;Create a user with the given username and password&quot;)
+&nbsp;    @PostMapping(path = &quot;/users/{username}/{password}/{confirmPassword}&quot;)
+&nbsp;    public String createUser(@PathVariable String username,@PathVariable String password, @PathVariable String confirmPassword) {
+<b class="fc">&nbsp;        if (password.length() &lt; 8) {</b>
+<b class="nc">&nbsp;            return failure; //Password too short</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!password.equals(confirmPassword)) {</b>
+<b class="nc">&nbsp;            return failure; //Passwords do not match</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (username.length() &lt;= 0) {</b>
+<b class="nc">&nbsp;            return failure;     //Username too short</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                return failure;     //Username taken</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        User u = new User(username, password);</b>
+<b class="fc">&nbsp;        userRepository.save(u);</b>
+<b class="fc">&nbsp;        userRepository.flush();</b>
+<b class="fc">&nbsp;        UserStats us = new UserStats(u);</b>
+<b class="fc">&nbsp;        userStatsRepository.save(us);</b>
+<b class="fc">&nbsp;        userStatsRepository.flush();</b>
+<b class="fc">&nbsp;        u.initUserStats(us);</b>
+<b class="fc">&nbsp;        userRepository.save(u);</b>
+<b class="fc">&nbsp;        userRepository.flush();</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that deletes a user and all friend requests or friendships associated with it
+&nbsp;    @ApiOperation(value = &quot;Delete the user with the given username&quot;)
+&nbsp;    @PutMapping(path = &quot;/users/{username}&quot;)
+&nbsp;    public String deleteUser(@PathVariable String username) {
+<b class="fc">&nbsp;        User user = null;</b>
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                user = u;</b>
+<b class="fc">&nbsp;                break;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return failure;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (FriendRequest fr : friendRequestRepository.findAll()) {        //Iterate through all friend requests and remove the one&#39;s associated with this user</b>
+<b class="nc">&nbsp;            if (fr.getSender().getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                fr.getReceiver().removeIncomingRequest(username);</b>
+<b class="nc">&nbsp;                friendRequestRepository.delete(fr);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (fr.getReceiver().getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                fr.getSender().removeOutgoingRequest(username);</b>
+<b class="nc">&nbsp;                friendRequestRepository.delete(fr);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        for (Friendship f : friendshipRepository.findAll()) {           //Iterate through all friendships and remove the one&#39;s associated with this user</b>
+<b class="nc">&nbsp;            if (f.getUser1().getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                f.getUser2().removeFriend(username);</b>
+<b class="nc">&nbsp;                friendshipRepository.delete(f);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            else if (f.getUser2().getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                f.getUser1().removeFriend(username);</b>
+<b class="nc">&nbsp;                friendshipRepository.delete(f);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        userRepository.delete(user);</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that returns a user object given a username
+&nbsp;    @ApiOperation(value = &quot;Returns a User object by their username&quot;)
+&nbsp;    @GetMapping(path = &quot;/users/getByName/{username}&quot;)
+&nbsp;    public User getUserByName(@PathVariable String username) {
+<b class="fc">&nbsp;        List&lt;User&gt; userList = userRepository.findAll();</b>
+<b class="fc">&nbsp;        for (User u : userList) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                return u;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that allows the user to login
+&nbsp;    @ApiOperation(value = &quot;Returns a true or false message allowing the user to login&quot;)
+&nbsp;    @PostMapping(path = &quot;/users/login&quot;)
+&nbsp;    public @ResponseBody String login(@RequestBody User user) {
+<b class="nc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if (u.getUsername().equals(user.getUsername()) &amp;&amp; u.getPassword().equals(user.getPassword())) {</b>
+<b class="nc">&nbsp;                return trueMessage;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return falseMessage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that returns a user object given their ID
+&nbsp;    @ApiOperation(value = &quot;Returns a user object given its ID&quot;)
+&nbsp;    @GetMapping(path = &quot;/users/{id}&quot;)
+&nbsp;    public User getUserById(@PathVariable int id) {
+<b class="fc">&nbsp;        return userRepository.findById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that returns a user&#39;s username given their ID
+&nbsp;    @ApiOperation(value = &quot;Returns a username given the user&#39;s ID&quot;)
+&nbsp;    @GetMapping(path = &quot;/users/name/{id}&quot;)
+&nbsp;    public String getUserName(@PathVariable int id) {
+<b class="fc">&nbsp;        return userRepository.findById(id).getUsername();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that returns a user&#39;s password given their ID
+&nbsp;    @ApiOperation(value = &quot;Returns a password given the user&#39;s ID&quot;)
+&nbsp;    @GetMapping(path = &quot;/users/password/{id}&quot;)
+&nbsp;    public String getUserPassword(@PathVariable int id) {
+<b class="fc">&nbsp;        return userRepository.findById(id).getPassword();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that changes a user&#39;s username given their current username, new username, and password
+&nbsp;    @ApiOperation(value = &quot;Allows the user to change their username as long as they know their password&quot;)
+&nbsp;    @PutMapping(path = &quot;/users/username/{currentUsername}/{password}/{username}&quot;)
+&nbsp;    public String changeUserName(@PathVariable String currentUsername, @PathVariable String password, @PathVariable String username) {
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="nc">&nbsp;                return &quot;failure&quot;;                         //username is taken</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(currentUsername)) {      //find current user</b>
+<b class="fc">&nbsp;                if (u.getPassword().equals(password)) {</b>
+<b class="fc">&nbsp;                    u.setUsername(username);            //if given password matches, change username</b>
+<b class="fc">&nbsp;                    userRepository.save(u);</b>
+<b class="fc">&nbsp;                    userRepository.flush();</b>
+<b class="fc">&nbsp;                    return &quot;success&quot;;</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    return &quot;failure&quot;;     //if given password does not match, return failure</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;failure&quot;;     //return failure if user isn&#39;t found</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that changes a user&#39;s password given their username, current password, and new password
+&nbsp;    @ApiOperation(value = &quot;Allows the user to change their password as long as they know their old password&quot;)
+&nbsp;    @PutMapping(path = &quot;/users/password/{username}/{currentPassword}/{password}&quot;)
+&nbsp;    public String changeUserPassword(@PathVariable String username, @PathVariable String currentPassword, @PathVariable String password) {
+<b class="fc">&nbsp;        if (password.length() &lt; 8) {</b>
+<b class="nc">&nbsp;            return &quot;failure&quot;;     //if password is too short return failure</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {       //find user</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                if (u.getPassword().equals(currentPassword)) {      //if they entered their old password correctly</b>
+<b class="fc">&nbsp;                    u.setPassword(password);            //change password</b>
+<b class="fc">&nbsp;                    userRepository.save(u);</b>
+<b class="fc">&nbsp;                    userRepository.flush();</b>
+<b class="fc">&nbsp;                    return &quot;success&quot;;</b>
+&nbsp;                }
+&nbsp;                else {
+<b class="nc">&nbsp;                    return &quot;failure&quot;;     //if they entered their old password incorrectly, return failure</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;failure&quot;;     //return failure if user isn&#39;t found</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @ApiOperation(value = &quot;Method to make users an admin&quot;)
+&nbsp;    @PutMapping(path = &quot;/users/makeadmin/{username}&quot;)
+&nbsp;    public String makeAdmin(@PathVariable String username){
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {       //find user</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                u.setAdmin(true);</b>
+&nbsp;
+<b class="fc">&nbsp;                userRepository.save(u);</b>
+<b class="fc">&nbsp;                userRepository.flush();</b>
+<b class="fc">&nbsp;                return &quot;success&quot;;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return &quot;failure&quot;;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

@@ -76,7 +76,7 @@ public class RegisterActivityTest {
 
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
 
-        intended(hasComponent(ProfileActivity.class.getName()));
+        intended(hasComponent(ProfileActivity.class.getCanonicalName()));
 
         try{
             Thread.sleep(SIMULATED_DELAY_MS);

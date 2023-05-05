@@ -36,7 +36,6 @@ public class LogInActivityTest {
 
     private static final int SIMULATED_DELAY_MS = 500;
 
-
     @Rule
     public ActivityScenarioRule<LogInActivity> activityRule = new ActivityScenarioRule<>(LogInActivity.class);
 
@@ -59,7 +58,8 @@ public class LogInActivityTest {
 
         onView(withId(R.id.LoginButton)).perform(click());
 
-        intended(hasComponent(MainMenuActivity.class.getName()));
+
+        intended(hasComponent(MainMenuActivity.class.getCanonicalName()));
 
 
         try{

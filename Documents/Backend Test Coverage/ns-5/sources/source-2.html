@@ -1,0 +1,244 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FriendRequestController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Friends</a>
+</div>
+
+<h1>Coverage Summary for Class: FriendRequestController (TotalKnockoutChess.Friends)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FriendRequestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.5%
+  </span>
+  <span class="absValue">
+    (55/71)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Friends;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;import TotalKnockoutChess.Users.UserRepository;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import io.swagger.annotations.ApiOperation;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Api(value = &quot;FriendRequestController&quot;, description = &quot;Controller used to manage Friend Request entities&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class FriendRequestController {</b>
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    FriendRequestRepository friendRequestRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    FriendshipRepository friendshipRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private final String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private final String trueMessage = &quot;{\&quot;message\&quot;:\&quot;true\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private final String falseMessage = &quot;{\&quot;message\&quot;:\&quot;false\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    //Method that returns a user&#39;s incoming friend requests given their username
+&nbsp;    @ApiOperation(value = &quot;Returns a list of a user&#39;s incoming friend requests given their username&quot;)
+&nbsp;    @GetMapping(path = &quot;/friendRequests/incoming/{username}&quot;)
+&nbsp;    public List&lt;String&gt; getIncomingRequests(@PathVariable String username) {
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                return u.getIncomingRequests();</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that returns a user&#39;s outgoing friend requests given their username
+&nbsp;    @ApiOperation(value = &quot;Returns a list of a user&#39;s outgoing friend requests given their username&quot;)
+&nbsp;    @GetMapping(path = &quot;/friendRequests/outgoing/{username}&quot;)
+&nbsp;    public List&lt;String&gt; getOutgoingRequests(@PathVariable String username) {
+<b class="fc">&nbsp;        for (User u : userRepository.findAll()) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                return u.getOutgoingRequests();</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that sends a friend request given the sender&#39;s username, and the receiver&#39;s username
+&nbsp;    @ApiOperation(value = &quot;Sends a friend request given the sender&#39;s username, and the receiver&#39;s username&quot;)
+&nbsp;    @PostMapping(path = &quot;/friendRequest/{sender}/{receiver}&quot;)
+&nbsp;    public String sendFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
+<b class="fc">&nbsp;        List&lt;FriendRequest&gt; friendRequests = friendRequestRepository.findAll();</b>
+<b class="fc">&nbsp;        List&lt;User&gt; users = userRepository.findAll();</b>
+<b class="fc">&nbsp;        User s = null;</b>
+<b class="fc">&nbsp;        User r = null;</b>
+&nbsp;        //Check if the receiving user exists
+<b class="fc">&nbsp;        for (User u : users) {</b>
+<b class="fc">&nbsp;            if (u.getUsername().equals(sender)) {</b>
+<b class="fc">&nbsp;                s = u;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            else if (u.getUsername().equals(receiver)) {</b>
+<b class="fc">&nbsp;                r = u;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (r == null || s == null) {</b>
+<b class="nc">&nbsp;            return failure;     //User not found</b>
+&nbsp;
+&nbsp;        }
+&nbsp;        //Check if identical request already exists
+<b class="fc">&nbsp;        for (FriendRequest f : friendRequests) {</b>
+<b class="nc">&nbsp;            if (f.getSender().getUsername().equals(sender) &amp;&amp; f.getReceiver().getUsername().equals(receiver)) {</b>
+<b class="nc">&nbsp;                return failure;     //You already sent this user a friend request</b>
+&nbsp;                //return &quot;over here&quot;;
+&nbsp;            }
+<b class="nc">&nbsp;            if (f.getSender().getUsername().equals(receiver) &amp;&amp; f.getReceiver().getUsername().equals(sender)) {</b>
+<b class="nc">&nbsp;                return failure;     //This user has already sent you a request</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;        //Check if already friends
+<b class="fc">&nbsp;        for (Friendship friendship : friendshipRepository.findAll()) {</b>
+<b class="nc">&nbsp;            if ((friendship.getUser1().getUsername().equals(sender) &amp;&amp; friendship.getUser2().getUsername().equals(receiver))  ||</b>
+<b class="nc">&nbsp;                    (friendship.getUser1().getUsername().equals(receiver) &amp;&amp; friendship.getUser2().getUsername().equals(sender))) {</b>
+<b class="nc">&nbsp;                return failure; //You are already friends with this user</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        FriendRequest f = new FriendRequest(s, r);</b>
+<b class="fc">&nbsp;        friendRequestRepository.save(f);</b>
+<b class="fc">&nbsp;        s.addOutgoingRequest(r.getUsername());</b>
+<b class="fc">&nbsp;        r.addIncomingRequest(s.getUsername());</b>
+<b class="fc">&nbsp;        userRepository.flush();</b>
+<b class="fc">&nbsp;        return success;     //Friend request sent</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that deletes a friend request given the sender and receiver&#39;s usernames
+&nbsp;    @ApiOperation(value = &quot;Deletes a friend request given the sender and receiver&#39;s usernames&quot;)
+&nbsp;    @PutMapping(path = &quot;/deleteFriendRequest/{sender}/{receiver}&quot;)
+&nbsp;    public String deleteFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
+<b class="fc">&nbsp;        List&lt;FriendRequest&gt; friendRequests = friendRequestRepository.findAll();</b>
+&nbsp;        //Iterate through friend requests until correct one is found and update lists/tables accordingly
+<b class="fc">&nbsp;        for (FriendRequest friendRequest : friendRequests) {</b>
+<b class="fc">&nbsp;            if (friendRequest.getSender().getUsername().equals(sender) &amp;&amp; friendRequest.getReceiver().getUsername().equals(receiver)) {</b>
+<b class="fc">&nbsp;                User s = friendRequest.getSender();</b>
+<b class="fc">&nbsp;                User r = friendRequest.getReceiver();</b>
+<b class="fc">&nbsp;                friendRequestRepository.delete(friendRequest);</b>
+<b class="fc">&nbsp;                s.removeOutgoingRequest(r.getUsername());</b>
+<b class="fc">&nbsp;                r.removeIncomingRequest(s.getUsername());</b>
+<b class="fc">&nbsp;                userRepository.flush();</b>
+<b class="fc">&nbsp;                return success;     //Friend request deleted</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return failure;     //Friend request not found</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Method that accepts a friend request given the sender and receiver&#39;s usernames
+&nbsp;    @ApiOperation(value = &quot;Accepts a friend request and creates a friendship entity given the sender and receiver&#39;s usernames&quot;)
+&nbsp;    @PostMapping(path = &quot;/acceptFriendRequest/{sender}/{receiver}&quot;)
+&nbsp;    public String acceptFriendRequest(@PathVariable String sender, @PathVariable String receiver) {
+<b class="fc">&nbsp;        List&lt;FriendRequest&gt; friendRequests = friendRequestRepository.findAll();</b>
+&nbsp;        //Iterate through all friend requests until correct one is found and update lists/repositories accordingly
+<b class="fc">&nbsp;        for (FriendRequest friendRequest : friendRequests) {</b>
+<b class="fc">&nbsp;            if (friendRequest.getSender().getUsername().equals(sender) &amp;&amp; friendRequest.getReceiver().getUsername().equals(receiver)) {</b>
+<b class="fc">&nbsp;                User s = friendRequest.getSender();</b>
+<b class="fc">&nbsp;                User r = friendRequest.getReceiver();</b>
+<b class="fc">&nbsp;                friendRequestRepository.delete(friendRequest);</b>
+<b class="fc">&nbsp;                s.removeOutgoingRequest(r.getUsername());</b>
+<b class="fc">&nbsp;                r.removeIncomingRequest(s.getUsername());</b>
+<b class="fc">&nbsp;                s.addFriend(r.getUsername());</b>
+<b class="fc">&nbsp;                r.addFriend(s.getUsername());</b>
+<b class="fc">&nbsp;                userRepository.flush();</b>
+<b class="fc">&nbsp;                friendshipRepository.save(new Friendship(s, r));</b>
+<b class="fc">&nbsp;                return success;     //Friendship saved successfully</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return failure;     //Couldn&#39;t find request</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>

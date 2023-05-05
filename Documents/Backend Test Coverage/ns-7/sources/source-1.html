@@ -1,0 +1,269 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UserStats</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">TotalKnockoutChess.Statistics</a>
+</div>
+
+<h1>Coverage Summary for Class: UserStats (TotalKnockoutChess.Statistics)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserStats</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (48/48)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserStats$HibernateProxy$r5zeHZ7R</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (48/48)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package TotalKnockoutChess.Statistics;
+&nbsp;
+&nbsp;import TotalKnockoutChess.Users.User;
+&nbsp;
+&nbsp;import javax.persistence.*;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class UserStats {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private Long id;
+&nbsp;
+&nbsp;    @OneToOne(cascade = CascadeType.ALL)
+&nbsp;    @JoinColumn(name = &quot;User&quot;)
+&nbsp;    User user;
+&nbsp;
+&nbsp;    private String username;
+&nbsp;
+&nbsp;    private int chessWins;
+&nbsp;
+&nbsp;    private int chessLosses;
+&nbsp;
+&nbsp;    private int chessGames;
+&nbsp;
+&nbsp;    private double chessWinRate;
+&nbsp;
+&nbsp;    private int boxingWins;
+&nbsp;
+&nbsp;    private int boxingLosses;
+&nbsp;
+&nbsp;    private int boxingGames;
+&nbsp;
+&nbsp;    private double boxingWinRate;
+&nbsp;
+&nbsp;    private int chessBoxingWins;
+&nbsp;
+&nbsp;    private int chessBoxingLosses;
+&nbsp;
+&nbsp;    private int chessBoxingGames;
+&nbsp;
+&nbsp;    private double chessBoxingWinRate;
+&nbsp;
+<b class="fc">&nbsp;    public UserStats(User user) {</b>
+<b class="fc">&nbsp;        this.user = user;</b>
+<b class="fc">&nbsp;        username = user.getUsername();</b>
+<b class="fc">&nbsp;        chessWins = 0;</b>
+<b class="fc">&nbsp;        chessLosses = 0;</b>
+<b class="fc">&nbsp;        chessGames = 0;</b>
+<b class="fc">&nbsp;        chessWinRate = 0.0;</b>
+<b class="fc">&nbsp;        boxingWins = 0;</b>
+<b class="fc">&nbsp;        boxingLosses = 0;</b>
+<b class="fc">&nbsp;        boxingGames = 0;</b>
+<b class="fc">&nbsp;        boxingWinRate = 0.0;</b>
+<b class="fc">&nbsp;        chessBoxingWins = 0;</b>
+<b class="fc">&nbsp;        chessBoxingLosses = 0;</b>
+<b class="fc">&nbsp;        chessBoxingGames = 0;</b>
+<b class="fc">&nbsp;        chessBoxingWinRate = 0.0;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public UserStats() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getUsername() {
+<b class="fc">&nbsp;        return username;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser() {
+<b class="fc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void chessWin() {
+<b class="fc">&nbsp;        chessWins++;</b>
+<b class="fc">&nbsp;        chessGames++;</b>
+<b class="fc">&nbsp;        chessWinRate = (((double) chessWins) / ( (double) (chessGames))) * 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void chessLoss() {
+<b class="fc">&nbsp;        chessLosses++;</b>
+<b class="fc">&nbsp;        chessGames++;</b>
+<b class="fc">&nbsp;        chessWinRate = (((double) chessWins) / ( (double) (chessGames))) * 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void boxingWin() {
+<b class="fc">&nbsp;        boxingWins++;</b>
+<b class="fc">&nbsp;        boxingGames++;</b>
+<b class="fc">&nbsp;        boxingWinRate = (((double) boxingWins) / ( (double) (boxingGames))) * 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void boxingLoss() {
+<b class="fc">&nbsp;        boxingLosses++;</b>
+<b class="fc">&nbsp;        boxingGames++;</b>
+<b class="fc">&nbsp;        boxingWinRate = (((double) boxingWins) / ( (double) (boxingGames))) * 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void chessBoxingWin() {
+<b class="fc">&nbsp;        chessBoxingWins++;</b>
+<b class="fc">&nbsp;        chessBoxingGames++;</b>
+<b class="fc">&nbsp;        chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingGames))) * 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void chessBoxingLoss() {
+<b class="fc">&nbsp;        chessBoxingLosses++;</b>
+<b class="fc">&nbsp;        chessBoxingGames++;</b>
+<b class="fc">&nbsp;        chessBoxingWinRate = (((double) chessBoxingWins) / ( (double) (chessBoxingGames))) * 100.0;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessWins() {
+<b class="fc">&nbsp;        return chessWins;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessLosses() {
+<b class="fc">&nbsp;        return chessLosses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessGames() {
+<b class="fc">&nbsp;        return chessGames;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBoxingWins() {
+<b class="fc">&nbsp;        return boxingWins;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBoxingLosses() {
+<b class="fc">&nbsp;        return boxingLosses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBoxingGames() {
+<b class="fc">&nbsp;        return boxingGames;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessBoxingWins() {
+<b class="fc">&nbsp;        return chessBoxingWins;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessBoxingLosses() {
+<b class="fc">&nbsp;        return chessBoxingLosses;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getChessBoxingGames() {
+<b class="fc">&nbsp;        return chessBoxingGames;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getChessWinRate() {
+<b class="fc">&nbsp;        return chessWinRate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getBoxingWinRate() {
+<b class="fc">&nbsp;        return boxingWinRate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getChessBoxingWinRate() {
+<b class="fc">&nbsp;        return chessBoxingWinRate;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-05 11:46</div>
+</div>
+</body>
+</html>
