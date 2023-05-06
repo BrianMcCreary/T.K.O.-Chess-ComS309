@@ -1,0 +1,1208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LobbyActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.tko_chess</a> &gt; <span class="el_source">LobbyActivity.java</span></div><h1>LobbyActivity.java</h1><pre class="source lang-java linenums">package com.example.tko_chess;
+
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.media.Image;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.w3c.dom.Text;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tko_chess.ultils.Const;
+
+/**
+ * @author Lex Somers
+ *
+ * Lobby that users can join to spectate or play games.
+ */
+<span class="fc" id="L41">public class LobbyActivity extends AppCompatActivity {</span>
+
+	/**
+	 * TextView displays ready up/unready prompt.
+	 */
+	TextView ReadyStatus;
+
+	/**
+	 * TextView displays host options prompt.
+	 */
+	TextView HostOptions;
+
+	/**
+	 * TextView displays the lobby code.
+	 */
+	TextView LobbyCodeText;
+
+	/**
+	 * TextView displays error messages caused when leaving the lobby.
+	 */
+	TextView LeaveLobbyError;
+
+	/**
+	 * TextView displays error messages caused by some event within the lobby.
+	 */
+	TextView LobbyError;
+
+	/**
+	 * TextView displays the most recent event that occurred within the lobby.
+	 */
+	TextView LobbyEvent;
+
+	/**
+	 * Button takes user back to the host or join lobby screen.
+	 */
+	ImageButton LobbyToHostJoin;
+
+	/**
+	 * Button changes user's player type to Player1.
+	 */
+	Button Player1Btn;
+
+	/**
+	 * Button changes user's player type to Player2.
+	 */
+	Button Player2Btn;
+
+	/**
+	 * Button changes user's player type to Spectator.
+	 */
+	Button SpectatorBtn;
+
+	/**
+	 * ImageButton changes user's ready status to &quot;NotReady&quot; if user is not a spectator.
+	 */
+	ImageButton NotReadyBtn;
+
+	/**
+	 * ImageButton changes user's ready status to &quot;Ready&quot; if user is not a spectator.
+	 */
+	ImageButton ReadyBtn;
+
+	/**
+	 * Button starts the game for all users in the lobby. Viewable only by the host of the lobby.
+	 */
+	Button StartGameBtn;
+
+	/**
+	 * Button displays game settings menu. Viewable only by the host of the lobby.
+	 */
+	Button GameSettingsBtn;
+
+	/**
+	 * String holds what gamemode a user is playing.
+	 * Gamemodes are chess, chessboxing, or boxing.
+	 */
+<span class="fc" id="L117">	String GameMode = &quot;&quot;;</span>
+
+	/**
+	 * String stores the of the lobby the user is currently in.
+	 */
+<span class="fc" id="L122">	String LobbyCode = &quot;&quot;;</span>
+
+	/**
+	 * String stores if the user is the host of the lobby or if they joined the lobby.
+	 */
+<span class="fc" id="L127">	String HostOrJoin = &quot;&quot;;</span>
+
+	/**
+	 * String stores the user's player type.
+	 * Player types are Player1, Player2, or Spectator.
+	 */
+<span class="fc" id="L133">	String PlayerOrSpectator = &quot;Spectator&quot;;</span>
+
+	/**
+	 * String stores which lobby member is currently assigned player type &quot;Player1&quot;
+	 */
+<span class="fc" id="L138">	String WhoPlayer1 = &quot;&quot;;</span>
+
+	/**
+	 * String stores which lobby member is currently assigned player type &quot;Player2&quot;
+	 */
+<span class="fc" id="L143">	String WhoPlayer2 = &quot;&quot;;</span>
+
+	/**
+	 * String stores a message about the most recent change of roles, ready status, etc within the lobby.
+	 */
+<span class="fc" id="L148">	String lobbyMessage = &quot;&quot;;</span>
+
+	/**
+	 * String stores the ending of the URL path mapping for the websocket.
+	 */
+<span class="fc" id="L153">	String URLConcatenation = &quot;&quot;;</span>
+
+	//LinearLayout Declarations
+	/**
+	 * LinearLayout container for the lobby overlay displayed upon closing of the lobby.
+	 */
+	LinearLayout LobbyOverlay;
+
+	/**
+	 * LinearLayout container displaying all lobby members and relevant information about them.
+	 * The display of the lobby members changes depending on if the user is the host or member of the lobby.
+	 */
+	LinearLayout LobbyMembersLayout;
+
+	/**
+	 * Boolean tracks if the user is currently readied up or not.
+	 */
+<span class="fc" id="L170">	boolean UserReady = false;</span>
+
+	/**
+	 * Boolean tracks if the host can start the game or not.
+	 */
+<span class="fc" id="L175">	boolean CanStart = false;</span>
+
+	/**
+	 * SingletonUser instance which stores the currently logged in user.
+	 */
+<span class="fc" id="L180">	SingletonUser currUser = SingletonUser.getInstance();</span>
+
+	/**
+	 * WebSocket used for connecting to the lobby, leaving the lobby,
+	 *      changing from spectator to player, changing user ready
+	 *      status, and kicking other lobby members from the lobby
+	 *      if user is the host.
+	 */
+	private WebSocketClient WebSocket;
+
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+	 *
+	 * Loads lobby screen onto device. Certain views and buttons will be disabled
+	 *     or hidden based on user's player type and role within the lobby.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L201">		super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L202">		setContentView(R.layout.activity_lobby);</span>
+
+		//Button Initializations
+<span class="fc" id="L205">		LobbyToHostJoin = findViewById(R.id.LobbyToHostJoinBtn);</span>
+<span class="fc" id="L206">		Player1Btn = findViewById(R.id.Player1Btn);</span>
+<span class="fc" id="L207">		Player2Btn = findViewById(R.id.Player2Btn);</span>
+<span class="fc" id="L208">		SpectatorBtn = findViewById(R.id.SpectatorBtn);</span>
+<span class="fc" id="L209">		NotReadyBtn = findViewById(R.id.NotReadyBtn);</span>
+<span class="fc" id="L210">		ReadyBtn = findViewById(R.id.ReadyBtn);</span>
+<span class="fc" id="L211">		StartGameBtn = findViewById(R.id.StartGameBtn);</span>
+<span class="fc" id="L212">		GameSettingsBtn = findViewById(R.id.GameSettingsBtn);</span>
+
+		//Text Initializations
+<span class="fc" id="L215">		ReadyStatus = findViewById(R.id.ReadyStatusText);</span>
+<span class="fc" id="L216">		HostOptions = findViewById(R.id.HostOptionsText);</span>
+<span class="fc" id="L217">		LobbyCodeText = findViewById(R.id.LobbyCodeText);</span>
+<span class="fc" id="L218">		LeaveLobbyError = findViewById(R.id.LeaveLobbyErrorText);</span>
+<span class="fc" id="L219">		LobbyError = findViewById(R.id.LobbyErrorText);</span>
+<span class="fc" id="L220">		LobbyEvent = findViewById(R.id.LobbyEventText);</span>
+
+		//String Initializations
+<span class="fc" id="L223">		GameMode = getIntent().getExtras().getString(&quot;Gamemode&quot;);</span>
+<span class="fc" id="L224">		LobbyCode = getIntent().getExtras().getString(&quot;LobbyCode&quot;);</span>
+<span class="fc" id="L225">		HostOrJoin = getIntent().getExtras().getString(&quot;HostOrJoin&quot;);</span>
+<span class="fc" id="L226">		URLConcatenation = currUser.getUsername() + &quot;/&quot; + HostOrJoin + &quot;/&quot; + LobbyCode;</span>
+
+		//LinearLayout Initializations
+<span class="fc" id="L229">		LobbyOverlay = findViewById(R.id.LobbyOverlayLinearLayout);</span>
+<span class="fc" id="L230">		LobbyMembersLayout = findViewById(R.id.LobbyLinearLayout);</span>
+
+		//Display lobby code if spectator.
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (!HostOrJoin.equals(&quot;host&quot;)) {</span>
+<span class="nc" id="L234">			LobbyCodeText.setText(LobbyCode);</span>
+		}
+
+		//Disable the StartGameBtn initially until host gets CanStart message
+<span class="fc" id="L238">		disableStartGame();</span>
+
+		//Hide views that user shouldn't see initially
+<span class="fc" id="L241">		hideOrShowViews();</span>
+
+		//TODO ///Disable game settings button until we implement something for it./// DELETE AFTER IMPLEMENTING
+<span class="fc" id="L244">		GameSettingsBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+<span class="fc" id="L245">		GameSettingsBtn.setClickable(false);</span>
+		//TODO ///Disable game settings button until we implement something for it./// DELETE AFTER IMPLEMENTING
+
+		//Beginning of WebSocket code
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<span class="fc" id="L250">		Draft[] drafts = {</span>
+				new Draft_6455()
+		};
+
+		try {
+<span class="fc" id="L255">			WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKETLOBBY + URLConcatenation), (Draft)drafts[0]) {</span>
+				@Override
+				public void onOpen(ServerHandshake serverHandshake) {
+<span class="fc" id="L258">					Log.d(&quot;OPEN&quot;, &quot;run() returned: &quot; + &quot;is connecting&quot;);</span>
+<span class="fc" id="L259">					System.out.println(&quot;Lobby onOpen returned&quot;);</span>
+<span class="fc" id="L260">				}</span>
+
+				@Override
+				public void onMessage(String message) {
+<span class="fc" id="L264">					Log.d(&quot;&quot;, &quot;run() returned: &quot; + message);</span>
+<span class="fc" id="L265">					String[] strings = message.split(&quot; &quot;);</span>
+
+					//Clears lobby event and error texts
+<span class="fc" id="L268">					hideEventErrorTexts();</span>
+
+<span class="pc bpc" id="L270" title="7 of 12 branches missed.">					switch (strings[0]) {</span>
+						//Sent to client upon joining lobby
+						case &quot;JustJoined&quot;:
+<span class="fc" id="L273">							String[] temp = message.split(&quot; &quot;);</span>
+<span class="fc" id="L274">							String[] members = temp[1].split(&quot;#&quot;);</span>
+
+							//Updates lobby display
+<span class="fc" id="L277">							displayLobbyMembers(members);</span>
+
+							//Exit switch statement
+<span class="fc" id="L280">							break;</span>
+
+
+						//Sent to host upon connection to websocket
+						case &quot;LobbyCode&quot;:
+							//Display lobby code
+<span class="fc" id="L286">							LobbyCode = strings[1];</span>
+<span class="fc" id="L287">							runOnUiThread(new Runnable() {</span>
+								@Override
+								public void run() {
+<span class="fc" id="L290">									LobbyCodeText.setText(LobbyCode);</span>
+<span class="fc" id="L291">								}</span>
+							});
+
+							//Exit switch statement
+<span class="fc" id="L295">							break;</span>
+
+
+						//Starts the game for everyone
+						case &quot;StartGame&quot;:
+							//Disconnects from lobby
+<span class="nc" id="L301">							WebSocket.close();</span>
+
+							//Take user to chess game
+<span class="nc bnc" id="L304" title="All 2 branches missed.">							if (GameMode.equals(&quot;Chess&quot;)) {</span>
+<span class="nc" id="L305">								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);</span>
+
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+<span class="nc" id="L308">								intent.putExtra(&quot;UserRole&quot;, PlayerOrSpectator);</span>
+<span class="nc" id="L309">								intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="nc" id="L310">								intent.putExtra(&quot;Player1&quot;, WhoPlayer1);</span>
+<span class="nc" id="L311">								intent.putExtra(&quot;Player2&quot;, WhoPlayer2);</span>
+
+<span class="nc" id="L313">								startActivity(intent);</span>
+<span class="nc" id="L314">							} else</span>
+
+							//Take user to chess boxing game
+<span class="nc bnc" id="L317" title="All 2 branches missed.">							if (GameMode.equals(&quot;ChessBoxing&quot;)) {</span>
+<span class="nc" id="L318">								Intent intent = new Intent(LobbyActivity.this, ChessActivity.class);</span>
+
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+<span class="nc" id="L321">								intent.putExtra(&quot;UserRole&quot;, PlayerOrSpectator);</span>
+<span class="nc" id="L322">								intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="nc" id="L323">								intent.putExtra(&quot;Player1&quot;, WhoPlayer1);</span>
+<span class="nc" id="L324">								intent.putExtra(&quot;Player2&quot;, WhoPlayer2);</span>
+
+<span class="nc" id="L326">								startActivity(intent);</span>
+<span class="nc" id="L327">							} else</span>
+
+							//Take user to boxing game
+<span class="nc bnc" id="L330" title="All 2 branches missed.">							if (GameMode.equals(&quot;Boxing&quot;)) {</span>
+<span class="nc" id="L331">								Intent intent = new Intent(LobbyActivity.this, BoxingActivity.class);</span>
+
+								//Sending extra info about type of game and user's role in that game (Spectator or player)
+<span class="nc" id="L334">								intent.putExtra(&quot;UserRole&quot;, PlayerOrSpectator);</span>
+<span class="nc" id="L335">								intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="nc" id="L336">								intent.putExtra(&quot;Player1&quot;, WhoPlayer1);</span>
+<span class="nc" id="L337">								intent.putExtra(&quot;Player2&quot;, WhoPlayer2);</span>
+
+<span class="nc" id="L339">								startActivity(intent);</span>
+<span class="nc" id="L340">							}</span>
+
+							//Exit switch statement
+							break;
+
+
+						//Updates screen with new ready status of user specified by strings[1]
+						case &quot;Ready&quot;:
+							//Updates client side info
+<span class="fc" id="L349">							userReadied(strings);</span>
+
+							//If user is ready, disable leaving the lobby.
+<span class="fc" id="L352">							disableLeaveLobby();</span>
+
+							//Alerts player of lobby event
+<span class="fc" id="L355">							displayLobbyEvent(strings);</span>
+
+							//Exit switch statement
+<span class="fc" id="L358">							break;</span>
+
+
+						//Updates screen with new ready status of the specified user (strings[1]).
+						case &quot;UnReady&quot;:
+							//Updates client side info
+<span class="fc" id="L364">							userUnReadied(strings);</span>
+
+							//If user is not ready, enable leaving the lobby.
+<span class="fc" id="L367">							enableLeaveLobby();</span>
+
+							//Alerts player of lobby event
+<span class="fc" id="L370">							displayLobbyEvent(strings);</span>
+
+							//Exit switch statement
+<span class="fc" id="L373">							break;</span>
+
+
+						//Updates screen with new PlayerType of the specified user (strings[1]).
+						case &quot;Switch&quot;:
+							//Updates client side info
+<span class="fc" id="L379">							switchPlayerType(strings);</span>
+
+							//Hides or displays ready status buttons
+<span class="fc" id="L382">							hideOrShowViews();</span>
+
+							//Alerts player of lobby event
+<span class="fc" id="L385">							displayLobbyEvent(strings);</span>
+
+							//Exit switch statement
+<span class="fc" id="L388">							break;</span>
+
+
+						//Updates screen by removing the user who left.
+						case &quot;PlayerLeft&quot;:
+							//Updates client side info
+<span class="nc" id="L394">							playerLeftLobby(strings);</span>
+
+							//Alerts player of lobby event
+<span class="nc" id="L397">							displayLobbyEvent(strings);</span>
+
+							//Exit switch statement
+<span class="nc" id="L400">							break;</span>
+
+
+						//Updates screen by adding the new user that joined. User will be spectator by default.
+						case &quot;Spectator&quot;:
+							//Tells users spectator joined
+<span class="nc" id="L406">							spectatorJoined(strings);</span>
+
+							//Alerts player of lobby event
+<span class="nc" id="L409">							displayLobbyEvent(strings);</span>
+
+							//Exit switch statement
+<span class="nc" id="L412">							break;</span>
+
+
+						//Closes websocket and displays lobby exit overlay
+						case &quot;Kicked&quot;:
+						case &quot;HostLeft&quot;:
+<span class="nc" id="L418">							WebSocket.close();</span>
+
+							//Hides and disables all buttons
+<span class="nc" id="L421">							hideAllButtons();</span>
+
+							//Displays overlay for host leaving
+<span class="nc" id="L424">							displayExitLobbyOverlay(strings[0]);</span>
+
+							//Exit switch statement
+<span class="nc" id="L427">							break;</span>
+
+
+						//Enables the start game button
+						case &quot;CanStart&quot;:
+							//Alerts player of lobby event
+<span class="nc" id="L433">							displayLobbyEvent(strings);</span>
+
+<span class="nc" id="L435">							enableStartGame();</span>
+
+							//Exit switch statement
+<span class="nc" id="L438">							break;</span>
+
+
+						//Enables the start game button
+						case &quot;CannotStart&quot;:
+<span class="nc" id="L443">							disableStartGame();</span>
+
+							//Exit switch statement
+							break;
+					}
+<span class="fc" id="L448">				}</span>
+
+				@Override
+				public void onClose(int code, String reason, boolean remote) {
+<span class="fc" id="L452">					Log.d(&quot;CLOSE&quot;, &quot;onClose() returned: &quot; + reason);</span>
+<span class="fc" id="L453">					System.out.println(&quot;Lobby onClose returned&quot;);</span>
+<span class="fc" id="L454">				}</span>
+
+				@Override
+				public void onError(Exception e) {
+<span class="nc" id="L458">					Log.d(&quot;Exception:&quot;, e.getMessage().toString());</span>
+<span class="nc" id="L459">					LobbyError.setText(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L460">				}</span>
+			};
+<span class="nc" id="L462">		} catch (URISyntaxException e) {</span>
+<span class="nc" id="L463">			e.printStackTrace();</span>
+<span class="nc" id="L464">			return;</span>
+<span class="fc" id="L465">		}</span>
+
+		//Connects to the websocket
+<span class="fc" id="L468">		WebSocket.connect();</span>
+		//End of WebSocket code
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+		/**
+		 * Takes user back to host or join screen.
+		 */
+<span class="fc" id="L477">		LobbyToHostJoin.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L481">				hideEventErrorTexts();</span>
+
+<span class="fc" id="L483">				runOnUiThread(new Runnable() {</span>
+					@Override
+					public void run() {
+						//If User is a player, and are readied up, then don't leave lobby.
+<span class="pc bpc" id="L487" title="3 of 4 branches missed.">						if ((!PlayerOrSpectator.equals(&quot;Spectator&quot;)) &amp;&amp; (UserReady)) {</span>
+<span class="nc" id="L488">							LeaveLobbyError.setText(&quot;Please unready before leaving.&quot;);</span>
+						}
+						//If user is a spectator or a player who is not readied up, then leave the lobby.
+						else {
+<span class="fc" id="L492">							WebSocket.close();</span>
+
+<span class="fc" id="L494">							Intent intent = new Intent(LobbyActivity.this, HostJoinActivity.class);</span>
+<span class="fc" id="L495">							intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="fc" id="L496">							startActivity(intent);</span>
+						}
+<span class="fc" id="L498">					}</span>
+				});
+<span class="fc" id="L500">			}</span>
+		});
+
+
+
+		/**
+		 * Changes user's role in the lobby to player 1 if possible.
+		 */
+<span class="fc" id="L508">		Player1Btn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L512">				hideEventErrorTexts();</span>
+
+				//Change user PlayerType to player 1 if user is not already player 1
+<span class="pc bpc" id="L515" title="1 of 2 branches missed.">				if (!WhoPlayer1.equals(currUser.getUsername())) {</span>
+<span class="fc" id="L516">					WebSocket.send(&quot;SwitchToP1&quot;);</span>
+				}
+<span class="fc" id="L518">			}</span>
+		});
+
+
+
+		/**
+		 * Changes user's role in the lobby to player 2 if possible.
+		 */
+<span class="fc" id="L526">		Player2Btn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L530">				hideEventErrorTexts();</span>
+
+				//Change user PlayerType to player 2 if user is not already player 2
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">				if (!WhoPlayer2.equals(currUser.getUsername())) {</span>
+<span class="fc" id="L534">					WebSocket.send(&quot;SwitchToP2&quot;);</span>
+				}
+<span class="fc" id="L536">			}</span>
+		});
+
+
+
+		/**
+		 * Changes user's role in the lobby to spectator.
+		 */
+<span class="fc" id="L544">		SpectatorBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L548">				hideEventErrorTexts();</span>
+
+				//Change user PlayerType to spectator if user is not already spectator
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">				if (!PlayerOrSpectator.equals(&quot;Spectator&quot;)) {</span>
+<span class="fc" id="L552">					WebSocket.send(&quot;SwitchToSpectate&quot;);</span>
+				}
+<span class="fc" id="L554">			}</span>
+		});
+
+
+
+		/**
+		 * Changes status of user to not ready.
+		 */
+<span class="fc" id="L562">		NotReadyBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L566">				hideEventErrorTexts();</span>
+
+				//Change user's ready status to unready if user is not already &quot;not ready&quot;.
+<span class="pc bpc" id="L569" title="1 of 2 branches missed.">				if (UserReady) {</span>
+<span class="fc" id="L570">					WebSocket.send(&quot;UnReady&quot;);</span>
+				}
+<span class="fc" id="L572">			}</span>
+		});
+
+
+
+		/**
+		 * Changes status of user to ready.
+		 */
+<span class="fc" id="L580">		ReadyBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="fc" id="L584">				hideEventErrorTexts();</span>
+
+				//Change user's ready status to ready if user is not already &quot;ready&quot;.
+<span class="pc bpc" id="L587" title="1 of 2 branches missed.">				if (!UserReady) {</span>
+<span class="fc" id="L588">					WebSocket.send(&quot;Ready&quot;);</span>
+				}
+<span class="fc" id="L590">			}</span>
+		});
+
+
+
+		/**
+		 * Starts games for all players and spectators.
+		 */
+<span class="fc" id="L598">		StartGameBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Clears lobby event and error texts
+<span class="nc" id="L602">				hideEventErrorTexts();</span>
+
+<span class="nc bnc" id="L604" title="All 2 branches missed.">				if (CanStart) {</span>
+<span class="nc" id="L605">					WebSocket.send(&quot;Start &quot; + GameMode);</span>
+				}
+<span class="nc" id="L607">			}</span>
+		});
+
+
+
+		//Hide and disable host options/ready status
+<span class="fc" id="L613">		hideOrShowViews();</span>
+<span class="fc" id="L614">	}</span>
+
+
+
+	/**
+	 * Hides Lobby event text and error texts.
+	 */
+	private void hideEventErrorTexts() {
+<span class="fc" id="L622">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+				//Clears latest error messages
+<span class="fc" id="L626">				LobbyError.setText(&quot;&quot;);</span>
+<span class="fc" id="L627">				LeaveLobbyError.setText(&quot;&quot;);</span>
+<span class="fc" id="L628">				LobbyEvent.setText(&quot;&quot;);</span>
+<span class="fc" id="L629">			}</span>
+		});
+<span class="fc" id="L631">	}</span>
+
+
+
+	/**
+	 * Hides views on screen depending on the user's role in the lobby.
+	 */
+	private void hideOrShowViews() {
+<span class="fc" id="L639">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+				//If user is not host, hide host options
+<span class="pc bpc" id="L643" title="1 of 2 branches missed.">				if (HostOrJoin.equals(&quot;join&quot;)) {</span>
+					//Hides host options from user.
+<span class="nc" id="L645">					HostOptions.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L646">					ReadyStatus.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L647">					StartGameBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L648">					GameSettingsBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L649">					ReadyBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L650">					NotReadyBtn.setVisibility(View.INVISIBLE);</span>
+
+					//Disables host option buttons
+<span class="nc" id="L653">					StartGameBtn.setClickable(false);</span>
+<span class="nc" id="L654">					GameSettingsBtn.setClickable(false);</span>
+<span class="nc" id="L655">					ReadyBtn.setClickable(false);</span>
+<span class="nc" id="L656">					NotReadyBtn.setClickable(false);</span>
+				}
+
+				//If user is spectator, hide ready status options
+<span class="fc bfc" id="L660" title="All 2 branches covered.">				if (PlayerOrSpectator.equals(&quot;Spectator&quot;)) {</span>
+					//Hides ready status options from user
+<span class="fc" id="L662">					ReadyStatus.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L663">					NotReadyBtn.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L664">					ReadyBtn.setVisibility(View.INVISIBLE);</span>
+
+<span class="fc" id="L666">					NotReadyBtn.setClickable(false);</span>
+<span class="fc" id="L667">					ReadyBtn.setClickable(false);</span>
+				}
+
+<span class="fc bfc" id="L670" title="All 4 branches covered.">				if (PlayerOrSpectator.equals(&quot;Player1&quot;) || PlayerOrSpectator.equals(&quot;Player2&quot;)) {</span>
+					//Hides ready status options from user
+<span class="fc" id="L672">					ReadyStatus.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L673">					NotReadyBtn.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L674">					ReadyBtn.setVisibility(View.VISIBLE);</span>
+
+<span class="fc" id="L676">					NotReadyBtn.setClickable(true);</span>
+<span class="fc" id="L677">					ReadyBtn.setClickable(true);</span>
+				}
+<span class="fc" id="L679">			}</span>
+		});
+<span class="fc" id="L681">	}</span>
+
+
+
+	/**
+	 * Disables and hides all buttons on screen.
+	 */
+	private void hideAllButtons() {
+<span class="nc" id="L689">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="nc" id="L692">				LobbyToHostJoin.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L693">				Player1Btn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L694">				Player2Btn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L695">				SpectatorBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L696">				NotReadyBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L697">				ReadyBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L698">				StartGameBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L699">				GameSettingsBtn.setVisibility(View.INVISIBLE);</span>
+
+<span class="nc" id="L701">				LobbyToHostJoin.setClickable(false);</span>
+<span class="nc" id="L702">				Player1Btn.setClickable(false);</span>
+<span class="nc" id="L703">				Player2Btn.setClickable(false);</span>
+<span class="nc" id="L704">				SpectatorBtn.setClickable(false);</span>
+<span class="nc" id="L705">				NotReadyBtn.setClickable(false);</span>
+<span class="nc" id="L706">				ReadyBtn.setClickable(false);</span>
+<span class="nc" id="L707">				StartGameBtn.setClickable(false);</span>
+<span class="nc" id="L708">				GameSettingsBtn.setClickable(false);</span>
+<span class="nc" id="L709">			}</span>
+		});
+<span class="nc" id="L711">	}</span>
+
+
+
+	/**
+	 * Displays the host left overlay.
+	 * @param message is a string containing the information of why
+	 *                the user must leave the lobby.
+	 */
+	private void displayExitLobbyOverlay(String message) {
+<span class="nc" id="L721">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="nc" id="L724">				View inflatedLayout = getLayoutInflater().inflate(R.layout.lobby_exitlobby_layout, null, false);</span>
+<span class="nc" id="L725">				Button LobbyToMenuBtn = (Button) inflatedLayout.findViewById(R.id.LobbyToMenuBtn);</span>
+<span class="nc" id="L726">				TextView ExitLobbyText = (TextView) inflatedLayout.findViewById(R.id.ExitLobbyText);</span>
+
+				//If host left, display host left message
+<span class="nc bnc" id="L729" title="All 2 branches missed.">				if (message.equals(&quot;HostLeft&quot;)) {</span>
+<span class="nc" id="L730">					ExitLobbyText.setText(&quot;The host has left the lobby.&quot;);</span>
+				} else
+
+				//If kicked, display kicked message
+<span class="nc bnc" id="L734" title="All 2 branches missed.">				if (message.equals(&quot;Kicked&quot;)) {</span>
+<span class="nc" id="L735">					ExitLobbyText.setText(&quot;You have been kicked.&quot;);</span>
+				}
+
+
+<span class="nc" id="L739">				LobbyToMenuBtn.setOnClickListener(new View.OnClickListener() {</span>
+					@Override
+					public void onClick(View view) {
+						//Returns user to main menu
+<span class="nc" id="L743">						Intent intent = new Intent(LobbyActivity.this, MainMenuActivity.class);</span>
+<span class="nc" id="L744">						startActivity(intent);</span>
+<span class="nc" id="L745">					}</span>
+				});
+
+<span class="nc" id="L748">				LobbyOverlay.addView(inflatedLayout);</span>
+<span class="nc" id="L749">			}</span>
+		});
+<span class="nc" id="L751">	}</span>
+
+
+
+	/**
+	 * Enables start game button.
+	 */
+	private void enableStartGame() {
+<span class="nc" id="L759">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="nc" id="L762">				CanStart = true;</span>
+<span class="nc" id="L763">				StartGameBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));</span>
+<span class="nc" id="L764">				StartGameBtn.setClickable(true);</span>
+<span class="nc" id="L765">			}</span>
+		});
+<span class="nc" id="L767">	}</span>
+
+
+
+	/**
+	 * Disables start game button.
+	 */
+	private void disableStartGame() {
+<span class="fc" id="L775">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L778">				CanStart = false;</span>
+<span class="fc" id="L779">				StartGameBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+<span class="fc" id="L780">				StartGameBtn.setClickable(false);</span>
+<span class="fc" id="L781">			}</span>
+		});
+<span class="fc" id="L783">}</span>
+
+
+	/**
+	 * Disables leave lobby button.
+	 */
+	private  void disableLeaveLobby() {
+<span class="fc" id="L790">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L793">				LobbyToHostJoin.setClickable(false);</span>
+<span class="fc" id="L794">			}</span>
+		});
+<span class="fc" id="L796">	}</span>
+
+
+
+	/**
+	 * Disables leave lobby button.
+	 */
+	private void enableLeaveLobby() {
+<span class="fc" id="L804">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L807">				LobbyToHostJoin.setClickable(true);</span>
+<span class="fc" id="L808">			}</span>
+		});
+<span class="fc" id="L810">	}</span>
+
+
+
+	/**
+	 * Switches client side data for role that was switched.
+	 * @param strings is a string array containing the information
+	 *                which lobby member switched to what new role.
+	 */
+	private void switchPlayerType(String[] strings) {
+<span class="fc" id="L820">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L823">				String temp = currUser.getUsername();</span>
+				//If user who changed PlayerType was currUser, store their new PlayerType.
+<span class="pc bpc" id="L825" title="1 of 2 branches missed.">				if (strings[3].equals(currUser.getUsername())) {</span>
+<span class="fc" id="L826">					PlayerOrSpectator = strings[2];</span>
+				}
+
+				//If player 1 is the user changing their PlayerType, then update WhoPlayer1
+<span class="fc bfc" id="L830" title="All 2 branches covered.">				if (strings[3].equals(WhoPlayer1)) {</span>
+<span class="fc" id="L831">					WhoPlayer1 = &quot;&quot;;</span>
+				}
+
+				//If player 2 is the user changing their PlayerType, then update WhoPlayer2
+<span class="fc bfc" id="L835" title="All 2 branches covered.">				if (strings[3].equals(WhoPlayer2)) {</span>
+<span class="fc" id="L836">					WhoPlayer2 = &quot;&quot;;</span>
+				}
+
+				//If user is changing to player 1, update WhoPlayer1
+<span class="fc bfc" id="L840" title="All 2 branches covered.">				if (strings[2].equals(&quot;Player1&quot;)) {</span>
+<span class="fc" id="L841">					WhoPlayer1 = strings[3];</span>
+				}
+
+				//If user is changing to player 2, update WhoPlayer2
+<span class="fc bfc" id="L845" title="All 2 branches covered.">				if (strings[2].equals(&quot;Player2&quot;)) {</span>
+<span class="fc" id="L846">					WhoPlayer2 = strings[3];</span>
+				}
+
+				//Change lobby member's playerType icon
+<span class="fc" id="L850">				int numChildren = LobbyMembersLayout.getChildCount();</span>
+<span class="fc bfc" id="L851" title="All 2 branches covered.">				for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="fc" id="L852">					LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);</span>
+<span class="fc" id="L853">					TextView memberName = (TextView) member.getChildAt(0);</span>
+
+					//If this member object is the member who switched, then...
+<span class="pc bpc" id="L856" title="1 of 2 branches missed.">					if (memberName.getText().equals(strings[3])) {</span>
+<span class="fc" id="L857">						ImageView readyOrSpectator = (ImageView) member.getChildAt(1);</span>
+
+						//If user is switching to a player, change spectator image to not ready image.
+<span class="fc bfc" id="L860" title="All 4 branches covered.">						if (strings[2].equals(&quot;Player1&quot;) || strings[2].equals(&quot;Player2&quot;)) {</span>
+<span class="fc" id="L861">							readyOrSpectator.setImageResource(R.drawable.notreadystatus);</span>
+						} else
+
+						//If user is switching to spectator change ready image to spectator image.
+<span class="pc bpc" id="L865" title="1 of 2 branches missed.">						if (strings[2].equals(&quot;Spectator&quot;)) {</span>
+<span class="fc" id="L866">							readyOrSpectator.setImageResource(R.drawable.spectator);</span>
+						}
+
+					}
+				}
+<span class="fc" id="L871">			}</span>
+		});
+<span class="fc" id="L873">	}</span>
+
+
+
+	/**
+	 * Updates client info about user ready status.
+	 * @param strings is a string array containing the information of
+	 *                which user unreadied.
+	 */
+	private void userUnReadied(String[] strings) {
+<span class="fc" id="L883">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L886">				String temp = currUser.getUsername();</span>
+
+				//If user who changed ready status was currUser, store their new ready status.
+<span class="pc bpc" id="L889" title="1 of 2 branches missed.">				if (strings[1].equals(currUser.getUsername())) {</span>
+<span class="fc" id="L890">					UserReady = false;</span>
+				}
+
+				//Change lobby member's playerType icon
+<span class="fc" id="L894">				int numChildren = LobbyMembersLayout.getChildCount();</span>
+<span class="fc bfc" id="L895" title="All 2 branches covered.">				for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="fc" id="L896">					LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);</span>
+<span class="fc" id="L897">					TextView memberName = (TextView) member.getChildAt(0);</span>
+
+					//If this member object is the member who unreadied, then...
+<span class="pc bpc" id="L900" title="1 of 2 branches missed.">					if (memberName.getText().equals(strings[1])) {</span>
+<span class="fc" id="L901">						ImageView readyStatus = (ImageView) member.getChildAt(1);</span>
+<span class="fc" id="L902">						readyStatus.setImageResource(R.drawable.notreadystatus);</span>
+					}
+				}
+<span class="fc" id="L905">			}</span>
+		});
+<span class="fc" id="L907">	}</span>
+
+
+
+	/**
+	 * Updates client info about user ready status.
+	 * @param strings is a string array containing the information of
+	 * 	              which user readied.
+	 */
+	private void userReadied(String[] strings) {
+<span class="fc" id="L917">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc" id="L920">				String temp = currUser.getUsername();</span>
+
+				//If user who changed ready status was currUser, store their new ready status.
+<span class="pc bpc" id="L923" title="1 of 2 branches missed.">				if (strings[1].equals(currUser.getUsername())) {</span>
+<span class="fc" id="L924">					UserReady = true;</span>
+				}
+
+				//Change lobby member's playerType icon
+<span class="fc" id="L928">				int numChildren = LobbyMembersLayout.getChildCount();</span>
+<span class="fc bfc" id="L929" title="All 2 branches covered.">				for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="fc" id="L930">					LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);</span>
+<span class="fc" id="L931">					TextView memberName = (TextView) member.getChildAt(0);</span>
+
+					//If this member object is the member who readied, then...
+<span class="pc bpc" id="L934" title="1 of 2 branches missed.">					if (memberName.getText().equals(strings[1])) {</span>
+<span class="fc" id="L935">						ImageView readyStatus = (ImageView) member.getChildAt(1);</span>
+<span class="fc" id="L936">						readyStatus.setImageResource(R.drawable.readystatus);</span>
+					}
+				}
+<span class="fc" id="L939">			}</span>
+		});
+<span class="fc" id="L941">	}</span>
+
+
+
+	/**
+	 * Updates client info about players.
+	 * @param strings is a string array containing the information of
+	 *                which lobby member left the lobby.
+	 */
+	private void playerLeftLobby(String[] strings) {
+<span class="nc" id="L951">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+				//Updates who is player 1
+<span class="nc bnc" id="L955" title="All 2 branches missed.">				if (strings[1].equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L956">					WhoPlayer1 = &quot;&quot;;</span>
+				} else
+
+					//Updates who is player 2
+<span class="nc bnc" id="L960" title="All 2 branches missed.">					if (strings[1].equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L961">						WhoPlayer2 = &quot;&quot;;</span>
+					}
+
+				//Remove member visual from lobby
+<span class="nc" id="L965">				int numChildren = LobbyMembersLayout.getChildCount();</span>
+<span class="nc bnc" id="L966" title="All 2 branches missed.">				for (int i = 0; i &lt; numChildren; i++) {</span>
+<span class="nc" id="L967">					LinearLayout member = (LinearLayout) LobbyMembersLayout.getChildAt(i);</span>
+<span class="nc" id="L968">					TextView memberName = (TextView) member.getChildAt(0);</span>
+
+					//If this member object is the member who left, then...
+<span class="nc bnc" id="L971" title="All 2 branches missed.">					if (memberName.getText().equals(strings[2])) {</span>
+<span class="nc" id="L972">						LobbyMembersLayout.removeViewAt(i);</span>
+					}
+				}
+<span class="nc" id="L975">			}</span>
+		});
+<span class="nc" id="L977">	}</span>
+
+
+
+	/**
+	 * Updates client that spectator has joined.
+	 * @param strings is a string array containing the information of
+	 *                which user has just joined the lobby.
+	 */
+	private void spectatorJoined(String[] strings) {
+<span class="nc" id="L987">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+				//Add host visual
+<span class="nc bnc" id="L991" title="All 2 branches missed.">				if (HostOrJoin.equals(&quot;host&quot;)) {</span>
+					//Create member object
+<span class="nc" id="L993">					View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);</span>
+<span class="nc" id="L994">					TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);</span>
+<span class="nc" id="L995">					ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);</span>
+<span class="nc" id="L996">					Button KickMemberBtn = (Button) newMember.findViewById(R.id.KickMemberBtn);</span>
+
+					//Set name and spectator image
+<span class="nc" id="L999">					MemberNameText.setText(strings[1]);</span>
+<span class="nc" id="L1000">					MemberReadyStatus.setImageResource(R.drawable.spectator);</span>
+
+					//Kicks user from lobby
+<span class="nc" id="L1003">					KickMemberBtn.setOnClickListener(new View.OnClickListener() {</span>
+						@Override
+						public void onClick(View view) {
+<span class="nc" id="L1006">							WebSocket.send(&quot;Kick &quot; + strings[1]);</span>
+<span class="nc" id="L1007">						}</span>
+					});
+
+					//Add the new member object to the screen.
+<span class="nc" id="L1011">					LobbyMembersLayout.addView(newMember);</span>
+<span class="nc" id="L1012">				} else</span>
+
+				//Add member visual
+<span class="nc bnc" id="L1015" title="All 2 branches missed.">				if (HostOrJoin.equals(&quot;join&quot;)) {</span>
+					//Create member object
+<span class="nc" id="L1017">					View newMember = getLayoutInflater().inflate(R.layout.lobby_member_layout, null, false);</span>
+<span class="nc" id="L1018">					TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberTextView);</span>
+<span class="nc" id="L1019">					ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.PlayerStatusImageView);</span>
+
+					//Set name and spectator image
+<span class="nc" id="L1022">					MemberNameText.setText(strings[1]);</span>
+<span class="nc" id="L1023">					MemberReadyStatus.setImageResource(R.drawable.spectator);</span>
+
+					//Add the new member object to the screen.
+<span class="nc" id="L1026">					LobbyMembersLayout.addView(newMember);</span>
+				}
+<span class="nc" id="L1028">			}</span>
+		});
+<span class="nc" id="L1030">	}</span>
+
+
+
+	/**
+	 * Displays lobby event at top of screen.
+	 * @param strings is a string array containing the information of
+	 *                what change in the lobby status has just occurred.
+	 */
+	private void displayLobbyEvent(String[] strings) {
+<span class="fc" id="L1040">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="pc bpc" id="L1043" title="4 of 7 branches missed.">				switch (strings[0]) {</span>
+					case &quot;Ready&quot;:
+						//Tell users who readied up
+<span class="fc" id="L1046">						lobbyMessage = strings[1] + &quot; has readied-up.&quot;;</span>
+<span class="fc" id="L1047">						LobbyEvent.setText(lobbyMessage);</span>
+<span class="fc" id="L1048">						break;</span>
+
+
+					case &quot;UnReady&quot;:
+						//Tell users who unreadied
+<span class="fc" id="L1053">						lobbyMessage = strings[1] + &quot; has un-readied.&quot;;</span>
+<span class="fc" id="L1054">						LobbyEvent.setText(lobbyMessage);</span>
+<span class="fc" id="L1055">						break;</span>
+
+
+					case &quot;Switch&quot;:
+						//Tell users who switched to what
+<span class="fc" id="L1060">						lobbyMessage = strings[3] + &quot; (&quot; + strings[1] + &quot;)&quot; + &quot; switched to &quot; + strings[2] + &quot;.&quot;;</span>
+<span class="fc" id="L1061">						LobbyEvent.setText(lobbyMessage);</span>
+<span class="fc" id="L1062">						break;</span>
+
+
+					case &quot;Spectator&quot;:
+						//Tell users who joined
+<span class="nc" id="L1067">						lobbyMessage = strings[1] + &quot; has joined.&quot;;</span>
+<span class="nc" id="L1068">						LobbyEvent.setText(lobbyMessage);</span>
+<span class="nc" id="L1069">						break;</span>
+
+
+					case &quot;PlayerLeft&quot;:
+						//Tell users who left
+<span class="nc" id="L1074">						lobbyMessage = strings[2] + &quot; (&quot; + strings[1] + &quot;)&quot; + &quot; has left.&quot;;</span>
+<span class="nc" id="L1075">						LobbyEvent.setText(lobbyMessage);</span>
+<span class="nc" id="L1076">						break;</span>
+
+
+					case &quot;CanStart&quot;:
+						//Tell host both players are ready
+<span class="nc" id="L1081">						lobbyMessage = &quot;Both players ready.&quot;;</span>
+<span class="nc" id="L1082">						LobbyEvent.setText(lobbyMessage);</span>
+						break;
+				}
+<span class="fc" id="L1085">			}</span>
+		});
+<span class="fc" id="L1087">	}</span>
+
+
+
+	/**
+	 * Displays who is in the lobby and what their corresponding player type
+	 *     and or ready status are.
+	 * @param listMembers is a string array containing the information of
+	 *                    all lobby members, their player type, and their
+	 *                    ready status if applicable.
+	 */
+	private void displayLobbyMembers(String[] listMembers) {
+<span class="fc" id="L1099">		runOnUiThread(new Runnable() {</span>
+			@Override
+			public void run() {
+<span class="fc bfc" id="L1102" title="All 2 branches covered.">				for (int i = 0; i &lt; listMembers.length; i++) {</span>
+<span class="fc" id="L1103">					String[] member = listMembers[i].split(&quot;[.]&quot;);</span>
+
+					//Display members for host
+<span class="pc bpc" id="L1106" title="1 of 2 branches missed.">					if (HostOrJoin.equals(&quot;host&quot;)) {</span>
+						//Create member object
+<span class="fc" id="L1108">						View newMember = getLayoutInflater().inflate(R.layout.lobby_host_layout, null, false);</span>
+<span class="fc" id="L1109">						TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberNameTextView);</span>
+<span class="fc" id="L1110">						ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.ReadyStatusImageView);</span>
+<span class="fc" id="L1111">						Button KickMemberBtn = (Button) newMember.findViewById(R.id.KickMemberBtn);</span>
+
+						//Display name of member
+<span class="fc" id="L1114">						MemberNameText.setText(member[0]);</span>
+
+						//Display spectator image
+<span class="pc bpc" id="L1117" title="1 of 2 branches missed.">						if (member[1].equals(&quot;Spectator&quot;)) {</span>
+<span class="fc" id="L1118">							MemberReadyStatus.setImageResource(R.drawable.spectator);</span>
+						} else
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+<span class="nc bnc" id="L1122" title="All 2 branches missed.">						if (member[1].equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L1123">							WhoPlayer1 = member[0];</span>
+
+<span class="nc bnc" id="L1125" title="All 2 branches missed.">							if (member[2].equals(&quot;NotReady&quot;)) {</span>
+<span class="nc" id="L1126">								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);</span>
+							} else
+
+<span class="nc bnc" id="L1129" title="All 2 branches missed.">							if (member[2].equals(&quot;Ready&quot;)) {</span>
+<span class="nc" id="L1130">								MemberReadyStatus.setImageResource(R.drawable.readystatus);</span>
+							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+<span class="pc bpc" id="L1135" title="1 of 2 branches missed.">						if (member[1].equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L1136">							 WhoPlayer2 = member[0];</span>
+
+<span class="nc bnc" id="L1138" title="All 2 branches missed.">							if (member[2].equals(&quot;NotReady&quot;)) {</span>
+<span class="nc" id="L1139">								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);</span>
+							} else
+
+<span class="nc bnc" id="L1142" title="All 2 branches missed.">							if (member[2].equals(&quot;Ready&quot;)) {</span>
+<span class="nc" id="L1143">								MemberReadyStatus.setImageResource(R.drawable.readystatus);</span>
+							}
+						}
+
+						//Kicks user from lobby
+<span class="fc" id="L1148">						KickMemberBtn.setOnClickListener(new View.OnClickListener() {</span>
+							@Override
+							public void onClick(View view) {
+<span class="nc" id="L1151">								WebSocket.send(&quot;Kick &quot; + member[0]);</span>
+<span class="nc" id="L1152">							}</span>
+						});
+
+						//Add the new member object to the screen.
+<span class="fc" id="L1156">						LobbyMembersLayout.addView(newMember);</span>
+<span class="fc" id="L1157">					} else</span>
+
+					//Display members for member
+<span class="nc bnc" id="L1160" title="All 2 branches missed.">					if (HostOrJoin.equals(&quot;join&quot;)) {</span>
+						//Create member object
+<span class="nc" id="L1162">						View newMember = getLayoutInflater().inflate(R.layout.lobby_member_layout, null, false);</span>
+<span class="nc" id="L1163">						TextView MemberNameText = (TextView) newMember.findViewById(R.id.MemberTextView);</span>
+<span class="nc" id="L1164">						ImageView MemberReadyStatus = (ImageView) newMember.findViewById(R.id.PlayerStatusImageView);</span>
+
+						//Display name of member
+<span class="nc" id="L1167">						MemberNameText.setText(member[0]);</span>
+
+						//Display spectator image
+<span class="nc bnc" id="L1170" title="All 2 branches missed.">						if (member[1].equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L1171">							MemberReadyStatus.setImageResource(R.drawable.spectator);</span>
+						} else
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+<span class="nc bnc" id="L1175" title="All 2 branches missed.">						if (member[1].equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L1176">							WhoPlayer1 = member[0];</span>
+
+<span class="nc bnc" id="L1178" title="All 2 branches missed.">							if (member[2].equals(&quot;NotReady&quot;)) {</span>
+<span class="nc" id="L1179">								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);</span>
+							} else
+
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">							if (member[2].equals(&quot;Ready&quot;)) {</span>
+<span class="nc" id="L1183">								MemberReadyStatus.setImageResource(R.drawable.readystatus);</span>
+							}
+						}
+
+						//Stores who is Player 1 and displays Ready or NotReady image
+<span class="nc bnc" id="L1188" title="All 2 branches missed.">						if (member[1].equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L1189">							WhoPlayer2 = member[0];</span>
+
+<span class="nc bnc" id="L1191" title="All 2 branches missed.">							if (member[2].equals(&quot;NotReady&quot;)) {</span>
+<span class="nc" id="L1192">								MemberReadyStatus.setImageResource(R.drawable.notreadystatus);</span>
+							} else
+
+<span class="nc bnc" id="L1195" title="All 2 branches missed.">							if (member[2].equals(&quot;Ready&quot;)) {</span>
+<span class="nc" id="L1196">								MemberReadyStatus.setImageResource(R.drawable.readystatus);</span>
+							}
+						}
+
+						//Add the new member object to the screen.
+<span class="nc" id="L1201">						LobbyMembersLayout.addView(newMember);</span>
+					}
+				}
+<span class="fc" id="L1204">			}</span>
+		});
+<span class="fc" id="L1206">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.1</div></body></html>

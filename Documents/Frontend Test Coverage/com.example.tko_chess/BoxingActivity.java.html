@@ -1,0 +1,1226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoxingActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.tko_chess</a> &gt; <span class="el_source">BoxingActivity.java</span></div><h1>BoxingActivity.java</h1><pre class="source lang-java linenums">package com.example.tko_chess;
+
+import static android.text.TextUtils.split;
+
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.cert.PKIXRevocationChecker;
+
+import com.example.tko_chess.ultils.Const;
+
+/**
+ * @author Lex Somers
+ *
+ * Boxing activity where users play against another user in a game of
+ *     rock, papaer, scissors like &quot;boxing&quot;.
+ */
+<span class="nc" id="L34">public class BoxingActivity extends AppCompatActivity {</span>
+
+    /**
+     * ImageView showing player 1's &quot;block&quot; pose.
+     */
+    ImageView Player1Block;
+
+    /**
+     * ImageView showing player 1's &quot;kick&quot; pose.
+     */
+    ImageView Player1Kick;
+
+    /**
+     * ImageView showing player 1's &quot;jab&quot;.
+     */
+    ImageView Player1Jab;
+
+    /**
+     * ImageView showing user's 6th heart.
+     */
+    ImageView UserHeart6;
+
+    /**
+     * ImageView showing user's 5th heart.
+     */
+    ImageView UserHeart5;
+
+    /**
+     * ImageView showing user's 4th heart.
+     */
+    ImageView UserHeart4;
+
+    /**
+     * ImageView showing user's 3rd heart.
+     */
+    ImageView UserHeart3;
+
+    /**
+     * ImageView showing user's 2nd heart.
+     */
+    ImageView UserHeart2;
+
+    /**
+     * ImageView showing user's 1st heart.
+     */
+    ImageView UserHeart1;
+
+    /**
+     * ImageView showing player 2's &quot;block&quot; pose.
+     */
+    ImageView Player2Block;
+
+    /**
+     * ImageView showing player 2's &quot;kick&quot; pose.
+     */
+    ImageView Player2Kick;
+
+    /**
+     * ImageView showing player 2's &quot;jab&quot;.
+     */
+    ImageView Player2Jab;
+
+    /**
+     * ImageView showing user's 6th heart.
+     */
+    ImageView OpponentHeart6;
+
+    /**
+     * ImageView showing user's 5th heart.
+     */
+    ImageView OpponentHeart5;
+
+    /**
+     * ImageView showing user's 4th heart.
+     */
+    ImageView OpponentHeart4;
+
+    /**
+     * ImageView showing user's 3rd heart.
+     */
+    ImageView OpponentHeart3;
+
+    /**
+     * ImageView showing user's 2nd heart.
+     */
+    ImageView OpponentHeart2;
+
+    /**
+     * ImageView showing user's 1st heart.
+     */
+    ImageView OpponentHeart1;
+
+    /**
+     * Button changes user's character pose to &quot;block&quot;.
+     */
+    Button BlockBtn;
+
+    /**
+     * Button changes user's character pose to &quot;kick&quot;.
+     */
+    Button KickBtn;
+
+    /**
+     * Button changes user's character pose to &quot;jab&quot;.
+     */
+    Button JabBtn;
+
+    /**
+     * Button locks in user's selected move.
+     */
+    Button ConfirmMoveBtn;
+
+    /**
+     * Button displays the options menu.
+     */
+    ImageButton OptionsBtn;
+
+    /**
+     * TextView displays boxing header.
+     */
+    TextView GameTimeText;
+
+    /**
+     * TextView displays player1's username.
+     */
+    TextView Player1Name;
+
+    /**
+     * Textview displays current round of boxing.
+     */
+    TextView CurrRound;
+
+    /**
+     * Textview displays Player1 total rounds won.
+     */
+    TextView Player1Wins;
+
+    /**
+     * Textview displays Player2 total rounds won.
+     */
+    TextView Player2Wins;
+
+    /**
+     * TextView displays player2's username.
+     */
+    TextView Player2Name;
+
+    /**
+     * TextView displays select move prompt.
+     */
+    TextView SelectMoveText;
+
+    /**
+     * Int holds user's current health.
+     */
+<span class="nc" id="L189">    int UserHealth = 3;</span>
+
+    /**
+     * Int stores the current round of boxing.
+     */
+    int RoundNum;
+
+    /**
+     * Int stores how many rounds of boxing Player1 has won.
+     */
+    //int Player1GamesWon = 0;
+
+    /**
+     * Int stores how many rounds of boxing Player2 has won.
+     */
+    //int Player2GamesWon = 0;
+
+    /**
+     * Int holds opponent's current health.
+     */
+<span class="nc" id="L209">    int OpponentHealth = 3;</span>
+
+    /**
+     * LinearLayout container for the options menu.
+     */
+    LinearLayout OptionsLayout;
+
+    /**
+     * LinearLayout container for the &quot;game over&quot; overlay.
+     */
+    LinearLayout GameOverLayout;
+
+    /**
+     * String holds user's currently selected move.
+     */
+<span class="nc" id="L224">    String SelectedMove = &quot;&quot;;</span>
+
+    /**
+     * String holds what gamemode a user is playing.
+     * Gamemodes are chess, chessboxing, or boxing.
+     */
+    String GameMode;
+
+    /**
+     * String holds the user's player type.
+     * Player type Player1, Player2, or Spectator.
+     */
+    String UserRole;
+    String WhoPlayer1;
+    String WhoPlayer2;
+
+    /**
+     * SingletonUser instance which stores the currently logged in user.
+     */
+<span class="nc" id="L243">    SingletonUser currUser = SingletonUser.getInstance();</span>
+
+    /**
+     * WebSocket used for sending and receiving messages about the user and
+     *      opponent's moves, round results, and when the game ends.
+     */
+    private WebSocketClient WebSocket;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     *
+     * Loads boxing screen onto device. Displays starting health, opposing player's username,
+     *     and other information.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L262">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L263">        setContentView(R.layout.activity_boxing);</span>
+
+        //ImageView initializations
+<span class="nc" id="L266">        Player1Block = findViewById(R.id.Player1BlockImg);</span>
+<span class="nc" id="L267">        Player1Jab = findViewById(R.id.Player1JabImg);</span>
+<span class="nc" id="L268">        Player1Kick = findViewById(R.id.Player1KickImg);</span>
+<span class="nc" id="L269">        UserHeart6 = findViewById(R.id.Player1Heart6);</span>
+<span class="nc" id="L270">        UserHeart5 = findViewById(R.id.Player1Heart5);</span>
+<span class="nc" id="L271">        UserHeart4 = findViewById(R.id.Player1Heart4);</span>
+<span class="nc" id="L272">        UserHeart3 = findViewById(R.id.Player1Heart3);</span>
+<span class="nc" id="L273">        UserHeart2 = findViewById(R.id.Player1Heart2);</span>
+<span class="nc" id="L274">        UserHeart1 = findViewById(R.id.Player1Heart1);</span>
+
+<span class="nc" id="L276">        Player2Block = findViewById(R.id.Player2BlockImg);</span>
+<span class="nc" id="L277">        Player2Jab = findViewById(R.id.Player2JabImg);</span>
+<span class="nc" id="L278">        Player2Kick = findViewById(R.id.Player2KickImg);</span>
+<span class="nc" id="L279">        OpponentHeart6 = findViewById(R.id.Player2Heart6);</span>
+<span class="nc" id="L280">        OpponentHeart5 = findViewById(R.id.Player2Heart5);</span>
+<span class="nc" id="L281">        OpponentHeart4 = findViewById(R.id.Player2Heart4);</span>
+<span class="nc" id="L282">        OpponentHeart3 = findViewById(R.id.Player2Heart3);</span>
+<span class="nc" id="L283">        OpponentHeart2 = findViewById(R.id.Player2Heart2);</span>
+<span class="nc" id="L284">        OpponentHeart1 = findViewById(R.id.Player2Heart1);</span>
+
+        //Button initializations
+<span class="nc" id="L287">        BlockBtn = findViewById(R.id.BlockBtn);</span>
+<span class="nc" id="L288">        KickBtn = findViewById(R.id.KickBtn);</span>
+<span class="nc" id="L289">        JabBtn = findViewById(R.id.JabBtn);</span>
+<span class="nc" id="L290">        ConfirmMoveBtn = findViewById(R.id.ConfirmMoveBtn);</span>
+<span class="nc" id="L291">        OptionsBtn = findViewById(R.id.BoxingMenuBtn);</span>
+
+        //TextView initializations
+<span class="nc" id="L294">        Player1Name = findViewById(R.id.Player1NameText);</span>
+<span class="nc" id="L295">        Player2Name = findViewById(R.id.Player2NameText);</span>
+<span class="nc" id="L296">        SelectMoveText = findViewById(R.id.SelectMoveText);</span>
+        /*CurrRound = findViewById(R.id.RoundNumberText);
+        Player1Wins = findViewById(R.id.Player1Wins);
+        Player2Wins = findViewById(R.id.Player2Wins);*/
+
+        //LinearLayout initializations
+<span class="nc" id="L302">        OptionsLayout = findViewById(R.id.OptionsLayout);</span>
+<span class="nc" id="L303">        GameOverLayout = findViewById(R.id.GameOverLayout);</span>
+
+        //String initializations
+<span class="nc" id="L306">        GameMode = getIntent().getExtras().getString(&quot;Gamemode&quot;);</span>
+<span class="nc" id="L307">        UserRole = getIntent().getExtras().getString(&quot;UserRole&quot;);</span>
+<span class="nc" id="L308">        WhoPlayer1 = getIntent().getExtras().getString(&quot;Player1&quot;);</span>
+<span class="nc" id="L309">        WhoPlayer2 = getIntent().getExtras().getString(&quot;Player2&quot;);</span>
+
+        /*//Int initializations
+        Player1GamesWon = getIntent().getExtras().getInt(&quot;Player1Wins&quot;);
+        Player2GamesWon = getIntent().getExtras().getInt(&quot;Player2Wins&quot;);
+        RoundNum = getIntent().getExtras().getInt(&quot;RoundNumber&quot;);
+        //Increments round number to current.
+        RoundNum += 1;
+
+        //Display round number
+        CurrRound.setText(&quot;Round &quot; + RoundNum);
+         */
+
+        //Hides excess starting hearts according to initial health
+<span class="nc" id="L323">        displayStartingOpponentHealth();</span>
+<span class="nc" id="L324">        displayStartingUserHealth();</span>
+
+        //Hides buttons for spectators
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L328">            hideButtons();</span>
+        }
+
+<span class="nc" id="L331">        String URLConcatenation = &quot;&quot;;</span>
+<span class="nc" id="L332">        URLConcatenation += currUser.getUsername();</span>
+
+        //Display player names on screen for spectators and for the case of user being Player 1
+<span class="nc bnc" id="L335" title="All 4 branches missed.">        if (UserRole.equals(&quot;Spectator&quot;) || WhoPlayer1.equals(currUser.getUsername())) {</span>
+<span class="nc" id="L336">            Player1Name.setText(WhoPlayer1);</span>
+<span class="nc" id="L337">            Player2Name.setText(WhoPlayer2);</span>
+            /*Player1Wins.setText(&quot;Wins: &quot; + Integer.toString(Player1GamesWon));
+            Player2Wins.setText(&quot;Wins: &quot; + Integer.toString(Player2GamesWon));*/
+        }
+
+        //Display player names on screen for the case of user being Player 2
+<span class="nc bnc" id="L343" title="All 2 branches missed.">        if (WhoPlayer2.equals(currUser.getUsername())) {</span>
+<span class="nc" id="L344">            Player1Name.setText(currUser.getUsername());</span>
+<span class="nc" id="L345">            Player2Name.setText(WhoPlayer1);</span>
+            /*Player1Wins.setText(&quot;Wins: &quot; + Integer.toString(Player2GamesWon));
+            Player2Wins.setText(&quot;Wins: &quot; + Integer.toString(Player1GamesWon));*/
+        }
+
+        /*if (!GameMode.equals(&quot;ChessBoxing&quot;)) {
+            Player1Wins.setVisibility(View.INVISIBLE);
+            Player2Wins.setVisibility(View.INVISIBLE);
+            CurrRound.setVisibility(View.INVISIBLE);
+        }*/
+
+<span class="nc" id="L356">        Draft[] drafts = {</span>
+                new Draft_6455()
+        };
+
+        //Connect to WebSocket
+        try {
+<span class="nc" id="L362">            WebSocket = new WebSocketClient(new URI(Const.URL_SERVER_WEBSOCKETBOXING + URLConcatenation), (Draft)drafts[0]) {</span>
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+<span class="nc" id="L365">                    Log.d(&quot;OPEN&quot;, &quot;run() returned: &quot; + &quot;is connecting&quot;);</span>
+<span class="nc" id="L366">                    System.out.println(&quot;Boxing onOpen returned&quot;);</span>
+
+                    //Creates a boxing game with the correct players if in ChessBoxing
+<span class="nc bnc" id="L369" title="All 4 branches missed.">                    if (GameMode.equals(&quot;ChessBoxing&quot;) &amp;&amp; UserRole.equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L370">                        WebSocket.send(&quot;Start &quot; + WhoPlayer1 + &quot; &quot; + WhoPlayer2);</span>
+                    }
+
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                    if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L374">                        WebSocket.send(&quot;Join &quot; + WhoPlayer1 + &quot; &quot; + currUser.getUsername());</span>
+                    }
+<span class="nc" id="L376">                }</span>
+
+                @Override
+                public void onMessage(String message) {
+<span class="nc" id="L380">                    Log.d(&quot;&quot;, &quot;run() returned: &quot; + message);</span>
+<span class="nc" id="L381">                    String[] strings = message.split(&quot; &quot;);</span>
+
+<span class="nc bnc" id="L383" title="All 11 branches missed.">                    switch (strings[0]) {</span>
+                        //Player Switch Cases
+                        ////////////////////////////////////////////////////////////////////
+                        case &quot;RoundWin&quot;:
+                            //Show opponent's move
+<span class="nc" id="L388">                            showOpponentMove(strings[1]);</span>
+<span class="nc" id="L389">                            System.out.println(&quot;show move returned&quot;);</span>
+<span class="nc" id="L390">                            waitTime(3.0);</span>
+
+                            //Hide opponent's move
+<span class="nc" id="L393">                            hideOpponentMove();</span>
+<span class="nc" id="L394">                            System.out.println(&quot;hide move returned&quot;);</span>
+
+                            //Lowers health of opponent
+<span class="nc" id="L397">                            OpponentHealth -= 1;</span>
+<span class="nc" id="L398">                            lowerOpponentHealth(OpponentHealth);</span>
+<span class="nc" id="L399">                            System.out.println(&quot;lower health returned&quot;);</span>
+
+                            //Reset user's stance to default
+<span class="nc" id="L402">                            showDefaultStance();</span>
+<span class="nc" id="L403">                            SelectedMove = &quot;&quot;;</span>
+
+                            //Enables buttons again for the new &quot;round&quot;
+<span class="nc" id="L406">                            enableButtons();</span>
+<span class="nc" id="L407">                            System.out.println(&quot;buttons enabled&quot;);</span>
+
+                            //Exit switch statement
+<span class="nc" id="L410">                            break;</span>
+
+
+                        case &quot;RoundLoss&quot;:
+                            //Show opponent's move
+<span class="nc" id="L415">                            showOpponentMove(strings[1]);</span>
+<span class="nc" id="L416">                            System.out.println(&quot;show move returned&quot;);</span>
+<span class="nc" id="L417">                            waitTime(3.0);</span>
+
+                            //Hide opponent's move
+<span class="nc" id="L420">                            hideOpponentMove();</span>
+<span class="nc" id="L421">                            System.out.println(&quot;hide move returned&quot;);</span>
+
+
+                            //Lowers health of User
+<span class="nc" id="L425">                            UserHealth -= 1;</span>
+<span class="nc" id="L426">                            lowerUserHealth(UserHealth);</span>
+<span class="nc" id="L427">                            System.out.println(&quot;lower health returned&quot;);</span>
+
+                            //Reset user's stance to default
+<span class="nc" id="L430">                            showDefaultStance();</span>
+<span class="nc" id="L431">                            SelectedMove = &quot;&quot;;</span>
+
+                            //Enables buttons again for the new &quot;round&quot;
+<span class="nc" id="L434">                            enableButtons();</span>
+<span class="nc" id="L435">                            System.out.println(&quot;buttons enabled&quot;);</span>
+
+                            //Exit switch statement
+<span class="nc" id="L438">                            break;</span>
+
+
+                        case &quot;Tie&quot;:
+                            //Show opponent's move
+<span class="nc" id="L443">                            showOpponentMove(strings[1]);</span>
+<span class="nc" id="L444">                            System.out.println(&quot;show move returned&quot;);</span>
+<span class="nc" id="L445">                            waitTime(3.0);</span>
+
+                            //Hide opponent's move
+<span class="nc" id="L448">                            hideOpponentMove();</span>
+<span class="nc" id="L449">                            System.out.println(&quot;hide move returned&quot;);</span>
+
+                            //Reset user's stance to default
+<span class="nc" id="L452">                            showDefaultStance();</span>
+<span class="nc" id="L453">                            SelectedMove = &quot;&quot;;</span>
+
+                            //Enables buttons again for the new &quot;round&quot;
+<span class="nc" id="L456">                            enableButtons();</span>
+<span class="nc" id="L457">                            System.out.println(&quot;enable&quot;);</span>
+
+                            //Exit switch statement
+<span class="nc" id="L460">                            break;</span>
+
+
+                        case &quot;GameWin&quot;:
+                            //Updates user's stats
+<span class="nc" id="L465">                            WebSocket.send(&quot;GameType &quot; + GameMode + &quot; win&quot;);</span>
+
+                            //Closes websocket
+<span class="nc" id="L468">                            WebSocket.close();</span>
+
+                            //Increments number of user game wins.
+<span class="nc bnc" id="L471" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L472">                                displayGameResult(&quot;You win!&quot;);</span>
+
+                                /*Player1GamesWon += 1;
+
+                                if ((Player1GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                    displayGameResult(&quot;You win!&quot;);
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra(&quot;Gamemode&quot;, GameMode);
+                                    intent.putExtra(&quot;UserRole&quot;, UserRole);
+                                    intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                    intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                    intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+                                    intent.putExtra(&quot;Player1&quot;, WhoPlayer1);
+                                    intent.putExtra(&quot;Player2&quot;, WhoPlayer2);
+
+                                    startActivity(intent);
+                                } */
+                            } else
+
+<span class="nc bnc" id="L493" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L494">                                displayGameResult(WhoPlayer2 + &quot; won!&quot;);</span>
+
+                                /*Player2GamesWon += 1;
+
+                                if ((Player2GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                    displayGameResult(WhoPlayer2 + &quot; won!&quot;);
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra(&quot;Gamemode&quot;, GameMode);
+                                    intent.putExtra(&quot;UserRole&quot;, UserRole);
+                                    intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                    intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                    intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+
+                                    startActivity(intent);
+                                }*/
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case &quot;GameLoss&quot;:
+                            //Updates user's stats
+<span class="nc" id="L519">                            WebSocket.send(&quot;GameType &quot; + GameMode + &quot; loss&quot;);</span>
+
+                            //Closes websocket
+<span class="nc" id="L522">                            WebSocket.close();</span>
+
+<span class="nc" id="L524">                            runOnUiThread(new Runnable() {</span>
+                                @Override
+                                public void run() {
+<span class="nc" id="L527">                                    OptionsBtn.setClickable(false);</span>
+<span class="nc" id="L528">                                }</span>
+                            });
+
+                            //Increments number of opponent game wins.
+<span class="nc bnc" id="L532" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Player1&quot;)) {</span>
+<span class="nc" id="L533">                                displayGameResult(&quot;You lost. :(&quot;);</span>
+
+                                /*Player2GamesWon += 1;
+
+                                if ((Player2GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                    displayGameResult(&quot;You lost. :(&quot;);
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra(&quot;Gamemode&quot;, &quot;ChessBoxing&quot;);
+                                    intent.putExtra(&quot;UserRole&quot;, UserRole);
+                                    intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                    intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                    intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+
+                                    startActivity(intent);
+                                }*/
+                            } else
+
+<span class="nc bnc" id="L552" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L553">                                displayGameResult(&quot;You lost. :(&quot;);</span>
+
+                                /*Player1GamesWon += 1;
+
+                                if ((Player1GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                    displayGameResult(&quot;You lost. :(&quot;);
+                                } else {
+                                    //Returns user to Chess
+                                    Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                    intent.putExtra(&quot;Gamemode&quot;, &quot;ChessBoxing&quot;);
+                                    intent.putExtra(&quot;UserRole&quot;, UserRole);
+                                    intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                    intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                    intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+
+                                    startActivity(intent);
+                                }*/
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case &quot;OpponentLeft&quot;:
+                            //Closes websocket
+<span class="nc" id="L578">                            WebSocket.close();</span>
+
+<span class="nc" id="L580">                            runOnUiThread(new Runnable() {</span>
+                                @Override
+                                public void run() {
+<span class="nc" id="L583">                                    OptionsBtn.setClickable(false);</span>
+<span class="nc" id="L584">                                }</span>
+                            });
+
+                            //Displays game over popup
+<span class="nc" id="L588">                            displayGameResult(&quot;Opponent conceded.&quot;);</span>
+
+                            //Exit switch statement
+<span class="nc" id="L591">                            break;</span>
+                        ////////////////////////////////////////////////////////////////////
+
+
+
+                        //Spectator Switch Cases
+                        ////////////////////////////////////////////////////////////////////
+                        case &quot;RoundOver&quot;:
+<span class="nc bnc" id="L599" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+                                //If player 1 won the round
+<span class="nc bnc" id="L601" title="All 2 branches missed.">                                if (strings[1].equals(&quot;Player1&quot;)) {</span>
+                                    //Shows both players' moves
+<span class="nc" id="L603">                                    showPlayer1Move(strings[2]);</span>
+<span class="nc" id="L604">                                    showOpponentMove(strings[4]);</span>
+
+                                    //Waits 3 seconds
+<span class="nc" id="L607">                                    waitTime(3.0);</span>
+
+                                    //Lowers health of opponent
+<span class="nc" id="L610">                                    OpponentHealth -= 1;</span>
+<span class="nc" id="L611">                                    lowerOpponentHealth(OpponentHealth);</span>
+
+                                    //Hides both players' moves
+<span class="nc" id="L614">                                    showDefaultStance();</span>
+<span class="nc" id="L615">                                    hideOpponentMove();</span>
+
+                                } else
+
+                                    //If player 2 won the round
+<span class="nc bnc" id="L620" title="All 2 branches missed.">                                    if (strings[1].equals(&quot;Player2&quot;)) {</span>
+                                        //Shows both players' moves
+<span class="nc" id="L622">                                        showPlayer1Move(strings[4]);</span>
+<span class="nc" id="L623">                                        showOpponentMove(strings[2]);</span>
+
+                                        //Waits 3 seconds
+<span class="nc" id="L626">                                        waitTime(3.0);</span>
+
+                                        //Lowers health of opponent
+<span class="nc" id="L629">                                        UserHealth -= 1;</span>
+<span class="nc" id="L630">                                        lowerUserHealth(UserHealth);</span>
+
+                                        //Hides both players' moves
+<span class="nc" id="L633">                                        showDefaultStance();</span>
+<span class="nc" id="L634">                                        hideOpponentMove();</span>
+                                    }
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case &quot;RoundTie&quot;:
+<span class="nc bnc" id="L643" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+                                //Shows both players' moves
+<span class="nc" id="L645">                                showPlayer1Move(strings[1]);</span>
+<span class="nc" id="L646">                                showOpponentMove(strings[1]);</span>
+
+                                //Waits 3 seconds
+<span class="nc" id="L649">                                waitTime(3.0);</span>
+
+                                //Hides both players' moves
+<span class="nc" id="L652">                                showDefaultStance();</span>
+<span class="nc" id="L653">                                hideOpponentMove();</span>
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case &quot;GameOver&quot;:
+<span class="nc bnc" id="L661" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L662">                                WebSocket.close();</span>
+
+<span class="nc" id="L664">                                runOnUiThread(new Runnable() {</span>
+                                    @Override
+                                    public void run() {
+<span class="nc" id="L667">                                        OptionsBtn.setClickable(false);</span>
+<span class="nc" id="L668">                                    }</span>
+                                });
+
+                                //Displays game result layout and which player won.
+<span class="nc bnc" id="L672" title="All 2 branches missed.">                                if (strings[1].equals(&quot;Player1&quot;)) {</span>
+                                    //Player1GamesWon += 1;
+
+<span class="nc" id="L675">                                    displayGameResult(WhoPlayer1 + &quot; won!&quot;);</span>
+
+                                    /*if ((Player1GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                        displayGameResult(WhoPlayer1 + &quot; won!&quot;);
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra(&quot;Gamemode&quot;, &quot;ChessBoxing&quot;);
+                                        intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                        intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                        intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+
+                                        startActivity(intent);
+                                    }*/
+                                } else
+
+<span class="nc bnc" id="L691" title="All 2 branches missed.">                                if (strings[1].equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L692">                                    displayGameResult(WhoPlayer2 + &quot; won!&quot;);</span>
+
+                                    /*Player2GamesWon += 1;
+
+                                    if ((Player2GamesWon &gt;= 3) || (!GameMode.equals(&quot;ChessBoxing&quot;))) {
+                                        displayGameResult(WhoPlayer2 + &quot; won!&quot;);
+                                    } else {
+                                        //Returns user to Chess
+                                        Intent intent = new Intent(BoxingActivity.this, ChessActivity.class);
+                                        intent.putExtra(&quot;Gamemode&quot;, &quot;ChessBoxing&quot;);
+                                        intent.putExtra(&quot;RoundNumber&quot;, RoundNum);
+                                        intent.putExtra(&quot;Player1Wins&quot;, Player1GamesWon);
+                                        intent.putExtra(&quot;Player2Wins&quot;, Player2GamesWon);
+
+                                        startActivity(intent);
+                                    } */
+                                }
+                            }
+
+                            //Exit switch statement
+                            break;
+
+
+                        case &quot;PlayerLeft&quot;:
+<span class="nc bnc" id="L716" title="All 2 branches missed.">                            if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L717">                                WebSocket.close();</span>
+
+<span class="nc" id="L719">                                runOnUiThread(new Runnable() {</span>
+                                    @Override
+                                    public void run() {
+<span class="nc" id="L722">                                        OptionsBtn.setClickable(false);</span>
+<span class="nc" id="L723">                                    }</span>
+                                });
+
+<span class="nc" id="L726">                                displayGameResult(&quot;A player has left the game.&quot;);</span>
+                            }
+
+                            //Exit switch statement
+                            break;
+                        ////////////////////////////////////////////////////////////////////
+                    }
+<span class="nc" id="L733">                }</span>
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+<span class="nc" id="L737">                    Log.d(&quot;CLOSE&quot;, &quot;onClose() returned: &quot; + reason);</span>
+<span class="nc" id="L738">                    System.out.println(&quot;Boxing onClose returned&quot;);</span>
+<span class="nc" id="L739">                }</span>
+
+                @Override
+                public void onError(Exception ex) {
+<span class="nc" id="L743">                    Log.d(&quot;Exception:&quot;, ex.getMessage().toString());</span>
+
+<span class="nc" id="L745">                }</span>
+            };
+<span class="nc" id="L747">        } catch (URISyntaxException e) {</span>
+<span class="nc" id="L748">            e.printStackTrace();</span>
+<span class="nc" id="L749">            return;</span>
+<span class="nc" id="L750">        }</span>
+
+        //Connect to the websocket
+<span class="nc" id="L753">        WebSocket.connect();</span>
+
+
+
+        /**
+         * Selects and displays &quot;block&quot; as the user's selected move.
+         */
+<span class="nc" id="L760">        BlockBtn.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //Sets currently selected move to block
+<span class="nc" id="L764">                SelectedMove = &quot;block&quot;;</span>
+
+                //Changes player1 icon to block pose
+<span class="nc" id="L767">                Player1Kick.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L768">                Player1Jab.setVisibility(View.INVISIBLE);</span>
+
+<span class="nc" id="L770">                Player1Block.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L771">            }</span>
+        });
+
+
+
+        /**
+         * Selects and displays &quot;kick&quot; as the user's selected move.
+         */
+<span class="nc" id="L779">        KickBtn.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //Sets currently selected move to kick
+<span class="nc" id="L783">                SelectedMove = &quot;kick&quot;;</span>
+
+                //Changes player1 icon to kick pose
+<span class="nc" id="L786">                Player1Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L787">                Player1Jab.setVisibility(View.INVISIBLE);</span>
+
+<span class="nc" id="L789">                Player1Kick.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L790">            }</span>
+        });
+
+
+        /**
+         * Selects and displays &quot;jab&quot; as the user's selected move.
+         */
+<span class="nc" id="L797">        JabBtn.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //Sets currently selected move to jab
+<span class="nc" id="L801">                SelectedMove = &quot;jab&quot;;</span>
+
+                //Changes player1 icon to jab pose
+<span class="nc" id="L804">                Player1Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L805">                Player1Kick.setVisibility(View.INVISIBLE);</span>
+
+<span class="nc" id="L807">                Player1Jab.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L808">            }</span>
+        });
+
+
+
+        /**
+         * Locks in the user's currently selected move and updates backend of the change.
+         */
+<span class="nc" id="L816">        ConfirmMoveBtn.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //Sends move to backend
+<span class="nc bnc" id="L820" title="All 2 branches missed.">                if (SelectedMove.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L821">                    SelectedMove = &quot;block&quot;;</span>
+                }
+
+<span class="nc" id="L824">                WebSocket.send(SelectedMove);</span>
+<span class="nc" id="L825">                System.out.println(&quot;Sent &quot; + SelectedMove);</span>
+
+                //Disables buttons until other user confirms
+<span class="nc" id="L828">                disableButtons();</span>
+<span class="nc" id="L829">            }</span>
+        });
+
+
+
+        /**
+         * Opens the options menu and displays buttons to leave the game and close the menu.
+         */
+<span class="nc" id="L837">        OptionsBtn.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+<span class="nc" id="L840">                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_menu_layout, null, false);</span>
+<span class="nc" id="L841">                Button LeaveGameBtn = (Button) inflatedLayout.findViewById(R.id.LeaveBoxingBtn);</span>
+<span class="nc" id="L842">                Button CloseOptionsBtn = (Button) inflatedLayout.findViewById(R.id.BackToGameBtn);</span>
+<span class="nc" id="L843">                TextView LeaveGameText = (TextView) inflatedLayout.findViewById(R.id.LeaveBoxingText);</span>
+
+                //Set leave game prompt depending on UserRole
+<span class="nc bnc" id="L846" title="All 2 branches missed.">                if (UserRole.equals(&quot;Spectator&quot;)) {</span>
+<span class="nc" id="L847">                    LeaveGameText.setText(&quot;Stop watching?&quot;);</span>
+                } else
+
+<span class="nc bnc" id="L850" title="All 4 branches missed.">                if (UserRole.equals(&quot;Player1&quot;) || UserRole.equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L851">                    LeaveGameText.setText(&quot;Concede?&quot;);</span>
+                }
+
+                //Leaves game and returns user to main menu
+<span class="nc" id="L855">                LeaveGameBtn.setOnClickListener(new View.OnClickListener() {</span>
+                    @Override
+                    public void onClick(View view) {
+                        //Send leave message if user was a player
+<span class="nc bnc" id="L859" title="All 4 branches missed.">                        if (UserRole.equals(&quot;Player1&quot;) || UserRole.equals(&quot;Player2&quot;)) {</span>
+<span class="nc" id="L860">                            WebSocket.send(&quot;leave&quot;);</span>
+                        }
+
+<span class="nc" id="L863">                        WebSocket.close();</span>
+
+                        //Returns user to main menu
+<span class="nc" id="L866">                        Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);</span>
+<span class="nc" id="L867">                        startActivity(intent);</span>
+<span class="nc" id="L868">                    }</span>
+                });
+
+                //Closes options menu
+<span class="nc" id="L872">                CloseOptionsBtn.setOnClickListener(new View.OnClickListener() {</span>
+                    @Override
+                    public void onClick(View view) {
+<span class="nc" id="L875">                        OptionsLayout.removeAllViews();</span>
+<span class="nc" id="L876">                    }</span>
+                });
+
+<span class="nc" id="L879">                OptionsLayout.addView(inflatedLayout);</span>
+<span class="nc" id="L880">            }</span>
+        });
+
+<span class="nc" id="L883">    }</span>
+
+
+    /**
+     * Makes buttons clickable and changes their color.
+     */
+    private void enableButtons() {
+<span class="nc" id="L890">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Enables buttons if user is a player.
+<span class="nc bnc" id="L894" title="All 4 branches missed.">                if (UserRole.equals(&quot;Player1&quot;) || (UserRole.equals(&quot;Player2&quot;))) {</span>
+                    //Changes appearance of buttons
+<span class="nc" id="L896">                    BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));</span>
+<span class="nc" id="L897">                    KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));</span>
+<span class="nc" id="L898">                    JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));</span>
+<span class="nc" id="L899">                    ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.soft_blue)));</span>
+
+                    //Enables buttons again
+<span class="nc" id="L902">                    BlockBtn.setClickable(true);</span>
+<span class="nc" id="L903">                    KickBtn.setClickable(true);</span>
+<span class="nc" id="L904">                    JabBtn.setClickable(true);</span>
+<span class="nc" id="L905">                    ConfirmMoveBtn.setClickable(true);</span>
+                }
+<span class="nc" id="L907">            }</span>
+        });
+<span class="nc" id="L909">    }</span>
+
+
+    /**
+     * Hides all buttons from view of spectator.
+     */
+    private void hideButtons() {
+<span class="nc" id="L916">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Hides buttons from view
+<span class="nc" id="L920">                BlockBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L921">                KickBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L922">                JabBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L923">                ConfirmMoveBtn.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L924">                SelectMoveText.setVisibility(View.INVISIBLE);</span>
+
+                //Makes buttons un-clickable.
+<span class="nc" id="L927">                BlockBtn.setClickable(false);</span>
+<span class="nc" id="L928">                KickBtn.setClickable(false);</span>
+<span class="nc" id="L929">                JabBtn.setClickable(false);</span>
+<span class="nc" id="L930">                ConfirmMoveBtn.setClickable(false);</span>
+<span class="nc" id="L931">            }</span>
+        });
+<span class="nc" id="L933">    }</span>
+
+
+
+    /**
+     * Makes buttons un-clickable and changes their color.
+     */
+    private void disableButtons() {
+<span class="nc" id="L941">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //disables buttons if user is a player.
+<span class="nc bnc" id="L945" title="All 4 branches missed.">                if (UserRole.equals(&quot;Player1&quot;) || (UserRole.equals(&quot;Player2&quot;))) {</span>
+                    //Changes appearance of buttons
+<span class="nc" id="L947">                    BlockBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+<span class="nc" id="L948">                    KickBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+<span class="nc" id="L949">                    JabBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+<span class="nc" id="L950">                    ConfirmMoveBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.faded_soft_blue)));</span>
+
+                    //Disables buttons until opponent confirms their move
+<span class="nc" id="L953">                    BlockBtn.setClickable(false);</span>
+<span class="nc" id="L954">                    KickBtn.setClickable(false);</span>
+<span class="nc" id="L955">                    JabBtn.setClickable(false);</span>
+<span class="nc" id="L956">                    ConfirmMoveBtn.setClickable(false);</span>
+                }
+<span class="nc" id="L958">            }</span>
+        });
+<span class="nc" id="L960">    }</span>
+
+
+
+    /**
+     * Shows opponent's move on screen.
+     * @param move is a string containing the opponent's selected move.
+     */
+    private void showOpponentMove(String move) {
+
+<span class="nc" id="L970">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Show opponent's move
+<span class="nc bnc" id="L974" title="All 3 branches missed.">                switch (move) {</span>
+                    case &quot;kick&quot;:
+                        //Hides block and shows kick
+<span class="nc" id="L977">                        Player2Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L978">                        Player2Kick.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L979">                        break;</span>
+
+                    case &quot;jab&quot;:
+                        //Hides block and shows jab
+<span class="nc" id="L983">                        Player2Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L984">                        Player2Jab.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L985">                        break;</span>
+
+                    default:
+                        //Do nothing because default stance is block
+                        break;
+                }
+<span class="nc" id="L991">            }</span>
+        });
+<span class="nc" id="L993">    }</span>
+
+
+    /**
+     * Hides opponent's move on screen and displays default block stance again.
+     */
+    private void hideOpponentMove() {
+<span class="nc" id="L1000">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L1003">                Player2Kick.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1004">                Player2Jab.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1005">                Player2Block.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L1006">            }</span>
+        });
+<span class="nc" id="L1008">    }</span>
+
+
+    /**
+     * Shows player 1's move on screen.
+     * @param move
+     */
+    private void showPlayer1Move(String move) {
+<span class="nc" id="L1016">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Show opponent's move
+<span class="nc bnc" id="L1020" title="All 3 branches missed.">                switch (move) {</span>
+                    case &quot;kick&quot;:
+                        //Hides block and shows kick
+<span class="nc" id="L1023">                        Player1Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1024">                        Player1Kick.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L1025">                        break;</span>
+
+                    case &quot;jab&quot;:
+                        //Hides block and shows jab
+<span class="nc" id="L1029">                        Player1Block.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1030">                        Player1Jab.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L1031">                        break;</span>
+
+                    default:
+                        //Do nothing because default stance is block
+                        break;
+                }
+<span class="nc" id="L1037">            }</span>
+        });
+<span class="nc" id="L1039">    }</span>
+
+
+
+    //Displays user's health on screen
+    /**
+     * Displays user's current health on screen.
+     * @param health is an int containing the user's current health.
+     */
+    private void lowerUserHealth(int health) {
+<span class="nc" id="L1049">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Changes image of Player1Heartx
+<span class="nc bnc" id="L1053" title="All 2 branches missed.">                if (health == 5) {</span>
+<span class="nc" id="L1054">                    UserHeart6.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1056" title="All 2 branches missed.">                } else if (health == 4) {</span>
+<span class="nc" id="L1057">                    UserHeart5.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1059" title="All 2 branches missed.">                } else if (health == 3) {</span>
+<span class="nc" id="L1060">                    UserHeart4.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1062" title="All 2 branches missed.">                } else if (health == 2) {</span>
+<span class="nc" id="L1063">                    UserHeart3.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1065" title="All 2 branches missed.">                } else if (health == 1) {</span>
+<span class="nc" id="L1066">                    UserHeart2.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1068" title="All 2 branches missed.">                } else if (health == 0) {</span>
+<span class="nc" id="L1069">                    UserHeart1.setImageResource(R.drawable.emptyheart);</span>
+                }
+<span class="nc" id="L1071">            }</span>
+        });
+<span class="nc" id="L1073">    }</span>
+
+
+    /**
+     * Displays opponent's current health on screen.
+     * @param health is an int containing the opponent's current health
+     */
+    private void lowerOpponentHealth(int health) {
+<span class="nc" id="L1081">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Changes image of Player1Heartx
+<span class="nc bnc" id="L1085" title="All 2 branches missed.">                if (health == 5) {</span>
+<span class="nc" id="L1086">                    OpponentHeart6.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1088" title="All 2 branches missed.">                } else if (health == 4) {</span>
+<span class="nc" id="L1089">                    OpponentHeart5.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1091" title="All 2 branches missed.">                } else if (health == 3) {</span>
+<span class="nc" id="L1092">                    OpponentHeart4.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1094" title="All 2 branches missed.">                } else if (health == 2) {</span>
+<span class="nc" id="L1095">                    OpponentHeart3.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1097" title="All 2 branches missed.">                } else if (health == 1) {</span>
+<span class="nc" id="L1098">                    OpponentHeart2.setImageResource(R.drawable.emptyheart);</span>
+
+<span class="nc bnc" id="L1100" title="All 2 branches missed.">                } else if (health == 0) {</span>
+<span class="nc" id="L1101">                    OpponentHeart1.setImageResource(R.drawable.emptyheart);</span>
+                }
+<span class="nc" id="L1103">            }</span>
+        });
+<span class="nc" id="L1105">    }</span>
+
+
+
+    /**
+     * Displays end of game overlay and appropriate game over prompt.
+     * @param result is a string containing the information of why the game ended.
+     */
+    private void displayGameResult(String result) {
+<span class="nc" id="L1114">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+                //Clears and displays game over overlay
+<span class="nc" id="L1118">                GameOverLayout.removeAllViews();</span>
+<span class="nc" id="L1119">                GameOverLayout.setVisibility(View.VISIBLE);</span>
+
+                //Populates overlay with win text.
+<span class="nc" id="L1122">                View inflatedLayout = getLayoutInflater().inflate(R.layout.game_result_layout, null, false);</span>
+<span class="nc" id="L1123">                TextView resultText = (TextView) inflatedLayout.findViewById(R.id.ResultText);</span>
+<span class="nc" id="L1124">                Button BoxingToMenuBtn = (Button) inflatedLayout.findViewById(R.id.ReturnToMenuBtn);</span>
+
+                //Displays win message on screen
+<span class="nc" id="L1127">                resultText.setText(result);</span>
+
+<span class="nc" id="L1129">                GameOverLayout.addView(inflatedLayout);</span>
+
+<span class="nc" id="L1131">                BoxingToMenuBtn.setOnClickListener(new View.OnClickListener() {</span>
+                    @Override
+                    public void onClick(View view) {
+                        //Returns user to main menu
+<span class="nc" id="L1135">                        Intent intent = new Intent(BoxingActivity.this, MainMenuActivity.class);</span>
+<span class="nc" id="L1136">                        startActivity(intent);</span>
+<span class="nc" id="L1137">                    }</span>
+                });
+<span class="nc" id="L1139">            }</span>
+        });
+<span class="nc" id="L1141">    }</span>
+
+
+    /**
+     * Changes user's player icon to the &quot;block&quot; stance.
+     */
+    private void showDefaultStance() {
+<span class="nc" id="L1148">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L1151">                Player1Kick.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1152">                Player1Jab.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1153">                Player1Block.setVisibility(View.VISIBLE);</span>
+<span class="nc" id="L1154">            }</span>
+        });
+<span class="nc" id="L1156">    }</span>
+
+
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
+    private void displayStartingUserHealth() {
+<span class="nc" id="L1163">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc bnc" id="L1166" title="All 2 branches missed.">                if (UserHealth == 5) {</span>
+<span class="nc" id="L1167">                    UserHeart6.setVisibility(View.INVISIBLE);</span>
+                } else
+
+<span class="nc bnc" id="L1170" title="All 2 branches missed.">                if (UserHealth == 4) {</span>
+<span class="nc" id="L1171">                    UserHeart6.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1172">                    UserHeart5.setVisibility(View.INVISIBLE);</span>
+                } else
+
+<span class="nc bnc" id="L1175" title="All 2 branches missed.">                if (UserHealth == 3) {</span>
+<span class="nc" id="L1176">                    UserHeart6.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1177">                    UserHeart5.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1178">                    UserHeart4.setVisibility(View.INVISIBLE);</span>
+                }
+<span class="nc" id="L1180">            }</span>
+        });
+<span class="nc" id="L1182">    }</span>
+
+
+    /**
+     * Displays a number of hearts equal the the players' starting health
+     */
+    private void displayStartingOpponentHealth() {
+<span class="nc" id="L1189">        runOnUiThread(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">                if (OpponentHealth == 5) {</span>
+<span class="nc" id="L1193">                    OpponentHeart6.setVisibility(View.INVISIBLE);</span>
+                } else
+
+<span class="nc bnc" id="L1196" title="All 2 branches missed.">                if (UserHealth == 4) {</span>
+<span class="nc" id="L1197">                    OpponentHeart6.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1198">                    OpponentHeart5.setVisibility(View.INVISIBLE);</span>
+                } else
+
+<span class="nc bnc" id="L1201" title="All 2 branches missed.">                if (UserHealth == 3) {</span>
+<span class="nc" id="L1202">                    OpponentHeart6.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1203">                    OpponentHeart5.setVisibility(View.INVISIBLE);</span>
+<span class="nc" id="L1204">                    OpponentHeart4.setVisibility(View.INVISIBLE);</span>
+                }
+<span class="nc" id="L1206">            }</span>
+        });
+<span class="nc" id="L1208">    }</span>
+
+
+
+    //Wait time seconds
+    /**
+     * Halts program for a specified amount of time.
+     * @param time is a double containing the information of how long to wait in seconds.
+     */
+    private void waitTime(double time) {
+<span class="nc" id="L1218">        time *= 1000;</span>
+        try {
+<span class="nc" id="L1220">            Thread.sleep((int) time);</span>
+<span class="nc" id="L1221">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L1222">            throw new RuntimeException(e);</span>
+<span class="nc" id="L1223">        }</span>
+<span class="nc" id="L1224">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.1</div></body></html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EditProfileActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.tko_chess</a> &gt; <span class="el_source">EditProfileActivity.java</span></div><h1>EditProfileActivity.java</h1><pre class="source lang-java linenums">package com.example.tko_chess;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tko_chess.ultils.Const;
+
+import org.w3c.dom.Text;
+
+/**
+ * @author Lex Somers
+ * @author Zachary Scurlock
+ * This is where the user will be able to choose whether to change their username or password
+ */
+<span class="fc" id="L28">public class EditProfileActivity extends AppCompatActivity {</span>
+
+    /**
+     * Takes users back to profile page.
+     */
+    ImageButton EditProfileToProfile; // takes user back to profile screen
+
+    Button UpdateUsername;
+    Button UpdatePassword;
+
+    EditText CurrUsername;
+    EditText CurrPassword;
+    EditText NewUsername;
+    EditText NewPassword;
+
+    TextView ErrorMessage;
+    TextView ChangeSuccess;
+
+    String URLConcatenation;
+
+<span class="fc" id="L48">    Context context = this;</span>
+
+    /**
+     * SingletonUser instance which stores the currently logged in user.
+     */
+<span class="fc" id="L53">    SingletonUser currUser = SingletonUser.getInstance();</span>
+
+
+    /**
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     *
+     *     loads the profile editor screen for the user.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L65">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L66">        setContentView(R.layout.activity_edit_profile);</span>
+
+<span class="fc" id="L68">        EditProfileToProfile = findViewById(R.id.EditProfileToProfile);</span>
+<span class="fc" id="L69">        UpdateUsername = findViewById(R.id.UpdateUsernameBtn);</span>
+<span class="fc" id="L70">        UpdatePassword = findViewById(R.id.UpdatePasswordBtn);</span>
+<span class="fc" id="L71">        CurrUsername = findViewById(R.id.CurrUsernameEditText);</span>
+<span class="fc" id="L72">        CurrPassword = findViewById(R.id.CurrPasswordEditText);</span>
+<span class="fc" id="L73">        NewUsername = findViewById(R.id.NewUsernameEditText);</span>
+<span class="fc" id="L74">        NewPassword = findViewById(R.id.NewPasswordEditText);</span>
+<span class="fc" id="L75">        ErrorMessage = findViewById(R.id.EditProfileErrorText);</span>
+<span class="fc" id="L76">        ChangeSuccess = findViewById(R.id.ChangeSuccessfulText);</span>
+
+<span class="fc" id="L78">        EditProfileToProfile.setOnClickListener(new View.OnClickListener() {</span>
+            /**
+             * @param view The view that was clicked.
+             * When pressed the user is taken back to the profile screen
+             */
+            @Override
+            public void onClick(View view) {
+<span class="nc" id="L85">                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);</span>
+<span class="nc" id="L86">                startActivity(intent);</span>
+<span class="nc" id="L87">            }</span>
+        });
+
+<span class="fc" id="L90">        UpdateUsername.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //If security username and password info is correct
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">                if (currUser.getUsername().equals(CurrUsername.getText().toString()) &amp;&amp; currUser.getPassword().equals(CurrPassword.getText().toString())) {</span>
+<span class="fc" id="L95">                    URLConcatenation = CurrUsername.getText().toString() + &quot;/&quot; + CurrPassword.getText().toString() + &quot;/&quot; + NewUsername.getText().toString();</span>
+
+                    //Request que used to send JSON requests
+<span class="fc" id="L98">                    RequestQueue queue = Volley.newRequestQueue(EditProfileActivity.this);</span>
+
+<span class="fc" id="L100">                    StringRequest ChangeUsernameReq = new StringRequest(Request.Method.PUT, Const.URL_SERVER_CHANGEUSERNAME + URLConcatenation, new Response.Listener&lt;String&gt;() {</span>
+                        @Override
+                        public void onResponse(String response) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                            if (response.equals(&quot;success&quot;)) {</span>
+<span class="fc" id="L104">                                ChangeSuccess.setText(&quot;Username successfully changed.&quot;);</span>
+<span class="fc" id="L105">                                currUser.updateUserObject(NewUsername.getText().toString(), context);</span>
+<span class="fc" id="L106">                                CurrUsername.setText(&quot;&quot;);</span>
+<span class="fc" id="L107">                                NewUsername.setText(&quot;&quot;);</span>
+<span class="fc" id="L108">                                ErrorMessage.setText(&quot;&quot;);</span>
+                            } else { //Display error message from backend
+<span class="nc" id="L110">                                ErrorMessage.setText(&quot;Could not change username.&quot;);</span>
+                            }
+<span class="fc" id="L112">						}</span>
+<span class="fc" id="L113">                    }, new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Display error message
+<span class="nc" id="L117">                            ErrorMessage.setText(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L118">                        }</span>
+                    });
+
+<span class="fc" id="L121">                    queue.add(ChangeUsernameReq);</span>
+<span class="fc" id="L122">                } else {</span>
+<span class="nc" id="L123">                    ErrorMessage.setText(&quot;Username and password did not match.&quot;);</span>
+                }
+<span class="fc" id="L125">            }</span>
+        });
+
+<span class="fc" id="L128">        UpdatePassword.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View view) {
+                //If security username and password info is correct
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">                if (currUser.getUsername().equals(CurrUsername.getText().toString()) &amp;&amp; currUser.getPassword().equals(CurrPassword.getText().toString())) {</span>
+<span class="fc" id="L133">                    URLConcatenation = CurrUsername.getText().toString() + &quot;/&quot; + CurrPassword.getText().toString() + &quot;/&quot; + NewPassword.getText().toString();</span>
+
+                    //Request que used to send JSON requests
+<span class="fc" id="L136">                    RequestQueue queue = Volley.newRequestQueue(EditProfileActivity.this);</span>
+
+<span class="fc" id="L138">                    StringRequest ChangePasswordReq = new StringRequest(Request.Method.PUT, Const.URL_SERVER_CHANGEPASSWORD + URLConcatenation, new Response.Listener&lt;String&gt;() {</span>
+                        @Override
+                        public void onResponse(String response) {
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">                            if (response.equals(&quot;success&quot;)) {</span>
+<span class="fc" id="L142">                                ChangeSuccess.setText(&quot;Password successfully changed.&quot;);</span>
+<span class="fc" id="L143">                                currUser.updateUserObject(currUser.getUsername(), context);</span>
+<span class="fc" id="L144">                                CurrPassword.setText(&quot;&quot;);</span>
+<span class="fc" id="L145">                                NewPassword.setText(&quot;&quot;);</span>
+<span class="fc" id="L146">                                ErrorMessage.setText(&quot;&quot;);</span>
+                            } else { //Display error message from backend
+<span class="nc" id="L148">                                ErrorMessage.setText(&quot;Could not change password.&quot;);</span>
+                            }
+<span class="fc" id="L150">						}</span>
+<span class="fc" id="L151">                    }, new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Display error message
+<span class="nc" id="L155">                            ErrorMessage.setText(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L156">                        }</span>
+                    });
+
+<span class="fc" id="L159">                    queue.add(ChangePasswordReq);</span>
+<span class="fc" id="L160">                } else {</span>
+<span class="nc" id="L161">                    ErrorMessage.setText(&quot;Username and password did not match.&quot;);</span>
+                }
+<span class="fc" id="L163">            }</span>
+        });
+<span class="fc" id="L165">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.1</div></body></html>

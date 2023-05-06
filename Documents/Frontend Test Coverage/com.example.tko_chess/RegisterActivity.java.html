@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegisterActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.tko_chess</a> &gt; <span class="el_source">RegisterActivity.java</span></div><h1>RegisterActivity.java</h1><pre class="source lang-java linenums">package com.example.tko_chess;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tko_chess.ultils.Const;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URL;
+
+
+/**
+ * @author Lex Somers
+ *
+ * Register screen where users can register a new account with a specified
+ *      username ana password.
+ */
+<span class="fc" id="L34">public class RegisterActivity extends AppCompatActivity {</span>
+
+	/**
+	 * EditTexts for registering a new user account.
+	 */
+	EditText RegUsername, RegPassword, ConfirmPassword;
+
+	/**
+	 * Displays register errors.
+	 */
+	TextView RegisterError;
+
+	/**
+	 * Buttons for confirming registration or navigating back to login screen.
+	 */
+	Button Register, RegisterToLogin;
+
+	/**
+	 * Context for volley requests.
+	 */
+<span class="fc" id="L54">	Context context = this;</span>
+
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+	 *
+	 *     Loads register screen onto device.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L66">		super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L67">		setContentView(R.layout.activity_register);</span>
+
+		/**
+		 * toLogin button that takes user back to login screen.
+		 */
+<span class="fc" id="L72">		RegisterToLogin = (Button) findViewById(R.id.toLoginBtn);</span>
+<span class="fc" id="L73">		RegisterToLogin.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+<span class="nc" id="L76">				startActivity(new Intent(RegisterActivity.this, LogInActivity.class));</span>
+<span class="nc" id="L77">			}</span>
+		});
+
+
+		/**
+		 * Register button that creates a new user in remote server.
+		 */
+<span class="fc" id="L84">		Register = (Button) findViewById(R.id.RegisterBtn);</span>
+<span class="fc" id="L85">		Register.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View v) {
+				//Create a string holding the username to concatenate to the URL
+<span class="fc" id="L89">				String URLConcatenation = &quot;&quot;;</span>
+
+
+				//Text fields for users to enter username/password for their account
+<span class="fc" id="L93">				RegUsername = (EditText) findViewById(R.id.RegUsernameText);</span>
+<span class="fc" id="L94">				RegPassword = (EditText) findViewById(R.id.RegPasswordText);</span>
+<span class="fc" id="L95">				ConfirmPassword = (EditText) findViewById(R.id.ConfirmPasswordText);</span>
+<span class="fc" id="L96">				RegisterError = (TextView) findViewById(R.id.RegisterErrorText);</span>
+
+<span class="fc" id="L98">				URLConcatenation += RegUsername.getText().toString() + &quot;/&quot;;</span>
+<span class="fc" id="L99">				URLConcatenation += RegPassword.getText().toString() + &quot;/&quot;;</span>
+<span class="fc" id="L100">				URLConcatenation += ConfirmPassword.getText().toString();</span>
+
+
+				//Create a Request Que for the JsonObjectRequest
+<span class="fc" id="L104">				RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);</span>
+
+				//Attempts to post a new user to remote server.
+<span class="fc" id="L107">				JsonObjectRequest registerObjectReq = new JsonObjectRequest(Request.Method.POST, Const.URL_SERVER_USERS + URLConcatenation, null,</span>
+<span class="fc" id="L108">						new Response.Listener&lt;JSONObject&gt;() {</span>
+							@Override
+							public void onResponse(JSONObject response) {
+								String temp;
+
+								//Get confirmation/failure of registration message from backend. Throw error if response is not string
+								try {
+<span class="fc" id="L115">									temp = (String) response.get(&quot;message&quot;);</span>
+<span class="nc" id="L116">								} catch (JSONException e) {</span>
+<span class="nc" id="L117">									throw new RuntimeException(e);</span>
+<span class="fc" id="L118">								}</span>
+
+								//If registration was &quot;success&quot;, take user to main menu and clear error
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">								if (temp.equals(&quot;success&quot;)) {</span>
+
+									//&quot;Logs in&quot; the user by setting SingletonUser to their username and password.
+<span class="fc" id="L124">									SingletonUser currUser = SingletonUser.getInstance();</span>
+<span class="fc" id="L125">									currUser.updateUserObject(RegUsername.getText().toString(), context);</span>
+
+
+<span class="fc" id="L128">									RegisterError.setText(&quot;&quot;);</span>
+<span class="fc" id="L129">									Intent intent = new Intent(RegisterActivity.this, MainMenuActivity.class);</span>
+<span class="fc" id="L130">									startActivity(intent);</span>
+
+<span class="fc" id="L132">								}</span>
+								//else, show error message
+								else {
+									try {
+<span class="nc" id="L136">										RegisterError.setText(response.get(&quot;message&quot;).toString());</span>
+<span class="nc" id="L137">									} catch (JSONException e) {</span>
+<span class="nc" id="L138">										throw new RuntimeException(e);</span>
+<span class="nc" id="L139">									}</span>
+								}
+<span class="fc" id="L141">							}</span>
+<span class="fc" id="L142">						}, new Response.ErrorListener() {</span>
+					@Override
+					public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L145">						System.out.println(error.toString());</span>
+<span class="nc" id="L146">						RegisterError.setText(&quot;onErrorResponse.&quot;);</span>
+<span class="nc" id="L147">					}</span>
+				});
+<span class="fc" id="L149">				queue.add(registerObjectReq);</span>
+
+<span class="fc" id="L151">				URLConcatenation = &quot;&quot;;</span>
+<span class="fc" id="L152">			}</span>
+		});
+<span class="fc" id="L154">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.1</div></body></html>

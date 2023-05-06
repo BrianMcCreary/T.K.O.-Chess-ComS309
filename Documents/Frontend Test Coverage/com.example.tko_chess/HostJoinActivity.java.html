@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HostJoinActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.tko_chess</a> &gt; <span class="el_source">HostJoinActivity.java</span></div><h1>HostJoinActivity.java</h1><pre class="source lang-java linenums">package com.example.tko_chess;
+
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.util.Log;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.tko_chess.ultils.Const;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+/**
+ * @author Lex Somers
+ *
+ * Host or join screen where users can choost to host a new game lobby
+ *      or join an existing one, specified by a lobby code.
+ */
+<span class="fc" id="L30">public class HostJoinActivity extends AppCompatActivity {</span>
+
+	//Button Declarations
+	/**
+	 * Takes user back to main menu.
+	 */
+	ImageButton HorJToMenuBtn;
+
+	/**
+	 * Takes user to lobby screen. User is the host of that new lobby.
+	 */
+	Button HostGameBtn;
+
+	/**
+	 * Takes user to lobby screen if the lobby specified by EditText LobbyCode exists.
+	 */
+	Button JoinGameBtn;
+
+	//Text Declarations
+	/**
+	 * Entry field for specifying which lobby the user wishes to join.
+	 */
+	EditText LobbyCode;
+
+	/**
+	 * View displaying join lobby errors.
+	 */
+	TextView JoinError;
+
+	//String Declarations
+	/**
+	 * Holds what game mode the user selected to play.
+	 */
+<span class="fc" id="L63">	String GameMode = &quot;&quot;;</span>
+
+	/**
+	 * Holds the end of the URL path mapping for any requests made.
+	 */
+<span class="fc" id="L68">	String URLConcatenation = &quot;&quot;;</span>
+
+
+	/**
+	 *
+	 * @param savedInstanceState If the activity is being re-initialized after
+	 *     previously being shut down then this Bundle contains the data it most
+	 *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+	 *
+	 *     Loads host and join game screen onto device.
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L81">		super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L82">		setContentView(R.layout.activity_host_or_join);</span>
+<span class="fc" id="L83">		GameMode = getIntent().getExtras().getString(&quot;Gamemode&quot;);</span>
+
+		//Button Initializations
+<span class="fc" id="L86">		HorJToMenuBtn = findViewById(R.id.HorJGametoMenuBtn);</span>
+<span class="fc" id="L87">		HostGameBtn = findViewById(R.id.HostGameBtn);</span>
+<span class="fc" id="L88">		JoinGameBtn = findViewById(R.id.JoinGameBtn);</span>
+
+		//Text Initializations
+<span class="fc" id="L91">		LobbyCode = findViewById(R.id.LobbyCodeEditText);</span>
+<span class="fc" id="L92">		JoinError = findViewById(R.id.JoinErrorText);</span>
+
+		/**
+		 * Takes user to main menu screen.
+		 */
+<span class="fc" id="L97">		HorJToMenuBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+<span class="fc" id="L100">				Intent intent = new Intent(HostJoinActivity.this, MainMenuActivity.class);</span>
+<span class="fc" id="L101">				startActivity(intent);</span>
+<span class="fc" id="L102">			}</span>
+		});
+
+		/**
+		 * Takes user to lobby screen. User is host of that new lobby.
+		 */
+<span class="fc" id="L108">		HostGameBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Takes user to hosted lobby screen
+<span class="fc" id="L112">				Intent intent = new Intent(HostJoinActivity.this, LobbyActivity.class);</span>
+<span class="fc" id="L113">				intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="fc" id="L114">				intent.putExtra(&quot;HostOrJoin&quot;, &quot;host&quot;);</span>
+<span class="fc" id="L115">				intent.putExtra(&quot;LobbyCode&quot;, &quot;0&quot;);</span>
+<span class="fc" id="L116">				startActivity(intent);</span>
+<span class="fc" id="L117">			}</span>
+		});
+
+		/**
+		 * Takes user to lobby screen if the lobby specified by EditText LobbyCode exists.
+		 */
+<span class="fc" id="L123">		JoinGameBtn.setOnClickListener(new View.OnClickListener() {</span>
+			@Override
+			public void onClick(View view) {
+				//Concatenates the lobby code to the URL for the find lobby request
+<span class="nc" id="L127">				URLConcatenation = LobbyCode.getText().toString();</span>
+
+<span class="nc" id="L129">				RequestQueue queue = Volley.newRequestQueue(HostJoinActivity.this);</span>
+<span class="nc" id="L130">				StringRequest FindLobbyReq = new StringRequest(Request.Method.GET, Const.URL_SERVER_LOBBYFIND + URLConcatenation, new Response.Listener&lt;String&gt;() {</span>
+					@Override
+					public void onResponse(String response) {
+						//If lobby exists, take user to lobby screen and join that lobby.
+<span class="nc bnc" id="L134" title="All 2 branches missed.">						if (response.equals(&quot;success&quot;)) {</span>
+<span class="nc" id="L135">							Intent intent = new Intent(HostJoinActivity.this, LobbyActivity.class);</span>
+
+							//Sending extra info about type of lobby and type of user joining the lobby
+<span class="nc" id="L138">							intent.putExtra(&quot;Gamemode&quot;, GameMode);</span>
+<span class="nc" id="L139">							intent.putExtra(&quot;HostOrJoin&quot;, &quot;join&quot;);</span>
+<span class="nc" id="L140">							intent.putExtra(&quot;LobbyCode&quot;, URLConcatenation);</span>
+
+<span class="nc" id="L142">							startActivity(intent);</span>
+<span class="nc" id="L143">						} else { //Display error message from backend</span>
+<span class="nc" id="L144">							JoinError.setText(response);</span>
+						}
+<span class="nc" id="L146">					}</span>
+<span class="nc" id="L147">				}, new Response.ErrorListener() {</span>
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						//Display error message
+<span class="nc" id="L151">						JoinError.setText(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L152">					}</span>
+				});
+
+				//Send the request we created
+<span class="nc" id="L156">				queue.add(FindLobbyReq);</span>
+<span class="nc" id="L157">			}</span>
+		});
+<span class="fc" id="L159">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.1</div></body></html>

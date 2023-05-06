@@ -197,6 +197,11 @@ public class EditProfileActivityTest {
         onView(withId(R.id.UsernameText)).perform(typeText(username), closeSoftKeyboard());
         onView(withId(R.id.PasswordText)).perform(typeText(password), closeSoftKeyboard());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.LoginButton)).perform(click());
 
         try{
@@ -212,6 +217,11 @@ public class EditProfileActivityTest {
         }
 
         onView(withId(R.id.editprofilebtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         String currentUsername = "tester8";
         String newPassword = "password";
