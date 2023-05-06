@@ -57,19 +57,52 @@ public class LobbyActivityTest {
         onView(withId(R.id.PasswordText)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.LoginButton)).perform(click());
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.MenuToChessBtn)).perform(click());
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.HostGameBtn)).perform(click());
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
         onView(withId(R.id.Player1Btn)).perform(click());
+
         onView(withId(R.id.ReadyBtn)).perform(click());
         onView(withId(R.id.NotReadyBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.Player2Btn)).perform(click());
         onView(withId(R.id.ReadyBtn)).perform(click());
         onView(withId(R.id.NotReadyBtn)).perform(click());
         onView(withId(R.id.SpectatorBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.LobbyToHostJoinBtn)).perform(click());
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
         onView(withId(R.id.HorJGametoMenuBtn)).perform(click());
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
 
         intended(hasComponent(ProfileActivity.class.getName()));

@@ -61,18 +61,54 @@ public class RegisterActivityTest {
         String username = String.valueOf(int_random);
         String password = String.valueOf(int_random);
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.toRegisterBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.RegUsernameText)).perform(typeText(username), closeSoftKeyboard());
         onView(withId(R.id.RegPasswordText)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.ConfirmPasswordText)).perform(typeText(password), closeSoftKeyboard());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.RegisterBtn)).perform(click());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.MenuToLoginBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.UsernameText)).perform(typeText(username), closeSoftKeyboard());
         onView(withId(R.id.PasswordText)).perform(typeText(password), closeSoftKeyboard());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
         onView(withId(R.id.LoginButton)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
 

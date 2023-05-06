@@ -59,8 +59,24 @@ public class EditProfileActivityTest {
 
         onView(withId(R.id.LoginButton)).perform(click());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.editprofilebtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         String currentUsername = "tester8";
         String newUsername = "testUsername";
@@ -68,6 +84,11 @@ public class EditProfileActivityTest {
         onView(withId(R.id.CurrUsernameEditText)).perform(typeText(currentUsername), closeSoftKeyboard());
         onView(withId(R.id.CurrPasswordEditText)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.NewUsernameEditText)). perform(typeText(newUsername), closeSoftKeyboard());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.UpdateUsernameBtn)).perform(click());
         onView(withId(R.id.ChangeSuccessfulText)).check(matches(withText("Username successfully changed.")));
@@ -91,12 +112,28 @@ public class EditProfileActivityTest {
 
         onView(withId(R.id.LoginButton)).perform(click());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.editprofilebtn)).perform(click());
 
         onView(withId(R.id.CurrUsernameEditText)).perform(typeText(currentUsername), closeSoftKeyboard());
         onView(withId(R.id.CurrPasswordEditText)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.NewUsernameEditText)). perform(typeText(newUsername), closeSoftKeyboard());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.UpdateUsernameBtn)).perform(click());
         onView(withId(R.id.ChangeSuccessfulText)).check(matches(withText("Username successfully changed.")));
@@ -117,7 +154,18 @@ public class EditProfileActivityTest {
 
         onView(withId(R.id.LoginButton)).perform(click());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.editprofilebtn)).perform(click());
 
         String currentUsername = "tester8";
@@ -126,6 +174,11 @@ public class EditProfileActivityTest {
         onView(withId(R.id.CurrUsernameEditText)).perform(typeText(currentUsername), closeSoftKeyboard());
         onView(withId(R.id.CurrPasswordEditText)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.NewPasswordEditText)). perform(typeText(newPassword), closeSoftKeyboard());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.UpdatePasswordBtn)).perform(click());
         onView(withId(R.id.ChangeSuccessfulText)).check(matches(withText("Password successfully changed.")));
@@ -146,7 +199,18 @@ public class EditProfileActivityTest {
 
         onView(withId(R.id.LoginButton)).perform(click());
 
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.MenuToProfileBtn)).perform(click());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
+
         onView(withId(R.id.editprofilebtn)).perform(click());
 
         String currentUsername = "tester8";
@@ -155,6 +219,11 @@ public class EditProfileActivityTest {
         onView(withId(R.id.CurrUsernameEditText)).perform(typeText(currentUsername), closeSoftKeyboard());
         onView(withId(R.id.CurrPasswordEditText)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.NewPasswordEditText)). perform(typeText(newPassword), closeSoftKeyboard());
+
+        try{
+            Thread.sleep(SIMULATED_DELAY_MS);
+        }catch (InterruptedException e){
+        }
 
         onView(withId(R.id.UpdatePasswordBtn)).perform(click());
         onView(withId(R.id.ChangeSuccessfulText)).check(matches(withText("Password successfully changed.")));
