@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * @Author Lex Somers
+ * @author Lex Somers
  * Page for deleting users if user is an admin.
  */
 public class SettingsActvity extends AppCompatActivity {
