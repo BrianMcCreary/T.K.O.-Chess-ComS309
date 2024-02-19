@@ -6,5 +6,6 @@ Link to Project overview video (Does not show all features): https://youtu.be/M0
 
 I was responsible for working on the frontend of our project alongside one of my team members, Zach Scurlock. This consisted of creating most of the screens with xml and providing them with functionality using Java classes. 
 
-To view the xml pages, navigate to Frontend/T.K.O_Chess/app/src/main/res/layout. Other resources used on the design of the frontend screen are found one directory up in /res. 
-To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess. 
+To view the xml pages, navigate to Frontend/T.K.O_Chess/app/src/main/res/layout (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/res/layout). Other resources used on the design of the frontend screen are found one directory up in /res. 
+
+To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess). 
