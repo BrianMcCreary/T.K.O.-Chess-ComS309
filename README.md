@@ -11,5 +11,5 @@ To view the xml pages, navigate to Frontend/T.K.O_Chess/app/src/main/res/layout 
 
 To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess). 
 
-#Awards
+# Awards
 T.K.O. Chess was awarded 3rd place in the "best project" competition which consisted of 100 project teams. 
