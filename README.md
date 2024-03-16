@@ -10,3 +10,6 @@ I was responsible for working on the frontend of our project alongside one of my
 To view the xml pages, navigate to Frontend/T.K.O_Chess/app/src/main/res/layout (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/res/layout). Other resources used on the design of the frontend screen are found one directory up in /res. 
 
 To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess). 
+
+#Awards
+T.K.O. Chess was awarded 3rd place in the "best project" competition which consisted of 100 project teams. 
