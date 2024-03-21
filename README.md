@@ -17,7 +17,7 @@ To view the xml pages, navigate to Frontend/T.K.O_Chess/app/src/main/res/layout 
 To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess (https://github.com/Leaflex/T.K.O.-Chess-ComS-309-/tree/main/Frontend/T.K.O_Chess/app/src/main/java/com/example/tko_chess). 
 
 ## Skills and Knowledge:
-Throughout this project I gained hands on experience with fundamental AGILE software development methodologies and many essential development tools. Some of the tools we learned how to use include Git, Github, Android Studio & emulators, Postman, MySQL, XML, Java, HTTP request & websocket APIs, etc. We also gained experience in software debugging and testing, as one of the requirements for our project was a minimum of 70% code coverage using the Junit testing framework. 
+Throughout this project I gained hands on experience in and with fundamental AGILE software development methodologies and many essential development tools. Some of the tools we learned how to use include Git, Github, Android Studio & emulators, Postman, MySQL, XML, Java, HTTP request & websocket APIs, etc. We also gained experience in software debugging and testing, as one of the requirements for our project was a minimum of 70% code coverage using the Junit testing framework. 
 
 ## Resources Used:
  - Java
