@@ -2,7 +2,7 @@
 Git repo containing code and documentation for Alexander Somers, Brian McCreary, Connor Hand, and Zach Scurlock's T.K.O. Chess android application project.
 
 ## Awards
-T.K.O. Chess was awarded 3rd place in the "best project" competition which consisted of 100 project teams. 
+T.K.O. Chess was awarded 3rd place in the "best project" competition for all Iowa State University's Spring 2023 ComS 309 sections which consisted of 100 4-person project teams in total
 
 Link to Project overview video (Does not show all features): https://youtu.be/M0QlbFpdWM0?si=jIyVdT6tK-lwyIlZ 
 
