@@ -20,11 +20,11 @@ To view the Java classes, navigate to Frontend/T.K.O_Chess/app/src/main/java/com
 Throughout this project I gained hands on experience with fundamental AGILE software development methodologies and many essential development tools. Some of the tools we learned how to use include Git, Github, Android Studio & emulators, Postman, MySQL, XML, Java, HTTP request & websocket APIs, etc. We also gained experience in software debugging and testing, as one of the requirements for our project was a minimum of 70% code coverage using the Junit testing framework. 
 
 ## Resources Used:
-Java
-Junit
-XML
-Postman
-HTTP Requests/Websockets
-Android Studio
-Git/Github
-MySQL
+ - Java
+ - Junit
+ - XML
+ - Postman
+ - HTTP Requests/Websockets
+ - Android Studio
+ - Git/Github
+ - MySQL
