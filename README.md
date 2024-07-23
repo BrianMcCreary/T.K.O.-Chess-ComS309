@@ -26,4 +26,4 @@ Throughout this project I gained hands on experience in and with fundamental AGI
  - MySQL
 
 ## Directory Navigation:
-To view the Java backend source code, navigate to [Backend/Total-Knockout-Chess/src/main/java/TotalKnockoutChess](github.com/BrianMcCreary/T.K.O.-Chess-ComS309/tree/main/Backend/Total-Knockout-Chess/src/main/java/TotalKnockoutChess).
+To view the Java backend source code, navigate to [Backend/Total-Knockout-Chess/src/main/java/TotalKnockoutChess](https://github.com/BrianMcCreary/T.K.O.-Chess-ComS309/tree/main/Backend/Total-Knockout-Chess/src/main/java/TotalKnockoutChess).
